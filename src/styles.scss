@@ -13,4 +13,7 @@ body {
 
 @include mat-core();
 @include angular-material-theme($app-theme);
-@include angular-material-color($dark-theme);
+
+.darkMode {
+  @include angular-material-color($dark-theme);
+}

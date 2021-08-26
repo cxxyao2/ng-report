@@ -8,25 +8,43 @@
   right: 0;
 }
 
-.is-handset .toolbar{
-  position:fixed;
-  z-index:2;
+.is-handset .toolbar {
+  position: fixed;
+  z-index: 2;
 }
 
-h1.app-name{
-  margin-left:8px;
+.toolbar {
+  display: flex;
+  flex-direction: row;
+  justify-content: stretch;
 }
 
-.sidenav-container{
+.toolbar .divider {
+  flex: 1;
+}
+
+.toolbar .nav-bar-item {
+  margin-left: 8px;
+  color: white;
+  text-decoration: none;
+  transition: all 0.3s;
+  &:hover {
+    opacity: 0.6;
+  }
+}
+
+h1.app-name {
+  margin-left: 8px;
+}
+
+.sidenav-container {
   /* When the sidenav is not fixed, stretch the
   sidenav container to fill the available space*/
-  flex:1;
+  flex: 1;
 }
 
-.is-handset .sidenav-container{
+.is-handset .sidenav-container {
   /* When the sidenav is fixed,
   don't constrain the height of the sidenav container */
-  flex:1 0 auto;
+  flex: 1 0 auto;
 }
-
-

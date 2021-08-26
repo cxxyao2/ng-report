@@ -1,4 +1,8 @@
-<div class="app-container dark" [class.is-handset]="isHandset$ | async">
+<div
+  class="app-container"
+  [class.darkMode]="themeService.isDarkTheme | async"
+  [class.is-handset]="isHandset$ | async"
+>
   <mat-toolbar color="primary" class="toolbar">
     <button
       type="button"
@@ -9,7 +13,31 @@
     >
       <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
     </button>
+
     <h1 class="app-name">Center</h1>
+    <span class="divider"></span>
+    <button
+      mat-icon-button
+      [title]="getThemeLabel()"
+      [attr.aria-label]="getThemeLabel()"
+      (click)="toggleTheme()"
+    >
+      <mat-icon *ngIf="!isDark">dark_mode</mat-icon>
+      <mat-icon *ngIf="isDark">light_mode</mat-icon>
+    </button>
+    <button
+      mat-button
+      [title]="getLanguageLabel()"
+      [attr.aria-label]="getLanguageLabel()"
+      (click)="toggleLanguage()"
+    >
+      <a *ngIf="currentLanguage === 'french'" class="nav-bar-item" href="/en/"
+        >English</a
+      >
+      <a *ngIf="currentLanguage === 'english'" class="nav-bar-item" href="/fr/"
+        >Français</a
+      >
+    </button>
   </mat-toolbar>
   <mat-sidenav-container
     class="sidenav-container"

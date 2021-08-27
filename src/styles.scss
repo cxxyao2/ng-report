@@ -11,6 +11,12 @@ body {
   font-family: Roboto, "Helvetica Neue", sans-serif;
 }
 
+*,
+*::after,
+*::before {
+  box-sizing: border-box;
+}
+
 @include mat-core();
 @include angular-material-theme($app-theme);
 

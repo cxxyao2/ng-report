@@ -6,12 +6,14 @@ import { PageNotFoundComponent } from './page-not-found/page-not-found.component
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { TodoComponent } from './todo/todo.component';
 import { SearchResultsComponent } from './toolbar/search-results/search-results.component';
+import { GameCardComponent } from './animations/game-card/game-card.component';
 
 const routes: Routes = [
   { path: 'home', component: HomeComponent },
   { path: 'dash', component: DashboardComponent },
   { path: 'todo', component: TodoComponent },
   { path: 'search', component: SearchResultsComponent },
+  { path: 'game-card', component: GameCardComponent },
   { path: '', redirectTo: '/home', pathMatch: 'full' },
   { path: '**', component: PageNotFoundComponent },
 ];

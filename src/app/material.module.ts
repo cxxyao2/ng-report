@@ -7,6 +7,8 @@ import { ScrollingModule } from '@angular/cdk/scrolling';
 import { CdkStepperModule } from '@angular/cdk/stepper';
 import { CdkTableModule } from '@angular/cdk/table';
 import { CdkTreeModule } from '@angular/cdk/tree';
+import { LayoutModule } from '@angular/cdk/layout';
+
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatBadgeModule } from '@angular/material/badge';
 import { MatBottomSheetModule } from '@angular/material/bottom-sheet';
@@ -51,6 +53,7 @@ import { OverlayModule } from '@angular/cdk/overlay';
     CdkTableModule,
     CdkTreeModule,
     DragDropModule,
+    LayoutModule,
     MatAutocompleteModule,
     MatBadgeModule,
     MatBottomSheetModule,

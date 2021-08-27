@@ -1,28 +1,24 @@
 <mat-card class="example-card">
   <mat-card-header style="text-align: center">
     <mat-card-title>Golden Brand</mat-card-title>
-    <mat-card-subtitle style="background-color: aqua"
-      >Golden Brand</mat-card-subtitle
-    >
+    <mat-card-subtitle>Golden Brand</mat-card-subtitle>
   </mat-card-header>
   <img
     style="width: 200px; height: 200px; object-fit: cover"
     mat-card-image
     src="https://source.unsplash.com/random/200×200/?gasoline"
-    alt="Photo of a Shiba Inu"
+    alt="Photo of gaz"
   />
   <mat-card-content>
-    <p [ngClass]="{ 'line-clamp': !showMore }">
+    <p [ngClass]="{ 'line-clamp': !showMore }" (click)="showMore = false">
       The Shiba Inu is the smallest of the six original and distinct spitz
       breeds of dog from Japan. A small, agile dog that copes very well with
       mountainous terrain, the Shiba Inu was originally bred for hunting.
     </p>
-    <span class="more" *ngIf="!showMore" (click)="showMore = true">
-      showMore
-    </span>
-    <span class="more" *ngIf="showMore" (click)="showMore = false">
-      collapse
-    </span>
+    <span class="more" *ngIf="!showMore" (click)="showMore = true"
+      >Show more</span
+    >
+
     <p
       style="display: flex; flex-direction: row; justify-content: space-between"
     >

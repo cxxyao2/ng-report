@@ -22,6 +22,9 @@ import { MatMenuModule } from '@angular/material/menu';
 import { TodoComponent } from './todo/todo.component';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { ToolbarDemoComponent } from './toolbar-demo/toolbar-demo.component';
+import { SearchBoxComponent } from './toolbar/search-box/search-box.component';
+import { SearchResultsComponent } from './toolbar/search-results/search-results.component';
+import { SearchCardComponent } from './toolbar/search-card/search-card.component';
 
 @NgModule({
   declarations: [
@@ -33,6 +36,9 @@ import { ToolbarDemoComponent } from './toolbar-demo/toolbar-demo.component';
     DashboardComponent,
     TodoComponent,
     ToolbarDemoComponent,
+    SearchBoxComponent,
+    SearchResultsComponent,
+    SearchCardComponent,
   ],
   imports: [
     BrowserModule,

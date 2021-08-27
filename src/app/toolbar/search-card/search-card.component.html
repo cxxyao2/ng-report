@@ -17,14 +17,17 @@
       breeds of dog from Japan. A small, agile dog that copes very well with
       mountainous terrain, the Shiba Inu was originally bred for hunting.
     </p>
-    <span class="more" *ngIf="!showMore" (click)="showMore = true"
-      >Show more</span
-    >
+    <span class="more" *ngIf="!showMore" (click)="showMore = true">
+      showMore
+    </span>
+    <span class="more" *ngIf="showMore" (click)="showMore = false">
+      collapse
+    </span>
     <p
       style="display: flex; flex-direction: row; justify-content: space-between"
     >
-      <span style="display: flex">12,34$</span>
-      <span style="display: flex">1234 in stock</span>
+      <span>12,34$</span>
+      <span>1234 in stock</span>
     </p>
   </mat-card-content>
   <mat-card-actions style="text-align: center">

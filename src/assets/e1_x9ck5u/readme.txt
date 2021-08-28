@@ -1,9 +1,3 @@
-<mat-card class="example-card">
-  <mat-card-header style="text-align: center">
-    <mat-card-title>Golden Brand</mat-card-title>
-    <mat-card-subtitle>Golden Brand</mat-card-subtitle>
-  </mat-card-header>
-
   <img
     style="width: 200px; height: 200px; object-fit: cover"
     mat-card-image
@@ -22,20 +16,3 @@
     src="assets/e1_x9ck5u/e1_x9ck5u_c_scale,w_200.jpg"
     alt="engine"
   />
-
-  <mat-card-content>
-    <p [ngClass]="{ 'line-clamp': !showMore }" (click)="showMore = !showMore">
-      The Shiba Inu is the smallest of th.
-    </p>
-
-    <p
-      style="display: flex; flex-direction: row; justify-content: space-between"
-    >
-      <span>12,34$</span>
-      <span>1234 in stock</span>
-    </p>
-  </mat-card-content>
-  <mat-card-actions style="text-align: center">
-    <button mat-raised-button color="primary">Add to Cart</button>
-  </mat-card-actions>
-</mat-card>

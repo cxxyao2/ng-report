@@ -1,1 +1,71 @@
-<app-navbar></app-navbar>
+<div
+  class="app-container"
+  [class.darkMode]="themeService.isDarkTheme | async"
+  [class.is-handset]="isHandset$ | async"
+>
+  <mat-toolbar color="primary" class="toolbar">
+    <button
+      type="button"
+      aria-label="Toggle sidenav"
+      mat-icon-button
+      (click)="drawer.toggle()"
+      *ngIf="isHandset$ | async"
+    >
+      <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
+    </button>
+
+    <h1 class="app-name" routerLink="/home">Center</h1>
+    <span class="divider"></span>
+    <app-search-box></app-search-box>
+    <button
+      mat-icon-button
+      [title]="getThemeLabel()"
+      [attr.aria-label]="getThemeLabel()"
+      (click)="toggleTheme()"
+    >
+      <mat-icon *ngIf="!isDark">dark_mode</mat-icon>
+      <mat-icon *ngIf="isDark">light_mode</mat-icon>
+    </button>
+    <button
+      mat-button
+      [title]="getLanguageLabel()"
+      [attr.aria-label]="getLanguageLabel()"
+      (click)="toggleLanguage()"
+    >
+      <a *ngIf="currentLanguage === 'french'" class="nav-bar-item" href="/en/"
+        >English</a
+      >
+      <a *ngIf="currentLanguage === 'english'" class="nav-bar-item" href="/fr/"
+        >Français</a
+      >
+    </button>
+  </mat-toolbar>
+  <mat-sidenav-container
+    class="sidenav-container"
+    [style.marginTop.px]="(isHandset$ | async) ? 56 : 0"
+  >
+    <mat-sidenav
+      #drawer
+      [mode]="(isHandset$ | async) ? 'over' : 'side'"
+      [fixedInViewport]="isHandset$ | async"
+      fixedTopGap="56"
+      [opened]="(isHandset$ | async) === false"
+      [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
+    >
+      <mat-nav-list>
+        <app-menu-list-item
+          *ngFor="let item of navItems"
+          [item]="item"
+        ></app-menu-list-item>
+
+        <mat-divider></mat-divider>
+        <a mat-list-item routerLink="/search">Search</a>
+        <a mat-list-item routerLink="/notfond">Not Found</a>
+        <a mat-list-item href="#">Go To Top</a>
+      </mat-nav-list>
+    </mat-sidenav>
+    <mat-sidenav-content>
+      <router-outlet></router-outlet>
+    </mat-sidenav-content>
+  </mat-sidenav-container>
+</div>

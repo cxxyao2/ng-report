@@ -1,0 +1,12 @@
+<a
+  mat-list-item
+  (click)="onItemSelected(item)"
+  [ngClass]="{
+    active: item.route ? router.isActive(item.route, true) : false
+  }"
+>
+  <mat-icon>{{ item.icon }}</mat-icon
+  >{{ item.label }}
+  <span class="spacer">&nbsp;&nbsp;</span>
+  <span>email16</span>
+</a>

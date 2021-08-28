@@ -6,7 +6,6 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 
 import { MaterialModule } from './material.module';
-import { NavbarComponent } from './navbar/navbar.component';
 
 import { HomeComponent } from './home/home.component';
 import { AboutComponent } from './about/about.component';
@@ -18,11 +17,11 @@ import { SearchBoxComponent } from './toolbar/search-box/search-box.component';
 import { SearchResultsComponent } from './toolbar/search-results/search-results.component';
 import { SearchCardComponent } from './toolbar/search-card/search-card.component';
 import { GameCardComponent } from './animations/game-card/game-card.component';
+import { MenuListItemComponent } from './toolbar/menu-list-item/menu-list-item.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    NavbarComponent,
     HomeComponent,
     AboutComponent,
     PageNotFoundComponent,
@@ -33,6 +32,7 @@ import { GameCardComponent } from './animations/game-card/game-card.component';
     SearchResultsComponent,
     SearchCardComponent,
     GameCardComponent,
+    MenuListItemComponent,
   ],
   imports: [
     BrowserModule,

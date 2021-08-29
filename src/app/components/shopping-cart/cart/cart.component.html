@@ -1,0 +1,7 @@
+<div *ngIf="cartItems.length === 0">Your cart is Empty.</div>
+
+<ul *ngIf="cartItems.length > 0">
+  <li *ngFor="let i of [1, 2, 3]">
+    <app-cart-item></app-cart-item>
+  </li>
+</ul>

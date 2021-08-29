@@ -59,11 +59,10 @@
         ></app-menu-list-item>
 
         <mat-divider></mat-divider>
-        <a mat-list-item routerLink="/search"
-          ><mat-icon style="margin-right: 8px">home</mat-icon>Search</a
-        >
-        <a mat-list-item routerLink="/notfond">Not Found</a>
-        <a mat-list-item href="#">Go To Top</a>
+        <app-menu-list-item
+          *ngFor="let item of navItems"
+          [item]="item"
+        ></app-menu-list-item>
       </mat-nav-list>
     </mat-sidenav>
     <mat-sidenav-content>

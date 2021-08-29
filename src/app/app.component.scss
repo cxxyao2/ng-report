@@ -11,12 +11,20 @@
 .is-handset .toolbar {
   position: fixed;
   z-index: 2;
+  height: 56px;
 }
 
-.toolbar {
+.fix-toolbar,
+.pliable-toolbar {
   display: flex;
   flex-direction: row;
-  justify-content: stretch;
+  justify-content: center;
+}
+
+.pliable-toolbar {
+  height: 30px;
+  background-color: black;
+  font-size: 0.7rem;
 }
 
 .mat-sidenav {
@@ -28,7 +36,7 @@
   background-color: rgba(255, 255, 255, 0.5);
 }
 
-.toolbar .divider {
+.fix-toolbar .divider {
   flex: 1;
 }
 

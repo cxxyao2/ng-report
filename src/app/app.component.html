@@ -4,42 +4,80 @@
   [class.is-handset]="isHandset$ | async"
 >
   <mat-toolbar color="primary" class="toolbar">
-    <button
-      type="button"
-      aria-label="Toggle sidenav"
-      mat-icon-button
-      (click)="drawer.toggle()"
-      *ngIf="isHandset$ | async"
-    >
-      <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
-    </button>
+    <mat-toolbar-row *ngIf="!(isHandset$ | async)" class="pliable-toolbar">
+      <span> TODO for large screen</span>
+      <span class="divider"></span>
+      <button
+        mat-icon-button
+        [title]="getThemeLabel()"
+        [attr.aria-label]="getThemeLabel()"
+        (click)="toggleTheme()"
+      >
+        <mat-icon *ngIf="!isDark">dark_mode</mat-icon>
+        <mat-icon *ngIf="isDark">light_mode</mat-icon>
+      </button>
+      <button
+        mat-button
+        [title]="getLanguageLabel()"
+        [attr.aria-label]="getLanguageLabel()"
+        (click)="toggleLanguage()"
+      >
+        <a *ngIf="currentLanguage === 'french'" class="nav-bar-item" href="/en/"
+          >English</a
+        >
+        <a
+          *ngIf="currentLanguage === 'english'"
+          class="nav-bar-item"
+          href="/fr/"
+          >Français</a
+        >
+      </button>
+    </mat-toolbar-row>
 
-    <h1 class="app-name" routerLink="/home">Center</h1>
-    <span class="divider"></span>
-    <app-search-box></app-search-box>
-    <button
-      mat-icon-button
-      [title]="getThemeLabel()"
-      [attr.aria-label]="getThemeLabel()"
-      (click)="toggleTheme()"
-    >
-      <mat-icon *ngIf="!isDark">dark_mode</mat-icon>
-      <mat-icon *ngIf="isDark">light_mode</mat-icon>
-    </button>
-    <button
-      mat-button
-      [title]="getLanguageLabel()"
-      [attr.aria-label]="getLanguageLabel()"
-      (click)="toggleLanguage()"
-    >
-      <a *ngIf="currentLanguage === 'french'" class="nav-bar-item" href="/en/"
-        >English</a
+    <mat-toolbar-row class="fix-toolbar">
+      <button
+        type="button"
+        aria-label="Toggle sidenav"
+        mat-icon-button
+        (click)="drawer.toggle()"
+        *ngIf="isHandset$ | async"
       >
-      <a *ngIf="currentLanguage === 'english'" class="nav-bar-item" href="/fr/"
-        >Français</a
+        <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
+      </button>
+
+      <h1 class="app-name" routerLink="/home">Center</h1>
+
+      <app-search-box></app-search-box>
+      <button
+        type="button"
+        aria-label="User"
+        mat-icon-button
+        *ngIf="true"
+        (click)="logout()"
+        style="margin-right:2rem;"
       >
-    </button>
+        <mat-icon >account_circle</mat-icon>Hello,Jennifer
+      </button>
+      <span style="width: 6rem"></span>
+
+      <button
+        type="button"
+        aria-label="Shopping cart"
+        mat-icon-button
+        (click)="drawer.toggle()"
+        *ngIf="true"
+        style="margin-right:1rem;"
+      >
+        <mat-icon
+          matBadge="15"
+          matBadgeColor="accent"
+          aria-label="Shopping cart icon"
+          >shopping_cart</mat-icon
+        >&nbsp;cart
+      </button>
+    </mat-toolbar-row>
   </mat-toolbar>
+
   <mat-sidenav-container
     class="sidenav-container"
     [style.marginTop.px]="(isHandset$ | async) ? 56 : 0"

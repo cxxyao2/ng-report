@@ -5,14 +5,15 @@ import { AboutComponent } from './components/shared/about/about.component';
 import { PageNotFoundComponent } from './components/shared/page-not-found/page-not-found.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { TodoComponent } from './components/todo/todo.component';
-import { SearchResultsComponent } from './components/toolbar/search-results/search-results.component';
 import { GameCardComponent } from './animations/game-card/game-card.component';
+import { ProductListComponent } from './components/shopping-cart/product-list/product-list.component';
 
 const routes: Routes = [
   { path: 'home', component: HomeComponent },
   { path: 'dash', component: DashboardComponent },
   { path: 'todo', component: TodoComponent },
-  { path: 'search', component: SearchResultsComponent },
+  { path: 'search', component: ProductListComponent },
+  { path: 'about-me', component: AboutComponent },
   { path: 'game-card', component: GameCardComponent },
   { path: '', redirectTo: '/home', pathMatch: 'full' },
   { path: '**', component: PageNotFoundComponent },

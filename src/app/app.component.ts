@@ -4,10 +4,14 @@ import {
   ElementRef,
   ViewEncapsulation,
   AfterViewInit,
+  Inject,
+  HostListener,
 } from '@angular/core';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { Observable } from 'rxjs';
 import { map, shareReplay } from 'rxjs/operators';
+import { DOCUMENT } from '@angular/common';
+
 import { ThemeService } from './services/theme.service';
 
 import { NavItem } from './models/nav-item';
@@ -23,6 +27,7 @@ export class AppComponent implements AfterViewInit {
   title = 'ng-center';
   isDark = false;
   currentLanguage = 'english';
+  windowScrolled = false;
 
   navItems: NavItem[] = [
     { label: 'home', icon: 'home', route: 'home' },
@@ -39,7 +44,8 @@ export class AppComponent implements AfterViewInit {
   constructor(
     private breakpointObserver: BreakpointObserver,
     public themeService: ThemeService,
-    private navService: NavService
+    private navService: NavService,
+    @Inject(DOCUMENT) private document: Document
   ) {}
 
   toggleTheme(): void {
@@ -63,4 +69,24 @@ export class AppComponent implements AfterViewInit {
   ngAfterViewInit(): void {
     this.navService.appDrawer = this.appDrawer;
   }
+
+  @HostListener('window:scroll', [])
+  onWindowScroll() {
+    console.log('hi,scroll window is ', this.windowScrolled);
+    if (
+      window.pageYOffset ||
+      document.documentElement.scrollTop ||
+      document.body.scrollTop > 100
+    ) {
+      this.windowScrolled = true;
+    } else if (
+      (this.windowScrolled && window.pageYOffset) ||
+      document.documentElement.scrollTop ||
+      document.body.scrollTop < 10
+    ) {
+      this.windowScrolled = false;
+    }
+  }
+
+  logout(): void {}
 }

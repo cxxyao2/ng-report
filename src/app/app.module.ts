@@ -14,8 +14,6 @@ import { PageNotFoundComponent } from './components/shared/page-not-found/page-n
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { TodoComponent } from './components/todo/todo.component';
 import { SearchBoxComponent } from './components/toolbar/search-box/search-box.component';
-import { SearchResultsComponent } from './components/toolbar/search-results/search-results.component';
-import { SearchCardComponent } from './components/toolbar/search-card/search-card.component';
 import { GameCardComponent } from './animations/game-card/game-card.component';
 import { MenuListItemComponent } from './components/toolbar/menu-list-item/menu-list-item.component';
 import { CartComponent } from './components/./shopping-cart/cart/cart.component';
@@ -34,8 +32,6 @@ import { WishListComponent } from './components/shopping-cart/wish-list/wish-lis
     DashboardComponent,
     TodoComponent,
     SearchBoxComponent,
-    SearchResultsComponent,
-    SearchCardComponent,
     GameCardComponent,
     MenuListItemComponent,
     CartComponent,

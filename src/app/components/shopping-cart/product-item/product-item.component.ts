@@ -1,7 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Product } from 'src/app/models/product';
 import { CartService } from 'src/app/services/cart.service';
-import { WishListService } from 'src/app/services/Wish-list.service';
+import { WishListService } from 'src/app/services/wish-list.service';
 import { MessageService } from '../../../services/message.service';
 
 @Component({
@@ -11,6 +11,7 @@ import { MessageService } from '../../../services/message.service';
 })
 export class ProductItemComponent implements OnInit {
   @Input() productItem!: Product;
+  showMore = false;
 
   constructor(
     private msg: MessageService,

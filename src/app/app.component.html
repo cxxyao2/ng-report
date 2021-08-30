@@ -48,33 +48,24 @@
       <h1 class="app-name" routerLink="/home">Center</h1>
 
       <app-search-box></app-search-box>
-      <button
-        type="button"
-        aria-label="User"
-        mat-icon-button
-        *ngIf="true"
-        (click)="logout()"
-        style="margin-right:2rem;"
-      >
-        <mat-icon >account_circle</mat-icon>Hello,Jennifer
-      </button>
-      <span style="width: 6rem"></span>
+      <span class="spacer"></span>
+      <a class="nav-link" routerLink="/home"><mat-icon>home</mat-icon>Home</a>
 
-      <button
-        type="button"
-        aria-label="Shopping cart"
-        mat-icon-button
-        (click)="drawer.toggle()"
-        *ngIf="true"
-        style="margin-right:1rem;"
+      <a class="nav-link" (click)="logout()"
+        ><mat-icon>account_circle</mat-icon>Hello, Jennifer</a
+      >
+      <a
+        class="nav-link"
+        (click)="logout()"
+        *ngIf="cartService.items.length > 0"
       >
         <mat-icon
-          matBadge="15"
+          [matBadge]="cartService.getTotal()"
           matBadgeColor="accent"
           aria-label="Shopping cart icon"
           >shopping_cart</mat-icon
-        >&nbsp;cart
-      </button>
+        >cart</a
+      >
     </mat-toolbar-row>
   </mat-toolbar>
 

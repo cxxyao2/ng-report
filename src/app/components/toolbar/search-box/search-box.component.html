@@ -1,1 +1,12 @@
-<input type="search" aria-label="search" placeholder="Search product..." />
+<input
+  #searchBox
+  id="search-box"
+  name="search-box"
+  type="search"
+  aria-label="search"
+  placeholder="Search product..."
+  (change)="setSearchTerms(searchBox.value)"
+  required
+  minlength="3"
+  maxlength="50"
+/>

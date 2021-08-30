@@ -13,6 +13,7 @@ import { map, shareReplay } from 'rxjs/operators';
 import { DOCUMENT } from '@angular/common';
 
 import { ThemeService } from './services/theme.service';
+import { CartService } from './services/cart.service';
 
 import { NavItem } from './models/nav-item';
 import { NavService } from './services/nav.service';
@@ -29,9 +30,16 @@ export class AppComponent implements AfterViewInit {
   currentLanguage = 'english';
   windowScrolled = false;
 
+  testItem: NavItem = {
+    label: 'user',
+    icon: 'account_circle',
+    route: 'home',
+  };
+
   navItems: NavItem[] = [
     { label: 'home', icon: 'home', route: 'home' },
     { label: 'todo', icon: 'todo', route: 'todo' },
+    { label: 'search', icon: 'search', route: 'product-list' },
   ];
 
   isHandset$: Observable<boolean> = this.breakpointObserver
@@ -45,7 +53,7 @@ export class AppComponent implements AfterViewInit {
     private breakpointObserver: BreakpointObserver,
     public themeService: ThemeService,
     private navService: NavService,
-    @Inject(DOCUMENT) private document: Document
+    public cartService: CartService
   ) {}
 
   toggleTheme(): void {

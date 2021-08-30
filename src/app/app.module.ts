@@ -19,7 +19,6 @@ import { MenuListItemComponent } from './components/toolbar/menu-list-item/menu-
 import { CartComponent } from './components/./shopping-cart/cart/cart.component';
 import { ProductItemComponent } from './components/./shopping-cart/product-item/product-item.component';
 import { ProductListComponent } from './components/./shopping-cart/product-list/product-list.component';
-import { ShippingCartComponent } from './components/./shopping-cart/shipping-cart.component';
 import { CartItemComponent } from './components/shopping-cart/cart/cart-item/cart-item.component';
 import { WishListComponent } from './components/shopping-cart/wish-list/wish-list.component';
 
@@ -37,7 +36,6 @@ import { WishListComponent } from './components/shopping-cart/wish-list/wish-lis
     CartComponent,
     ProductItemComponent,
     ProductListComponent,
-    ShippingCartComponent,
     CartItemComponent,
     WishListComponent,
   ],

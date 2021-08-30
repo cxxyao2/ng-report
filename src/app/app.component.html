@@ -46,9 +46,10 @@
       </button>
 
       <h1 class="app-name" routerLink="/home">Center</h1>
+      <span class="spacer"></span>
 
       <app-search-box></app-search-box>
-      <span class="spacer"></span>
+
       <a class="nav-link" routerLink="/home"><mat-icon>home</mat-icon>Home</a>
 
       <a class="nav-link" (click)="logout()"
@@ -56,7 +57,7 @@
       >
       <a
         class="nav-link"
-        (click)="logout()"
+        routerLink="/cart"
         *ngIf="cartService.items.length > 0"
       >
         <mat-icon

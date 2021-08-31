@@ -1,1 +1,40 @@
-<p>cart-item works!</p>
+<div
+  style="
+    margin: 16px 8px;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+  "
+>
+  <div style="margin-right: 16px">
+    <input type="checkbox"  />
+    <img
+      style="
+        width: 100px;
+        height: 100px;
+        border-radius: 4px;
+        object-fit: cover;
+        vertical-align: top;
+      "
+      src="assets/e1_x9ck5u/e1_x9ck5u_c_scale,w_200.jpg"
+      alt="xxx"
+    />
+  </div>
+  <div
+    style="
+      display: flex;
+      flex-direction: row;
+      flex-wrap: wrap;
+      justify-content: stretch;
+      gap: 8px;
+    "
+  >
+    <div>This is a good product.very pouplair i madin</div>
+    <div>price:12.34$ 1212 in stock</div>
+    <div>
+      <input type="number" ([(ngModel)="(item.qty)" disabled/>
+      <button mat-raised-button>update</button>
+      <button mat-raised-button>delete</button>
+    </div>
+  </div>
+</div>

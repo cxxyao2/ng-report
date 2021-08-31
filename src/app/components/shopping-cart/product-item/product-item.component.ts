@@ -33,5 +33,11 @@ export class ProductItemComponent implements OnInit {
     });
   }
 
-  handleRemoveFromWishList() {}
+  handleRemoveFromWishList() {
+    this.wishListService
+      .removeFromWishList(this.productItem.id)
+      .subscribe(() => {
+        this.msg.sendMsg(this.productItem.name);
+      });
+  }
 }

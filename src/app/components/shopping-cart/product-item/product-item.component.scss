@@ -1,13 +1,53 @@
-.example-card {
+.product-card {
   width: 200px;
+  text-align: center;
+  mat-card-header {
+    justify-content: center;
+  }
 }
 
+::ng-deep .mat-card-subtitle.golden {
+  background-color: #fffde7 !important;
+  color: #f57f17;
+  padding: 5px !important;
+  border-radius: 5px;
+  min-width: 50px;
+}
 
+::ng-deep .mat-card-subtitle.silver {
+  background-color: #eeeeee !important;
+  color: #616161;
+  padding: 5px !important;
+  border-radius: 5px;
+  min-width: 50px;
+}
+
+::ng-deep .mat-card-subtitle.iron {
+  background-color: #e8f5e9 !important;
+  color: #2e7d32;
+  padding: 5px !important;
+  border-radius: 5px;
+  min-width: 50px;
+}
 
 .line-clamp {
-    display: -webkit-box;
-    -webkit-line-clamp: 2;
-    overflow: hidden;
-    -webkit-box-orient: vertical;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
+  -webkit-box-orient: vertical;
+}
+.product-description {
+  text-align: left;
 }
 
+.product-stock {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.product-image {
+  width: 200px;
+  height: 200px;
+  object-fit: cover;
+}

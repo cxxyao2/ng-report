@@ -7,7 +7,11 @@ import { HttpClient } from '@angular/common/http';
 })
 export class WishListService {
   constructor(private http: HttpClient) {}
-  addToWishList(item: string): Observable<any> {
+  addToWishList(itemId: string): Observable<any> {
     return this.http.get('');
+  }
+
+  removeFromWishList(e: string){
+     return this.http.delete('');
   }
 }

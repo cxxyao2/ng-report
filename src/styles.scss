@@ -1,6 +1,8 @@
 /* You can add global styles to this file, and also import other style files */
 @import "./app/theme";
 @import "../src/app/components/toolbar/menu-list-item/menu-list-item";
+@import "../src/app/components/shopping-cart/cart/cart-item/cart-item";
+
 html,
 body {
   height: 100%;
@@ -20,8 +22,10 @@ body {
 @include mat-core();
 @include angular-material-theme($app-theme);
 @include menu-list-item-color($app-theme);
+@include cart-item-color($app-theme);
 
 .darkMode {
   @include angular-material-color($dark-theme);
   @include menu-list-item-color($dark-theme);
+  @include cart-item-color($dark-theme);
 }

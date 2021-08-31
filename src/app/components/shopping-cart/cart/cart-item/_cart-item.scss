@@ -1,0 +1,15 @@
+@import "~@angular/material/theming";
+
+@mixin cart-item-color($config-or-theme) {
+  $config: mat-get-color-config($config-or-theme);
+  $primary: map-get($config, primary);
+
+  app-cart-item .mat-raised-button {
+    margin-left: 8px;
+    transition: all 0.3s;
+    &:hover,
+    &:focus {
+      background-color: mat-color($primary, 50) !important;
+    }
+  }
+}

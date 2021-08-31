@@ -8,9 +8,33 @@ import { CartItem } from 'src/app/models/cart-item';
 })
 export class CartComponent implements OnInit {
   cartItems: CartItem[] = [
-    { id: '1', productId: '1', productName: 'xxx', qty: 4, price: 100 },
-    { id: '2', productId: '2', productName: 'yyy', qty: 4, price: 100 },
-    { id: '3', productId: '3', productName: 'zzz', qty: 4, price: 100 },
+    {
+      selected: true,
+      id: '1',
+      productId: '1',
+      productName: 'xxx',
+      qty: 4,
+      price: 100,
+      imageUrl: 'assets/e1_x9ck5u/e1_x9ck5u_c_scale,w_200.jpg',
+    },
+    {
+      selected: true,
+      id: '2',
+      productId: '2',
+      productName: 'yyy',
+      qty: 4,
+      price: 100,
+      imageUrl: 'assets/e1_x9ck5u/e1_x9ck5u_c_scale,w_200.jpg',
+    },
+    {
+      selected: true,
+      id: '3',
+      productId: '3',
+      productName: 'zzz',
+      qty: 4,
+      price: 100,
+      imageUrl: 'assets/e1_x9ck5u/e1_x9ck5u_c_scale,w_200.jpg',
+    },
   ];
 
   cartTotal = 0;

@@ -12,18 +12,34 @@ const CartUrl = '';
 })
 export class CartService {
   items: CartItem[] = [
-    { id: 'xx', productId: 'xx', productName: 'xx', qty: 12, price: 12 },
-    { id: 'yy', productId: 'xx', productName: 'xx', qty: 13, price: 12 },
+    {
+      selected: true,
+      productId: 'xx',
+      productName: 'xx',
+      qty: 12,
+      price: 12,
+      clientId: 'aaa',
+      salePersonId: 'bbb',
+      imageUrl: 'assets/e1_x9ck5u/e1_x9ck5u_c_scale,w_200.jpg',
+    },
+    {
+      selected: true,
+      productId: 'xx',
+      productName: 'xx',
+      qty: 13,
+      price: 12,
+      clientId: 'aaa',
+      salePersonId: 'bbb',
+      imageUrl: 'assets/e1_x9ck5u/e1_x9ck5u_c_scale,w_200.jpg',
+    },
   ];
 
   constructor(private http: HttpClient) {}
 
-  getTotal() {
-    let total = 0;
-    this.items.forEach((item) => {
-      total += item.qty;
-    });
-    return total;
+  getTotal(): number {
+    return this.items
+      .map((item) => item.qty)
+      .reduce((acc, value) => acc + value, 0);
   }
 
   getCartItems(): Observable<CartItem[]> {
@@ -31,6 +47,23 @@ export class CartService {
   }
 
   addProductToCart(product: Product): Observable<any> {
-    return this.http.post(CartUrl, { product });
+    // 1, update local array
+    // 2, update remote database
+    let cartItem = this.items.find((item) => item.id === product.id);
+    if (cartItem) {
+      cartItem.qty += 1;
+    } else {
+      cartItem = {
+        selected: true,
+        productId: product.id,
+        productName: product.name,
+        qty: 1,
+        price: product.price,
+        clientId: 'aa',
+        salePersonId: 'bb',
+        imageUrl: product.imageUrl,
+      };
+    }
+    return this.http.post(CartUrl, cartItem);
   }
 }

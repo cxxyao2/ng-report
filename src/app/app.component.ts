@@ -28,7 +28,6 @@ export class AppComponent implements AfterViewInit {
   title = 'ng-center';
   isDark = false;
   currentLanguage = 'english';
-  windowScrolled = false;
 
   testItem: NavItem = {
     label: 'user',
@@ -76,24 +75,6 @@ export class AppComponent implements AfterViewInit {
 
   ngAfterViewInit(): void {
     this.navService.appDrawer = this.appDrawer;
-  }
-
-  @HostListener('window:scroll', [])
-  onWindowScroll() {
-    console.log('hi,scroll window is ', this.windowScrolled);
-    if (
-      window.pageYOffset ||
-      document.documentElement.scrollTop ||
-      document.body.scrollTop > 100
-    ) {
-      this.windowScrolled = true;
-    } else if (
-      (this.windowScrolled && window.pageYOffset) ||
-      document.documentElement.scrollTop ||
-      document.body.scrollTop < 10
-    ) {
-      this.windowScrolled = false;
-    }
   }
 
   logout(): void {}

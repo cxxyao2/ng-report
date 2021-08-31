@@ -95,7 +95,10 @@
       </mat-nav-list>
     </mat-sidenav>
     <mat-sidenav-content>
-      <router-outlet></router-outlet>
+      <div class="main-wrapper">
+        <router-outlet></router-outlet>
+      </div>
+      <app-scroll-to-top></app-scroll-to-top>
     </mat-sidenav-content>
   </mat-sidenav-container>
 </div>

@@ -1,0 +1,17 @@
+.scroll-to-top {
+  position: fixed;
+  bottom: 35px;
+  right: 10px;
+  opacity: 0;
+  transition: all 0.2s ease-in-out;
+}
+.show-scrollTop {
+  opacity: 1;
+  transition: all 0.2s ease-in-out;
+}
+
+.back-top-button-container {
+  display: flex;
+  justify-content: center;
+  width: 100px;
+}

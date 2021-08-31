@@ -22,6 +22,7 @@ import { ProductItemComponent } from './components/./shopping-cart/product-item/
 import { ProductListComponent } from './components/./shopping-cart/product-list/product-list.component';
 import { CartItemComponent } from './components/shopping-cart/cart/cart-item/cart-item.component';
 import { WishListComponent } from './components/shopping-cart/wish-list/wish-list.component';
+import { ScrollToTopComponent } from './components/scroll-to-top/scroll-to-top.component';
 
 @NgModule({
   declarations: [
@@ -39,6 +40,7 @@ import { WishListComponent } from './components/shopping-cart/wish-list/wish-lis
     ProductListComponent,
     CartItemComponent,
     WishListComponent,
+    ScrollToTopComponent,
   ],
   imports: [
     BrowserModule,

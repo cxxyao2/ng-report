@@ -6,6 +6,7 @@
   bottom: 0;
   left: 0;
   right: 0;
+
 }
 
 .is-handset .toolbar {
@@ -18,7 +19,7 @@
 .pliable-toolbar {
   display: flex;
   flex-direction: row;
-  justify-content:stretch;
+  justify-content: stretch;
 }
 
 .pliable-toolbar {
@@ -57,7 +58,7 @@ h1.app-name {
 }
 
 .mat-sidenav {
-  width: 280px;
+  width: 240px;
 }
 
 .mat-divider {
@@ -75,3 +76,7 @@ h1.app-name {
   don't constrain the height of the sidenav container */
   flex: 1 0 auto;
 }
+
+.main-wrapper {
+    margin: 16px;
+  }

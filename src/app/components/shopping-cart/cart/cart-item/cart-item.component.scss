@@ -1,0 +1,32 @@
+.item-price {
+  font-weight: 600;
+}
+
+.line-clamp {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
+  -webkit-box-orient: vertical;
+}
+
+.big-screen {
+  visibility: visible;
+}
+
+.small-screen {
+  visibility: hidden;
+}
+
+.my {
+  margin-top: 16px;
+  margin-bottom: 16px;
+}
+@media screen and (max-width: 599px) {
+  .big-screen {
+    visibility: hidden;
+  }
+
+  .small-screen {
+    visibility: visible;
+  }
+}

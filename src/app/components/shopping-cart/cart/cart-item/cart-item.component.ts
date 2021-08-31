@@ -8,6 +8,7 @@ import { CartItem } from 'src/app/models/cart-item';
 })
 export class CartItemComponent implements OnInit {
   @Input() item!: CartItem;
+  showMore = false;
 
   constructor() {}
 

@@ -1,9 +1,11 @@
 <div
   style="
-    margin: 16px 8px;
     display: flex;
     flex-direction: row;
     justify-content: flex-start;
+    flex-wrap: wrap;
+    gap: 16px;
+    margin-top: 16px;
   "
 >
   <div style="margin-right: 16px">
@@ -20,18 +22,22 @@
       alt="xxx"
     />
   </div>
-  <div
-    style="
-      display: flex;
-      flex-direction: row;
-      flex-wrap: wrap;
-      justify-content: stretch;
-      gap: 8px;
-    "
-  >
-    <div>This is a good product.very pouplair i madin</div>
-    <div>price:12.34$ 1212 in stock</div>
+  <div style="flex: 1">
+    <p
+      [ngClass]="{ 'line-clamp': !showMore }"
+      class="product-description"
+      (click)="showMore = !showMore"
+    >
+      This is gasoline standard.One state may require a minimum octane rating of
+      92 to be considered premium, while another may only require 90. Gas
+      stations in the United States generally offer three octane grades: regular
+      (usually 87 octane), mid-grade (usually 89 octane), and premium (usually
+      91 or 93).
+    </p>
+    <div class="item-price small-screen my">121212.34$</div>
+    <p>12222 in stock</p>
     <div>
+      Qty: &nbsp;
       <mat-form-field class="example-full-width">
         <input matInput type="number" value="12" />
       </mat-form-field>
@@ -39,4 +45,6 @@
       <button mat-raised-button>delete</button>
     </div>
   </div>
+  <div class="item-price big-screen">121212.34$</div>
 </div>
+<mat-divider ></mat-divider>

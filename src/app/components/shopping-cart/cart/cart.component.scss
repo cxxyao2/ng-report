@@ -1,0 +1,13 @@
+@import "~@angular/material/theming";
+
+@mixin cart-item-color($config-or-theme, $background: "") {
+  $config: mat-get-color-config($config-or-theme);
+  $primary: map-get($config, primary);
+  $accent: map-get($config, accent);
+
+  @if $background != "" {
+    app-cart {
+      background-color: $background;
+    }
+  }
+}

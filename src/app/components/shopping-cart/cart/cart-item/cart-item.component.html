@@ -7,7 +7,7 @@
   "
 >
   <div style="margin-right: 16px">
-    <input type="checkbox"  />
+    <input type="checkbox" />
     <img
       style="
         width: 100px;
@@ -32,7 +32,9 @@
     <div>This is a good product.very pouplair i madin</div>
     <div>price:12.34$ 1212 in stock</div>
     <div>
-      <input type="number" ([(ngModel)="(item.qty)" disabled/>
+      <mat-form-field class="example-full-width">
+        <input matInput type="number" value="12" />
+      </mat-form-field>
       <button mat-raised-button>update</button>
       <button mat-raised-button>delete</button>
     </div>

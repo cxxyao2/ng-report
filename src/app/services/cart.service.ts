@@ -38,12 +38,19 @@ export class CartService {
 
   getTotal(): number {
     return this.items
-      .map((item) => item.qty)
+      .map((item) => (item.selected ? item.qty : 0))
       .reduce((acc, value) => acc + value, 0);
   }
 
   getCartItems(): Observable<CartItem[]> {
     return this.http.get<CartItem[]>(CartUrl);
+  }
+
+  removeProductFromCart(productId: string) {
+    const idx = this.items.findIndex((item) => item.productId === productId);
+    if (idx >= 0) {
+      this.items.splice(idx, 1);
+    }
   }
 
   addProductToCart(product: Product): Observable<any> {
@@ -65,5 +72,17 @@ export class CartService {
       };
     }
     return this.http.post(CartUrl, cartItem);
+  }
+
+  updateProductQtyInCart(productId: string, qty: number): Observable<any> {
+    // 1, update local array
+    // 2, update remote database
+    let cartItem = this.items.find((item) => item.id === productId);
+    if (cartItem) {
+      cartItem.qty = qty;
+      return this.http.post(CartUrl, cartItem);
+    } else {
+      return of([]); // TODO error 处理
+    }
   }
 }

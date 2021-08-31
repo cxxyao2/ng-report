@@ -1,50 +1,68 @@
-<div
-  style="
-    display: flex;
-    flex-direction: row;
-    justify-content: flex-start;
-    flex-wrap: wrap;
-    gap: 16px;
-    margin-top: 16px;
-  "
->
-  <div style="margin-right: 16px">
-    <input type="checkbox" [checked]="selected" />
-    <img
-      style="
-        width: 100px;
-        height: 100px;
-        border-radius: 4px;
-        object-fit: cover;
-        vertical-align: top;
-      "
-      src="assets/e1_x9ck5u/e1_x9ck5u_c_scale,w_200.jpg"
-      alt="xxx"
-    />
-  </div>
-  <div style="flex: 1">
-    <p
-      [ngClass]="{ 'line-clamp': !showMore }"
-      class="product-description"
-      (click)="showMore = !showMore"
-    >
-      This is gasoline standard.One state may require a minimum octane rating of
-      92 to be considered premium, while another may only require 90. Gas
-      stations in the United States generally offer three octane grades: regular
-      (usually 87 octane), mid-grade (usually 89 octane), and premium (usually
-      91 or 93).
-    </p>
-    <div class="item-price small-screen my">121212.34$</div>
-    <p>12222 in stock</p>
-    <div>
-      Qty: &nbsp;
-      <mat-form-field class="example-full-width">
-        <input matInput type="number" value="12" />
-      </mat-form-field>
-      <button mat-raised-button>update</button>
-      <button mat-raised-button>delete</button>
+<form [formGroup]="myForm">
+  <div
+    style="
+      display: flex;
+      flex-direction: row;
+      justify-content: flex-start;
+      flex-wrap: wrap;
+      gap: 16px;
+      margin-top: 16px;
+    "
+  >
+    <div style="margin-right: 16px">
+      <input
+        #selectedFlag
+        type="checkbox"
+        checked="item.checked"
+        (change)="onSelectedChange(selectedFlag.checked)"
+      />
+      <img
+        style="
+          width: 100px;
+          height: 100px;
+          border-radius: 4px;
+          object-fit: cover;
+          vertical-align: top;
+        "
+        [src]="item.imageUrl"
+        alt="xxx"
+      />
     </div>
+    <div style="flex: 1">
+      <p
+        [ngClass]="{ 'line-clamp': !showMore }"
+        class="product-description"
+        (click)="showMore = !showMore"
+      >
+        {{ item.productName }}
+      </p>
+      <div class="item-price small-screen my">{{ item.price }}$</div>
+      <p>{{ item.stock }} in stock</p>
+      <div>
+        Qty: &nbsp;
+        <mat-form-field class="example-full-width">
+          <input
+            formControlName="productQty"
+            #qty
+            matInput
+            type="number"
+            value="item.qty"
+            [readonly]="qtyReadOnly"
+            required
+          />
+          <mat-error *ngIf="productQty?.touched && productQty?.invalid">
+            Qty should be between 0 and 1000.</mat-error
+          >
+        </mat-form-field>
+
+        <button mat-raised-button color="primary" (click)="onUpdate()">
+          {{ updateButtonText }}
+        </button>
+        <button mat-raised-button (click)="onDelete()">delete</button>
+      </div>
+    </div>
+    <div class="item-price big-screen">{{item.price}}$</div>
   </div>
-  <div class="item-price big-screen">121212.34$</div>
-</div>
-<div class="divider"></div>
+
+  <div class="divider"></div>
+</form>

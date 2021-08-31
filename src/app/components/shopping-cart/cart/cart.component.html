@@ -9,10 +9,11 @@
   />
   <div *ngIf="cartItems.length === 0">Your cart is Empty.</div>
 
-  <ng-container *ngFor="let i of [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]">
-    <app-cart-item></app-cart-item>
+  <ng-container *ngFor="let item of cartItems">
+    <app-cart-item [item]="item"></app-cart-item>
   </ng-container>
   <div style="text-align: right; margin-top: 16px">
-    Total&nbsp;(12 items): <strong>1122.15$</strong>
+    <p>Total&nbsp;(12 items): <strong>1122.15$</strong></p>
+    <button mat-raised-button color="primary">proceed to checkout</button>
   </div>
 </mat-card>

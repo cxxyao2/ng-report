@@ -29,18 +29,29 @@ export class AppComponent implements AfterViewInit {
   isDark = false;
   currentLanguage = 'english';
 
-  testItem: NavItem = {
-    label: 'user',
-    icon: 'account_circle',
-    route: 'home',
-  };
-
-  navItems: NavItem[] = [
-    { label: 'home', icon: 'home', route: 'home' },
-    { label: 'todo', icon: 'todo', route: 'todo' },
-    { label: 'search', icon: 'search', route: 'product-list' },
+  adminItems: NavItem[] = [
+    { label: 'Products', icon: 'addchart', route: 'home' },
+    { label: 'Authorization', icon: 'vpn_key', route: 'todo' },
+    { label: 'Logs', icon: 'event_note', route: 'product-list' },
   ];
 
+  managerItems: NavItem[] = [
+    { label: 'By product', icon: 'bar_chart', route: 'home' },
+    { label: 'By employee', icon: 'trending_up', route: 'todo' },
+    { label: 'Planning', icon: 'edit_calendar', route: 'product-list' },
+  ];
+
+  salespersonItems: NavItem[] = [
+    { label: 'My Orders', icon: 'sell', route: 'product-list' },
+    { label: 'My Calendar', icon: 'calendar_today', route: 'todo' },
+    { label: 'My clients', icon: 'contact_page', route: 'product-list' },
+  ];
+
+  othersItems: NavItem[] = [
+    { label: 'AboutMe', icon: 'account_circle', route: 'home' },
+    { label: 'Help', icon: 'help', route: 'todo' },
+    { label: 'FAQs', icon: 'search', route: 'product-list' },
+  ];
   isHandset$: Observable<boolean> = this.breakpointObserver
     .observe(Breakpoints.Handset)
     .pipe(

@@ -83,15 +83,30 @@
       [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
     >
       <mat-nav-list>
+        <h3 mat-subheader>Administrator</h3>
         <app-menu-list-item
-          *ngFor="let item of navItems"
+          *ngFor="let item of adminItems"
           [item]="item"
         ></app-menu-list-item>
         <mat-divider></mat-divider>
+        <h3 mat-subheader>Manager</h3>
         <app-menu-list-item
-          *ngFor="let item of navItems"
+          *ngFor="let item of managerItems"
           [item]="item"
         ></app-menu-list-item>
+        <mat-divider></mat-divider>
+         <h3 mat-subheader>Salesperson</h3>
+        <app-menu-list-item
+          *ngFor="let item of salespersonItems"
+          [item]="item"
+        ></app-menu-list-item>
+        <mat-divider></mat-divider>
+        <h3 mat-subheader>More Information</h3>
+        <app-menu-list-item
+          *ngFor="let item of othersItems"
+          [item]="item"
+        ></app-menu-list-item>
+
       </mat-nav-list>
     </mat-sidenav>
     <mat-sidenav-content>

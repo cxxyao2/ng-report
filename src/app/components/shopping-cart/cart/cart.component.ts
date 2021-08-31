@@ -12,27 +12,33 @@ export class CartComponent implements OnInit {
       selected: true,
       id: '1',
       productId: '1',
-      productName: 'xxx',
+      productName:
+        'One state may require a minimum octOne state may require a minimum octanOne state may require a minimum octanane',
       qty: 4,
       price: 100,
+      stock: 3000,
       imageUrl: 'assets/e1_x9ck5u/e1_x9ck5u_c_scale,w_200.jpg',
     },
     {
       selected: true,
       id: '2',
       productId: '2',
-      productName: 'yyy',
+      productName:
+        'One state may require a minimum octOne state may require a minimum octanOne state may require a minimum octanane',
       qty: 4,
       price: 100,
+      stock: 2000,
       imageUrl: 'assets/e1_x9ck5u/e1_x9ck5u_c_scale,w_200.jpg',
     },
     {
       selected: true,
       id: '3',
       productId: '3',
-      productName: 'zzz',
+      productName:
+        'One state may require a minimum octOne state may require a minimum octanOne state may require a minimum octanane',
       qty: 4,
       price: 100,
+      stock: 1000,
       imageUrl: 'assets/e1_x9ck5u/e1_x9ck5u_c_scale,w_200.jpg',
     },
   ];

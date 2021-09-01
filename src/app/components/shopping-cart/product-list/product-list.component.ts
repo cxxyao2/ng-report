@@ -39,6 +39,26 @@ export class ProductListComponent implements OnInit {
       price: 12,
       qtyInStock: 0,
     },
+    {
+      id: '4',
+      name: 'a3',
+      description:
+        'Gas stations in the US and many other nations are required to supply customers with consistent and clean gasoline.',
+      imageUrl: 'assets/e3_ewhset/e3_ewhset_c_scale,w_200.jpg',
+      category: 'iron',
+      price: 12,
+      qtyInStock: 0,
+    },
+    {
+      id: '5',
+      name: 'a3',
+      description:
+        'Gas stations in the US and many other nations are required to supply customers with consistent and clean gasoline.',
+      imageUrl: 'assets/e3_ewhset/e3_ewhset_c_scale,w_200.jpg',
+      category: 'iron',
+      price: 12,
+      qtyInStock: 0,
+    },
   ];
 
   constructor(private productService: ProductService) {}

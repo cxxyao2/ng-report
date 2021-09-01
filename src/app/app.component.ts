@@ -10,7 +10,6 @@ import {
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { Observable } from 'rxjs';
 import { map, shareReplay } from 'rxjs/operators';
-import { DOCUMENT } from '@angular/common';
 
 import { ThemeService } from './services/theme.service';
 import { CartService } from './services/cart.service';
@@ -53,7 +52,7 @@ export class AppComponent implements AfterViewInit {
     { label: 'FAQs', icon: 'search', route: 'product-list' },
   ];
   isHandset$: Observable<boolean> = this.breakpointObserver
-    .observe(Breakpoints.Handset)
+    .observe(['(max-width: 800px)'])
     .pipe(
       map((result) => result.matches),
       shareReplay()

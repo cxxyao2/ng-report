@@ -1,5 +1,4 @@
 .product-card {
-  width: 200px;
   text-align: center;
   mat-card-header {
     justify-content: center;
@@ -47,7 +46,6 @@
 }
 
 .product-image {
-  width: 200px;
-  height: 200px;
+  max-height: 200px;
   object-fit: cover;
 }

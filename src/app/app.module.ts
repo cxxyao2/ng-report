@@ -23,6 +23,8 @@ import { ProductListComponent } from './components/./shopping-cart/product-list/
 import { CartItemComponent } from './components/shopping-cart/cart/cart-item/cart-item.component';
 import { WishListComponent } from './components/shopping-cart/wish-list/wish-list.component';
 import { ScrollToTopComponent } from './components/scroll-to-top/scroll-to-top.component';
+import { PrintInvoiceComponent } from './components/shopping-cart/print-invoice/print-invoice.component';
+import { FlexLayoutModule } from '@angular/flex-layout';
 
 @NgModule({
   declarations: [
@@ -41,6 +43,7 @@ import { ScrollToTopComponent } from './components/scroll-to-top/scroll-to-top.c
     CartItemComponent,
     WishListComponent,
     ScrollToTopComponent,
+    PrintInvoiceComponent,
   ],
   imports: [
     BrowserModule,
@@ -49,6 +52,7 @@ import { ScrollToTopComponent } from './components/scroll-to-top/scroll-to-top.c
     HttpClientModule,
     FormsModule,
     ReactiveFormsModule,
+    FlexLayoutModule,
     MaterialModule,
   ],
   providers: [],

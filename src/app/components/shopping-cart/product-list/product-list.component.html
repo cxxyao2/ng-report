@@ -1,6 +1,8 @@
-<h3 style="text-align: center">Search result is : 3 articles</h3>
-<div class="product-list">
-  <ng-container *ngFor="let item of productList">
-    <app-product-item [productItem]="item"></app-product-item>
-  </ng-container>
-</div>
+<mat-card style="min-height:calc(100vh - 120px)">
+  <h3 style="text-align: center">Search result is : 3 articles</h3>
+  <div class="product-list">
+    <ng-container *ngFor="let item of productList">
+      <app-product-item [productItem]="item"></app-product-item>
+    </ng-container>
+  </div>
+</mat-card>

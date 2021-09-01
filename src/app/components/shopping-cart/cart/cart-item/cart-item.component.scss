@@ -1,8 +1,29 @@
+.item-wrapper {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+  gap: 16px;
+  margin-top: 16px;
+}
+.item-image-wrapper {
+  margin-right: 16px;
+}
+.item-image {
+  width: 100px;
+  height: 100px;
+  border-radius: 4px;
+  object-fit: cover;
+  vertical-align: top;
+}
+.item-main-info {
+  flex: 1
+}
 .item-price {
   font-weight: 600;
 }
 
-.line-clamp {
+.item-description {
   display: -webkit-box;
   -webkit-line-clamp: 2;
   overflow: hidden;

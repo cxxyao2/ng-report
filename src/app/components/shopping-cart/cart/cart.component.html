@@ -1,18 +1,12 @@
-<mat-card class="cart-wrapper" style="padding: 8px">
+<mat-card class="cart-wrapper">
   <h2>Shopping Cart</h2>
-  <hr
-    style="
-      border: 1px solid rgba(0, 0, 0, 0.25);
-      text-align: center;
-      margin: 16px auto;
-    "
-  />
+  <hr class="cart-divider" />
   <div *ngIf="cartItems.length === 0">Your cart is Empty.</div>
 
   <ng-container *ngFor="let item of cartItems">
     <app-cart-item [item]="item"></app-cart-item>
   </ng-container>
-  <div style="text-align: right; margin-top: 16px">
+  <div class='cart-amount'>
     <p>Total&nbsp;(12 items): <strong>1122.15$</strong></p>
     <button mat-raised-button color="primary">proceed to checkout</button>
   </div>

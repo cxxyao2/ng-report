@@ -1,13 +1,14 @@
-@import "~@angular/material/theming";
+.cart-wrapper {
+  padding: 8px;
+}
 
-@mixin cart-item-color($config-or-theme, $background: "") {
-  $config: mat-get-color-config($config-or-theme);
-  $primary: map-get($config, primary);
-  $accent: map-get($config, accent);
+.cart-divider {
+  border: 1px solid rgba(0, 0, 0, 0.25);
+  text-align: center;
+  margin: 16px auto;
+}
 
-  @if $background != "" {
-    app-cart {
-      background-color: $background;
-    }
-  }
+.cart-amount {
+  text-align: right;
+  margin-top: 16px;
 }

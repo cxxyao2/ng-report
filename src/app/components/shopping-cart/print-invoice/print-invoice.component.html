@@ -7,7 +7,7 @@
       </button>
       Download to Excel</span
     >
-    <span class="download-button-wrapper">
+    <span class="download-button-wrapper" (click)="openPdf()">
       <button mat-icon-button aria-label="print icon">
         <mat-icon>print</mat-icon></button
       ><mat-label>Print to PDF</mat-label></span
@@ -80,8 +80,7 @@
 
       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
       <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
-      <tr mat-footer-row *matFooterRowDef="displayedColumns; "></tr>
+      <tr mat-footer-row *matFooterRowDef="displayedColumns"></tr>
     </table>
-    <div style="text-align: right">1212,12$</div>
   </div>
 </mat-card>

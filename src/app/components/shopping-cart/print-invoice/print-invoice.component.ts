@@ -1,6 +1,7 @@
 import { AfterViewInit, Component, ViewChild } from '@angular/core';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
+import { PdfmakeService } from 'src/app/services/pdfmake.service';
 
 export interface PeriodicElement {
   name: string;
@@ -33,6 +34,8 @@ export class PrintInvoiceComponent {
 
   @ViewChild(MatSort) sort!: MatSort;
 
+  constructor(private pdfService: PdfmakeService) {}
+
   ngAfterViewInit() {
     this.dataSource.sort = this.sort;
   }
@@ -43,5 +46,9 @@ export class PrintInvoiceComponent {
     //   .map((t) => t.cost)
     //   .reduce((acc, value) => acc + value, 0);
     return 1111;
+  }
+
+  openPdf() {
+    this.pdfService.generatePDF();
   }
 }

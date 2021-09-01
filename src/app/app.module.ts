@@ -25,6 +25,7 @@ import { WishListComponent } from './components/shopping-cart/wish-list/wish-lis
 import { ScrollToTopComponent } from './components/scroll-to-top/scroll-to-top.component';
 import { PrintInvoiceComponent } from './components/shopping-cart/print-invoice/print-invoice.component';
 import { FlexLayoutModule } from '@angular/flex-layout';
+import { MessageComponent } from './components/shared/message/message.component';
 
 @NgModule({
   declarations: [
@@ -44,6 +45,7 @@ import { FlexLayoutModule } from '@angular/flex-layout';
     WishListComponent,
     ScrollToTopComponent,
     PrintInvoiceComponent,
+    MessageComponent,
   ],
   imports: [
     BrowserModule,

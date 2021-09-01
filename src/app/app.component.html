@@ -5,8 +5,11 @@
 >
   <mat-toolbar color="primary" class="toolbar">
     <mat-toolbar-row *ngIf="!(isHandset$ | async)" class="pliable-toolbar">
-      <span> TODO for large screen</span>
-      <span class="divider"></span>
+      <span class="link-item">PRODUCT MANUAL</span>
+      <span class="link-item">TECHNICAL SERVICE</span>
+      <span class="link-item">EMAIL</span>
+      <span class="link-item">FIND A STORE</span>
+      <span class="spacer"></span>
       <button
         mat-icon-button
         [title]="getThemeLabel()"
@@ -27,7 +30,7 @@
         >
         <a
           *ngIf="currentLanguage === 'english'"
-          class="nav-bar-item"
+          class="nav-link"
           href="/fr/"
           >Français</a
         >
@@ -109,7 +112,7 @@
       </mat-nav-list>
     </mat-sidenav>
     <mat-sidenav-content>
-      <div class="main-wrapper">
+      <div class="content-wrapper">
         <router-outlet></router-outlet>
       </div>
       <app-scroll-to-top></app-scroll-to-top>

@@ -1,0 +1,14 @@
+@import "~@angular/material/theming";
+
+@mixin print-invoice-color($config-or-theme) {
+  $config: mat-get-color-config($config-or-theme);
+  $primary: map-get($config, primary);
+  $accent: map-get($config, accent);
+
+  app-print-invoice {
+
+    .download-button-wrapper:hover {
+      background-color: mat-color($primary, 50) !important;
+    }
+  }
+}

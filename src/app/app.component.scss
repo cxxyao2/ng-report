@@ -6,7 +6,6 @@
   bottom: 0;
   left: 0;
   right: 0;
-
 }
 
 .is-handset .toolbar {
@@ -26,6 +25,10 @@
   height: 30px;
   background-color: black;
   font-size: 0.7rem;
+  font-weight: 300;
+  .link-item{
+    margin-left:24px;
+  }
 }
 
 .toolbar .spacer {
@@ -77,6 +80,7 @@ h1.app-name {
   flex: 1 0 auto;
 }
 
-.main-wrapper {
-    margin: 16px;
-  }
+.content-wrapper {
+  margin: 16px;
+  min-height: calc(100vh - 140px);
+}

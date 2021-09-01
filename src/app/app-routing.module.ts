@@ -8,6 +8,7 @@ import { TodoComponent } from './components/todo/todo.component';
 import { GameCardComponent } from './animations/game-card/game-card.component';
 import { ProductListComponent } from './components/shopping-cart/product-list/product-list.component';
 import { CartComponent } from './components/shopping-cart/cart/cart.component';
+import { PrintInvoiceComponent } from './components/shopping-cart/print-invoice/print-invoice.component';
 
 const routes: Routes = [
   { path: 'home', component: HomeComponent },
@@ -17,6 +18,7 @@ const routes: Routes = [
   { path: 'about-me', component: AboutComponent },
   { path: 'game-card', component: GameCardComponent },
   { path: 'cart', component: CartComponent },
+  { path: 'print-invoice', component: PrintInvoiceComponent },
   { path: '', redirectTo: '/home', pathMatch: 'full' },
 
   { path: '**', component: PageNotFoundComponent },

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CartItem } from 'src/app/models/cart-item';
-
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-cart',
   templateUrl: './cart.component.html',
@@ -44,11 +44,15 @@ export class CartComponent implements OnInit {
   ];
 
   cartTotal = 0;
-  constructor() {}
+  constructor(private router: Router) {}
 
   ngOnInit(): void {
     this.cartItems.forEach((item) => {
       this.cartTotal += item.price * item.qty;
     });
+  }
+
+  printInvoice(): void {
+    this.router.navigate(['/print-invoice']);
   }
 }

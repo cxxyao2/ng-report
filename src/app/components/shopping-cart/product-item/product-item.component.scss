@@ -1,7 +1,26 @@
+.print-button-container {
+  position: absolute;
+  right: 2px;
+  top: 90px;
+  display: none;
+  z-index: 3;
+}
+.mat-fab {
+  color: #1f3bdc;
+  background-color: #dee1e8;
+}
+
 .product-card {
   text-align: center;
   mat-card-header {
     justify-content: center;
+  }
+  &:hover {
+    .print-button-container {
+      display: flex;
+      justify-content: center;
+      width: 80px;
+    }
   }
 }
 

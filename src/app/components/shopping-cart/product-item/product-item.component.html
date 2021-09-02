@@ -6,6 +6,12 @@
     }}</mat-card-subtitle>
   </mat-card-header>
 
+  <div class="print-button-container">
+    <button mat-fab aria-label="print button with icon"  (click)="openPdf()">
+      <mat-icon>print</mat-icon>
+    </button>
+  </div>
+
   <img
     class="product-image"
     mat-card-image
@@ -46,6 +52,5 @@
     >
       Add to Wait List
     </button>
-    <button mat-raised-button (click)="openPdf()">Print</button>
-  </mat-card-actions>
+   </mat-card-actions>
 </mat-card>

@@ -42,11 +42,17 @@ export class CartService {
       .reduce((acc, value) => acc + value, 0);
   }
 
+  getAmount(): number {
+    return this.items
+      .filter((item) => item.selected === true)
+      .reduce((acc, item) => acc + item.qty * item.price, 0);
+  }
+
   getCartItems(): Observable<CartItem[]> {
     return this.http.get<CartItem[]>(CartUrl);
   }
 
-  removeProductFromCart(productId: string) {
+  removeProductFromCart(productId: string): void {
     const idx = this.items.findIndex((item) => item.productId === productId);
     if (idx >= 0) {
       this.items.splice(idx, 1);

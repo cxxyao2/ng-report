@@ -18,7 +18,7 @@ const routes: Routes = [
   { path: 'about-me', component: AboutComponent },
   { path: 'game-card', component: GameCardComponent },
   { path: 'cart', component: CartComponent },
-  { path: 'print-invoice', component: PrintInvoiceComponent },
+  { path: 'cart/print', component: PrintInvoiceComponent },
   { path: '', redirectTo: '/home', pathMatch: 'full' },
 
   { path: '**', component: PageNotFoundComponent },

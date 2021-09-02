@@ -1,86 +1,88 @@
-<mat-card class="cart-wrapper">
-  <h2 class="title" style="text-align: center">Print Invoice</h2>
-  <div>
-    <span style="color: green" class="download-button-wrapper">
-      <button mat-icon-button aria-label="print icon">
-        <mat-icon>file_download</mat-icon>
-      </button>
-      Download to Excel</span
+<h2 class="title">Print Invoice</h2>
+<div>
+  <span
+    style="color: green"
+    class="download-button-wrapper"
+    (click)="downloadCSV()"
+  >
+    <button mat-icon-button aria-label="print icon">
+      <mat-icon>file_download</mat-icon>
+    </button>
+    Download to CSV</span
+  >
+  <span class="download-button-wrapper" (click)="openPdf()">
+    <button mat-icon-button aria-label="print icon">
+      <mat-icon>print</mat-icon></button
+    ><mat-label>Print to PDF</mat-label></span
+  >
+</div>
+<div>
+  <mat-accordion>
+    <mat-expansion-panel
+      (opened)="panelOpenState = true"
+      (closed)="panelOpenState = false"
     >
-    <span class="download-button-wrapper" (click)="openPdf()">
-      <button mat-icon-button aria-label="print icon">
-        <mat-icon>print</mat-icon></button
-      ><mat-label>Print to PDF</mat-label></span
-    >
-  </div>
-  <div>
-    <mat-accordion>
-      <mat-expansion-panel
-        (opened)="panelOpenState = true"
-        (closed)="panelOpenState = false"
+      <mat-expansion-panel-header>
+        <mat-panel-title> Client Information </mat-panel-title>
+      </mat-expansion-panel-header>
+      <div
+        style="
+          display: flex;
+          flex-wrap: wrap;
+          align-items: center;
+          justify-content: space-between;
+          margin-bottom: 16px;
+          gap: 8px;
+        "
       >
-        <mat-expansion-panel-header>
-          <mat-panel-title> Client Information </mat-panel-title>
-        </mat-expansion-panel-header>
-        <div
-          style="
-            display: flex;
-            flex-wrap: wrap;
-            align-items: center;
-            justify-content: space-between;
-            margin-bottom: 16px;
-            gap: 8px;
-          "
-        >
-          <span><strong>Client No:&nbsp;</strong>123</span>
-          <span><strong>Client Name:&nbsp;</strong>Start-up New Brach</span>
-          <span><strong>Address:&nbsp;</strong>Ouhagan Califolia</span>
-          <span><strong>Tel:&nbsp;</strong>(01) 1234 4567</span>
-        </div>
-        <mat-divider></mat-divider>
-        <p style="text-align: right">
-          <button mat-flat-button style="margin-top: 16px" color="primary">
-            Refresh
-          </button>
-        </p>
-      </mat-expansion-panel>
-    </mat-accordion>
-  </div>
-  <div class="table-wrapper">
-    <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
-      <!-- Position Column -->
-      <ng-container matColumnDef="position">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header>No.</th>
-        <td mat-cell *matCellDef="let element">{{ element.position }}</td>
-        <td mat-footer-cell *matFooterCellDef>Total</td>
-      </ng-container>
+        <span><strong>Client No:&nbsp;</strong>123</span>
+        <span><strong>Client Name:&nbsp;</strong>Start-up New Brach</span>
+        <span><strong>Address:&nbsp;</strong>Ouhagan Califolia</span>
+        <span><strong>Tel:&nbsp;</strong>(01) 1234 4567</span>
+      </div>
+      <mat-divider></mat-divider>
+      <p style="text-align: right">
+        <button mat-flat-button style="margin-top: 16px" color="primary">
+          Refresh
+        </button>
+      </p>
+    </mat-expansion-panel>
+  </mat-accordion>
+</div>
+<div class="table-wrapper">
+  <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
+    <!-- Position Column -->
+    <ng-container matColumnDef="position">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>No.</th>
+      <td mat-cell *matCellDef="let element">{{ element.position }}</td>
+      <td mat-footer-cell *matFooterCellDef>Total</td>
+    </ng-container>
 
-      <!-- Name Column -->
-      <ng-container matColumnDef="name">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header>Name</th>
-        <td mat-cell *matCellDef="let element">{{ element.name }}</td>
-        <td mat-footer-cell *matFooterCellDef>&nbsp;</td>
-      </ng-container>
+    <!-- Name Column -->
+    <ng-container matColumnDef="name">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Name</th>
+      <td mat-cell *matCellDef="let element">{{ element.name }}</td>
+      <td mat-footer-cell *matFooterCellDef>&nbsp;</td>
+    </ng-container>
 
-      <!-- Weight Column -->
-      <ng-container matColumnDef="weight">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header>Weight</th>
-        <td mat-cell *matCellDef="let element">{{ element.weight }}</td>
-        <td mat-footer-cell *matFooterCellDef>
-          {{ getTotalCost() | currency }}
-        </td>
-      </ng-container>
+    <!-- Weight Column -->
+    <ng-container matColumnDef="weight">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Weight</th>
+      <td mat-cell *matCellDef="let element">{{ element.weight }}</td>
+      <td mat-footer-cell *matFooterCellDef>
+        {{ getTotalCost() | currency }}
+      </td>
+    </ng-container>
 
-      <!-- Symbol Column -->
-      <ng-container matColumnDef="symbol">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header>Symbol</th>
-        <td mat-cell *matCellDef="let element">{{ element.symbol }}</td>
-        <td mat-footer-cell *matFooterCellDef>&nbsp;</td>
-      </ng-container>
+    <!-- Symbol Column -->
+    <ng-container matColumnDef="symbol">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Symbol</th>
+      <td mat-cell *matCellDef="let element">{{ element.symbol }}</td>
+      <td mat-footer-cell *matFooterCellDef>&nbsp;</td>
+    </ng-container>
 
-      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-      <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
-      <tr mat-footer-row *matFooterRowDef="displayedColumns"></tr>
-    </table>
-  </div>
-</mat-card>
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+    <tr mat-footer-row *matFooterRowDef="displayedColumns"></tr>
+  </table>
+</div>

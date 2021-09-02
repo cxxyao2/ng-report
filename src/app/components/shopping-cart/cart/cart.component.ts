@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CartItem } from 'src/app/models/cart-item';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 @Component({
   selector: 'app-cart',
   templateUrl: './cart.component.html',
@@ -44,7 +44,7 @@ export class CartComponent implements OnInit {
   ];
 
   cartTotal = 0;
-  constructor(private router: Router) {}
+  constructor(private router: Router, private route: ActivatedRoute) {}
 
   ngOnInit(): void {
     this.cartItems.forEach((item) => {
@@ -53,6 +53,6 @@ export class CartComponent implements OnInit {
   }
 
   printInvoice(): void {
-    this.router.navigate(['/print-invoice']);
+    this.router.navigate(['print'], { relativeTo: this.route });
   }
 }

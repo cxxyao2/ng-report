@@ -31,7 +31,7 @@ export class AppComponent implements AfterViewInit {
   adminItems: NavItem[] = [
     { label: 'Products', icon: 'addchart', route: 'home' },
     { label: 'Authorization', icon: 'vpn_key', route: 'todo' },
-    { label: 'Logs', icon: 'event_note', route: 'product-list' },
+    { label: 'Logs', icon: 'event_note', route: 'loglist' },
   ];
 
   managerItems: NavItem[] = [

@@ -9,9 +9,11 @@ import { GameCardComponent } from './animations/game-card/game-card.component';
 import { ProductListComponent } from './components/shopping-cart/product-list/product-list.component';
 import { CartComponent } from './components/shopping-cart/cart/cart.component';
 import { PrintInvoiceComponent } from './components/shopping-cart/print-invoice/print-invoice.component';
+import { LoglistComponent } from './components/loglist/loglist.component';
 
 const routes: Routes = [
   { path: 'home', component: HomeComponent },
+  { path: 'loglist', component: LoglistComponent },
   { path: 'dash', component: DashboardComponent },
   { path: 'todo', component: TodoComponent },
   { path: 'product-list', component: ProductListComponent },

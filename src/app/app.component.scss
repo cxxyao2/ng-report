@@ -26,8 +26,8 @@
   background-color: black;
   font-size: 0.7rem;
   font-weight: 300;
-  .link-item{
-    margin-left:24px;
+  .link-item {
+    margin-left: 24px;
   }
 }
 
@@ -44,12 +44,12 @@
   padding: 4px;
   transition: all 0.3s;
   border-radius: 4px;
-
   &:hover,
   &:active {
     border: 1px solid white;
     opacity: 0.8;
   }
+
   mat-icon {
     margin-right: 4px;
     vertical-align: middle;

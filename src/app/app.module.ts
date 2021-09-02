@@ -26,6 +26,7 @@ import { ScrollToTopComponent } from './components/scroll-to-top/scroll-to-top.c
 import { PrintInvoiceComponent } from './components/shopping-cart/print-invoice/print-invoice.component';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { MessageComponent } from './components/shared/message/message.component';
+import { LoglistComponent } from './components/loglist/loglist.component';
 
 @NgModule({
   declarations: [
@@ -46,6 +47,7 @@ import { MessageComponent } from './components/shared/message/message.component'
     ScrollToTopComponent,
     PrintInvoiceComponent,
     MessageComponent,
+    LoglistComponent,
   ],
   imports: [
     BrowserModule,

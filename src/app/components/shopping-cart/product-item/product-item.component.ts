@@ -58,18 +58,20 @@ export class ProductItemComponent implements OnInit {
           fontSize: 16,
           alignment: 'center',
           color: '#047886',
-          margin: [0, 0, 0, 32],
+          margin: [0, 0, 0, 24],
         },
         {
-          text: 'https://wwww.goodcompany.com',
-          link: 'http://google.com',
-          margin: [0, 0, 0, 8],
-        },
-
-        {
-          text: `Date of Issue: ${new Date().toLocaleDateString()}`,
-          alignment: 'left',
-          margin: [0, 0, 0, 8],
+          margin: [0, 0, 0, 16],
+          columns: [
+            {
+              text: 'https://wwww.goodcompany.com',
+              link: 'http://google.com',
+            },
+            {
+              text: `Date of Issue: ${new Date().toLocaleDateString()}`,
+              align: 'center',
+            },
+          ],
         },
 
         {
@@ -89,7 +91,7 @@ export class ProductItemComponent implements OnInit {
               },
               {
                 columns: [
-                  { text: '$12.88', color: '#990099', align: 'right' },
+                  { text: '$12.88', color: '#990099' },
                   {
                     text: '289 in stock',
                     align: 'right',

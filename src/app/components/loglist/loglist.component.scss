@@ -1,3 +1,34 @@
-table{
-  width:100%;
+.alert-card {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 3;
+}
+.alert-close-button-wrapper {
+  text-align: right;
+  margin-bottom: 0;
+}
+
+table {
+  width: 100%;
+}
+
+.cell-overflow {
+  max-width: 60px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.userName {
+  max-width: 60px;
+}
+
+.logContent {
+  max-width: 120px;
+}
+
+.error-log {
+  color: red;
 }

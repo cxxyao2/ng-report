@@ -1,0 +1,16 @@
+<h1 mat-dialog-title>Add more filters</h1>
+<div mat-dialog-content>
+  <mat-form-field appearance="fill">
+    <mat-label>User Name</mat-label>
+    <input matInput [(ngModel)]="data.username">
+  </mat-form-field>
+  <mat-form-field appearance="fill">
+    <mat-label>Log Content</mat-label>
+    <input matInput [(ngModel)]="data.content">
+  </mat-form-field>
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="onNoClick()">Cancel</button>
+  <button mat-button [mat-dialog-close]="data" cdkFocusInitial>Confirm</button>
+</div>
+

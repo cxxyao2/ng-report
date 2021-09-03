@@ -3,7 +3,7 @@
   top: 0;
   left: 0;
   width: 100%;
-  z-index: 3;
+  z-index: 5;
 }
 .alert-close-button-wrapper {
   text-align: right;
@@ -26,9 +26,13 @@ table {
 }
 
 .logContent {
-  max-width: 120px;
+  max-width: 180px;
 }
 
 .error-log {
   color: red;
+}
+
+.button-ml {
+  margin-left: 8px;
 }

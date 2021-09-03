@@ -1,13 +1,22 @@
 import { Component, OnInit } from '@angular/core';
+import { FormGroup, FormControl } from '@angular/forms';
+import {
+  MatDialog,
+  MatDialogRef,
+  MAT_DIALOG_DATA,
+} from '@angular/material/dialog';
+
 import { SelectionModel } from '@angular/cdk/collections';
 
+import { LogfilterComponent } from '../logfilter/logfilter.component';
 import { MatTableDataSource } from '@angular/material/table';
-
+import { LogFilterData } from 'src/app/models/log-filter-data';
 export interface LogElement {
   name: string;
   position: number;
   content: string;
   symbol: string; // E -error O - operation
+  logDate: Date;
   loginIP: string;
 }
 
@@ -17,6 +26,7 @@ const ELEMENT_DATA: LogElement[] = [
     name: 'Hydrogen',
     content: 'insert data into table orders,data is ...',
     symbol: 'O',
+    logDate: new Date('2021-09-01'),
     loginIP: '201.01.11.01',
   },
   {
@@ -25,6 +35,7 @@ const ELEMENT_DATA: LogElement[] = [
     content:
       'delete data into table orders,elete delete delete delete delete delete delete delete ddata is ...',
     symbol: 'O',
+    logDate: new Date('2021-09-01'),
     loginIP: '201.01.11.01',
   },
   {
@@ -32,6 +43,7 @@ const ELEMENT_DATA: LogElement[] = [
     name: 'LithiumLithiumLithiumLithiumLithium',
     content: 'insert data into table orders,data is ...',
     symbol: 'O',
+    logDate: new Date('2021-09-01'),
     loginIP: '201.01.11.01',
   },
   {
@@ -39,6 +51,7 @@ const ELEMENT_DATA: LogElement[] = [
     name: 'Beryllium',
     content: 'insert data into table orders,data is ...',
     symbol: 'O',
+    logDate: new Date('2021-09-01'),
     loginIP: '201.01.11.01',
   },
   {
@@ -46,6 +59,7 @@ const ELEMENT_DATA: LogElement[] = [
     name: 'Boron',
     content: 'insert data into table orders,data is ...',
     symbol: 'O',
+    logDate: new Date('2021-09-01'),
     loginIP: '201.01.11.01',
   },
   {
@@ -53,6 +67,7 @@ const ELEMENT_DATA: LogElement[] = [
     name: 'Carbon',
     content: 'insert data into table orders,data is ...',
     symbol: 'E',
+    logDate: new Date('2021-09-01'),
     loginIP: '201.01.11.02',
   },
   {
@@ -60,6 +75,7 @@ const ELEMENT_DATA: LogElement[] = [
     name: 'Nitrogen',
     content: 'insert data into table orders,data is ...',
     symbol: 'O',
+    logDate: new Date('2021-09-01'),
     loginIP: '201.01.11.01',
   },
   {
@@ -67,6 +83,7 @@ const ELEMENT_DATA: LogElement[] = [
     name: 'Oxygen',
     content: 'insert data into table orders,data is ...',
     symbol: 'O',
+    logDate: new Date('2021-09-01'),
     loginIP: '201.01.11.01',
   },
   {
@@ -74,6 +91,7 @@ const ELEMENT_DATA: LogElement[] = [
     name: 'Fluorine',
     content: 'insert data into table orders,data is ...',
     symbol: 'O',
+    logDate: new Date('2021-09-01'),
     loginIP: '201.01.11.01',
   },
   {
@@ -81,6 +99,55 @@ const ELEMENT_DATA: LogElement[] = [
     name: 'Neon',
     content: 'insert data into table orders,data is ...',
     symbol: 'O',
+    logDate: new Date('2021-09-01'),
+    loginIP: '201.01.11.01',
+  },
+  {
+    position: 10,
+    name: 'Neon',
+    content: 'insert data into table orders,data is ...',
+    symbol: 'O',
+    logDate: new Date('2021-09-01'),
+    loginIP: '201.01.11.01',
+  },
+  {
+    position: 10,
+    name: 'Neon',
+    content: 'insert data into table orders,data is ...',
+    symbol: 'O',
+    logDate: new Date('2021-09-01'),
+    loginIP: '201.01.11.01',
+  },
+  {
+    position: 10,
+    name: 'Neon',
+    content: 'insert data into table orders,data is ...',
+    symbol: 'O',
+    logDate: new Date('2021-09-01'),
+    loginIP: '201.01.11.01',
+  },
+  {
+    position: 10,
+    name: 'Neon',
+    content: 'insert data into table orders,data is ...',
+    symbol: 'O',
+    logDate: new Date('2021-09-01'),
+    loginIP: '201.01.11.01',
+  },
+  {
+    position: 10,
+    name: 'Neon',
+    content: 'insert data into table orders,data is ...',
+    symbol: 'O',
+    logDate: new Date('2021-09-01'),
+    loginIP: '201.01.11.01',
+  },
+  {
+    position: 10,
+    name: 'Neon',
+    content: 'insert data into table orders,data is ...',
+    symbol: 'O',
+    logDate: new Date('2021-09-01'),
     loginIP: '201.01.11.01',
   },
 ];
@@ -91,11 +158,17 @@ const ELEMENT_DATA: LogElement[] = [
   styleUrls: ['./loglist.component.scss'],
 })
 export class LoglistComponent implements OnInit {
+  range = new FormGroup({
+    start: new FormControl(),
+    end: new FormControl(),
+  });
+
   showDeleteAlert = true;
   displayedColumns: string[] = [
     'select',
     'position',
     'symbol',
+    'logDate',
     'name',
     'content',
     'star',
@@ -103,6 +176,7 @@ export class LoglistComponent implements OnInit {
   dataSource = new MatTableDataSource<LogElement>(ELEMENT_DATA);
   selection = new SelectionModel<LogElement>(true, []);
 
+  constructor(public dialog: MatDialog) {}
   ngOnInit() {}
   /** Whether the number of selected elements matches the total number of rows. */
   isAllSelected() {
@@ -138,7 +212,23 @@ export class LoglistComponent implements OnInit {
     console.log('position is ', item);
   }
 
-  hideDeleteAlert(){
+  hideDeleteAlert() {
     this.showDeleteAlert = false;
+  }
+
+  openDialog(): void {
+    let filterData: LogFilterData = {
+      username: 'aa',
+      content: 'bb',
+    };
+    const dialogRef = this.dialog.open(LogfilterComponent, {
+      width: '250px',
+      data: filterData,
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      console.log('The dialog was closed', result);
+      filterData = result;
+    });
   }
 }

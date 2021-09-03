@@ -27,6 +27,7 @@ import { PrintInvoiceComponent } from './components/shopping-cart/print-invoice/
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { MessageComponent } from './components/shared/message/message.component';
 import { LoglistComponent } from './components/loglist/loglist.component';
+import { LogfilterComponent } from './components/logfilter/logfilter.component';
 
 @NgModule({
   declarations: [
@@ -48,6 +49,7 @@ import { LoglistComponent } from './components/loglist/loglist.component';
     PrintInvoiceComponent,
     MessageComponent,
     LoglistComponent,
+    LogfilterComponent,
   ],
   imports: [
     BrowserModule,

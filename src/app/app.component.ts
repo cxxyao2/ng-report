@@ -16,6 +16,7 @@ import { CartService } from './services/cart.service';
 
 import { NavItem } from './models/nav-item';
 import { NavService } from './services/nav.service';
+import { LoadingService } from './services/loading.service';
 
 @Component({
   selector: 'app-root',
@@ -24,6 +25,7 @@ import { NavService } from './services/nav.service';
 })
 export class AppComponent implements AfterViewInit {
   @ViewChild('drawer') appDrawer!: ElementRef;
+  @ViewChild('spin') spin?: ElementRef;
   title = 'ng-center';
   isDark = false;
   currentLanguage = 'english';
@@ -47,7 +49,7 @@ export class AppComponent implements AfterViewInit {
   ];
 
   othersItems: NavItem[] = [
-    { label: 'AboutMe', icon: 'account_circle', route: 'home' },
+    { label: 'AboutMe', icon: 'account_circle', route: 'about-me' },
     { label: 'Help', icon: 'help', route: 'todo' },
     { label: 'FAQs', icon: 'search', route: 'product-list' },
   ];
@@ -58,11 +60,14 @@ export class AppComponent implements AfterViewInit {
       shareReplay()
     );
 
+  loading$ = this.loader.laoding$;
+
   constructor(
     private breakpointObserver: BreakpointObserver,
     public themeService: ThemeService,
     private navService: NavService,
-    public cartService: CartService
+    public cartService: CartService,
+    public loader: LoadingService
   ) {}
 
   toggleTheme(): void {
@@ -85,6 +90,8 @@ export class AppComponent implements AfterViewInit {
 
   ngAfterViewInit(): void {
     this.navService.appDrawer = this.appDrawer;
+    if (this.spin) {
+    }
   }
 
   logout(): void {}

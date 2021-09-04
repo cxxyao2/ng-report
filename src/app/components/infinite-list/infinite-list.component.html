@@ -1,0 +1,19 @@
+<mat-list class="content">
+  <mat-list-item *ngFor="let item of listItems">
+    <img matListAvatar [src]="item.image">
+    <h3 matLine>{{item.title}}</h3>
+    <p matLine>
+      <span>{{item.content}}</span>
+    </p>
+    <button mat-icon-button [matMenuTriggerFor]='itemMenu'>
+      <mat-icon>more-vert</mat-icon>
+    </button>
+    <mat-divider></mat-divider>
+  </mat-list-item>
+</mat-list>
+
+<mat-menu #itemMenu="matMenu">
+  <button mat-menu-item>Option 1</button>
+  <button mat-menu-item>Option 2</button>
+  <button mat-menu-item>Option 3</button>
+</mat-menu>

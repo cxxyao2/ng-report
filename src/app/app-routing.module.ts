@@ -10,6 +10,7 @@ import { ProductListComponent } from './components/shopping-cart/product-list/pr
 import { CartComponent } from './components/shopping-cart/cart/cart.component';
 import { PrintInvoiceComponent } from './components/shopping-cart/print-invoice/print-invoice.component';
 import { LoglistComponent } from './components/loglist/loglist.component';
+import { InfiniteListComponent } from './components/infinite-list/infinite-list.component';
 
 const routes: Routes = [
   { path: 'home', component: HomeComponent },
@@ -17,7 +18,7 @@ const routes: Routes = [
   { path: 'dash', component: DashboardComponent },
   { path: 'todo', component: TodoComponent },
   { path: 'product-list', component: ProductListComponent },
-  { path: 'about-me', component: AboutComponent },
+  { path: 'about-me', component: InfiniteListComponent },
   { path: 'game-card', component: GameCardComponent },
   { path: 'cart', component: CartComponent },
   { path: 'cart/print', component: PrintInvoiceComponent },

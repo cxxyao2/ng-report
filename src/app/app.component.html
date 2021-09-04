@@ -28,10 +28,7 @@
         <a *ngIf="currentLanguage === 'french'" class="nav-bar-item" href="/en/"
           >English</a
         >
-        <a
-          *ngIf="currentLanguage === 'english'"
-          class="nav-link"
-          href="/fr/"
+        <a *ngIf="currentLanguage === 'english'" class="nav-link" href="/fr/"
           >Français</a
         >
       </button>
@@ -115,6 +112,10 @@
       <div class="content-wrapper">
         <router-outlet></router-outlet>
       </div>
+      <mat-progress-spinner #spin
+        [mode]="'indeterminate'"
+        *ngIf="loading$ | async"
+      ></mat-progress-spinner>
       <app-scroll-to-top></app-scroll-to-top>
     </mat-sidenav-content>
   </mat-sidenav-container>

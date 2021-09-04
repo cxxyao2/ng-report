@@ -9,7 +9,6 @@ import {
 import { SelectionModel } from '@angular/cdk/collections';
 
 import { LogfilterComponent } from '../logfilter/logfilter.component';
-import { MatTableDataSource } from '@angular/material/table';
 import { LogRecord } from 'src/app/models/log-record';
 import { LogsService } from 'src/app/services/logs.service';
 import { merge, of, scheduled, Subject } from 'rxjs';
@@ -22,8 +21,9 @@ import {
   flatMap,
   tap,
   map,
+  delay,
 } from 'rxjs/operators';
-import { start } from 'repl';
+import { LoadingService } from 'src/app/services/loading.service';
 
 const ELEMENT_DATA: LogRecord[] = [
   {
@@ -181,18 +181,30 @@ export class LoglistComponent implements OnInit {
     'loginIP',
     'star',
   ];
-  // dataSource = new MatTableDataSource<LogRecord>(ELEMENT_DATA);
+
   selection = new SelectionModel<LogRecord>(true, []);
   data: LogRecord[] = [];
 
-  constructor(public dialog: MatDialog, private logService: LogsService) {}
+  constructor(
+    public dialog: MatDialog,
+    private logService: LogsService,
+    private loading: LoadingService
+  ) {}
   ngOnInit() {
     this.logService
       .getLogs()
-      .pipe(catchError(() => of([])))
-      .subscribe((data) => {
-        this.data = data;
-      });
+      .pipe(tap(() => this.loading.show()))
+      .subscribe(
+        (data) => {
+          this.data = data;
+        },
+        (err) => {
+          console.log('error is', err);
+        },
+        () => {
+          setTimeout(() => this.loading.hide(), 1000);
+        }
+      );
 
     merge(
       this.range.controls.end.valueChanges,
@@ -202,14 +214,19 @@ export class LoglistComponent implements OnInit {
       .pipe(
         switchMap(() =>
           this.logService.getFilterdLogs(
-            this.range.controls.start.value || new Date(),
+            this.range.controls.start.value || new Date('Jan 1,1970'),
             this.range.controls.end.value || new Date(),
             this.dialogFilterData?.userName || '',
             this.dialogFilterData?.content || ''
           )
         )
       )
-      .subscribe((data: any) => console.log('data is ', data));
+      .subscribe(
+        (data: any) => {
+          this.data = data;
+        },
+        (err) => console.log('error', err)
+      );
     // this.range.controls.end.valueChanges.subscribe((data) =>
     //   console.log('data is ', data)
     //scheduled([ob1, ob2, ob3], scheduled).pipe(mergeAll());

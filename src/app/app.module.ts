@@ -1,7 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -28,6 +28,8 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { MessageComponent } from './components/shared/message/message.component';
 import { LoglistComponent } from './components/loglist/loglist.component';
 import { LogfilterComponent } from './components/logfilter/logfilter.component';
+import { NetworkInterceptor } from './interceptors/network.interceptor';
+import { InfiniteListComponent } from './components/infinite-list/infinite-list.component';
 
 @NgModule({
   declarations: [
@@ -50,6 +52,7 @@ import { LogfilterComponent } from './components/logfilter/logfilter.component';
     MessageComponent,
     LoglistComponent,
     LogfilterComponent,
+    InfiniteListComponent,
   ],
   imports: [
     BrowserModule,

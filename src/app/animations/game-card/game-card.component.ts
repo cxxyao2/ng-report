@@ -1,4 +1,4 @@
-// 3D card, flip to back when tapped
+// 3D card, flip to front when tapped
 
 import {
   animate,
@@ -17,7 +17,7 @@ import { CardData } from './cardData';
   animations: [
     trigger('cardFlip', [
       state('default', style({ transform: 'none' })),
-      state('flipped', style({ transform: 'rotateY(180deg' })),
+      state('flipped', style({ transform: 'rotateY(180deg)' })),
       transition('default=>flipped', [animate('400ms')]),
       transition('flipped=>default', [animate('200ms')]),
     ]),

@@ -10,143 +10,148 @@ import { SelectionModel } from '@angular/cdk/collections';
 
 import { LogfilterComponent } from '../logfilter/logfilter.component';
 import { MatTableDataSource } from '@angular/material/table';
-import { LogFilterData } from 'src/app/models/log-filter-data';
-export interface LogElement {
-  name: string;
-  position: number;
-  content: string;
-  symbol: string; // E -error O - operation
-  logDate: Date;
-  loginIP: string;
-}
+import { LogRecord } from 'src/app/models/log-record';
+import { LogsService } from 'src/app/services/logs.service';
+import { merge, of, scheduled, Subject } from 'rxjs';
+import {
+  catchError,
+  mergeAll,
+  switchMap,
+  debounceTime,
+  mergeMap,
+  flatMap,
+  tap,
+  map,
+} from 'rxjs/operators';
+import { start } from 'repl';
 
-const ELEMENT_DATA: LogElement[] = [
+const ELEMENT_DATA: LogRecord[] = [
   {
-    position: 1,
-    name: 'Hydrogen',
+    _id: '1',
+    userName: 'Hydrogen',
     content: 'insert data into table orders,data is ...',
-    symbol: 'O',
+    logType: 'O',
     logDate: new Date('2021-09-01'),
     loginIP: '201.01.11.01',
   },
   {
-    position: 2,
-    name: 'Helium',
+    _id: '2',
+    userName: 'Helium',
     content:
       'delete data into table orders,elete delete delete delete delete delete delete delete ddata is ...',
-    symbol: 'O',
+    logType: 'O',
     logDate: new Date('2021-09-01'),
     loginIP: '201.01.11.01',
   },
   {
-    position: 3,
-    name: 'LithiumLithiumLithiumLithiumLithium',
+    _id: '3',
+    userName: 'LithiumLithiumLithiumLithiumLithium',
     content: 'insert data into table orders,data is ...',
-    symbol: 'O',
+    logType: 'O',
     logDate: new Date('2021-09-01'),
     loginIP: '201.01.11.01',
   },
   {
-    position: 4,
-    name: 'Beryllium',
+    _id: '4',
+    userName: 'Beryllium',
     content: 'insert data into table orders,data is ...',
-    symbol: 'O',
+    logType: 'O',
     logDate: new Date('2021-09-01'),
     loginIP: '201.01.11.01',
   },
   {
-    position: 5,
-    name: 'Boron',
+    _id: '5',
+    userName: 'Boron',
     content: 'insert data into table orders,data is ...',
-    symbol: 'O',
+    logType: 'O',
     logDate: new Date('2021-09-01'),
     loginIP: '201.01.11.01',
   },
   {
-    position: 6,
-    name: 'Carbon',
+    _id: '6',
+    userName: 'Carbon',
     content: 'insert data into table orders,data is ...',
-    symbol: 'E',
+    logType: 'E',
     logDate: new Date('2021-09-01'),
     loginIP: '201.01.11.02',
   },
   {
-    position: 7,
-    name: 'Nitrogen',
+    _id: '7',
+    userName: 'Nitrogen',
     content: 'insert data into table orders,data is ...',
-    symbol: 'O',
+    logType: 'O',
     logDate: new Date('2021-09-01'),
     loginIP: '201.01.11.01',
   },
   {
-    position: 8,
-    name: 'Oxygen',
+    _id: '8',
+    userName: 'Oxygen',
     content: 'insert data into table orders,data is ...',
-    symbol: 'O',
+    logType: 'O',
     logDate: new Date('2021-09-01'),
     loginIP: '201.01.11.01',
   },
   {
-    position: 9,
-    name: 'Fluorine',
+    _id: '9',
+    userName: 'Fluorine',
     content: 'insert data into table orders,data is ...',
-    symbol: 'O',
+    logType: 'O',
     logDate: new Date('2021-09-01'),
     loginIP: '201.01.11.01',
   },
   {
-    position: 10,
-    name: 'Neon',
+    _id: '10',
+    userName: 'Neon',
     content: 'insert data into table orders,data is ...',
-    symbol: 'O',
+    logType: 'O',
     logDate: new Date('2021-09-01'),
     loginIP: '201.01.11.01',
   },
   {
-    position: 10,
-    name: 'Neon',
+    _id: '10',
+    userName: 'Neon',
     content: 'insert data into table orders,data is ...',
-    symbol: 'O',
+    logType: 'O',
     logDate: new Date('2021-09-01'),
     loginIP: '201.01.11.01',
   },
   {
-    position: 10,
-    name: 'Neon',
+    _id: '10',
+    userName: 'Neon',
     content: 'insert data into table orders,data is ...',
-    symbol: 'O',
+    logType: 'O',
     logDate: new Date('2021-09-01'),
     loginIP: '201.01.11.01',
   },
   {
-    position: 10,
-    name: 'Neon',
+    _id: '10',
+    userName: 'Neon',
     content: 'insert data into table orders,data is ...',
-    symbol: 'O',
+    logType: 'O',
     logDate: new Date('2021-09-01'),
     loginIP: '201.01.11.01',
   },
   {
-    position: 10,
-    name: 'Neon',
+    _id: '10',
+    userName: 'Neon',
     content: 'insert data into table orders,data is ...',
-    symbol: 'O',
+    logType: 'O',
     logDate: new Date('2021-09-01'),
     loginIP: '201.01.11.01',
   },
   {
-    position: 10,
-    name: 'Neon',
+    _id: '10',
+    userName: 'Neon',
     content: 'insert data into table orders,data is ...',
-    symbol: 'O',
+    logType: 'O',
     logDate: new Date('2021-09-01'),
     loginIP: '201.01.11.01',
   },
   {
-    position: 10,
-    name: 'Neon',
+    _id: '10',
+    userName: 'Neon',
     content: 'insert data into table orders,data is ...',
-    symbol: 'O',
+    logType: 'O',
     logDate: new Date('2021-09-01'),
     loginIP: '201.01.11.01',
   },
@@ -158,6 +163,8 @@ const ELEMENT_DATA: LogElement[] = [
   styleUrls: ['./loglist.component.scss'],
 })
 export class LoglistComponent implements OnInit {
+  dialogFilterData?: LogRecord | null;
+  dialogSubject = new Subject<LogRecord>();
   range = new FormGroup({
     start: new FormControl(),
     end: new FormControl(),
@@ -166,22 +173,52 @@ export class LoglistComponent implements OnInit {
   showDeleteAlert = true;
   displayedColumns: string[] = [
     'select',
-    'position',
-    'symbol',
+    '_id',
+    'logType',
     'logDate',
-    'name',
+    'userName',
     'content',
+    'loginIP',
     'star',
   ];
-  dataSource = new MatTableDataSource<LogElement>(ELEMENT_DATA);
-  selection = new SelectionModel<LogElement>(true, []);
+  // dataSource = new MatTableDataSource<LogRecord>(ELEMENT_DATA);
+  selection = new SelectionModel<LogRecord>(true, []);
+  data: LogRecord[] = [];
 
-  constructor(public dialog: MatDialog) {}
-  ngOnInit() {}
+  constructor(public dialog: MatDialog, private logService: LogsService) {}
+  ngOnInit() {
+    this.logService
+      .getLogs()
+      .pipe(catchError(() => of([])))
+      .subscribe((data) => {
+        this.data = data;
+      });
+
+    merge(
+      this.range.controls.end.valueChanges,
+      this.range.controls.start.valueChanges,
+      this.dialogSubject
+    )
+      .pipe(
+        switchMap(() =>
+          this.logService.getFilterdLogs(
+            this.range.controls.start.value || new Date(),
+            this.range.controls.end.value || new Date(),
+            this.dialogFilterData?.userName || '',
+            this.dialogFilterData?.content || ''
+          )
+        )
+      )
+      .subscribe((data: any) => console.log('data is ', data));
+    // this.range.controls.end.valueChanges.subscribe((data) =>
+    //   console.log('data is ', data)
+    //scheduled([ob1, ob2, ob3], scheduled).pipe(mergeAll());
+    // );
+  }
   /** Whether the number of selected elements matches the total number of rows. */
   isAllSelected() {
     const numSelected = this.selection.selected.length;
-    const numRows = this.dataSource.data.length;
+    const numRows = this.data.length;
     return numSelected === numRows;
   }
 
@@ -189,27 +226,27 @@ export class LoglistComponent implements OnInit {
   masterToggle() {
     this.isAllSelected()
       ? this.selection.clear()
-      : this.dataSource.data.forEach((row) => this.selection.select(row));
+      : this.data.forEach((row) => this.selection.select(row));
   }
 
   /** The label for the checkbox on the passed row */
-  checkboxLabel(row?: LogElement): string {
+  checkboxLabel(row?: LogRecord): string {
     if (!row) {
       return `${this.isAllSelected() ? 'select' : 'deselect'} all`;
     }
-    return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row ${
-      row.position + 1
+    return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row _id ${
+      row._id
     }`;
   }
 
-  deleteLogItem(itemPosition: any): void {
-    console.log('position is ', itemPosition);
+  deleteLogItem(_id: string): void {
+    console.log('_id is ', _id);
     // TODO
   }
 
-  editLogItem(item: LogElement): void {
+  editLogItem(item: LogRecord): void {
     // TODO call a edit dialog
-    console.log('position is ', item);
+    console.log('_id is ', item);
   }
 
   hideDeleteAlert() {
@@ -217,18 +254,19 @@ export class LoglistComponent implements OnInit {
   }
 
   openDialog(): void {
-    let filterData: LogFilterData = {
-      username: 'aa',
+    this.dialogFilterData = {
+      userName: 'aa',
       content: 'bb',
     };
     const dialogRef = this.dialog.open(LogfilterComponent, {
       width: '250px',
-      data: filterData,
+      data: this.dialogFilterData,
     });
 
     dialogRef.afterClosed().subscribe((result) => {
       console.log('The dialog was closed', result);
-      filterData = result;
+      this.dialogFilterData = result;
+      this.dialogSubject.next(result);
     });
   }
 }

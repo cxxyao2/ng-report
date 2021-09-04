@@ -4,7 +4,7 @@ import {
   MatDialogRef,
   MAT_DIALOG_DATA,
 } from '@angular/material/dialog';
-import { LogFilterData } from 'src/app/models/log-filter-data';
+import { LogRecord } from 'src/app/models/log-record';
 
 @Component({
   selector: 'app-logfilter',
@@ -14,7 +14,7 @@ import { LogFilterData } from 'src/app/models/log-filter-data';
 export class LogfilterComponent {
   constructor(
     public dialogRef: MatDialogRef<LogfilterComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: LogFilterData
+    @Inject(MAT_DIALOG_DATA) public data: LogRecord
   ) {}
 
   onNoClick(): void {

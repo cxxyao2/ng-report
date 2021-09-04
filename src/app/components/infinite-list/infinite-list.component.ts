@@ -1,4 +1,16 @@
-import { Component, OnInit } from '@angular/core';
+import {
+  CdkVirtualScrollViewport,
+  AfterViewInit,
+} from '@angular/cdk/scrolling';
+import {
+  Component,
+  OnInit,
+  ViewChild,
+  NgZone,
+  AfterViewInit,
+} from '@angular/core';
+import { timer } from 'rxjs';
+import { filter, map, pairwise, throttleTime } from 'rxjs/operators';
 
 export interface ImageItem {
   title: string;
@@ -10,12 +22,32 @@ export interface ImageItem {
   templateUrl: './infinite-list.component.html',
   styleUrls: ['./infinite-list.component.scss'],
 })
-export class InfiniteListComponent implements OnInit {
+export class InfiniteListComponent implements OnInit, AfterViewInit {
+  @ViewChild('scroller') scroller!: CdkVirtualScrollViewport;
   listItems: ImageItem[] = [];
+  loading = false;
 
-  constructor() {}
+  constructor(private ngZone: NgZone) {}
+  ngOnInit(): void {
+    this.fetchMore();
+  }
 
-  ngOnInit(): void {}
+  ngAfterViewInit(): void {
+    this.scroller
+      .elementScrolled()
+      .pipe(
+        map(() => this.scroller.measureScrollOffset('bottom')),
+        pairwise(),
+        filter(([y1, y2]) => y2 < y1 && y2 < 140),
+        throttleTime(200)
+      )
+      .subscribe(() => {
+        //  the CDK virtual scroller runs outside the ngZone for performance reasons.
+        this.ngZone.run(() => {
+          this.fetchMore();
+        });
+      });
+  }
   fetchMore(): void {
     const images = [
       'IuLgi9PWETU',
@@ -25,7 +57,7 @@ export class InfiniteListComponent implements OnInit {
       'H90Af2TFqng',
     ];
 
-    const newItems = [];
+    const newItems: ImageItem[] = [];
     for (let i = 0; i < 20; i++) {
       const randomListNumber = Math.round(Math.random() * 100);
       const randomPhotoId = Math.round(Math.random() * 4);
@@ -35,8 +67,12 @@ export class InfiniteListComponent implements OnInit {
           'This is some description of the list - item #' + randomListNumber,
         image: `https://source.unsplash.com/${images[randomPhotoId]}/50x50`,
       });
-
-      this.listItems = [...this.listItems, ...newItems];
+      this.loading = true;
+      timer(1000).subscribe(() => {
+        console.log('feach more...');
+        this.loading = false;
+        this.listItems = [...this.listItems, ...newItems];
+      });
     }
   }
 }

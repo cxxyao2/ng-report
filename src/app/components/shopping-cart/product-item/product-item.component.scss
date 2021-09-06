@@ -1,17 +1,23 @@
-.print-button-container {
+.image-button-container {
   position: absolute;
-  right: 2px;
-  top: 90px;
   z-index: 3;
   border-radius: 4px;
   padding: 5px;
   display: flex;
   justify-content: center;
-  width: 80px;
-  background-color:lightgray;
+  width: 60px;
+  background-color: lightgray;
   opacity: 0;
   transition: all 0.3s;
   box-shadow: 0 2px 2px rgba(0, 0, 0, 0.25);
+  &.print {
+    right: 2px;
+    top: 90px;
+  }
+  &.copy {
+    left: 2px;
+    top: 90px;
+  }
 }
 
 .product-card {
@@ -20,34 +26,31 @@
     justify-content: center;
   }
   &:hover {
-    .print-button-container {
+    .image-button-container {
       opacity: 0.8;
+      &:hover {
+        opacity: 1;
+      }
     }
   }
 }
 
- .mat-card-subtitle.golden {
-  background-color: #fffde7 !important;
-  color: #f57f17;
+.mat-card-subtitle {
   padding: 5px !important;
   border-radius: 5px;
   min-width: 80px;
-}
-
- .mat-card-subtitle.silver {
-  background-color: #eeeeee !important;
-  color: #616161;
-  padding: 5px !important;
-  border-radius: 5px;
-  min-width: 80px;
-}
-
- .mat-card-subtitle.iron {
-  background-color: #e8f5e9 !important;
-  color: #2e7d32;
-  padding: 5px !important;
-  border-radius: 5px;
-  min-width: 80px;
+  &.golden {
+    background-color: #fffde7 !important;
+    color: #f57f17;
+  }
+  &.silver {
+    background-color: #eeeeee !important;
+    color: #616161;
+  }
+  &.iron {
+    background-color: #e8f5e9 !important;
+    color: #2e7d32;
+  }
 }
 
 .line-clamp {
@@ -56,6 +59,7 @@
   overflow: hidden;
   -webkit-box-orient: vertical;
 }
+
 .product-description {
   text-align: left;
 }

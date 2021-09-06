@@ -1,8 +1,13 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ClipboardModule } from '@angular/cdk/clipboard';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import {
+  FormsModule,
+  NG_VALUE_ACCESSOR,
+  ReactiveFormsModule,
+} from '@angular/forms';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -30,6 +35,9 @@ import { LoglistComponent } from './components/loglist/loglist.component';
 import { LogfilterComponent } from './components/logfilter/logfilter.component';
 import { NetworkInterceptor } from './interceptors/network.interceptor';
 import { InfiniteListComponent } from './components/infinite-list/infinite-list.component';
+import { ChipsMultiSelectComponent } from './components/shared/chips-multi-select/chips-multi-select.component';
+import { AddClientComponent } from './components/add-client/add-client.component';
+import { RoutineComponent } from './components/routine/routine.component';
 
 @NgModule({
   declarations: [
@@ -53,6 +61,9 @@ import { InfiniteListComponent } from './components/infinite-list/infinite-list.
     LoglistComponent,
     LogfilterComponent,
     InfiniteListComponent,
+    ChipsMultiSelectComponent,
+    AddClientComponent,
+    RoutineComponent,
   ],
   imports: [
     BrowserModule,

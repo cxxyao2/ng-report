@@ -1,13 +1,11 @@
-<mat-card >
-  <h3 style="text-align: center">Search result is : 3 articles</h3>
-  <div fxLayout="row wrap" fxLayoutGap="16px grid">
-    <div
-      fxFlex="25%"
-      fxFlex.xs="100%"
-      fxFlex.sm="33%"
-      *ngFor="let item of productList"
-    >
-      <app-product-item [productItem]="item"></app-product-item>
-    </div>
+<h3 style="text-align: center">Search result is : 3 articles</h3>
+<div fxLayout="row wrap" fxLayoutGap="16px grid">
+  <div
+    fxFlex="25%"
+    fxFlex.xs="100%"
+    fxFlex.sm="33%"
+    *ngFor="let item of productList"
+  >
+    <app-product-item [productItem]="item"></app-product-item>
   </div>
-</mat-card>
+</div>

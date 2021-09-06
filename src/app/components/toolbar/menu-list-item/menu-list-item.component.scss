@@ -1,7 +1,13 @@
-.menu-list-item {
+:host {
+  display: flex;
+  flex-direction: column;
+  outline: none;
+  width: 100%;
   font-size: 14px !important;
 }
 
-.mat-icon {
-  margin-right: 8px;
+.mat-list-item {
+  .mat-icon {
+    margin-right: 8px;
+  }
 }

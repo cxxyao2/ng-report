@@ -7,7 +7,7 @@ import {
   Inject,
   HostListener,
 } from '@angular/core';
-import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
+import { BreakpointObserver } from '@angular/cdk/layout';
 import { Observable } from 'rxjs';
 import { map, shareReplay } from 'rxjs/operators';
 
@@ -44,8 +44,20 @@ export class AppComponent implements AfterViewInit {
 
   salespersonItems: NavItem[] = [
     { label: 'My Orders', icon: 'sell', route: 'product-list' },
-    { label: 'My Calendar', icon: 'calendar_today', route: 'todo' },
-    { label: 'My clients', icon: 'contact_page', route: 'product-list' },
+    {
+      label: 'My TodoList',
+      icon: 'edit_calendar',
+      route: 'todo',
+      children: [
+        {
+          label: 'My Supervisor',
+          icon: 'supervisor_account',
+          route: 'todo/client',
+        },
+        { label: 'My note', icon: 'edit_note', route: 'todo/note' },
+      ],
+    },
+    { label: 'My clients', icon: 'contact_page', route: 'add-client' },
   ];
 
   othersItems: NavItem[] = [

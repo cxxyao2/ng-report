@@ -1,1 +1,16 @@
-<p>about me</p>
+<div class="content">
+  <app-chips-multi-select [options]="categories" [formControl]="chipsControl">
+  </app-chips-multi-select>
+
+  <mat-divider></mat-divider>
+
+  <h3>Value: {{ chipsControlValue$ | async }}</h3>
+
+  <mat-divider></mat-divider>
+
+  <mat-checkbox [formControl]="disabledControl">Disabled</mat-checkbox>
+
+  <mat-divider></mat-divider>
+
+  <button mat-raised-button (click)="setChipsValue()">Patch Value</button>
+</div>

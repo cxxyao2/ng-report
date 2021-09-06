@@ -46,3 +46,4 @@ testem.log
 Thumbs.db
 
 !types.d.ts
+/src/index.html

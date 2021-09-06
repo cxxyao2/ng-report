@@ -3,13 +3,12 @@ import { NgModule } from '@angular/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ClipboardModule } from '@angular/cdk/clipboard';
 import { FlexLayoutModule } from '@angular/flex-layout';
-
-import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { GoogleMapsModule } from '@angular/google-maps';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-
 import { MaterialModule } from './material.module';
 
 import { AboutComponent } from './components/shared/about/about.component';
@@ -66,14 +65,15 @@ import { WishListComponent } from './components/shopping-cart/wish-list/wish-lis
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule,
     BrowserAnimationsModule,
-    HttpClientModule,
+    ClipboardModule,
+    FlexLayoutModule,
     FormsModule,
     ReactiveFormsModule,
-    FlexLayoutModule,
-    ClipboardModule,
+    GoogleMapsModule,
+    HttpClientModule,
     MaterialModule,
+    AppRoutingModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

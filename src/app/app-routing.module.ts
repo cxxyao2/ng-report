@@ -13,7 +13,8 @@ import { LoglistComponent } from './components/loglist/loglist.component';
 import { InfiniteListComponent } from './components/infinite-list/infinite-list.component';
 import { AddClientComponent } from './components/add-client/add-client.component';
 import { RoutineComponent } from './components/routine/routine.component';
-import { componentFactoryName } from '@angular/compiler';
+import { FindStoreComponent } from './components/find-store/find-store.component';
+
 const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
 
@@ -34,6 +35,7 @@ const routes: Routes = [
   { path: 'cart/print', component: PrintInvoiceComponent },
   { path: 'routine', component: RoutineComponent },
   { path: 'add-client', component: AddClientComponent },
+  { path: 'find-store', component: FindStoreComponent },
 
   { path: '**', component: PageNotFoundComponent },
 ];

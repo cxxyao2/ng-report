@@ -1,9 +1,10 @@
-@import "~@angular/material/theming";
+@use 'sass:map';
+@use '~@angular/material' as mat;
 
 @mixin cart-item-color($config-or-theme, $background: "") {
-  $config: mat-get-color-config($config-or-theme);
-  $primary: map-get($config, primary);
-  $accent: map-get($config, accent);
+  $config: mat.get-color-config($config-or-theme);
+  $primary: map.get($config, primary);
+  $accent: map.get($config, accent);
 
   @if $background != "" {
     app-cart-item {
@@ -16,11 +17,11 @@
       margin-left: 8px;
       transition: all 0.3s;
       &:hover{
-        background-color: mat-color($primary, 200) !important;
+        background-color: mat.get-color-from-palette($primary, 200) !important;
       }
     }
     .item-price {
-      color: mat-color($accent, 700) !important;
+      color: mat.get-color-from-palette($accent, 700) !important;
     }
   }
 }

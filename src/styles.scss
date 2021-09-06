@@ -1,4 +1,5 @@
 /* You can add global styles to this file, and also import other style files */
+@use '~@angular/material' as mat;
 @import "./app/theme";
 @import "../src/app/components/toolbar/menu-list-item/menu-list-item";
 @import "../src/app/components/shopping-cart/cart/cart-item/cart-item";
@@ -23,14 +24,15 @@ body {
   padding: 8px;
 }
 
-@include mat-core();
-@include angular-material-theme($app-theme);
+@include mat.core();
+@include mat.all-component-themes($app-theme);
+@include mat.strong-focus-indicators-theme($app-theme);
 @include menu-list-item-color($app-theme);
 @include cart-item-color($app-theme);
 @include print-invoice-color($app-theme);
 
 .darkMode {
-  @include angular-material-color($dark-theme);
+  @include mat.all-component-colors($dark-theme);
   @include menu-list-item-color($dark-theme);
   @include cart-item-color($dark-theme);
   @include print-invoice-color($dark-theme);

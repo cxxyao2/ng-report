@@ -1,16 +1,17 @@
-@import "~@angular/material/theming";
+@use 'sass:map';
+@use '~@angular/material' as mat;
 
 @mixin menu-list-item-color($config-or-theme) {
-  $config: mat-get-color-config($config-or-theme);
-  $primary: map-get($config, primary);
+  $config: mat.get-color-config($config-or-theme);
+  $primary: map.get($config, primary);
 
   .mat-list-item.active {
-    background-color: mat-color($primary, 50);
+    background-color: mat.get-color-from-palette($primary, 50);
 
     &:hover,
     &:focus {
       > .mat-list-item:not(.expanded) {
-        background-color: mat-color($primary, 100) !important;
+        background-color: mat.get-color-from-palette($primary, 100) !important;
       }
     }
   }

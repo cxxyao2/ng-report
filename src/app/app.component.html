@@ -5,10 +5,16 @@
 >
   <mat-toolbar color="primary" class="toolbar">
     <mat-toolbar-row *ngIf="!(isHandset$ | async)" class="pliable-toolbar">
-      <span class="link-item">PRODUCT MANUAL</span>
-      <span class="link-item">TECHNICAL SERVICE</span>
-      <span class="link-item">EMAIL</span>
-      <span class="link-item">FIND A STORE</span>
+      <span class="link-item"
+        ><a [routerLink]="['/find-store']">PRODUCT MANUAL</a></span
+      >
+      <span class="link-item"
+        ><a [routerLink]="['/find-store']">TECHNICAL SERVICE</a></span
+      >
+      <span class="link-item"><a [routerLink]="['/find-store']">EMAIL</a></span>
+      <span class="link-item"
+        ><a [routerLink]="['/find-store']">FIND A STORE</a>
+      </span>
       <span class="spacer"></span>
       <button
         mat-icon-button
@@ -112,7 +118,8 @@
       <div class="content-wrapper">
         <router-outlet></router-outlet>
       </div>
-      <mat-progress-spinner #spin
+      <mat-progress-spinner
+        #spin
         [mode]="'indeterminate'"
         *ngIf="loading$ | async"
       ></mat-progress-spinner>

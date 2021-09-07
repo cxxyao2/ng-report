@@ -3,6 +3,8 @@ import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { EChartsOption } from 'echarts';
 
+import { CreateGraphDataService } from 'src/app/services/create-graph-data.service';
+
 export interface PeriodicElement {
   name: string;
   position: number;
@@ -50,11 +52,17 @@ export class ReportByProductsComponent implements OnInit, AfterViewInit {
 
   @ViewChild(MatSort) sort!: MatSort;
 
-  constructor() {}
+  constructor(private dataService: CreateGraphDataService) {}
 
   ngOnInit(): void {}
 
   ngAfterViewInit() {
     this.dataSource.sort = this.sort;
+  }
+
+  createGraphData() {
+    this.dataService
+      .createProductData(60000)
+      .subscribe((data) => console.log('data is created', data));
   }
 }

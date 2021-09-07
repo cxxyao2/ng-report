@@ -1,9 +1,10 @@
 // The base64 encoded file should be converted to Blob before bing uploaded to server.
 export function base64ToBlob(urlData, type) {
   let arr = urlData.split(",");
-  // * 和 + 限定符都是贪婪的，因为它们会尽可能多的匹配文字，只有在它们的后面加上一个 ? 就可以实现非贪婪或最小匹配。
+  // * and + are greedy ( the regex engine tried to find your pattern in the string )
+  // matched as many characters as possible. We add ?  to make regex not greedy
   let mime = arr[0].match(/:(.*?);/)[1] || type;
-  // 去掉url的头，并转化为byte
+  // cut the head data of url ，turn the left data into byte format
   // atob() function decodes a string of data which has been encoded using Base64 encoding. 解码
   // You can use the btoa() method to encode and transmit data which may otherwise cause communication problems,
   // then transmit it and use the atob() method to decode the data again
@@ -56,7 +57,7 @@ export function makeCSV(contents) {
     value.forEach((item, i) => {
       let innerValue = item === null ? "" : "" + item;
       let result = innerValue.replace(/"/g, '""');
-      // " , \n换行符  以上3个符号出现任何一个，表示一行结束
+      // " , \n  That anyone of the 3 signs appears means the end of one line
       if (result.search(/("|,|\n)/g) >= 0) {
         result = '"' + result + '"';
       }

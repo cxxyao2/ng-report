@@ -14,6 +14,9 @@ import { InfiniteListComponent } from './components/infinite-list/infinite-list.
 import { AddClientComponent } from './components/add-client/add-client.component';
 import { RoutineComponent } from './components/routine/routine.component';
 import { FindStoreComponent } from './components/find-store/find-store.component';
+import { EmailToUsComponent } from './components/email-to-us/email-to-us.component';
+import { TechnicalSupportComponent } from './components/technical-support/technical-support.component';
+import { ReportByProductsComponent } from './components/report-by-products/report-by-products.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
@@ -21,6 +24,12 @@ const routes: Routes = [
   { path: 'home', component: HomeComponent },
   { path: 'loglist', component: LoglistComponent },
   { path: 'dash', component: DashboardComponent },
+  { path: 'by-product', component: ReportByProductsComponent },
+  {
+    path: 'email-to-us',
+    component: EmailToUsComponent,
+    data: { animation: 'EmailPage' },
+  },
   {
     path: 'todo',
     children: [
@@ -35,7 +44,16 @@ const routes: Routes = [
   { path: 'cart/print', component: PrintInvoiceComponent },
   { path: 'routine', component: RoutineComponent },
   { path: 'add-client', component: AddClientComponent },
-  { path: 'find-store', component: FindStoreComponent },
+  {
+    path: 'find-store',
+    component: FindStoreComponent,
+    data: { animation: 'FindStorePage' },
+  },
+  {
+    path: 'technical-support',
+    component: TechnicalSupportComponent,
+    data: { animation: 'TechnicalPage' },
+  },
 
   { path: '**', component: PageNotFoundComponent },
 ];

@@ -6,6 +6,7 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { GoogleMapsModule } from '@angular/google-maps';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { NgxEchartsModule } from 'ngx-echarts';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -35,6 +36,9 @@ import { RoutineComponent } from './components/routine/routine.component';
 import { SearchBoxComponent } from './components/toolbar/search-box/search-box.component';
 import { ScrollToTopComponent } from './components/scroll-to-top/scroll-to-top.component';
 import { WishListComponent } from './components/shopping-cart/wish-list/wish-list.component';
+import { ReportByProductsComponent } from './components/report-by-products/report-by-products.component';
+import { EmailToUsComponent } from './components/email-to-us/email-to-us.component';
+import { TechnicalSupportComponent } from './components/technical-support/technical-support.component';
 
 @NgModule({
   declarations: [
@@ -62,6 +66,9 @@ import { WishListComponent } from './components/shopping-cart/wish-list/wish-lis
     AddClientComponent,
     RoutineComponent,
     FindStoreComponent,
+    ReportByProductsComponent,
+    EmailToUsComponent,
+    TechnicalSupportComponent,
   ],
   imports: [
     BrowserModule,
@@ -73,6 +80,9 @@ import { WishListComponent } from './components/shopping-cart/wish-list/wish-lis
     GoogleMapsModule,
     HttpClientModule,
     MaterialModule,
+    NgxEchartsModule.forRoot({
+      echarts: () => import('echarts'),
+    }),
     AppRoutingModule,
   ],
   providers: [],

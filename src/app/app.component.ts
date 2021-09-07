@@ -17,11 +17,14 @@ import { CartService } from './services/cart.service';
 import { NavItem } from './models/nav-item';
 import { NavService } from './services/nav.service';
 import { LoadingService } from './services/loading.service';
+import { RouterOutlet } from '@angular/router';
+import { slideInAnimation } from 'src/app/animations/animations';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
+  animations: [slideInAnimation],
 })
 export class AppComponent implements AfterViewInit {
   @ViewChild('drawer') appDrawer!: ElementRef;
@@ -37,7 +40,7 @@ export class AppComponent implements AfterViewInit {
   ];
 
   managerItems: NavItem[] = [
-    { label: 'By product', icon: 'bar_chart', route: 'home' },
+    { label: 'By product', icon: 'bar_chart', route: 'by-product' },
     { label: 'By employee', icon: 'trending_up', route: 'todo' },
     { label: 'Planning', icon: 'edit_calendar', route: 'product-list' },
   ];
@@ -107,4 +110,10 @@ export class AppComponent implements AfterViewInit {
   }
 
   logout(): void {}
+
+  prepareRoute(outlet: RouterOutlet) {
+    return (
+      outlet && outlet.activatedRouteData && outlet.activatedRouteData.animation
+    );
+  }
 }

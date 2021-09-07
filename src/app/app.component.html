@@ -9,9 +9,11 @@
         ><a [routerLink]="['/find-store']">PRODUCT MANUAL</a></span
       >
       <span class="link-item"
-        ><a [routerLink]="['/find-store']">TECHNICAL SERVICE</a></span
+        ><a [routerLink]="['/technical-support']">TECHNICAL SUPPORT</a></span
       >
-      <span class="link-item"><a [routerLink]="['/find-store']">EMAIL</a></span>
+      <span class="link-item"
+        ><a [routerLink]="['/email-to-us']">EMAIL</a></span
+      >
       <span class="link-item"
         ><a [routerLink]="['/find-store']">FIND A STORE</a>
       </span>
@@ -115,8 +117,8 @@
       </mat-nav-list>
     </mat-sidenav>
     <mat-sidenav-content>
-      <div class="content-wrapper">
-        <router-outlet></router-outlet>
+      <div class="content-wrapper" [@routeAnimations]="prepareRoute(outlet)">
+        <router-outlet #outlet="outlet"></router-outlet>
       </div>
       <mat-progress-spinner
         #spin

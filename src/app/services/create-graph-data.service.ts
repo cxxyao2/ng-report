@@ -19,9 +19,11 @@ export interface SalesRecord {
   providedIn: 'root',
 })
 export class CreateGraphDataService {
-  worker = new Worker('../web-workers/product-profit.worker', {
+  worker = new Worker('./product-profit.worker', {
     type: 'module',
   });
+
+  //  worker = new Worker(new URL('./app.worker', import.meta.url));
 
   constructor() {}
 
@@ -32,6 +34,8 @@ export class CreateGraphDataService {
         resultSubject.next(data);
       };
       this.worker.postMessage(recordCount);
+    } else {
+      console.log(' type Worker does not exist.');
     }
 
     return resultSubject;

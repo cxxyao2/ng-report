@@ -1,4 +1,4 @@
-import { createProductProfitData } from '../utils/create-mock-data.utils';
+import { createProductProfitData } from './utils/create-mock-data.utils';
 
 addEventListener('message', ({ data }) => {
   let result;

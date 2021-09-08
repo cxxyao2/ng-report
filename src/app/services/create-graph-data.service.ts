@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable, of, BehaviorSubject } from 'rxjs';
-
+import { LoadingService } from './loading.service';
 export const MAX_LINES = 20000;
 export enum PRODUCT_CATEGORY {
   ALevel = 'A',
@@ -19,25 +19,23 @@ export interface SalesRecord {
   providedIn: 'root',
 })
 export class CreateGraphDataService {
-  worker = new Worker('./product-profit.worker', {
-    type: 'module',
-  });
+  items = [];
+  worker: Worker;
 
-  //  worker = new Worker(new URL('./app.worker', import.meta.url));
+  constructor(private loader: LoadingService) {
+    this.worker = new Worker(
+      new URL('../product-profit.worker', import.meta.url)
+    );
+  }
 
-  constructor() {}
-
-  createProductData(recordCount = 0): Observable<[]> {
-    const resultSubject = new BehaviorSubject<[]>([]);
-    if (typeof Worker !== 'undefined') {
-      this.worker.onmessage = ({ data }) => {
-        resultSubject.next(data);
-      };
-      this.worker.postMessage(recordCount);
-    } else {
-      console.log(' type Worker does not exist.');
-    }
-
+  createProductData(): Observable<number> {
+    let resultSubject = new BehaviorSubject<number>(0);
+    this.worker.onmessage = ({ data }) => {
+      resultSubject.next(data);
+      console.log(`calculate result is : ${data} `);
+      this.loader.hide();
+    };
+    this.worker.postMessage(600000000);
     return resultSubject;
   }
 }

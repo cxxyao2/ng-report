@@ -1,4 +1,3 @@
-import { Injectable } from '@angular/core';
 import { Observable, of, Subject } from 'rxjs';
 
 export const MAX_LINES = 20000;
@@ -50,6 +49,7 @@ export const createProductProfitData = (
   let a1 = 0;
   let b1 = 0;
   let c1 = 0;
+  console.log('hi', analyzeObj.length);
   analyzeObj.forEach((product) => {
     switch (product.category) {
       case PRODUCT_CATEGORY.ALevel:

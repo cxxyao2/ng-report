@@ -19,10 +19,7 @@ import {
     trigger('indicatorRotate', [
       state('collapsed', style({ transform: 'rotate(0deg)' })),
       state('expanded', style({ transform: 'rotate(180deg' })),
-      transition(
-        'expanded <=> collapsed',
-        animate('225ms')
-      ),
+      transition('expanded <=> collapsed', animate('225ms')),
     ]),
   ],
 })
@@ -41,7 +38,6 @@ export class MenuListItemComponent implements OnInit {
   ngOnInit(): void {
     this.navService.currentUrl.subscribe((url) => {
       if (this.item.route && url) {
-        console.log('url is', url);
         this.expanded = url.indexOf(`/${this.item.route}`) === 0;
         this.ariaExpanded = this.expanded;
       }

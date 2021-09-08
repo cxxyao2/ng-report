@@ -2,8 +2,8 @@ import { AfterViewInit, OnInit, Component, ViewChild } from '@angular/core';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { EChartsOption } from 'echarts';
-
 import { CreateGraphDataService } from 'src/app/services/create-graph-data.service';
+import { LoadingService } from 'src/app/services/loading.service';
 
 export interface PeriodicElement {
   name: string;
@@ -52,7 +52,10 @@ export class ReportByProductsComponent implements OnInit, AfterViewInit {
 
   @ViewChild(MatSort) sort!: MatSort;
 
-  constructor(private dataService: CreateGraphDataService) {}
+  constructor(
+    private dataService: CreateGraphDataService,
+    private loader: LoadingService
+  ) {}
 
   ngOnInit(): void {}
 
@@ -60,9 +63,15 @@ export class ReportByProductsComponent implements OnInit, AfterViewInit {
     this.dataSource.sort = this.sort;
   }
 
-  createGraphData() {
-    this.dataService
-      .createProductData(60000)
-      .subscribe((data) => console.log('data is created', data));
+  createGraphData(): void {
+    this.loader.show();
+    this.dataService.createProductData().subscribe(
+      (data) => {
+        console.log('hi,data is ', data);
+      },
+      (err) => {
+        console.log(err);
+      }
+    );
   }
 }

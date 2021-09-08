@@ -1,13 +1,18 @@
-import { createProductProfitData } from './utils/create-mock-data.utils';
+/// <reference lib="webworker" />
+import { Observable, of, BehaviorSubject } from 'rxjs';
+export function createReportData(counter = 1000): Observable<number> {
+  let my = 0;
+  for (let i = 0; i < counter; i++) {
+    my += i;
+  }
+  return of(my);
+}
 
 addEventListener('message', ({ data }) => {
-  let result;
-  createProductProfitData(data).subscribe(
-    (graphData) => (result = graphData),
-    (err) => console.log('error is ', err),
-    () => {
-      console.log('create data process is completed');
-    }
-  );
-  postMessage(result);
+  let result = 0;
+  createReportData(data).subscribe((return1) => {
+    result = return1;
+  });
+  const response = `custom worker response to ${result}`;
+  postMessage(response);
 });

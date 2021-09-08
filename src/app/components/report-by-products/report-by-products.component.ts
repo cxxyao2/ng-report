@@ -71,6 +71,7 @@ export class ReportByProductsComponent implements OnInit, AfterViewInit {
       },
       (err) => {
         console.log(err);
+        this.loader.hide();
       }
     );
   }

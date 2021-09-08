@@ -34,19 +34,19 @@ export class AppComponent implements AfterViewInit {
   currentLanguage = 'english';
 
   adminItems: NavItem[] = [
-    { label: 'Products', icon: 'addchart', route: 'home' },
-    { label: 'Authorization', icon: 'vpn_key', route: 'todo' },
-    { label: 'Logs', icon: 'event_note', route: 'loglist' },
+    { label: 'Products', icon: 'addchart', route: 'add-product' },
+    { label: 'Authorization', icon: 'vpn_key', route: 'authorize' },
+    { label: 'Logs', icon: 'event_note', route: 'list-logs' },
   ];
 
   managerItems: NavItem[] = [
     { label: 'By product', icon: 'bar_chart', route: 'by-product' },
-    { label: 'By employee', icon: 'trending_up', route: 'todo' },
-    { label: 'Planning', icon: 'edit_calendar', route: 'product-list' },
+    { label: 'By employee', icon: 'trending_up', route: 'by-employee' },
+    { label: 'Planning', icon: 'edit_calendar', route: 'schedule' },
   ];
 
   salespersonItems: NavItem[] = [
-    { label: 'My Orders', icon: 'sell', route: 'product-list' },
+    { label: 'My Orders', icon: 'sell', route: 'place-order' },
     {
       label: 'My TodoList',
       icon: 'edit_calendar',
@@ -117,4 +117,3 @@ export class AppComponent implements AfterViewInit {
     );
   }
 }
-

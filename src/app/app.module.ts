@@ -39,6 +39,10 @@ import { WishListComponent } from './components/shopping-cart/wish-list/wish-lis
 import { ReportByProductsComponent } from './components/report-by-products/report-by-products.component';
 import { EmailToUsComponent } from './components/email-to-us/email-to-us.component';
 import { TechnicalSupportComponent } from './components/technical-support/technical-support.component';
+import { SchedulerComponent } from './components/scheduler/scheduler.component';
+import { AddProductComponent } from './components/add-product/add-product.component';
+import { AddRoleToUserComponent } from './components/add-role-to-user/add-role-to-user.component';
+import { ReportByEmployeeComponent } from './components/report-by-employee/report-by-employee.component';
 
 @NgModule({
   declarations: [
@@ -69,6 +73,10 @@ import { TechnicalSupportComponent } from './components/technical-support/techni
     ReportByProductsComponent,
     EmailToUsComponent,
     TechnicalSupportComponent,
+    SchedulerComponent,
+    AddProductComponent,
+    AddRoleToUserComponent,
+    ReportByEmployeeComponent,
   ],
   imports: [
     BrowserModule,

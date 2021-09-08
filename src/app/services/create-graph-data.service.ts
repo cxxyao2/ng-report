@@ -29,13 +29,13 @@ export class CreateGraphDataService {
   }
 
   createProductData(): Observable<number> {
-    let resultSubject = new BehaviorSubject<number>(0);
+    const resultSubject = new BehaviorSubject<number>(0);
     this.worker.onmessage = ({ data }) => {
       resultSubject.next(data);
       console.log(`calculate result is : ${data} `);
       this.loader.hide();
     };
-    this.worker.postMessage(600000000);
+    this.worker.postMessage(600000000); // TODO
     return resultSubject;
   }
 }

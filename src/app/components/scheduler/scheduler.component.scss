@@ -1,0 +1,27 @@
+.today-row {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: nowrap;
+  
+}
+
+.today-row-button-container {
+  display: flex;
+  justify-content: center;
+  width: 120px;
+  .mat-mini-fab {
+    background-color: white;
+    color: black;
+  }
+  .mat-mini-fab + .mat-mini-fab {
+    margin-left: 8px;
+  }
+}
+
+mat-grid-tile {
+  background: lightblue;
+}
+
+mat-grid-tile.header {
+  background-color: lightgray;
+}

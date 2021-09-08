@@ -1,0 +1,112 @@
+<div fxLayout="row wrap" fxLayoutGap="16px grid">
+  <div class="calendar-wrapper" fxFlex="50%" fxFlex.xs="100%">
+    <div class="today-row">
+      <h2>September 8, 2021</h2>
+      <div class="today-row-button-container">
+        <button mat-mini-fab aria-label="back icon">
+          <mat-icon>arrow_back</mat-icon>
+        </button>
+        <button mat-mini-fab aria-label="forward icon">
+          <mat-icon>arrow_forward</mat-icon>
+        </button>
+      </div>
+    </div>
+    <mat-grid-list
+      cols="7"
+      rowHeight="30px"
+      gutterSize="2px"
+      style="
+        box-shadow: 0px 2px 4px -1px rgba(0, 0, 0, 0.2),
+          0px 4px 5px 0px rgba(0, 0, 0, 0.14),
+          0px 1px 10px 0px rgba(0, 0, 0, 0.12);
+      "
+    >
+      <mat-grid-tile class="header">Monday</mat-grid-tile>
+      <mat-grid-tile class="header">Tuesday</mat-grid-tile>
+      <mat-grid-tile class="header">Wednesday</mat-grid-tile>
+      <mat-grid-tile class="header">Thursday</mat-grid-tile>
+      <mat-grid-tile class="header">Friday</mat-grid-tile>
+      <mat-grid-tile class="header">Saturday</mat-grid-tile>
+      <mat-grid-tile class="header">Sunday</mat-grid-tile>
+    </mat-grid-list>
+    <mat-grid-list
+      class="calendar"
+      cols="7"
+      rowHeight="60px"
+      gutterSize="2px"
+      style="
+        box-shadow: 0px 2px 4px -1px rgba(0, 0, 0, 0.2),
+          0px 4px 5px 0px rgba(0, 0, 0, 0.14),
+          0px 1px 10px 0px rgba(0, 0, 0, 0.12);
+      "
+    >
+      <mat-grid-tile>
+        <div
+          style="
+            display: flex;
+            flex-direction: column;
+            flex-wrap: nowrap;
+            align-items: flex-end;
+          "
+        >
+          <div>1</div>
+          <div>8 Events</div>
+        </div>
+      </mat-grid-tile>
+      <mat-grid-tile>2</mat-grid-tile>
+      <mat-grid-tile>3</mat-grid-tile>
+      <mat-grid-tile>4</mat-grid-tile>
+      <mat-grid-tile>5</mat-grid-tile>
+      <mat-grid-tile>6</mat-grid-tile>
+      <mat-grid-tile>7</mat-grid-tile>
+      <mat-grid-tile>8</mat-grid-tile>
+      <mat-grid-tile>9</mat-grid-tile>
+      <mat-grid-tile>10</mat-grid-tile>
+      <mat-grid-tile>11</mat-grid-tile>
+      <mat-grid-tile>12</mat-grid-tile>
+      <mat-grid-tile>13</mat-grid-tile>
+      <mat-grid-tile>14</mat-grid-tile>
+      <mat-grid-tile>15</mat-grid-tile>
+      <mat-grid-tile>16</mat-grid-tile>
+      <mat-grid-tile>17</mat-grid-tile>
+      <mat-grid-tile>18</mat-grid-tile>
+      <mat-grid-tile>19</mat-grid-tile>
+      <mat-grid-tile>20</mat-grid-tile>
+      <mat-grid-tile>21</mat-grid-tile>
+      <mat-grid-tile>22</mat-grid-tile>
+      <mat-grid-tile>23</mat-grid-tile>
+      <mat-grid-tile>24</mat-grid-tile>
+      <mat-grid-tile>25</mat-grid-tile>
+      <mat-grid-tile>26</mat-grid-tile>
+      <mat-grid-tile>27</mat-grid-tile>
+      <mat-grid-tile>28</mat-grid-tile>
+      <mat-grid-tile>29</mat-grid-tile>
+      <mat-grid-tile>30</mat-grid-tile>
+      <mat-grid-tile>31</mat-grid-tile>
+      <mat-grid-tile>32</mat-grid-tile>
+      <mat-grid-tile>33</mat-grid-tile>
+      <mat-grid-tile>34</mat-grid-tile>
+      <mat-grid-tile>35</mat-grid-tile>
+    </mat-grid-list>
+  </div>
+  <div class="taskList" fxFlex="50%" fxFlex.xs="100%">
+    <h2>tasklist</h2>
+    <div>
+      <input type="text" placeholder="enter a name..." />
+      <button mat-raised-button color="primary">
+        <mat-icon>search</mat-icon>
+        Search
+      </button>
+    </div>
+    <ul>
+      <li></li>
+      <li></li>
+      <li></li>
+      <li></li>
+      <li></li>
+      <li></li>
+      <li></li>
+      <li></li>
+    </ul>
+  </div>
+</div>

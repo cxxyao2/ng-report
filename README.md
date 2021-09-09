@@ -28,3 +28,6 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 ## layout
 
 - breakpoint: 800px
+- Modern CSS: Grid Layout & Flex Box
+- Mobile Friendly and full responsive
+- 2 Modes: Dark Mode & Light Mode

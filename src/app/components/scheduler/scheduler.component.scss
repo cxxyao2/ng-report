@@ -50,31 +50,53 @@ mat-grid-tile {
   overflow: hidden;
   border-radius: 4px;
   box-shadow: 0 0 2rem 0.15rem rgba(0, 0, 255, 0.1);
+  .search-person {
+    width: 100%;
+    border: none;
+    outline: none;
+    padding: 16px;
+    height: 90%;
+    -webkit-appearance: none;
+    transition: width 0.4s ease-in-out;
+    font-size: 1rem;
+  }
+  .search-person::placeholder {
+    font-size: 1rem;
+    color: #131f69;
+    letter-spacing: 0.1rem;
+  }
   button {
     position: absolute;
     right: 0px;
-    top: 8px;
+    top: 0px;
+    height: 100%;
   }
 }
 
-.search-person {
-  width: 100%;
-  border: none;
-  outline: none;
-  padding: 16px;
-  height: 90%;
-  -webkit-appearance: none;
-  transition: width 0.4s ease-in-out;
-  font-size: 1rem;
-}
-
-.search-person::placeholder {
-  font-size: 1rem;
-  color: #131f69;
-  letter-spacing: 0.1rem;
-}
-
 .search-data-list-wrapper {
+  position: relative;
+  top: 0px;
+  left: 0;
   margin: 8px auto;
   width: 100%;
+  z-index: 1001;
+}
+
+form {
+  position: relative;
+  .daily-task-card {
+    position: absolute;
+    top: 60px;
+    left: 0;
+    overflow: visible;
+    right: 0;
+    z-index: 1000;
+    .daily-task {
+      position: relative;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+    }
+  }
 }

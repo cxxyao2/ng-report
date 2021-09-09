@@ -14,6 +14,8 @@ export class SchedulerComponent implements OnInit {
     'Sneakers',
   ];
 
+  personList: string[] = ['Alex', 'Bob', 'Tom', 'Hans'];
+
   calendar: string[] = [];
 
   constructor() {}

@@ -7,7 +7,7 @@ import { Product } from '../models/product';
 export class ProductService {
   products: Product[] = [
     {
-      id: '1',
+      _id: '1',
       name: 'a1',
       description: 'simpele',
       category: 'golden',
@@ -16,7 +16,7 @@ export class ProductService {
       qtyInStock: 12,
     },
     {
-      id: '1',
+      _id: '2',
       name: 'a1',
       description: 'simpele',
       category: 'golden',
@@ -25,7 +25,7 @@ export class ProductService {
       qtyInStock: 12,
     },
     {
-      id: '1',
+      _id: '1',
       name: 'a1',
       description: 'simpele',
       category: 'golden',

@@ -10,7 +10,7 @@ import { ProductService } from 'src/app/services/product.service';
 export class ProductListComponent implements OnInit {
   productList: Product[] = [
     {
-      id: '1',
+      _id: '1',
       name: 'a1',
       description:
         'simpeleve technologve technologve technologve technologve technologve technolog',
@@ -20,7 +20,7 @@ export class ProductListComponent implements OnInit {
       qtyInStock: 12,
     },
     {
-      id: '2',
+      _id: '2',
       name: 'a2',
       description:
         'As automotive technology has advanced in recent decades, automakers around the world agreed that government requirements for fuel additives were not adequate since they have not changed to meet the performance demands of modern vehicles. If a fuel company can prove that their gas has additives and detergents that keep residue from building up on valves or in the combustion chamber, then they are qualified to call themselves a "top-tier" gasoline supplier. Top-tier fuel is formulated to keep engines running efficiently and reliably. Automakers claim that these requirements makes gas better for modern cars.',
@@ -30,7 +30,7 @@ export class ProductListComponent implements OnInit {
       qtyInStock: 12,
     },
     {
-      id: '3',
+      _id: '3',
       name: 'a3',
       description:
         'Gas stations in the US and many other nations are required to supply customers with consistent and clean gasoline.',
@@ -40,7 +40,7 @@ export class ProductListComponent implements OnInit {
       qtyInStock: 0,
     },
     {
-      id: '4',
+      _id: '4',
       name: 'a3',
       description:
         'Gas stations in the US and many other nations are required to supply customers with consistent and clean gasoline.',
@@ -50,7 +50,7 @@ export class ProductListComponent implements OnInit {
       qtyInStock: 0,
     },
     {
-      id: '5',
+      _id: '5',
       name: 'a3',
       description:
         'Gas stations in the US and many other nations are required to supply customers with consistent and clean gasoline.',

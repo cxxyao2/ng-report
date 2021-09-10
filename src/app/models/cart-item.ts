@@ -8,5 +8,5 @@ export interface CartItem {
   stock?: number;
   clientId?: string;
   salePersonId?: string;
-  id?: string;
+  _id?: string;
 }

@@ -2,13 +2,7 @@ import { AfterViewInit, Component, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
-
-export interface UserData {
-  id: string;
-  name: string;
-  progress: string;
-  fruit: string;
-}
+import { Product } from 'src/app/models/product';
 
 /** Constants used to fill up our data base. */
 const FRUITS: string[] = [
@@ -21,27 +15,6 @@ const FRUITS: string[] = [
   'pomegranate',
   'pineapple',
 ];
-const NAMES: string[] = [
-  'Maia',
-  'Asher',
-  'Olivia',
-  'Atticus',
-  'Amelia',
-  'Jack',
-  'Charlotte',
-  'Theodore',
-  'Isla',
-  'Oliver',
-  'Isabella',
-  'Jasper',
-  'Cora',
-  'Levi',
-  'Violet',
-  'Arthur',
-  'Mia',
-  'Thomas',
-  'Elizabeth',
-];
 
 /**
  * @title Data table with sorting, pagination, and filtering.
@@ -53,18 +26,27 @@ const NAMES: string[] = [
   styleUrls: ['./add-product.component.scss'],
 })
 export class AddProductComponent implements AfterViewInit {
-  displayedColumns: string[] = ['id', 'name', 'progress', 'fruit'];
-  dataSource: MatTableDataSource<UserData>;
+  displayedColumns: string[] = [
+    'action1',
+    'action2',
+    'id',
+    'name',
+    'description',
+    'category',
+  ];
+  dataSource: MatTableDataSource<Product>;
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
 
   constructor() {
-    // Create 100 users
-    const users = Array.from({ length: 100 }, (_, k) => createNewUser(k + 1));
+    // Create 100 products
+    const products = Array.from({ length: 100 }, (_, k) =>
+      createNewProduct(k + 1)
+    );
 
     // Assign the data to the data source for the table to render
-    this.dataSource = new MatTableDataSource(users);
+    this.dataSource = new MatTableDataSource(products);
   }
 
   ngAfterViewInit() {
@@ -82,18 +64,22 @@ export class AddProductComponent implements AfterViewInit {
   }
 }
 
-/** Builds and returns a new User. */
-function createNewUser(id: number): UserData {
+/** Builds and returns a new Product. */
+function createNewProduct(id: number): Product {
+  const categoryList = ['golden', 'silver', 'iron'];
   const name =
-    NAMES[Math.round(Math.random() * (NAMES.length - 1))] +
+    FRUITS[Math.round(Math.random() * (FRUITS.length - 1))] +
     ' ' +
-    NAMES[Math.round(Math.random() * (NAMES.length - 1))].charAt(0) +
+    FRUITS[Math.round(Math.random() * (FRUITS.length - 1))].charAt(0) +
     '.';
 
   return {
-    id: id.toString(),
-    name: name,
-    progress: Math.round(Math.random() * 100).toString(),
-    fruit: FRUITS[Math.round(Math.random() * (FRUITS.length - 1))],
+    _id: id.toString(),
+    name,
+    description: Math.round(Math.random() * 100).toString(),
+    category:
+      categoryList[Math.round(Math.random() * (categoryList.length - 1))],
+    price: 100,
+    qtyInStock: 200,
   };
 }

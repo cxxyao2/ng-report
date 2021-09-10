@@ -62,19 +62,19 @@ export class CartService {
   addProductToCart(product: Product): Observable<any> {
     // 1, update local array
     // 2, update remote database
-    let cartItem = this.items.find((item) => item.id === product.id);
+    let cartItem = this.items.find((item) => item._id === product._id);
     if (cartItem) {
       cartItem.qty += 1;
     } else {
       cartItem = {
         selected: true,
-        productId: product.id,
+        productId: product._id,
         productName: product.name,
         qty: 1,
-        price: product.price,
+        price: product.price ? product.price : 0,
         clientId: 'aa',
         salePersonId: 'bb',
-        imageUrl: product.imageUrl,
+        imageUrl: product.imageUrl ? product.imageUrl : '',
       };
     }
     return this.http.post(CartUrl, cartItem);
@@ -83,7 +83,7 @@ export class CartService {
   updateProductQtyInCart(productId: string, qty: number): Observable<any> {
     // 1, update local array
     // 2, update remote database
-    let cartItem = this.items.find((item) => item.id === productId);
+    let cartItem = this.items.find((item) => item._id === productId);
     if (cartItem) {
       cartItem.qty = qty;
       return this.http.post(CartUrl, cartItem);

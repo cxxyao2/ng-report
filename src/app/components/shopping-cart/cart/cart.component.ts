@@ -10,7 +10,7 @@ export class CartComponent implements OnInit {
   cartItems: CartItem[] = [
     {
       selected: true,
-      id: '1',
+      _id: '1',
       productId: '1',
       productName:
         'One state may require a minimum octOne state may require a minimum octanOne state may require a minimum octanane',
@@ -21,7 +21,7 @@ export class CartComponent implements OnInit {
     },
     {
       selected: true,
-      id: '2',
+      _id: '2',
       productId: '2',
       productName:
         'One state may require a minimum octOne state may require a minimum octanOne state may require a minimum octanane',
@@ -32,7 +32,7 @@ export class CartComponent implements OnInit {
     },
     {
       selected: true,
-      id: '3',
+      _id: '3',
       productId: '3',
       productName:
         'One state may require a minimum octOne state may require a minimum octanOne state may require a minimum octanane',

@@ -11,7 +11,7 @@ import { CartService } from 'src/app/services/cart.service';
 })
 export class CartItemComponent implements OnInit {
   @Input() item: CartItem = {
-    id: 'aa',
+    _id: 'aa',
     productId: 'bb',
     qty: 12,
     productName: 'productName',

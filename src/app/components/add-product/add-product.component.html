@@ -1,46 +1,168 @@
-<h2>
-  Data table with sorting, pagination, and filtering.
-</h2>
+<h2>Data table with sorting, pagination, and filtering.</h2>
 <mat-form-field appearance="standard">
   <mat-label>Filter</mat-label>
-  <input matInput (keyup)="applyFilter($event)" placeholder="Ex. Mia" #input>
+  <input matInput (keyup)="applyFilter($event)" placeholder="Ex. Mia" #input />
 </mat-form-field>
 
 <div class="mat-elevation-z8">
-  <table mat-table [dataSource]="dataSource" matSort>
+  <table mat-table [dataSource]="dataSource" class="mat-elevation-z8" matSort>
+    <!-- First Row Header Begin -->
 
-    <!-- ID Column -->
+    <!--actions Column -->
+    <ng-container matColumnDef="actionsFirstRow">
+      <th mat-header-cell *matHeaderCellDef class="header-actions" colspan="2">Actions</th>
+    </ng-container>
+
+    <!--id Column -->
+    <ng-container matColumnDef="idFirstRow">
+      <th mat-header-cell *matHeaderCellDef>Id</th>
+    </ng-container>
+
+    <!--name Column -->
+    <ng-container matColumnDef="nameFirstRow">
+      <th mat-header-cell *matHeaderCellDef>Name</th>
+    </ng-container>
+
+    <!--description Column -->
+    <ng-container matColumnDef="descriptionFirstRow">
+      <th mat-header-cell *matHeaderCellDef>Description</th>
+    </ng-container>
+
+    <!--category Column -->
+    <ng-container matColumnDef="categoryFirstRow">
+      <th mat-header-cell *matHeaderCellDef>Category</th>
+    </ng-container>
+    <!-- First Row Header End -->
+
+    <!-- Second Row Header Begin -->
+
+    <!--actions Column -->
+    <ng-container matColumnDef="addAction">
+      <th mat-header-cell *matHeaderCellDef class="header-actions" colspan="2">
+        <button mat-button class="head-row-button"><mat-icon>add</mat-icon></button>
+      </th>
+    </ng-container>
+
+    <!--id Column -->
+    <ng-container matColumnDef="idFilter">
+      <th mat-header-cell *matHeaderCellDef>
+        <mat-form-field appearance="standard">
+          <mat-label>Id..</mat-label>
+          <input matInput placeholder="Placeholder" />
+        </mat-form-field>
+      </th>
+    </ng-container>
+
+    <!--name Column -->
+    <ng-container matColumnDef="nameFilter">
+      <th mat-header-cell *matHeaderCellDef>
+        <mat-form-field appearance="standard">
+          <mat-label>Name..</mat-label>
+          <input matInput placeholder="Placeholder" />
+        </mat-form-field>
+      </th>
+    </ng-container>
+
+    <!--description Column -->
+    <ng-container matColumnDef="descriptionFilter">
+      <th mat-header-cell *matHeaderCellDef>
+        <mat-form-field appearance="standard">
+          <mat-label>Description..</mat-label>
+          <input matInput placeholder="Placeholder" />
+        </mat-form-field>
+      </th>
+    </ng-container>
+
+    <!--category Column -->
+    <ng-container matColumnDef="categoryFilter">
+      <th mat-header-cell *matHeaderCellDef>
+        <mat-form-field appearance="standard">
+          <mat-label>Category..</mat-label>
+          <input matInput placeholder="Placeholder" />
+        </mat-form-field>
+      </th>
+    </ng-container>
+
+    <!-- Second Row Header End -->
+
+    <!-- Action1 Column -->
+    <ng-container matColumnDef="action1">
+      <th mat-header-cell *matHeaderCellDef>Id</th>
+      <td mat-cell *matCellDef="let row" class="data-row-button-wrapper">
+        <button mat-button ><mat-icon>edit</mat-icon></button>
+      </td>
+    </ng-container>
+
+    <!-- Action2 Column -->
+    <ng-container matColumnDef="action2">
+      <th mat-header-cell *matHeaderCellDef>Id</th>
+      <td mat-cell *matCellDef="let row" class="data-row-button-wrapper">
+        <button mat-button ><mat-icon>delete</mat-icon></button>
+      </td>
+    </ng-container>
+
+    <!-- Id Column -->
     <ng-container matColumnDef="id">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header> ID </th>
-      <td mat-cell *matCellDef="let row"> {{row.id}} </td>
+      <th mat-header-cell *matHeaderCellDef>Id</th>
+      <td mat-cell *matCellDef="let row">{{ row._id }}</td>
     </ng-container>
 
-    <!-- Progress Column -->
-    <ng-container matColumnDef="progress">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header> Progress </th>
-      <td mat-cell *matCellDef="let row"> {{row.progress}}% </td>
-    </ng-container>
-
-    <!-- Name Column -->
+    <!-- name Column -->
     <ng-container matColumnDef="name">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header> Name </th>
-      <td mat-cell *matCellDef="let row"> {{row.name}} </td>
+      <th mat-header-cell *matHeaderCellDef>Name</th>
+      <td mat-cell *matCellDef="let row">{{ row.name }}</td>
     </ng-container>
 
-    <!-- Fruit Column -->
-    <ng-container matColumnDef="fruit">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header> Fruit </th>
-      <td mat-cell *matCellDef="let row"> {{row.fruit}} </td>
+    <!-- Description Column -->
+    <ng-container matColumnDef="description">
+      <th mat-header-cell *matHeaderCellDef>Description</th>
+      <td mat-cell *matCellDef="let row">{{ row.description }}</td>
     </ng-container>
 
-    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    <!-- Category Column -->
+    <ng-container matColumnDef="category">
+      <th mat-header-cell *matHeaderCellDef>Category</th>
+      <td mat-cell *matCellDef="let row">{{ row.category }}</td>
+    </ng-container>
+
+    <!-- The table will render three header rows, one data row per data object.-->
+    <tr
+      mat-header-row
+      *matHeaderRowDef="[
+        'actionsFirstRow',
+        'idFirstRow',
+        'nameFirstRow',
+        'descriptionFirstRow',
+        'categoryFirstRow'
+      ]"
+    ></tr>
+    <tr
+      mat-header-row
+      *matHeaderRowDef="[
+        'addAction',
+        'idFilter',
+        'nameFilter',
+        'descriptionFilter',
+        'categoryFilter'
+      ]"
+    ></tr>
+    <tr
+      mat-header-row
+      class="third-row-header"
+      *matHeaderRowDef="displayedColumns"
+    ></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
 
     <!-- Row shown when there is no matching data. -->
     <tr class="mat-row" *matNoDataRow>
-      <td class="mat-cell" colspan="4">No data matching the filter "{{input.value}}"</td>
+      <td class="mat-cell" colspan="4">
+        No data matching the filter "{{ input.value }}"
+      </td>
     </tr>
   </table>
 
-  <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" aria-label="Select page of users"></mat-paginator>
+  <mat-paginator
+    [pageSizeOptions]="[5, 10, 25, 100]"
+    aria-label="Select page of users"
+  ></mat-paginator>
 </div>

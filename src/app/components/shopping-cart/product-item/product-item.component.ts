@@ -31,14 +31,14 @@ export class ProductItemComponent implements OnInit {
   }
 
   handleAddToWishList() {
-    this.wishListService.addToWishList(this.productItem.id).subscribe(() => {
+    this.wishListService.addToWishList(this.productItem._id).subscribe(() => {
       this.msg.sendMsg(this.productItem.name);
     });
   }
 
   handleRemoveFromWishList() {
     this.wishListService
-      .removeFromWishList(this.productItem.id)
+      .removeFromWishList(this.productItem._id)
       .subscribe(() => {
         this.msg.sendMsg(this.productItem.name);
       });

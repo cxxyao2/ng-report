@@ -1,0 +1,28 @@
+.container {
+  height: 500px;
+  width: 100%;
+  max-width: 600px;
+  overflow: auto;
+}
+
+.mat-table {
+  width: 100%;
+}
+
+.mat-table-sticky {
+  background: #59abfd;
+  opacity: 1;
+}
+
+.mat-form-field {
+  font-size: 14px;
+  width: 50%;
+}
+
+.mat-column-locked {
+  max-width: 100px;
+}
+
+.mat-column-name {
+  max-width: 100px;
+}

@@ -1,1 +1,79 @@
-<p>add-role-to-user works!</p>
+<h2>Grant Roles to User && Lock(Unlock) Users</h2>
+
+<div style="margin-bottom: 8px">128 records meet the criteria.</div>
+<div class="container mat-elevation-z8">
+  <table mat-table [dataSource]="dataSource">
+    <!-- Name Column -->
+    <ng-container matColumnDef="name">
+      <th mat-header-cell *matHeaderCellDef>
+        Name
+        <div>
+          <mat-form-field>
+            <input
+              matInput
+              class="form-field"
+              [formControl]="positionFilter"
+              placeholder="Position Filter"
+            />
+          </mat-form-field>
+        </div>
+      </th>
+      <td mat-cell *matCellDef="let element">{{ element.name }}</td>
+    </ng-container>
+
+    <!-- Locked Column -->
+    <ng-container matColumnDef="locked">
+      <th mat-header-cell *matHeaderCellDef>
+        Locked
+        <div>
+          <mat-checkbox></mat-checkbox>
+        </div>
+      </th>
+      <td mat-cell *matCellDef="let element">
+        <mat-checkbox [checked]="element.locked"></mat-checkbox>
+      </td>
+    </ng-container>
+
+    <!-- salesperson role -->
+    <ng-container matColumnDef="salesperson">
+      <th mat-header-cell *matHeaderCellDef>
+        Person
+        <div>
+          <mat-checkbox></mat-checkbox>
+        </div>
+      </th>
+      <td mat-cell *matCellDef="let element">
+        <mat-checkbox [checked]="element.salesperson"></mat-checkbox>
+      </td>
+    </ng-container>
+
+    <!-- manager role -->
+    <ng-container matColumnDef="manager">
+      <th mat-header-cell *matHeaderCellDef>
+        Manager
+        <div>
+          <mat-checkbox></mat-checkbox>
+        </div>
+      </th>
+      <td mat-cell *matCellDef="let element">
+        <mat-checkbox [checked]="element.manager"></mat-checkbox>
+      </td>
+    </ng-container>
+
+    <!-- admin role -->
+    <ng-container matColumnDef="admin">
+      <th mat-header-cell *matHeaderCellDef>
+        Admin
+        <div>
+          <mat-checkbox></mat-checkbox>
+        </div>
+      </th>
+      <td mat-cell *matCellDef="let element">
+        <mat-checkbox [checked]="element.admin"></mat-checkbox>
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+  </table>
+</div>

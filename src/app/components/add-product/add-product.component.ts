@@ -27,8 +27,7 @@ const FRUITS: string[] = [
 })
 export class AddProductComponent implements AfterViewInit {
   displayedColumns: string[] = [
-    'action1',
-    'action2',
+    'action',
     'id',
     'name',
     'description',

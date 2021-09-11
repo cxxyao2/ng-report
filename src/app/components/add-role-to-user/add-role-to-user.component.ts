@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit, ViewChild } from '@angular/core';
 import { COMMA, TAB, SPACE, ENTER } from '@angular/cdk/keycodes';
 import { FormControl } from '@angular/forms';
 import { MatTableDataSource } from '@angular/material/table';
+import { MatSort } from '@angular/material/sort';
 import { MatChipInputEvent } from '@angular/material/chips';
 
 export interface UserElement {
@@ -114,13 +115,14 @@ const ELEMENT_DATA: UserElement[] = [
   templateUrl: './add-role-to-user.component.html',
   styleUrls: ['./add-role-to-user.component.scss'],
 })
-export class AddRoleToUserComponent implements OnInit {
+export class AddRoleToUserComponent implements OnInit, AfterViewInit {
   displayedColumns = ['name', 'locked', 'salesperson', 'manager', 'admin'];
 
   positionFilter = new FormControl();
   dataSource = new MatTableDataSource(ELEMENT_DATA);
   nameFilter = new FormControl();
   private filterValues = { id: '', name: '' };
+  @ViewChild(MatSort) sort!: MatSort;
 
   filteredValues = {
     position: '',
@@ -208,4 +210,10 @@ export class AddRoleToUserComponent implements OnInit {
     };
     return filterFunction;
   }
+
+  ngAfterViewInit() {
+    this.dataSource.sort = this.sort;
+  }
+
+
 }

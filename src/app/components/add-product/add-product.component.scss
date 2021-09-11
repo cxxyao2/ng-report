@@ -10,27 +10,6 @@ table {
   th {
     box-shadow: -1px 1px 1px rgba(0, 0, 0, 0.12);
   }
-
-  th.mat-header-cell, td.mat-cell, td.mat-footer-cell {
-    width: 20%;
-  }
-
-  .head-row-button {
-    width: 100%;
-  }
-  .data-row-button-wrapper {
-    .mat-button {
-      width: 50%;
-      margin: 0;
-      padding: 0;
-    }
-  }
-}
-
-.mat-column-actionsFirstRow,
-.mat-column-addAction,
-.mat-column-action1 {
-  padding-left: 0px !important;
 }
 
 .third-row-header {

@@ -1,0 +1,49 @@
+.calendar-wrapper {
+  width: 100%;
+}
+
+.calendar-header {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: row nowrap;
+}
+
+.calendar-header-button-container {
+  position: relative;
+  right: 20px;
+  display: flex;
+  justify-content: center;
+  width: 80px;
+  .mat-button {
+   
+    margin: 0;
+    padding: 0;
+    font-size: 14px;
+  }
+}
+
+mat-grid-list {
+  box-shadow: -1px -1px 2px lightgray;
+}
+
+mat-grid-tile {
+  box-shadow: 1px 1px 1px lightgray;
+  &:nth-child(7n + 1),
+  &:nth-child(7n + 0) {
+    color: rgba(0, 0, 0, 0.8);
+  }
+}
+
+mat-grid-list.calendar {
+  .mat-grid-tile {
+    &:nth-child(7n + 1),
+    &:nth-child(7n + 0),
+    &.passed {
+      background-color: lightgray;
+    }
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    align-items: flex-end;
+  }
+}

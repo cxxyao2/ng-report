@@ -43,6 +43,7 @@ import { SchedulerComponent } from './components/scheduler/scheduler.component';
 import { AddProductComponent } from './components/add-product/add-product.component';
 import { AddRoleToUserComponent } from './components/add-role-to-user/add-role-to-user.component';
 import { ReportByEmployeeComponent } from './components/report-by-employee/report-by-employee.component';
+import { CalendarComponent } from './components/calendar/calendar.component';
 
 @NgModule({
   declarations: [
@@ -77,6 +78,7 @@ import { ReportByEmployeeComponent } from './components/report-by-employee/repor
     AddProductComponent,
     AddRoleToUserComponent,
     ReportByEmployeeComponent,
+    CalendarComponent,
   ],
   imports: [
     BrowserModule,

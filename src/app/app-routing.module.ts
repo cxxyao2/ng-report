@@ -21,10 +21,10 @@ import { SchedulerComponent } from './components/scheduler/scheduler.component';
 import { ReportByEmployeeComponent } from './components/report-by-employee/report-by-employee.component';
 import { AddProductComponent } from './components/add-product/add-product.component';
 import { AddRoleToUserComponent } from './components/add-role-to-user/add-role-to-user.component';
-
+import { CalendarComponent } from './components/calendar/calendar.component';
 const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
-
+  { path: 'calendar', component: CalendarComponent },
   { path: 'home', component: HomeComponent }, // public no-login
   { path: 'dash', component: DashboardComponent }, // user profile
   { path: 'add-product', component: AddProductComponent }, // administrator role

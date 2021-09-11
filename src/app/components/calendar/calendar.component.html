@@ -1,0 +1,41 @@
+<mat-card class="calendar-wrapper">
+  <div class="calendar-header">
+    <h2>{{ startDayOfCalendar | date: "MMMM yyyy" }}</h2>
+    <div class="calendar-header-button-container">
+      <button
+        mat-button
+        aria-label="back icon"
+        (click)="getCalendarOfLastMonth()"
+      >
+        <mat-icon>arrow_back</mat-icon>
+      </button>
+      <button
+        mat-button
+        aria-label="forward icon"
+        (click)="getCalendarOfNextMonth()"
+      >
+        <mat-icon>arrow_forward</mat-icon>
+      </button>
+    </div>
+  </div>
+  <mat-grid-list class="day-wrapper" cols="7" rowHeight="30px" gutterSize="2px">
+    <mat-grid-tile class="header">Sun</mat-grid-tile>
+    <mat-grid-tile class="header">Mon</mat-grid-tile>
+    <mat-grid-tile class="header">Tue</mat-grid-tile>
+    <mat-grid-tile class="header">Wed</mat-grid-tile>
+    <mat-grid-tile class="header">Thu</mat-grid-tile>
+    <mat-grid-tile class="header">Fri</mat-grid-tile>
+    <mat-grid-tile class="header">Sat</mat-grid-tile>
+  </mat-grid-list>
+  <mat-grid-list class="calendar" cols="7" rowHeight="60px" gutterSize="2px">
+    <mat-grid-tile
+      *ngFor="let everyday of calendar"
+      [class.passed]="!everyday.isEditable"
+    >
+      <div>{{ everyday.dateElement | date: "d" }}</div>
+      <div style="text-align: left; width: 100%; background-color: #e1bee7">
+        TODO
+      </div>
+    </mat-grid-tile>
+  </mat-grid-list>
+</mat-card>

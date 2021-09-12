@@ -1,5 +1,6 @@
+import { ComponentType } from '@angular/cdk/portal';
 import { Injectable } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { ConfirmComponent } from '../components/confirm/confirm.component';
 
 export interface ConfirmDialogData {
@@ -18,5 +19,14 @@ export class DialogService {
     this.dialog
       .open(ConfirmComponent, { data, width: '400px', disableClose: true })
       .afterClosed();
+  }
+
+
+  async openLazyDialog(dialogName: string): Promise<MatDialogRef<any>> {
+    const chunk = await import(
+      `../lazy-components/${dialogName}/${dialogName}.component`
+    );
+    const dialogComponent = Object.values(chunk)[0] as ComponentType<unknown>;
+    return this.dialog.open(dialogComponent);
   }
 }

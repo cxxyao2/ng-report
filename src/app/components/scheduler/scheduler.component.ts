@@ -50,7 +50,7 @@ export class SchedulerComponent implements OnInit {
   displayedColumns: string[] = ['action', 'name', 'period'];
   dataSource = ELEMENT_DATA;
 
-  constructor(private dialogService: DialogService) {}
+  constructor(public dialogService: DialogService) {}
 
   ngOnInit(): void {}
 

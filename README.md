@@ -7,6 +7,11 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 - register & login with recaptcha
 - deploy web worker for analyzing mass data and image. no block the main thread.
 - attention to modularity && reusability
+- lazy loading
+- interceptors
+- guards, resolves
+- light/dark themes
+- i18n
 
 ## back-end : mongodb mongoose express node.js
 

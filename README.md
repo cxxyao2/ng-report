@@ -6,6 +6,7 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 - prevent XSRF attack by cookie from back-end server et set it as HTTP header
 - register & login with recaptcha
 - deploy web worker for analyzing mass data and image. no block the main thread.
+- attention to modularity && reusability
 
 ## back-end : mongodb mongoose express node.js
 

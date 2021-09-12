@@ -3,6 +3,8 @@ import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 export interface DayInCalendar {
   dateElement: Date | null;
   isWorkday: boolean;
+  isToday?: boolean | null;
+  events?: string | null;
 }
 
 @Component({
@@ -46,10 +48,12 @@ export class CalendarComponent implements OnInit {
       if (dayInWeek < 6 && dt >= this.today) {
         isWorkday = true;
       }
+      const isToday = dt.toDateString() === this.today.toDateString();
 
       this.calendar[whatDayIsFirst + i] = {
         dateElement: dt,
         isWorkday,
+        isToday,
       };
     }
   }

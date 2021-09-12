@@ -1,0 +1,52 @@
+@use 'sass:map';
+@use '~@angular/material' as mat;
+
+@mixin calendar-color($config-or-theme, $shadow-color: rgba(0, 0, 255, 0.1)) {
+  $config: mat.get-color-config($config-or-theme);
+  $primary: map.get($config, primary);
+  $accent: map.get($config, accent);
+  $warn: map.get($config, warn);
+  $holiday-color: mat.get-color-from-palette($primary, 50);
+
+  app-calendar {
+    mat-grid-tile {
+      box-shadow: -1px 0px 1px $shadow-color, 0px 1px 1px $shadow-color;
+    }
+
+    mat-grid-list {
+      box-shadow: 1px 1px 1px $shadow-color;
+
+      &.calendar {
+        .mat-grid-tile {
+          &:nth-child(7n + 1),
+          &:nth-child(7n + 0),
+          &.isHoliday {
+            background-color: $holiday-color;
+          }
+          .day_event {
+            background-color: mat.get-color-from-palette($primary, 50);
+            width: 100%;
+          }
+          .today {
+            position: relative;
+          }
+          .today::before {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            content: "";
+            display: inline-block;
+            width: 24px;
+            height: 24px;
+            -moz-border-radius: 12px;
+            -webkit-border-radius: 12px;
+            border-radius: 12px;
+            opacity: 0.5;
+            transform: translate(-50%, -50%);
+            background-color: mat.get-color-from-palette($accent);
+          }
+        }
+      }
+    }
+  }
+}

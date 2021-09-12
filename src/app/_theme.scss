@@ -23,7 +23,7 @@ $dark-primary: mat.define-palette(mat.$indigo-palette, 900);
 $dark-accent: mat.define-palette(mat.$green-palette, 100);
 
 // The warn palette is optional (defaults to red).
-$dark-warn: mat.define-palette(mat.$red-palette);
+$dark-warn: mat.define-palette(mat.$purple-palette,400);
 
 // Create the theme object (a Sass map containing all of the palettes).
 $dark-theme: mat.define-dark-theme(

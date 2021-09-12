@@ -10,7 +10,6 @@
   margin-bottom: 8px;
   overflow: hidden;
   border-radius: 4px;
-  box-shadow: 0 0 2rem 0.15rem rgba(0, 0, 255, 0.1);
   .task-section-search-area_input {
     width: 100%;
     border: none;
@@ -35,18 +34,12 @@
 }
 
 .task-section-absolute-basic {
-  position: absolute;
-  top: 55px;
   left: 0;
   right: 16px;
 }
 
 .task-section-search-area_input-error {
   @extend .task-section-absolute-basic;
-  border-left: 2px solid red;
-  box-shadow: 0px 2px 4px -1px rgba(0, 0, 0, 0.2),
-    0px 4px 5px 0px rgba(0, 0, 0, 0.14), 0px 1px 10px 0px rgba(0, 0, 0, 0.12);
-  overflow-y: auto;
   padding: 8px;
   z-index: 1002;
 }
@@ -56,30 +49,29 @@
   margin: 0 auto;
   padding: 0;
   border-radius: 4px;
-  box-shadow: 0px 2px 4px -1px rgba(0, 0, 0, 0.2),
-    0px 4px 5px 0px rgba(0, 0, 0, 0.14), 0px 1px 10px 0px rgba(0, 0, 0, 0.12);
-  max-height: 12rem;
-  overflow-y: auto;
   z-index: 1001;
 }
 
 .task-section-daily-task-card {
   @extend .task-section-absolute-basic;
-  overflow: visible;
-
   z-index: 1000;
-  .daily-task-card-content {
-    position: relative;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    table.task-list {
-      font-size: 1rem;
-      color: #333;
-      td:last-child {
-        text-align: right;
-      }
+  table {
+    width: 100%;
+    text-align: left;
+    .text-right {
+      text-align: right;
     }
   }
+
+  .th_icon {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    padding: 4px 8px;
+    border-radius: 4px;
+    &.bigger-padding {
+      padding: 4px 16px;
+    }
+  }
+ 
 }

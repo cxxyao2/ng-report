@@ -1,4 +1,5 @@
 <mat-card class="calendar-wrapper">
+  <input type="hidden" #hidden_today value="{{ today }}" />
   <div class="calendar-header">
     <h2>{{ startDayOfCalendar | date: "MMMM yyyy" }}</h2>
     <div class="calendar-header-button-container">
@@ -33,8 +34,10 @@
       [class.isHoliday]="!everyday.isWorkday"
       (click)="onClick(everyday)"
     >
-      <div>{{ everyday.dateElement | date: "d" }}</div>
-      <div class="day_event">TODO</div>
+      <div [class.today]="everyday.isToday">
+        {{ everyday.dateElement | date: "d" }}
+      </div>
+      <div class="day_event">{{ everyday.events }}</div>
     </mat-grid-tile>
   </mat-grid-list>
 </mat-card>

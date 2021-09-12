@@ -1,12 +1,20 @@
 import { Component, OnInit } from '@angular/core';
-
+import { MatSelectionListChange } from '@angular/material/list/selection-list';
+import { DayInCalendar } from '../calendar/calendar.component';
 @Component({
   selector: 'app-scheduler',
   templateUrl: './scheduler.component.html',
   styleUrls: ['./scheduler.component.scss'],
 })
 export class SchedulerComponent implements OnInit {
-  typesOfShoes: string[] = [
+  showPersonList = true;
+  isValidPerson = false;
+  selectedPerson = '';
+  allPersons: string[] = [
+    'Alex',
+    'Bob',
+    'Tom',
+    'Hans',
     'Boots',
     'Clogs',
     'Loafers',
@@ -16,45 +24,57 @@ export class SchedulerComponent implements OnInit {
 
   personList: string[] = ['Alex', 'Bob', 'Tom', 'Hans'];
 
-  calendar: string[] = [];
-
   constructor() {}
 
-  ngOnInit(): void {
-    for (let i = 0; i < 35; i++) {
-      this.calendar.push('');
+  ngOnInit(): void {}
+
+  inputPersonChange(inputPerson: string): void {
+    this.isValidPerson = false;
+    if (inputPerson.length > 0) {
+      this.personList = this.allPersons.filter((person) =>
+        person.toLowerCase().includes(inputPerson.toLowerCase())
+      );
+    } else {
+      this.personList = this.allPersons.slice(0);
     }
-    this.getCalendarOfThisMonth();
+    this.showPersonList = true;
   }
 
-  getCalendarOfThisMonth(): void {
-    // calculate the calendar array
-    // get the first day of this month
-    const today = new Date();
-    const year = today.getFullYear();
-    const month = today.getMonth();
-    const firstDayOfMonth = new Date(year, month, 1);
-    const lastDayOfMonth = new Date(year, month + 1, 0).getDate();
-    const whatDayIsFirst = firstDayOfMonth.getDay();
-    for (let i = 0; i < lastDayOfMonth; i++) {
-      this.calendar[whatDayIsFirst + i] = (i + 1).toString();
+  selectPersonByEnter(inputPerson: string): void {
+    let idx = -1;
+    if (inputPerson.trim().length === 0) {
+      this.selectedPerson = '';
+      this.isValidPerson = true;
     }
+    if (inputPerson.trim().length > 0) {
+      this.selectedPerson = inputPerson.trim();
+      idx = this.allPersons.findIndex((person) =>
+        person.toLowerCase().includes(inputPerson.toLowerCase())
+      );
+      if (idx >= 0) {
+        this.isValidPerson = true;
+        this.selectedPerson = this.allPersons[idx];
+      } else {
+        this.isValidPerson = false;
+      }
+    }
+    this.getTaskList();
+    this.showPersonList = false;
   }
-  getCalendarOfNextMonth(): void {
-    for (let i = 0; i < 35; i++) {
-      this.calendar[i] = '';
-    }
-    const today = new Date();
-    const year = today.getFullYear();
-    const month = today.getMonth() + 1;
-    const firstDayOfMonth = new Date(year, month, 1);
-    const lastDayOfMonth = new Date(year, month + 1, 0).getDate();
-    const whatDayIsFirst = firstDayOfMonth.getDay();
-    for (let i = 0; i < lastDayOfMonth; i++) {
-      this.calendar[whatDayIsFirst + i] = (i + 1).toString();
-    }
+
+  getTaskList(): void {
+    // 1, set TaskList null
+    
+    // 2, set Data to TaskList
   }
-  getCalendarOfLastMonth(): void {
-    this.calendar = ['', '', '1', '2', '28'];
+  selectDate(event: DayInCalendar): void {
+    console.log(event);
+  }
+
+  selectPerson(event: MatSelectionListChange): void {
+    this.showPersonList = false;
+    this.isValidPerson = true;
+    this.selectedPerson = event.source.selectedOptions.selected[0]?.value;
+    this.getTaskList();
   }
 }

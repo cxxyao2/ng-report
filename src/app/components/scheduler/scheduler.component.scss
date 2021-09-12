@@ -1,52 +1,9 @@
-.today-row {
-  display: flex;
-  justify-content: space-between;
-  flex-wrap: nowrap;
-}
-
-.today-row-button-container {
-  display: flex;
-  justify-content: center;
-  width: 120px;
-  .mat-mini-fab {
-    background-color: white;
-    color: black;
-  }
-  .mat-mini-fab + .mat-mini-fab {
-    margin-left: 8px;
-  }
-}
-
-mat-grid-list.day {
-  box-shadow: -1px -1px 2px lightgray;
-}
-
-mat-grid-list.calendar {
-  box-shadow: -1px 1px 2px lightgray;
-  .mat-grid-tile.everyday {
-    display: flex;
-    flex-direction: column;
-    flex-wrap: nowrap;
-    align-items: flex-end;
-  }
-  .mat-grid-tile:nth-child(7n + 1) {
-    color: red;
-  }
-  .mat-grid-tile:nth-child(7n + 0) {
-    color: blue;
-  }
-}
-
-mat-grid-tile {
-  box-shadow: 1px 1px 1px lightgray;
-}
-
 .search-person-input-wrapper {
   position: relative;
   width: 100%;
   min-width: 150px;
-  height: 100%;
   margin-right: 16px;
+  margin-bottom: 8px;
   overflow: hidden;
   border-radius: 4px;
   box-shadow: 0 0 2rem 0.15rem rgba(0, 0, 255, 0.1);
@@ -77,12 +34,16 @@ mat-grid-tile {
   position: relative;
   top: 0px;
   left: 0;
-  margin: 8px auto;
   width: 100%;
+  margin: 0 auto;
+  padding: 0;
+  border-radius: 4px;
+  max-height: 12rem;
+  overflow-y: auto;
   z-index: 1001;
 }
 
-form {
+.taskList {
   position: relative;
   .daily-task-card {
     position: absolute;

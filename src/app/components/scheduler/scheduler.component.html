@@ -1,121 +1,91 @@
 <div fxLayout="row wrap" fxLayoutGap="16px grid">
   <div class="calendar-wrapper" fxFlex="50%" fxFlex.xs="100%">
-    <mat-card>
-      <div class="today-row">
-        <h2>September 8, 2021</h2>
-        <div class="today-row-button-container">
-          <button mat-mini-fab aria-label="back icon">
-            <mat-icon>arrow_back</mat-icon>
-          </button>
-          <button
-            mat-mini-fab
-            aria-label="forward icon"
-            (click)="getCalendarOfNextMonth()"
-          >
-            <mat-icon>arrow_forward</mat-icon>
-          </button>
-        </div>
-      </div>
-      <mat-grid-list class="day" cols="7" rowHeight="30px" gutterSize="2px">
-        <mat-grid-tile class="header">Sun</mat-grid-tile>
-        <mat-grid-tile class="header">Mon</mat-grid-tile>
-        <mat-grid-tile class="header">Tue</mat-grid-tile>
-        <mat-grid-tile class="header">Wed</mat-grid-tile>
-        <mat-grid-tile class="header">Thu</mat-grid-tile>
-        <mat-grid-tile class="header">Fri</mat-grid-tile>
-        <mat-grid-tile class="header">Sat</mat-grid-tile>
-      </mat-grid-list>
-      <mat-grid-list
-        class="calendar"
-        cols="7"
-        rowHeight="60px"
-        gutterSize="2px"
-      >
-        <mat-grid-tile *ngFor="let everyday of calendar">
-          <div class="everyday">
-            <div style="text-align: right">{{ everyday }}</div>
-            <div>8 Events</div>
-          </div>
-        </mat-grid-tile>
-      </mat-grid-list>
-    </mat-card>
+    <app-calendar (itemEvent)="selectDate($event)"></app-calendar>
   </div>
   <div class="taskList" fxFlex="50%" fxFlex.xs="100%">
-    <form role="search">
-      <div class="search-person-input-wrapper">
-        <input
-          type="text"
-          class="search-person"
-          autocomplete
-          placeholder="input name..."
-        />
-        <button mat-button class="search-icon">
-          <mat-icon color="primary">search</mat-icon>
-        </button>
+    <div class="search-person-input-wrapper">
+      <input
+        type="text"
+        class="search-person"
+        autocomplete
+        placeholder="search salesperson"
+        [(ngModel)]="selectedPerson"
+        (key.enter)="selectPersonByEnter(input.value)"
+        (ngModelChange)="inputPersonChange(input.value)"
+        #input
+      />
+      <button mat-button class="search-icon">
+        <mat-icon color="primary">search</mat-icon>
+      </button>
+      <div *ngIf="!isValidPerson">
+        Salesperson named {{ selectedPerson }} does not exist.
       </div>
-      <div class="search-data-list-wrapper">
-        <mat-card>
-          <mat-selection-list #shoes [multiple]="false">
-            <mat-list-option *ngFor="let shoe of typesOfShoes" [value]="shoe">
-              {{ shoe }}
-            </mat-list-option>
-          </mat-selection-list>
-
-          <p>Option selected: {{ shoes.selectedOptions.selected[0]?.value }}</p>
-        </mat-card>
-      </div>
-      <mat-card class="daily-task-card">
-        <div class="daily-task">
-          <mat-list>
-            <div mat-subheader>Daily Task</div>
-            <mat-list-item>
-              <mat-icon mat-list-icon>add</mat-icon>
-              <mat-icon mat-list-icon></mat-icon>
-              <div mat-line>9:00</div>
-            </mat-list-item>
-            <mat-list-item>
-              <mat-icon mat-list-icon>remove</mat-icon>
-              <mat-icon mat-list-icon>edit</mat-icon>
-              <div mat-line>10:00 client A</div>
-            </mat-list-item>
-            <mat-list-item>
-              <mat-icon mat-list-icon>remove</mat-icon>
-              <mat-icon mat-list-icon>edit</mat-icon>
-              <div mat-line>11:00 client B</div>
-            </mat-list-item>
-            <mat-list-item>
-              <mat-icon mat-list-icon>add</mat-icon>
-              <mat-icon mat-list-icon></mat-icon>
-              <div mat-line>12:00 client C</div>
-            </mat-list-item>
-            <mat-divider></mat-divider>
-
-            <mat-list-item>
-              <mat-icon mat-list-icon>add</mat-icon>
-              <mat-icon mat-list-icon></mat-icon>
-              <div mat-line>13:00</div>
-            </mat-list-item>
-            <mat-list-item>
-              <mat-icon mat-list-icon>add</mat-icon>
-              <mat-icon mat-list-icon></mat-icon>
-              <div mat-line>14:00</div>
-            </mat-list-item>
-            <mat-list-item>
-              <mat-icon mat-list-icon>add</mat-icon>
-              <mat-icon mat-list-icon></mat-icon>
-              <div mat-line>15:00</div>
-            </mat-list-item>
-            <mat-list-item>
-              <mat-icon mat-list-icon>add</mat-icon>
-              <mat-icon mat-list-icon></mat-icon>
-              <div mat-line>16:00</div>
-            </mat-list-item>
-            <mat-action-row>
-              <button mat-raised-button>xx</button>
-            </mat-action-row>
-          </mat-list>
-        </div>
+    </div>
+    <div *ngIf="showPersonList" class="search-data-list-wrapper">
+      <mat-card>
+        <mat-selection-list
+          #persons
+          [multiple]="false"
+          (selectionChange)="selectPerson($event)"
+        >
+          <mat-list-option *ngFor="let person of personList" [value]="person">
+            {{ person }}
+          </mat-list-option>
+        </mat-selection-list>
+        <p>Option selected: {{ persons.selectedOptions.selected[0]?.value }}</p>
       </mat-card>
-    </form>
+    </div>
+    <mat-card class="daily-task-card">
+      <div class="daily-task">
+        <mat-list>
+          <div mat-subheader>Daily Task</div>
+          <mat-list-item>
+            <mat-icon mat-list-icon>add</mat-icon>
+            <mat-icon mat-list-icon></mat-icon>
+            <div mat-line>9:00</div>
+          </mat-list-item>
+          <mat-list-item>
+            <mat-icon mat-list-icon>remove</mat-icon>
+            <mat-icon mat-list-icon>edit</mat-icon>
+            <div mat-line>10:00 client A</div>
+          </mat-list-item>
+          <mat-list-item>
+            <mat-icon mat-list-icon>remove</mat-icon>
+            <mat-icon mat-list-icon>edit</mat-icon>
+            <div mat-line>11:00 client B</div>
+          </mat-list-item>
+          <mat-list-item>
+            <mat-icon mat-list-icon>add</mat-icon>
+            <mat-icon mat-list-icon></mat-icon>
+            <div mat-line>12:00 client C</div>
+          </mat-list-item>
+          <mat-divider></mat-divider>
+
+          <mat-list-item>
+            <mat-icon mat-list-icon>add</mat-icon>
+            <mat-icon mat-list-icon></mat-icon>
+            <div mat-line>13:00</div>
+          </mat-list-item>
+          <mat-list-item>
+            <mat-icon mat-list-icon>add</mat-icon>
+            <mat-icon mat-list-icon></mat-icon>
+            <div mat-line>14:00</div>
+          </mat-list-item>
+          <mat-list-item>
+            <mat-icon mat-list-icon>add</mat-icon>
+            <mat-icon mat-list-icon></mat-icon>
+            <div mat-line>15:00</div>
+          </mat-list-item>
+          <mat-list-item>
+            <mat-icon mat-list-icon>add</mat-icon>
+            <mat-icon mat-list-icon></mat-icon>
+            <div mat-line>16:00</div>
+          </mat-list-item>
+          <mat-action-row>
+            <button mat-raised-button>xx</button>
+          </mat-action-row>
+        </mat-list>
+      </div>
+    </mat-card>
   </div>
 </div>

@@ -1,8 +1,8 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 
-export interface dayInCalendar {
+export interface DayInCalendar {
   dateElement: Date | null;
-  isEditable: boolean;
+  isWorkday: boolean;
 }
 
 @Component({
@@ -11,7 +11,8 @@ export interface dayInCalendar {
   styleUrls: ['./calendar.component.scss'],
 })
 export class CalendarComponent implements OnInit {
-  calendar: dayInCalendar[] = [];
+  @Output() itemEvent = new EventEmitter<DayInCalendar>();
+  calendar: DayInCalendar[] = [];
   today = new Date();
   startDayOfCalendar = new Date();
 
@@ -24,7 +25,6 @@ export class CalendarComponent implements OnInit {
     const date = baseDay.getDate();
     this.today = new Date(year, month, date, 0, 0, 0);
     this.getDaysOfMonth(this.today);
-    console.log('today is', this.today);
   }
 
   getDaysOfMonth(baseDay: Date): void {
@@ -36,20 +36,20 @@ export class CalendarComponent implements OnInit {
     const whatDayIsFirst = firstDayOfMonth.getDay();
     this.calendar = [];
     for (let i = 0; i < 35; i++) {
-      this.calendar.push({ dateElement: null, isEditable: false });
+      this.calendar.push({ dateElement: null, isWorkday: false });
     }
     for (let i = 0; i < lastDayOfMonth; i++) {
       const dt = new Date(firstDayOfMonth.getTime());
       dt.setTime(dt.getTime() + 24 * 60 * 60 * 1000 * i);
       const dayInWeek = dt.getDay();
-      let isEditable = false;
+      let isWorkday = false;
       if (dayInWeek < 6 && dt >= this.today) {
-        isEditable = true;
+        isWorkday = true;
       }
 
       this.calendar[whatDayIsFirst + i] = {
         dateElement: dt,
-        isEditable,
+        isWorkday,
       };
     }
   }
@@ -76,5 +76,9 @@ export class CalendarComponent implements OnInit {
     }
     this.startDayOfCalendar = current;
     this.getDaysOfMonth(this.startDayOfCalendar);
+  }
+
+  onClick(event: DayInCalendar): void {
+    this.itemEvent.emit(event);
   }
 }

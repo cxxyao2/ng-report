@@ -30,12 +30,11 @@
   <mat-grid-list class="calendar" cols="7" rowHeight="60px" gutterSize="2px">
     <mat-grid-tile
       *ngFor="let everyday of calendar"
-      [class.passed]="!everyday.isEditable"
+      [class.isHoliday]="!everyday.isWorkday"
+      (click)="onClick(everyday)"
     >
       <div>{{ everyday.dateElement | date: "d" }}</div>
-      <div style="text-align: left; width: 100%; background-color: #e1bee7">
-        TODO
-      </div>
+      <div class="day_event">TODO</div>
     </mat-grid-tile>
   </mat-grid-list>
 </mat-card>

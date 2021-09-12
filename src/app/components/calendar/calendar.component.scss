@@ -10,15 +10,15 @@
 
 .calendar-header-button-container {
   position: relative;
-  right: 20px;
+  right: 0px;
   display: flex;
   justify-content: center;
   width: 80px;
   .mat-button {
-   
     margin: 0;
     padding: 0;
     font-size: 14px;
+    min-width: 40px;
   }
 }
 
@@ -38,12 +38,16 @@ mat-grid-list.calendar {
   .mat-grid-tile {
     &:nth-child(7n + 1),
     &:nth-child(7n + 0),
-    &.passed {
+    &.isHoliday {
       background-color: lightgray;
     }
-    display: flex;
-    flex-direction: column;
-    flex-wrap: nowrap;
-    align-items: flex-end;
+    .day_event {
+      background-color: #e1bee7;
+      width:100%;
+    }
   }
+}
+
+::ng-deep .mat-grid-tile-content {
+  flex-direction: column !important;
 }

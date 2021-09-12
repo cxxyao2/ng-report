@@ -7,7 +7,7 @@ import { DayInCalendar } from '../calendar/calendar.component';
   styleUrls: ['./scheduler.component.scss'],
 })
 export class SchedulerComponent implements OnInit {
-  showPersonList = true;
+  showPersonList = false;
   isValidPerson = false;
   selectedPerson = '';
   allPersons: string[] = [
@@ -29,7 +29,7 @@ export class SchedulerComponent implements OnInit {
   ngOnInit(): void {}
 
   inputPersonChange(inputPerson: string): void {
-    this.isValidPerson = false;
+     this.isValidPerson = true;
     if (inputPerson.length > 0) {
       this.personList = this.allPersons.filter((person) =>
         person.toLowerCase().includes(inputPerson.toLowerCase())
@@ -42,6 +42,7 @@ export class SchedulerComponent implements OnInit {
 
   selectPersonByEnter(inputPerson: string): void {
     let idx = -1;
+    this.isValidPerson = false;
     if (inputPerson.trim().length === 0) {
       this.selectedPerson = '';
       this.isValidPerson = true;
@@ -54,17 +55,19 @@ export class SchedulerComponent implements OnInit {
       if (idx >= 0) {
         this.isValidPerson = true;
         this.selectedPerson = this.allPersons[idx];
-      } else {
-        this.isValidPerson = false;
       }
     }
-    this.getTaskList();
+
     this.showPersonList = false;
   }
 
   getTaskList(): void {
+    if (!(this.isValidPerson && this.selectedPerson.length >= 1)) {
+      return;
+    }
+
+    // search button is clicked...
     // 1, set TaskList null
-    
     // 2, set Data to TaskList
   }
   selectDate(event: DayInCalendar): void {
@@ -75,6 +78,5 @@ export class SchedulerComponent implements OnInit {
     this.showPersonList = false;
     this.isValidPerson = true;
     this.selectedPerson = event.source.selectedOptions.selected[0]?.value;
-    this.getTaskList();
   }
 }

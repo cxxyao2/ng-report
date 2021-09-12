@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MatSelectionListChange } from '@angular/material/list/selection-list';
 import { DayInCalendar } from '../calendar/calendar.component';
+import { DialogService } from 'src/app/services/dialog.service';
 export interface ScheduleElement {
   name: string | null;
   period: string;
@@ -49,9 +50,18 @@ export class SchedulerComponent implements OnInit {
   displayedColumns: string[] = ['action', 'name', 'period'];
   dataSource = ELEMENT_DATA;
 
-  constructor() {}
+  constructor(private dialogService: DialogService) {}
 
   ngOnInit(): void {}
+
+  openDeleteDialog() {
+    this.dialogService.confirmDialog({
+      title: 'Title',
+      message: 'Are you sure you want to do this?',
+      confirmText: 'Yes',
+      cancelText: 'No',
+    });
+  }
 
   inputPersonChange(inputPerson: string): void {
     this.isValidPerson = true;
@@ -99,9 +109,5 @@ export class SchedulerComponent implements OnInit {
     this.showPersonList = false;
     this.isValidPerson = true;
     this.selectedPerson = event.source.selectedOptions.selected[0]?.value;
-  }
-
-  onClick() {
-    alert('hello');
   }
 }

@@ -51,17 +51,17 @@
         <ng-container matColumnDef="action">
           <th mat-header-cell *matHeaderCellDef>Action</th>
           <td mat-cell *matCellDef="let element">
-            <div
-              class="th_icon bigger-padding"
-              (click)="onClick()"
-              *ngIf="!element.name"
-            >
+            <div class="th_icon bigger-padding" *ngIf="!element.name">
               <mat-icon>add</mat-icon>
             </div>
-            <div class="th_icon" (click)="onClick()" *ngIf="element.name">
+            <div class="th_icon" *ngIf="element.name">
               <mat-icon>edit</mat-icon>
             </div>
-            <div class="th_icon" (click)="onClick()" *ngIf="element.name">
+            <div
+              class="th_icon"
+              *ngIf="element.name"
+              (click)="openDeleteDialog()"
+            >
               <mat-icon>delete</mat-icon>
             </div>
           </td>

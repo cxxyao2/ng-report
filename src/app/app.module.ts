@@ -44,6 +44,7 @@ import { AddProductComponent } from './components/add-product/add-product.compon
 import { AddRoleToUserComponent } from './components/add-role-to-user/add-role-to-user.component';
 import { ReportByEmployeeComponent } from './components/report-by-employee/report-by-employee.component';
 import { CalendarComponent } from './components/calendar/calendar.component';
+import { ConfirmComponent } from './components/confirm/confirm.component';
 
 @NgModule({
   declarations: [
@@ -79,6 +80,7 @@ import { CalendarComponent } from './components/calendar/calendar.component';
     AddRoleToUserComponent,
     ReportByEmployeeComponent,
     CalendarComponent,
+    ConfirmComponent,
   ],
   imports: [
     BrowserModule,

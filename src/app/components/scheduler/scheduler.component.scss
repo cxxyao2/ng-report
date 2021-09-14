@@ -2,7 +2,7 @@
   position: relative;
 }
 
-.task-section-search-area {
+.search-area {
   position: relative;
   width: 100%;
   min-width: 150px;
@@ -10,7 +10,7 @@
   margin-bottom: 8px;
   overflow: hidden;
   border-radius: 4px;
-  .task-section-search-area_input {
+  .search-area_input {
     width: 100%;
     border: none;
     outline: none;
@@ -25,7 +25,7 @@
     color: #131f69;
     letter-spacing: 0.1rem;
   }
-  .task-section-search-area_button {
+  .search-area_button {
     position: absolute;
     right: 0px;
     top: 0px;
@@ -33,45 +33,48 @@
   }
 }
 
-.task-section-absolute-basic {
+.task-section-position-basic {
   left: 0;
   right: 16px;
 }
 
-.task-section-search-area_input-error {
-  @extend .task-section-absolute-basic;
+.search-area_input-error {
+  @extend .task-section-position-basic;
   padding: 8px;
   z-index: 1002;
 }
 
-.task-section-person-list-wrapper {
-  @extend .task-section-absolute-basic;
+.data-list-wrapper {
+  @extend .task-section-position-basic;
   margin: 0 auto;
   padding: 0;
   border-radius: 4px;
   z-index: 1001;
 }
 
-.task-section-daily-task-card {
-  @extend .task-section-absolute-basic;
+.daily-task-card {
+  @extend .task-section-position-basic;
   z-index: 1000;
   table {
     width: 100%;
     text-align: left;
-    .text-right {
-      text-align: right;
+    .table-main-title {
+      font-size: 16px;
+      font-weight: 900;
+    }
+    .th_icon {
+      display: inline-flex;
+      justify-content: center;
+      align-items: center;
+      padding: 4px 8px;
+      border-radius: 4px;
+      &.bigger-padding {
+        padding: 4px 16px;
+      }
     }
   }
+}
 
-  .th_icon {
-    display: inline-flex;
-    justify-content: center;
-    align-items: center;
-    padding: 4px 8px;
-    border-radius: 4px;
-    &.bigger-padding {
-      padding: 4px 16px;
-    }
-  }
- 
+.text-right {
+  text-align: right;
 }

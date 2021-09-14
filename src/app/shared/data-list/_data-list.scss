@@ -1,0 +1,15 @@
+@use 'sass:map';
+@use '~@angular/material' as mat;
+
+@mixin datalist-color($config-or-theme, $shadow-color: rgba(0, 0, 255, 0.1)) {
+  $config: mat.get-color-config($config-or-theme);
+  $primary: map.get($config, primary);
+  $accent: map.get($config, accent);
+  $warn: map.get($config, warn);
+
+  app-data-list {
+    .mat-row:hover {
+      background-color: mat.get-color-from-palette($primary, 50);
+    }
+  }
+}

@@ -1,8 +1,8 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { HomeComponent } from './components/shared/home/home.component';
-import { AboutComponent } from './components/shared/about/about.component';
-import { PageNotFoundComponent } from './components/shared/page-not-found/page-not-found.component';
+import { HomeComponent } from './home/home.component';
+import { AboutComponent } from './about/about.component';
+import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { TodoComponent } from './components/todo/todo.component';
 import { GameCardComponent } from './animations/game-card/game-card.component';
@@ -33,15 +33,15 @@ const routes: Routes = [
   { path: 'schedule', component: SchedulerComponent }, // manager role
   { path: 'by-product', component: ReportByProductsComponent }, // manager role
   { path: 'by-employee', component: ReportByEmployeeComponent }, // manager role
+  { path: 'todo', component: TodoComponent }, // salesperson role
+  { path: 'place-order', component: ProductListComponent }, // salesperson role
   {
-    path: 'todo',
+    path: 'personal',
     children: [
-      { path: 'client', component: AddClientComponent },
-      { path: 'note', component: TodoComponent },
+      { path: 'clients', component: AddClientComponent },
+      { path: 'orders', component: ReportByEmployeeComponent },
     ],
   }, // salesperson role
-
-  { path: 'place-order', component: ProductListComponent }, // salesperson role
 
   { path: 'cart', component: CartComponent },
   { path: 'cart/print', component: PrintInvoiceComponent },

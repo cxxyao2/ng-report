@@ -8,25 +8,25 @@
   $warn: map.get($config, warn);
 
   app-scheduler {
-    .task-section-search-area {
+    .search-area {
       box-shadow: 0 0 2rem 0.15rem $shadow-color;
-      .task-section-search-area_button:hover {
+      .search-area_button:hover {
         background-color: mat.get-color-from-palette($primary, 50);
       }
     }
 
-    .task-section-search-area_input-error {
+    .search-area_error {
       border-left: 2px solid mat.get-color-from-palette($warn);
       box-shadow: 0px 2px 4px -1px $shadow-color, 0px 4px 5px 0px $shadow-color,
         0px 1px 10px 0px $shadow-color;
     }
 
-    .task-section-person-list-wrapper {
+    .data-list-wrapper {
       box-shadow: 0px 2px 4px -1px $shadow-color, 0px 4px 5px 0px $shadow-color,
         0px 1px 10px 0px $shadow-color;
     }
 
-    .task-section-daily-task-card {
+    .daily-task-card {
       .th_icon:hover {
         background-color: mat.get-color-from-palette($primary, 50);
       }

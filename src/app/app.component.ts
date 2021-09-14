@@ -46,21 +46,21 @@ export class AppComponent implements AfterViewInit {
   ];
 
   salespersonItems: NavItem[] = [
-    { label: 'My Orders', icon: 'sell', route: 'place-order' },
+    { label: 'To-do List', icon: 'task', route: 'todo' },
+    { label: 'Place Order', icon: 'add_shopping_cart', route: 'place-order' },
     {
-      label: 'My TodoList',
-      icon: 'edit_calendar',
-      route: 'todo',
+      label: 'Personal Data',
+      icon: 'analytics',
+      route: 'personal',
       children: [
         {
-          label: 'My Supervisor',
-          icon: 'supervisor_account',
-          route: 'todo/client',
+          label: 'My Clients',
+          icon: 'contact_page',
+          route: 'personal/clients',
         },
-        { label: 'My note', icon: 'edit_note', route: 'todo/note' },
+        { label: 'My Orders', icon: 'sell', route: 'personal/orders' },
       ],
     },
-    { label: 'My clients', icon: 'contact_page', route: 'add-client' },
   ];
 
   othersItems: NavItem[] = [

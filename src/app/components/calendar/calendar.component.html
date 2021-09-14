@@ -1,5 +1,4 @@
 <mat-card class="calendar-wrapper">
-  <input type="hidden" #hidden_today value="{{ today }}" />
   <div class="calendar-header">
     <h2>{{ startDayOfCalendar | date: "MMMM yyyy" }}</h2>
     <div class="calendar-header-button-container">
@@ -32,9 +31,12 @@
     <mat-grid-tile
       *ngFor="let everyday of calendar"
       [class.isHoliday]="!everyday.isWorkday"
-      (click)="onClick(everyday)"
+      (click)="toggleDay(everyday)"
     >
-      <div [class.today]="everyday.isToday">
+      <div
+        [class.today]="everyday.isToday"
+        [class.selected]="everyday.isSelected"
+      >
         {{ everyday.dateElement | date: "d" }}
       </div>
       <div class="day_event">{{ everyday.events }}</div>

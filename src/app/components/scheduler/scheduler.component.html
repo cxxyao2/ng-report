@@ -3,10 +3,10 @@
     <app-calendar (itemEvent)="selectDate($event)"></app-calendar>
   </div>
   <div class="task-section" fxFlex="50%" fxFlex.xs="100%">
-    <div class="task-section-search-area">
+    <div class="search-area">
       <input
         type="text"
-        class="task-section-search-area_input"
+        class="search-area_input"
         autocomplete
         placeholder="search salesperson"
         [(ngModel)]="selectedPerson"
@@ -14,19 +14,19 @@
         (ngModelChange)="inputPersonChange(input.value)"
         #input
       />
-      <button mat-button class="task-section-search-area_button">
+      <button mat-button class="search-area_button">
         <mat-icon color="primary">search</mat-icon>
       </button>
     </div>
-    <div *ngIf="!isValidPerson && selectedPerson.trim().length > 0">
-      <mat-card class="task-section-search-area_input-error"
-        >Salesperson named {{ selectedPerson }} does not exist.</mat-card
+    <ng-container *ngIf="!isValidPerson && selectedPerson.trim().length > 0">
+      <mat-card class="search-area_error">
+        No data matching the filter "{{ input.value }}".</mat-card
       >
-    </div>
+    </ng-container>
 
     <div
       *ngIf="showPersonList && personList.length >= 1"
-      class="task-section-person-list-wrapper"
+      class="data-list-wrapper"
     >
       <mat-card>
         <mat-selection-list
@@ -41,26 +41,30 @@
       </mat-card>
     </div>
 
-    <div class="task-section-daily-task-card">
-      <h3 mat-dialog-title>My form</h3>
+    <div class="daily-task-card">
       <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
-        <!--- Note that these columns can be defined in any order.
-        The actual rendered columns are set as a property on the row definition" -->
-
         <!-- Name Column -->
         <ng-container matColumnDef="action">
           <th mat-header-cell *matHeaderCellDef>Action</th>
           <td mat-cell *matCellDef="let element">
-            <div class="th_icon bigger-padding" *ngIf="!element.name">
+            <div
+              class="th_icon bigger-padding"
+              *ngIf="!element.name"
+              (click)="addClient(element)"
+            >
               <mat-icon>add</mat-icon>
             </div>
-            <div class="th_icon" *ngIf="element.name">
+            <div
+              class="th_icon"
+              *ngIf="element.name"
+              (click)="addClient(element)"
+            >
               <mat-icon>edit</mat-icon>
             </div>
             <div
               class="th_icon"
               *ngIf="element.name"
-              (click)="openDeleteDialog()"
+              (click)="openDeleteDialog(element)"
             >
               <mat-icon>delete</mat-icon>
             </div>
@@ -80,33 +84,24 @@
           </td>
         </ng-container>
 
-        <!-- Tabel Title Description Column -->
+        <!-- Table Title SelectedDate Row -->
         <ng-container matColumnDef="table-title">
           <th
             mat-header-cell
             *matHeaderCellDef
             colspan="3"
-            style="font-size: 16px; font-weight: 900"
+            class="table-main-title"
           >
-            {{ selectedDay }} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Task List
+            {{ selectedDay ? (selectedDay | date: "dd MMMM yyyy") : "" }}
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Task List
           </th>
         </ng-container>
 
-        <tr
-          mat-header-row
-          *matHeaderRowDef="['table-title']"
-          class="example-second-header-row"
-        ></tr>
+        <tr mat-header-row *matHeaderRowDef="['table-title']"></tr>
 
         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
         <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
       </table>
-      <button
-        mat-raised-button
-        (click)="dialogService.openLazyDialog('take-notes')"
-      >
-        Open Lazy Loading Dialog
-      </button>
     </div>
   </div>
 </div>

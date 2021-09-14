@@ -12,24 +12,23 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { MaterialModule } from './material.module';
 
-import { AboutComponent } from './components/shared/about/about.component';
+import { AboutComponent } from './about/about.component';
 import { AddClientComponent } from './components/add-client/add-client.component';
 import { CartComponent } from './components/./shopping-cart/cart/cart.component';
-import { ChipsMultiSelectComponent } from './components/shared/chips-multi-select/chips-multi-select.component';
+import { ChipsMultiSelectComponent } from './shared/chips-multi-select/chips-multi-select.component';
 import { CartItemComponent } from './components/shopping-cart/cart/cart-item/cart-item.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
-import { HomeComponent } from './components/shared/home/home.component';
+import { HomeComponent } from './home/home.component';
 import { InfiniteListComponent } from './components/infinite-list/infinite-list.component';
 import { TodoComponent } from './components/todo/todo.component';
 import { FindStoreComponent } from './components/find-store/find-store.component';
 import { GameCardComponent } from './animations/game-card/game-card.component';
 import { LoglistComponent } from './components/loglist/loglist.component';
 import { LogfilterComponent } from './components/logfilter/logfilter.component';
-import { MessageComponent } from './components/shared/message/message.component';
 import { NetworkInterceptor } from './interceptors/network.interceptor';
 import { MenuListItemComponent } from './components/toolbar/menu-list-item/menu-list-item.component';
 import { PrintInvoiceComponent } from './components/shopping-cart/print-invoice/print-invoice.component';
-import { PageNotFoundComponent } from './components/shared/page-not-found/page-not-found.component';
+import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { ProductItemComponent } from './components/./shopping-cart/product-item/product-item.component';
 import { ProductListComponent } from './components/./shopping-cart/product-list/product-list.component';
 import { RoutineComponent } from './components/routine/routine.component';
@@ -44,7 +43,8 @@ import { AddProductComponent } from './components/add-product/add-product.compon
 import { AddRoleToUserComponent } from './components/add-role-to-user/add-role-to-user.component';
 import { ReportByEmployeeComponent } from './components/report-by-employee/report-by-employee.component';
 import { CalendarComponent } from './components/calendar/calendar.component';
-import { ConfirmComponent } from './components/confirm/confirm.component';
+import { ConfirmComponent } from './shared/confirm/confirm.component';
+import { DataListComponent } from './shared/data-list/data-list.component';
 
 @NgModule({
   declarations: [
@@ -64,7 +64,6 @@ import { ConfirmComponent } from './components/confirm/confirm.component';
     WishListComponent,
     ScrollToTopComponent,
     PrintInvoiceComponent,
-    MessageComponent,
     LoglistComponent,
     LogfilterComponent,
     InfiniteListComponent,
@@ -81,6 +80,7 @@ import { ConfirmComponent } from './components/confirm/confirm.component';
     ReportByEmployeeComponent,
     CalendarComponent,
     ConfirmComponent,
+    DataListComponent,
   ],
   imports: [
     BrowserModule,

@@ -5,6 +5,7 @@ export interface DayInCalendar {
   isWorkday: boolean;
   isToday?: boolean | null;
   events?: string | null;
+  isSelected?: boolean;
 }
 
 @Component({
@@ -13,9 +14,10 @@ export interface DayInCalendar {
   styleUrls: ['./calendar.component.scss'],
 })
 export class CalendarComponent implements OnInit {
-  @Output() itemEvent = new EventEmitter<DayInCalendar>();
+  @Output() itemEvent = new EventEmitter<DayInCalendar | null>();
   calendar: DayInCalendar[] = [];
   today = new Date();
+  selectedDay: DayInCalendar | null = null;
   startDayOfCalendar = new Date();
 
   constructor() {}
@@ -82,7 +84,33 @@ export class CalendarComponent implements OnInit {
     this.getDaysOfMonth(this.startDayOfCalendar);
   }
 
-  onClick(event: DayInCalendar): void {
-    this.itemEvent.emit(event);
+  toggleDay(event: DayInCalendar): void {
+    // clear the styling of last selected day
+    if (this.selectedDay !== null) {
+      const idx = this.calendar.findIndex(
+        (element) => element.dateElement === this.selectedDay?.dateElement
+      );
+      if (idx >= 0) {
+        this.calendar[idx].isSelected = false;
+      }
+    }
+
+    if (this.selectedDay === event) {
+      this.selectedDay = null;
+    } else {
+      this.selectedDay = event;
+    }
+
+    // style the selected day
+    if (this.selectedDay !== null) {
+      const idx = this.calendar.findIndex(
+        (element) => element.dateElement === this.selectedDay?.dateElement
+      );
+      if (idx >= 0) {
+        this.calendar[idx].isSelected = true;
+      }
+    }
+
+    this.itemEvent.emit(this.selectedDay);
   }
 }

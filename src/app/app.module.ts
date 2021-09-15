@@ -45,6 +45,8 @@ import { ReportByEmployeeComponent } from './components/report-by-employee/repor
 import { CalendarComponent } from './components/calendar/calendar.component';
 import { ConfirmComponent } from './shared/confirm/confirm.component';
 import { DataListComponent } from './shared/data-list/data-list.component';
+import { CookiePopupComponent } from './cookie-popup/cookie-popup.component';
+import { ClientsComponent } from './components/clients/clients.component';
 
 @NgModule({
   declarations: [
@@ -81,6 +83,8 @@ import { DataListComponent } from './shared/data-list/data-list.component';
     CalendarComponent,
     ConfirmComponent,
     DataListComponent,
+    CookiePopupComponent,
+    ClientsComponent,
   ],
   imports: [
     BrowserModule,

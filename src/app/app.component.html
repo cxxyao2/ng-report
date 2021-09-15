@@ -1,10 +1,10 @@
 <div
   class="app-container"
   [class.darkMode]="themeService.isDarkTheme | async"
-  [class.is-handset]="isHandset$ | async"
+  [class.is-handset]="themeService.isHandset | async"
 >
   <mat-toolbar color="primary" class="toolbar">
-    <mat-toolbar-row *ngIf="!(isHandset$ | async)" class="pliable-toolbar">
+    <mat-toolbar-row *ngIf="!(themeService.isHandset| async)" class="pliable-toolbar">
       <span class="link-item"
         ><a [routerLink]="['/find-store']">PRODUCT MANUAL</a></span
       >
@@ -48,7 +48,7 @@
         aria-label="Toggle sidenav"
         mat-icon-button
         (click)="drawer.toggle()"
-        *ngIf="isHandset$ | async"
+        *ngIf="themeService.isHandset | async"
       >
         <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
       </button>
@@ -80,15 +80,15 @@
 
   <mat-sidenav-container
     class="sidenav-container"
-    [style.marginTop.px]="(isHandset$ | async) ? 56 : 0"
+    [style.marginTop.px]="(themeService.isHandset| async) ? 56 : 0"
   >
     <mat-sidenav
       #drawer
-      [mode]="(isHandset$ | async) ? 'over' : 'side'"
-      [fixedInViewport]="isHandset$ | async"
+      [mode]="(themeService.isHandset| async) ? 'over' : 'side'"
+      [fixedInViewport]="themeService.isHandset | async"
       fixedTopGap="56"
-      [opened]="(isHandset$ | async) === false"
-      [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
+      [opened]="(themeService.isHandset | async) === false"
+      [attr.role]="(themeService.isHandset| async) ? 'dialog' : 'navigation'"
     >
       <mat-nav-list>
         <h3 mat-subheader>Administrator</h3>

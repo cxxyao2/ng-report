@@ -1,19 +1,16 @@
-<!-- horizontal 大屏水平显示-->
-<button mat-raised-button (click)="isLinear = !isLinear" id="toggle-linear">
-  {{ !isLinear ? "Enable linear mode" : "Disable linear mode" }}
-</button>
-<mat-horizontal-stepper [linear]="isLinear" #stepper>
-  <mat-step [stepControl]="firstFormGroup">
+<ng-container [ngSwitch]="stepperOrientation | async">
+  <div *ngSwitchCase="'horizontal'">Make your screen smaller to see a vertical stepper</div>
+  <div *ngSwitchCase="'vertical'">Make your screen larger to see a horizontal stepper</div>
+</ng-container>
+
+<mat-stepper
+  class="example-stepper"
+  [orientation]="(stepperOrientation | async)!">
+  <mat-step [stepControl]="firstFormGroup" label="Fill out your name">
     <form [formGroup]="firstFormGroup">
-      <ng-template matStepLabel>Fill out your name</ng-template>
-      <mat-form-field>
+      <mat-form-field appearance="fill">
         <mat-label>Name</mat-label>
-        <input
-          matInput
-          placeholder="Last name, First name"
-          formControlName="firstCtrl"
-          required
-        />
+        <input matInput placeholder="Last name, First name" formControlName="firstCtrl" required>
       </mat-form-field>
       <div>
         <button mat-button matStepperNext>Next</button>
@@ -22,14 +19,10 @@
   </mat-step>
   <mat-step [stepControl]="secondFormGroup" label="Fill out your address">
     <form [formGroup]="secondFormGroup">
-      <mat-form-field>
+      <mat-form-field appearance="fill">
         <mat-label>Address</mat-label>
-        <input
-          matInput
-          formControlName="secondCtrl"
-          placeholder="Ex. 1 Main St, New York, NY"
-          required
-        />
+        <input matInput formControlName="secondCtrl" placeholder="Ex. 1 Main St, New York, NY"
+               required>
       </mat-form-field>
       <div>
         <button mat-button matStepperPrevious>Back</button>
@@ -37,25 +30,11 @@
       </div>
     </form>
   </mat-step>
-   <mat-step [stepControl]="thirdFormGroup" label="Download your street image">
+  <mat-step [stepControl]="thirdFormGroup" label="Fill out your phone number">
     <form [formGroup]="thirdFormGroup">
-      <mat-form-field>
-        <mat-label>select a image</mat-label>
-        <input
-          matInput
-          formControlName="thirdCtrl"
-          placeholder="Ex. 1 Main St, New York, NY"
-          required
-        />
-      </mat-form-field>
-       <mat-form-field>
-        <mat-label>fourth Image</mat-label>
-        <input
-          matInput
-          formControlName="fourthCtrl"
-          placeholder="Ex. 1 Main St, New York, NY"
-          required
-        />
+      <mat-form-field appearance="fill">
+        <mat-label>Phone number</mat-label>
+        <input matInput formControlName="thirdCtrl" placeholder="Ex. 12345678" required>
       </mat-form-field>
       <div>
         <button mat-button matStepperPrevious>Back</button>
@@ -68,7 +47,6 @@
     <p>You are now done.</p>
     <div>
       <button mat-button matStepperPrevious>Back</button>
-      <button mat-button (click)="stepper.reset()">Reset</button>
     </div>
   </mat-step>
-</mat-horizontal-stepper>
+</mat-stepper>

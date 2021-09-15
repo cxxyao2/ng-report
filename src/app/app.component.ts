@@ -6,10 +6,11 @@ import {
   AfterViewInit,
   Inject,
   HostListener,
+  OnInit,
 } from '@angular/core';
 import { BreakpointObserver } from '@angular/cdk/layout';
 import { Observable } from 'rxjs';
-import { map, shareReplay } from 'rxjs/operators';
+import { map, shareReplay, tap } from 'rxjs/operators';
 
 import { ThemeService } from './services/theme.service';
 import { CartService } from './services/cart.service';
@@ -42,23 +43,28 @@ export class AppComponent implements AfterViewInit {
   managerItems: NavItem[] = [
     { label: 'By product', icon: 'bar_chart', route: 'by-product' },
     { label: 'By employee', icon: 'trending_up', route: 'by-employee' },
-    { label: 'Planning', icon: 'edit_calendar', route: 'schedule' },
+    { label: 'Team Tasks', icon: 'edit_calendar', route: 'schedule' },
   ];
 
   salespersonItems: NavItem[] = [
-    { label: 'To-do List', icon: 'task', route: 'todo' },
+    { label: 'Contact Management', icon: 'location_on', route: 'todo' },
     { label: 'Place Order', icon: 'add_shopping_cart', route: 'place-order' },
+    {
+      label: 'Lead Management',
+      icon: 'person_add',
+      route: 'capture-client',
+    },
     {
       label: 'Personal Data',
       icon: 'analytics',
       route: 'personal',
       children: [
         {
-          label: 'My Clients',
+          label: 'Sales Pipeline',
           icon: 'contact_page',
           route: 'personal/clients',
         },
-        { label: 'My Orders', icon: 'sell', route: 'personal/orders' },
+        { label: 'Sales Data', icon: 'sell', route: 'personal/orders' },
       ],
     },
   ];
@@ -68,12 +74,6 @@ export class AppComponent implements AfterViewInit {
     { label: 'Help', icon: 'help', route: 'todo' },
     { label: 'FAQs', icon: 'search', route: 'product-list' },
   ];
-  isHandset$: Observable<boolean> = this.breakpointObserver
-    .observe(['(max-width: 800px)'])
-    .pipe(
-      map((result) => result.matches),
-      shareReplay()
-    );
 
   loading$ = this.loader.laoding$;
 
@@ -84,6 +84,15 @@ export class AppComponent implements AfterViewInit {
     public cartService: CartService,
     public loader: LoadingService
   ) {}
+
+  ngOnInit(): void {
+    this.breakpointObserver
+      .observe(['(max-width: 800px)'])
+      .pipe(map((result) => result.matches))
+      .subscribe((data) => {
+        this.themeService.setHandset(data);
+      });
+  }
 
   toggleTheme(): void {
     this.isDark = !this.isDark;
@@ -105,8 +114,6 @@ export class AppComponent implements AfterViewInit {
 
   ngAfterViewInit(): void {
     this.navService.appDrawer = this.appDrawer;
-    if (this.spin) {
-    }
   }
 
   logout(): void {}

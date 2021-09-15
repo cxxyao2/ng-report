@@ -22,6 +22,8 @@ import { ReportByEmployeeComponent } from './components/report-by-employee/repor
 import { AddProductComponent } from './components/add-product/add-product.component';
 import { AddRoleToUserComponent } from './components/add-role-to-user/add-role-to-user.component';
 import { CalendarComponent } from './components/calendar/calendar.component';
+import { ClientsComponent } from './components/clients/clients.component';
+
 const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
   { path: 'calendar', component: CalendarComponent },
@@ -35,10 +37,12 @@ const routes: Routes = [
   { path: 'by-employee', component: ReportByEmployeeComponent }, // manager role
   { path: 'todo', component: TodoComponent }, // salesperson role
   { path: 'place-order', component: ProductListComponent }, // salesperson role
+  { path: 'capture-client', component: AddClientComponent }, // salesperson role
+
   {
     path: 'personal',
     children: [
-      { path: 'clients', component: AddClientComponent },
+      { path: 'clients', component: ClientsComponent },
       { path: 'orders', component: ReportByEmployeeComponent },
     ],
   }, // salesperson role

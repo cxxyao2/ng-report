@@ -8,17 +8,23 @@
   right: 0;
 }
 
-.is-handset .toolbar {
-  position: fixed;
+.toolbar {
+  position: relative;
   z-index: 2;
-  height: 56px;
+  box-shadow: 0 3px 5px -1px rgba(0, 0, 0, 0.2),
+    0 6px 10px 0 rgba(0, 0, 0, 0.14), 0 1px 18px 0 rgba(0, 0, 0, 0.12);
+  .fix-toolbar,
+  .pliable-toolbar {
+    display: flex;
+    flex-direction: row;
+    justify-content: stretch;
+  }
 }
 
-.fix-toolbar,
-.pliable-toolbar {
-  display: flex;
-  flex-direction: row;
-  justify-content: stretch;
+.is-handset .toolbar {
+  position: fixed;
+
+  height: 56px;
 }
 
 .pliable-toolbar {
@@ -75,9 +81,8 @@ h1.app-name {
   margin: 8px auto;
   background-color: rgba(255, 255, 255, 0.5);
 }
+
 .sidenav-container {
-  /* When the sidenav is not fixed, stretch the
-  sidenav container to fill the available space*/
   flex: 1;
 }
 

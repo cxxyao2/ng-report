@@ -47,6 +47,8 @@ import { ConfirmComponent } from './shared/confirm/confirm.component';
 import { DataListComponent } from './shared/data-list/data-list.component';
 import { CookiePopupComponent } from './cookie-popup/cookie-popup.component';
 import { ClientsComponent } from './components/clients/clients.component';
+import { LoginComponent } from './components/login/login.component';
+import { SignUpComponent } from './components/sign-up/sign-up.component';
 
 @NgModule({
   declarations: [
@@ -85,6 +87,8 @@ import { ClientsComponent } from './components/clients/clients.component';
     DataListComponent,
     CookiePopupComponent,
     ClientsComponent,
+    LoginComponent,
+    SignUpComponent,
   ],
   imports: [
     BrowserModule,

@@ -39,14 +39,8 @@ export class TodoComponent implements OnInit {
     };
 
     if (!navigator.geolocation || !navigator.geolocation.getCurrentPosition) {
-      console.log('not support');
+      alert('not support google map');
     } else {
-      console.log('p1 is');
-      navigator.geolocation.getCurrentPosition(
-        () => {},
-        () => {},
-        options
-      );
       navigator.geolocation.getCurrentPosition(
         (position) => {
           console.log('p2 is', position);
@@ -118,15 +112,6 @@ export class TodoComponent implements OnInit {
       },
       options
     );
-
-    // if (!this.center) {
-    //   const xx = this.map.getCenter();
-    //   this.center = {
-    //     lat: xx.lat(),
-    //     lng: xx.lng(),
-    //   };
-    // }
-    // console.log(JSON.stringify(this.map.getCenter()));
   }
 
   addMarker(): void {

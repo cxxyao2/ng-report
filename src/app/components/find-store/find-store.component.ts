@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MapInfoWindow, MapMarker, GoogleMap } from '@angular/google-maps';
-
+import { GoogleMapService } from 'src/app/services/google-map.service';
 // Create an Observable that will start listening to geolocation updates
 
 @Component({
@@ -25,7 +25,7 @@ export class FindStoreComponent implements OnInit {
   markers: Array<any> = [];
   infoContent = '';
 
-  constructor() {}
+  constructor(private mapService: GoogleMapService) {}
 
   ngOnInit(): void {
     const options = {
@@ -129,5 +129,51 @@ export class FindStoreComponent implements OnInit {
   openInfo(marker: any, content = ''): void {
     this.infoContent = content;
     this.info.open(marker);
+  }
+
+  getPositionByZipCode(zipCode: string): void {
+    this.mapService.getPositionByZipCode(zipCode);
+  }
+
+  calculateDistance(pointA: any, pointB: any): void {
+    pointA = { lat: 40.7767644, lng: -73.9761399 }; // google.maps.LatLng
+
+    pointB = { lat: 40.771209, lng: -73.9673991 };
+    const directionsService = new google.maps.DirectionsService();
+    const directionsRenderer = new google.maps.DirectionsRenderer();
+    directionsRenderer.setMap(this.map.googleMap ? this.map.googleMap : null);
+
+    // Existing map object displays directions
+    // Create route from existing points used for markers
+
+    const route = {
+      origin: pointA,
+      destination: pointB,
+      travelMode: google.maps.TravelMode.DRIVING, // BICYCLING, TRANSIT, WALKING
+    };
+
+    directionsService.route(route, (response, status) => {
+      // anonymous function to capture directions
+      if (status !== 'OK') {
+        window.alert('Directions request failed due to ' + status);
+        return;
+      } else {
+        directionsRenderer.setDirections(response);
+        // Add route to the map
+        let directionsData = response.routes[0].legs[0];
+        // Get data about the mapped route
+        if (!directionsData) {
+          window.alert('Directions request failed');
+          return;
+        } else {
+          const distanceMessage =
+            ' Driving distance is ' +
+            directionsData.distance.text +
+            ' (' +
+            directionsData.duration.text +
+            ').';
+        }
+      }
+    });
   }
 }

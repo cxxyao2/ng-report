@@ -1,13 +1,44 @@
-<div
-  style="
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: purple;
-    gap:1rem;
-  "
->
-  <div>TODO Announce</div>
-  <div>Policy</div>
-  <div>History</div>
-</div>
+<footer>
+  <div fxLayout="row wrap" fxLayoutGap="16px grid">
+    <div fxFlex="33%" fxFlex.md="50%" fxFlex.sm="100%" class="footer-block">
+      <h3>Contact Details</h3>
+      <ul>
+        <li>
+          <mat-icon>email</mat-icon>
+          <a href="mailto:info@excelcompany.com"
+            ><span>info@excelcompany.com</span>
+          </a>
+        </li>
+        <li>
+          <mat-icon>call</mat-icon>
+          <span>866 2323-2345 poste 111</span>
+        </li>
+        <li>
+          <mat-icon>place</mat-icon>
+          <span>Saint-Laurent 152, Quebec, QC H4A 3D2</span>
+        </li>
+      </ul>
+    </div>
+    <div fxFlex="33%" fxFlex.md="50%" fxFlex.sm="100%" class="footer-block">
+      <h3>Since 1980</h3>
+      <span class="image-container">
+        <img
+          class="image"
+          src="https://source.unsplash.com/random/100×100/?gasoline"
+          alt="company image"
+        />
+      </span>
+    </div>
+    <div fxFlex="33%" fxFlex.md="50%" fxFlex.sm="100%" class="footer-block">
+      <h3>Events</h3>
+      <ul>
+        <li><mat-icon>celebration</mat-icon><span>June 13,&nbsp;2021 summer holiday sales</span></li>
+        <li><mat-icon>celebration</mat-icon><span>Sep 01,&nbsp;2021 return to school sales</span></li>
+        <li><mat-icon>celebration</mat-icon><span>Dec 12,&nbsp;2021 snow tyres sales</span></li>
+      </ul>
+    </div>
+  </div>
+  <div style="width: 100%; margin-top: 10px; text-align: center">
+    @2021 Excel Company&nbsp;|&nbsp; All rights reserved.
+  </div>
+</footer>

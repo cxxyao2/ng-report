@@ -1,42 +1,94 @@
-<ng-container [ngSwitch]="stepperOrientation | async">
-  <div *ngSwitchCase="'horizontal'">Make your screen smaller to see a vertical stepper</div>
-  <div *ngSwitchCase="'vertical'">Make your screen larger to see a horizontal stepper</div>
-</ng-container>
-
-<mat-stepper
-  class="example-stepper"
-  [orientation]="(stepperOrientation | async)!">
-  <mat-step [stepControl]="firstFormGroup" label="Fill out your name">
+<h2>Lead management</h2>
+<span>*:&nbsp;Register a potential client</span>
+<mat-stepper #stepper>
+  <mat-step [stepControl]="firstFormGroup" errorMessage="Name is required.">
     <form [formGroup]="firstFormGroup">
+      <ng-template matStepLabel>Fill out your name</ng-template>
       <mat-form-field appearance="fill">
         <mat-label>Name</mat-label>
-        <input matInput placeholder="Last name, First name" formControlName="firstCtrl" required>
+        <input
+          matInput
+          placeholder="Last name, First name"
+          formControlName="firstCtrl"
+          required
+        />
       </mat-form-field>
       <div>
+        <p>Go to a different step to see the error state</p>
         <button mat-button matStepperNext>Next</button>
       </div>
     </form>
   </mat-step>
-  <mat-step [stepControl]="secondFormGroup" label="Fill out your address">
+  <mat-step [stepControl]="secondFormGroup" errorMessage="Address is required.">
     <form [formGroup]="secondFormGroup">
+      <ng-template matStepLabel>Fill out your address</ng-template>
       <mat-form-field appearance="fill">
         <mat-label>Address</mat-label>
-        <input matInput formControlName="secondCtrl" placeholder="Ex. 1 Main St, New York, NY"
-               required>
+        <input
+          matInput
+          placeholder="Ex. 1 Main St, New York, NY"
+          formControlName="secondCtrl"
+          required
+        />
       </mat-form-field>
       <div>
+        <p>Go to a different step to see the error state</p>
         <button mat-button matStepperPrevious>Back</button>
         <button mat-button matStepperNext>Next</button>
       </div>
     </form>
   </mat-step>
-  <mat-step [stepControl]="thirdFormGroup" label="Fill out your phone number">
+  <mat-step
+    [stepControl]="thirdFormGroup"
+    errorMessage="Telephone number is required."
+  >
     <form [formGroup]="thirdFormGroup">
+      <ng-template matStepLabel>Fill out telephone number</ng-template>
       <mat-form-field appearance="fill">
-        <mat-label>Phone number</mat-label>
-        <input matInput formControlName="thirdCtrl" placeholder="Ex. 12345678" required>
+        <mat-label>Telelphone number</mat-label>
+        <input
+          matInput
+          placeholder="514-111-2222"
+          formControlName="thirdCtrl"
+          required
+        />
       </mat-form-field>
       <div>
+        <p>Go to a different step to see the error state</p>
+        <button mat-button matStepperPrevious>Back</button>
+        <button mat-button matStepperNext>Next</button>
+      </div>
+    </form>
+  </mat-step>
+  <mat-step [stepControl]="fourthFormGroup" errorMessage="Image is required.">
+    <form [formGroup]="fourthFormGroup">
+      <ng-template matStepLabel>Select a front shop image</ng-template>
+      <input
+        type="file"
+        class="file-input"
+        (change)="onFileSelected($event)"
+        accept="{{ requiredFileType }}"
+        #fileUpload
+      />
+      <div class="file-upload">
+        {{ fileName || "No file uploaded yet." }}
+       
+
+        <!--todo show image <img *ngIf="fileName" src="{{ fileName }}" /> -->
+
+        <button
+          mat-raised-button
+          color="primary"
+          class="upload-btn"
+          (click)="fileUpload.click()"
+        >
+          <mat-icon>attach_file</mat-icon>
+        </button>
+
+        <img class="front-shop" *ngIf="fileUrl" src="{{ fileUrl }}" />
+      </div>
+      <div>
+        <p>Go to a different step to see the error state</p>
         <button mat-button matStepperPrevious>Back</button>
         <button mat-button matStepperNext>Next</button>
       </div>
@@ -47,6 +99,10 @@
     <p>You are now done.</p>
     <div>
       <button mat-button matStepperPrevious>Back</button>
+      <button mat-button (click)="stepper.reset()">Reset</button>
+      <button mat-button color="primary" (click)="stepper.reset()">
+        Upload
+      </button>
     </div>
   </mat-step>
 </mat-stepper>

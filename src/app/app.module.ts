@@ -2,6 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ClipboardModule } from '@angular/cdk/clipboard';
+import { CookieService } from 'ngx-cookie-service';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { GoogleMapsModule } from '@angular/google-maps';
@@ -45,10 +46,11 @@ import { ReportByEmployeeComponent } from './components/report-by-employee/repor
 import { CalendarComponent } from './components/calendar/calendar.component';
 import { ConfirmComponent } from './shared/confirm/confirm.component';
 import { DataListComponent } from './shared/data-list/data-list.component';
-import { CookiePopupComponent } from './cookie-popup/cookie-popup.component';
+import { CookiePopupComponent } from './components/cookie-popup/cookie-popup.component';
 import { ClientsComponent } from './components/clients/clients.component';
 import { LoginComponent } from './components/login/login.component';
 import { SignUpComponent } from './components/sign-up/sign-up.component';
+import { FooterComponent } from './components/footer/footer.component';
 
 @NgModule({
   declarations: [
@@ -89,6 +91,7 @@ import { SignUpComponent } from './components/sign-up/sign-up.component';
     ClientsComponent,
     LoginComponent,
     SignUpComponent,
+    FooterComponent,
   ],
   imports: [
     BrowserModule,
@@ -105,7 +108,7 @@ import { SignUpComponent } from './components/sign-up/sign-up.component';
     }),
     AppRoutingModule,
   ],
-  providers: [],
+  providers: [CookieService],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

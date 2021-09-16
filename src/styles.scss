@@ -7,6 +7,7 @@
 @import "../src/app/components/scheduler/scheduler";
 @import "../src/app/components/calendar/calendar";
 @import "../src/app/shared/data-list/data-list";
+@import "../src/app/components/todo/todo";
 
 html,
 body {
@@ -48,6 +49,7 @@ h5 {
 @include calendar-color($app-theme);
 @include scheduler-color($app-theme);
 @include datalist-color($app-theme);
+@include todo-color($app-theme);
 
 .darkMode {
   @include mat.all-component-colors($dark-theme);
@@ -57,4 +59,5 @@ h5 {
   @include calendar-color($dark-theme);
   @include scheduler-color($dark-theme);
   @include datalist-color($dark-theme);
+  @include todo-color($dark-theme);
 }

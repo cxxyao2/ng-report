@@ -4,7 +4,10 @@
   [class.is-handset]="themeService.isHandset | async"
 >
   <mat-toolbar color="primary" class="toolbar">
-    <mat-toolbar-row *ngIf="!(themeService.isHandset| async)" class="pliable-toolbar">
+    <mat-toolbar-row
+      *ngIf="!(themeService.isHandset | async)"
+      class="pliable-toolbar"
+    >
       <span class="link-item"
         ><a [routerLink]="['/find-store']">PRODUCT MANUAL</a></span
       >
@@ -80,15 +83,15 @@
 
   <mat-sidenav-container
     class="sidenav-container"
-    [style.marginTop.px]="(themeService.isHandset| async) ? 56 : 0"
+    [style.marginTop.px]="(themeService.isHandset | async) ? 56 : 0"
   >
     <mat-sidenav
       #drawer
-      [mode]="(themeService.isHandset| async) ? 'over' : 'side'"
+      [mode]="(themeService.isHandset | async) ? 'over' : 'side'"
       [fixedInViewport]="themeService.isHandset | async"
       fixedTopGap="56"
       [opened]="(themeService.isHandset | async) === false"
-      [attr.role]="(themeService.isHandset| async) ? 'dialog' : 'navigation'"
+      [attr.role]="(themeService.isHandset | async) ? 'dialog' : 'navigation'"
     >
       <mat-nav-list>
         <h3 mat-subheader>Administrator</h3>
@@ -126,6 +129,7 @@
         *ngIf="loading$ | async"
       ></mat-progress-spinner>
       <app-scroll-to-top></app-scroll-to-top>
+      <app-footer></app-footer>
     </mat-sidenav-content>
   </mat-sidenav-container>
 </div>

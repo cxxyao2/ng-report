@@ -73,15 +73,6 @@ h1.app-name {
   margin-left: 8px;
 }
 
-.mat-sidenav {
-  width: 240px;
-}
-
-.mat-divider {
-  margin: 8px auto;
-  background-color: rgba(255, 255, 255, 0.5);
-}
-
 .sidenav-container {
   flex: 1;
 }
@@ -90,6 +81,15 @@ h1.app-name {
   /* When the sidenav is fixed,
   don't constrain the height of the sidenav container */
   flex: 1 0 auto;
+}
+
+.mat-sidenav {
+  width: 240px;
+}
+
+.mat-divider {
+  margin: 8px auto;
+  background-color: rgba(255, 255, 255, 0.5);
 }
 
 .content-wrapper {
@@ -103,3 +103,4 @@ mat-progress-spinner {
   transform: translate(-50%, -50%);
   z-index: 101;
 }
+

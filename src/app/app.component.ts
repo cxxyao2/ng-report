@@ -11,6 +11,11 @@ import {
 import { BreakpointObserver } from '@angular/cdk/layout';
 import { Observable } from 'rxjs';
 import { map, shareReplay, tap } from 'rxjs/operators';
+import {
+  MatBottomSheet,
+  MatBottomSheetRef,
+} from '@angular/material/bottom-sheet';
+import { CookiePopupComponent } from './components/cookie-popup/cookie-popup.component';
 
 import { ThemeService } from './services/theme.service';
 import { CartService } from './services/cart.service';
@@ -20,6 +25,7 @@ import { NavService } from './services/nav.service';
 import { LoadingService } from './services/loading.service';
 import { RouterOutlet } from '@angular/router';
 import { slideInAnimation } from 'src/app/animations/animations';
+import { CookieService } from 'ngx-cookie-service';
 
 @Component({
   selector: 'app-root',
@@ -33,6 +39,7 @@ export class AppComponent implements AfterViewInit {
   title = 'ng-center';
   isDark = false;
   currentLanguage = 'english';
+  cookieValue = '';
 
   adminItems: NavItem[] = [
     { label: 'Products', icon: 'addchart', route: 'add-product' },
@@ -82,7 +89,9 @@ export class AppComponent implements AfterViewInit {
     public themeService: ThemeService,
     private navService: NavService,
     public cartService: CartService,
-    public loader: LoadingService
+    public loader: LoadingService,
+    private cookieService: CookieService,
+    private _bottomSheet: MatBottomSheet
   ) {}
 
   ngOnInit(): void {
@@ -114,6 +123,12 @@ export class AppComponent implements AfterViewInit {
 
   ngAfterViewInit(): void {
     this.navService.appDrawer = this.appDrawer;
+    this.cookieValue = this.cookieService.get('acceptCookie');
+    if (this.cookieValue.trim() !== 'yes') {
+      setTimeout(() => {
+        this._bottomSheet.open(CookiePopupComponent);
+      }, 1000);
+    }
   }
 
   logout(): void {}

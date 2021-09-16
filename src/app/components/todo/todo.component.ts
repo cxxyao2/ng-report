@@ -27,10 +27,12 @@ export class TodoComponent implements OnInit {
   };
   markers: Array<any> = [];
   infoContent = '';
+  tourLength = 300;
 
-  todo = ['Get to work', 'Pick up groceries', 'Go home', 'Fall asleep'];
+  todo = ['Bas-Laurant', 'Lac-Saint', 'Capitale', 'Maurice'];
 
-  done = ['Get up', 'Brush teeth', 'Take a shower', 'Check e-mail', 'Walk dog'];
+  done = ['Estrie', 'Cote-nord', 'Madeleint', 'Laval', 'Mongteregie'];
+  
   ngOnInit(): void {
     const options = {
       enableHighAccuracy: true,
@@ -71,6 +73,7 @@ export class TodoComponent implements OnInit {
         event.currentIndex
       );
     }
+    this.tourLength = this.todo.length * 50; // TODO google map distance
   }
 
   zoomIn(): void {

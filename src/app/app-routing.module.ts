@@ -29,6 +29,7 @@ import { SignUpComponent } from './components/sign-up/sign-up.component';
 const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
   { path: 'calendar', component: CalendarComponent },
+  { path: 'login', component: LoginComponent },
   { path: 'signup', component: SignUpComponent },
   { path: 'calendar', component: CalendarComponent },
   { path: 'home', component: HomeComponent }, // public no-login

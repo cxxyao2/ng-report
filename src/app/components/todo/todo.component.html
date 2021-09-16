@@ -57,7 +57,7 @@
     (mapClick)="click($event)"
   >
     <map-marker
-      #markerElem
+      #markerElem="mapMarker"
       *ngFor="let marker of markers"
       [position]="marker.position"
       [label]="marker.label"
@@ -66,7 +66,9 @@
       (mapClick)="openInfo(markerElem, marker.info)"
     ></map-marker>
 
-    <map-info-window>{{ infoContent }}</map-info-window>
+    <map-info-window style="width: 150px; height: 150px; color: blue">{{
+      infoContent
+    }}</map-info-window>
   </google-map>
 
   <!--Use custome zoom buttons-->

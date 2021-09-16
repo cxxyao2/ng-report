@@ -26,13 +26,24 @@ export class TodoComponent implements OnInit {
     minZoom: 8,
   };
   markers: Array<any> = [];
-  infoContent = '';
+  infoContent = 'aaa';
   tourLength = 300;
 
   todo = ['Bas-Laurant', 'Lac-Saint', 'Capitale', 'Maurice'];
 
-  done = ['Estrie', 'Cote-nord', 'Madeleint', 'Laval', 'Mongteregie'];
-  
+  done = ['Estrie', 'Cote-nord', 'Madeleine', 'Laval', 'Mongteregie'];
+  coords = [
+    { name: 'Bas-Laurant', lat: 45.47, lng: -73.63 },
+    { name: 'Lac-Saint', lat: 45.47, lng: -73.6 },
+    { name: 'Capitale', lat: 45.47, lng: -72 },
+    { name: 'Maurice', lat: 45.47, lng: -72.6 },
+    { name: 'Estrie', lat: 45.47, lng: -72.5 },
+    { name: 'Cote-nord', lat: 45.47, lng: -72.1 },
+    { name: 'Madeleine', lat: 45.47, lng: -73.4 },
+    { name: 'Laval', lat: 45.47, lng: -73.1 },
+    { name: 'Mongteregie', lat: 45.8, lng: -73 },
+  ];
+
   ngOnInit(): void {
     const options = {
       enableHighAccuracy: true,
@@ -74,6 +85,7 @@ export class TodoComponent implements OnInit {
       );
     }
     this.tourLength = this.todo.length * 50; // TODO google map distance
+    this.addMarker();
   }
 
   zoomIn(): void {
@@ -118,25 +130,33 @@ export class TodoComponent implements OnInit {
   }
 
   addMarker(): void {
-    this.markers.push({
-      position: {
-        lat: this.center.lat + ((Math.random() - 0.5) * 2) / 10,
-        lng: this.center.lng + ((Math.random() - 0.5) * 2) / 10,
-      },
-      label: {
-        color: 'red',
-        text: 'Marker label ' + (this.markers.length + 1),
-      },
-      title: 'Marker title ' + (this.markers.length + 1),
-      info: 'Marker info ' + (this.markers.length + 1),
-      options: {
-        animation: google.maps.Animation.BOUNCE,
-      },
+    this.markers = [];
+    this.todo.forEach((locationName) => {
+      const idx = this.coords.findIndex(
+        (location: any) => location.name === locationName
+      );
+      if (idx >= 0) {
+        this.markers.push({
+          position: {
+            lat: this.coords[idx].lat,
+            lng: this.coords[idx].lng,
+          },
+          label: {
+            color: 'red',
+            text: locationName,
+          },
+          title: locationName,
+          info: locationName,
+          options: {
+            animation: google.maps.Animation.DROP,
+          },
+        });
+      }
     });
   }
 
-  openInfo(marker: any, content = ''): void {
-    this.infoContent = content;
+  openInfo(marker: MapMarker, content: string): void {
+    this.infoContent = content + ' is a excellent location';
     this.info.open(marker);
   }
 }

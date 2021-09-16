@@ -48,8 +48,8 @@ export class AppComponent implements AfterViewInit {
   ];
 
   managerItems: NavItem[] = [
-    { label: 'By product', icon: 'bar_chart', route: 'by-product' },
-    { label: 'By employee', icon: 'trending_up', route: 'by-employee' },
+    { label: 'Data Analyse', icon: 'bar_chart', route: 'by-product' },
+    { label: 'Pipeline Management', icon: 'contact_page', route: 'pipeline' },
     { label: 'Team Tasks', icon: 'edit_calendar', route: 'schedule' },
   ];
 

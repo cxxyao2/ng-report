@@ -25,6 +25,7 @@ import { CalendarComponent } from './components/calendar/calendar.component';
 import { ClientsComponent } from './components/clients/clients.component';
 import { LoginComponent } from './components/login/login.component';
 import { SignUpComponent } from './components/sign-up/sign-up.component';
+import { PipelinesComponent } from './components/pipelines/pipelines.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
@@ -42,6 +43,7 @@ const routes: Routes = [
   { path: 'by-employee', component: ReportByEmployeeComponent }, // manager role
   { path: 'todo', component: TodoComponent }, // salesperson role
   { path: 'place-order', component: ProductListComponent }, // salesperson role
+  {path:'pipeline',component:PipelinesComponent},
   { path: 'capture-client', component: AddClientComponent }, // salesperson role
 
   {

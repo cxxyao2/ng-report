@@ -51,6 +51,7 @@ import { ClientsComponent } from './components/clients/clients.component';
 import { LoginComponent } from './components/login/login.component';
 import { SignUpComponent } from './components/sign-up/sign-up.component';
 import { FooterComponent } from './components/footer/footer.component';
+import { PipelinesComponent } from './components/pipelines/pipelines.component';
 
 @NgModule({
   declarations: [
@@ -92,6 +93,7 @@ import { FooterComponent } from './components/footer/footer.component';
     LoginComponent,
     SignUpComponent,
     FooterComponent,
+    PipelinesComponent,
   ],
   imports: [
     BrowserModule,

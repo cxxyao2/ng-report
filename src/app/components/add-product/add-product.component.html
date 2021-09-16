@@ -11,39 +11,6 @@
       />
     </mat-form-field>
   </div>
-  <div fxFlex="25%" fxFlex.sm="33%" fxFlex.xs="100%">
-    <mat-form-field appearance="standard">
-      <mat-label>Filter By Category</mat-label>
-      <input
-        matInput
-        (keyup)="applyFilter($event)"
-        placeholder="Ex. Mia"
-        #input
-      />
-    </mat-form-field>
-  </div>
-  <div fxFlex="25%" fxFlex.sm="33%" fxFlex.xs="100%">
-    <mat-form-field appearance="standard">
-      <mat-label>Filter By Stock</mat-label>
-      <input
-        matInput
-        (keyup)="applyFilter($event)"
-        placeholder="Ex. Mia"
-        #input
-      />
-    </mat-form-field>
-  </div>
-  <div fxFlex="25%" fxFlex.sm="33%" fxFlex.xs="100%">
-    <mat-form-field appearance="standard">
-      <mat-label>Filter</mat-label>
-      <input
-        matInput
-        (keyup)="applyFilter($event)"
-        placeholder="Ex. Mia"
-        #input
-      />
-    </mat-form-field>
-  </div>
 </div>
 
 <div class="mat-elevation-z8">
@@ -54,8 +21,8 @@
         <button mat-button><mat-icon>add</mat-icon></button>
       </th>
       <td mat-cell *matCellDef="let row" class="data-row-button-wrapper">
-        <button mat-button ><mat-icon>edit</mat-icon></button>
-        <button mat-button ><mat-icon>delete</mat-icon></button>
+        <button mat-button><mat-icon>edit</mat-icon></button>
+        <button mat-button><mat-icon>delete</mat-icon></button>
       </td>
     </ng-container>
 

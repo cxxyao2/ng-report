@@ -1,6 +1,11 @@
 <h2>Pipeline Management</h2>
-<div>
-  <button mat-raised-button (click)="addNewMessage()">Add</button>
+<div class="list-wrapper" style="padding: 8px">
+  <p><button mat-raised-button color="accent" (click)="addNewMessage()">Refresh</button><span style="margin-left:8px;">New client registered</span></p>
+  <mat-radio-group aria-label="Select an option">
+    <mat-radio-button value="1">Authorized</mat-radio-button>
+    <mat-radio-button value="2">Unauthorized</mat-radio-button>
+    <mat-radio-button value="3">All</mat-radio-button>
+  </mat-radio-group>
 </div>
 <div class="list-wrapper">
   <mat-list>
@@ -11,15 +16,14 @@
         alt="..."
       />
       <h3 matLine>{{ message.from }}</h3>
-      <p matLine>1234 Lorant Street, Quebec, QC, H4Y 4Y6</p>
-      <p matLine style="display: flex; gap: 8px; flex-wrap: wrap">
-        <span style="display: inline-flex;"
-          >Golden Credit :$10k Authorized
+      <p matLine>Quebec, H4X 3Y7</p>
+      <p matLine>
+        <span [ngClass]="message.status === 'authorized' ? '' : 'unauthorized'"
+          >{{ message.status | titlecase }} , &nbsp;Golden Credit
         </span>
-
-        <span style="display: inline-flex" class="authorize-button"
-          >Authorize</span
-        >
+      </p>
+      <p>
+        <span class="authorize-button">Authorize</span>
       </p>
     </mat-list-item>
   </mat-list>

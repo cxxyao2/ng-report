@@ -17,6 +17,11 @@
     }
     .authorize-button {
       background-color: mat.get-color-from-palette($primary, 50);
+      color: #333;
+    }
+    .unauthorize-button {
+      background-color: mat.get-color-from-palette($warn, 50);
+      color: #333;
     }
   }
 }

@@ -8,12 +8,12 @@ import { Component, OnInit } from '@angular/core';
 export class PipelinesComponent implements OnInit {
   messages = [
     {
-      from: "DLL School, Located at 1218 Street, Quebec, QC",
+      from: "DLL School South Branch",
       subject: 'golden',
       status: 'authorized',
     },
     {
-      from: "Our burgers are made with high quality, fresh beef ground daily on site and you'll taste the difference – but that's not all. Fries, poutine gravy, sauces, ..",
+      from: "Old Orchard Shop",
       subject: 'silver',
       status: 'unauthorized',
     },

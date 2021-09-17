@@ -1,37 +1,85 @@
-<h3>Find a store</h3>
-<div>
-  <input
-    type="text"
-    placeholder="enter store name or zipCode"
-    (keyup.enter)="getPositionByZipCode(input.value)"
-    #input
-  />
-</div>
-<div>
-  <google-map
-    height="500px"
-    width="100%"
-    [zoom]="zoom"
-    [center]="center"
-    [options]="options"
-    (mapClick)="click($event)"
-  >
-    <map-marker
-      #markerElem
-      *ngFor="let marker of markers"
-      [position]="marker.position"
-      [label]="marker.label"
-      [title]="marker.title"
-      [options]="marker.options"
-      (mapClick)="openInfo(markerElem, marker.info)"
-    ></map-marker>
+<main>
+  <h3>Find a store</h3>
 
-    <map-info-window>{{ infoContent }}</map-info-window>
-  </google-map>
+  <div class="search-area">
+    <input
+      type="text"
+      class="search-area_input"
+      autocomplete
+      placeholder="enter zipcode"
+      (keyup.enter)="getPositionByZipCode(input.value)"
+      #input
+    />
+    <button mat-button class="search-area_button">
+      <mat-icon color="primary">search</mat-icon>
+    </button>
+  </div>
 
-  <!--Use custome zoom buttons-->
-  <button (click)="zoomIn()">Zoom in</button>
-  <button (click)="zoomOut()">Zoom out</button>
-  <button (click)="logCenter()">Log center</button>
-  <button (click)="addMarker()">Add marker</button>
-</div>
+  <div fxLayout="row wrap" fxLayoutGap="16px grid">
+    <div fxFlex="30%" fxFlex.lt-md="100%">
+      <mat-card style="margin: 0; padding: 0">
+        <h3 style="padding: 0 16px">Showing 5 stores</h3>
+        <div style="display: flex; align-items: flex-start">
+          <div style="display: flex; flex-direction: column; margin: 0 16px">
+            <div
+              style="
+                position: relative;
+                width: 40px;
+                height: 40px;
+                border: 1px solid red;
+                display: table-cell;
+                vertical-align: top;
+              "
+            >
+              <span
+                style="
+                  position: absolute;
+                  left: 50%;
+                  top: 50%;
+                  transform: translate(-50%, -50%);
+                  z-index: 10;
+                  color: white;
+                "
+                >2</span
+              >
+              <mat-icon class="location-icon">place</mat-icon>
+            </div>
+            <div>1.1cm</div>
+          </div>
+          <div>
+            <div>first line</div>
+            <div>second line</div>
+          </div>
+        </div>
+      </mat-card>
+    </div>
+    <div fxFlex="70%" fxFlex.lt-md="100%" style="position: relative">
+      <span class="map-zoom-button zoom-in" (click)="zoomIn()"
+        ><mat-icon>add</mat-icon></span
+      >
+      <span class="map-zoom-button zoom-out" (click)="zoomOut()"
+        ><mat-icon>remove</mat-icon></span
+      >
+      <google-map
+        height="500px"
+        width="100%"
+        [zoom]="zoom"
+        [center]="center"
+        [options]="options"
+        (mapClick)="click($event)"
+      >
+        <map-marker
+          #markerElem
+          *ngFor="let marker of markers"
+          [position]="marker.position"
+          [label]="marker.label"
+          [title]="marker.title"
+          [options]="marker.options"
+          (mapClick)="openInfo(markerElem, marker.info)"
+        ></map-marker>
+
+        <map-info-window>{{ infoContent }}</map-info-window>
+      </google-map>
+    </div>
+  </div>
+</main>

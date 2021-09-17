@@ -9,6 +9,7 @@
 @import "../src/app/shared/data-list/data-list";
 @import "../src/app/components/todo/todo";
 @import "../src/app/components/pipelines/pipeline";
+@import "../src/app/components/find-store/find-store";
 
 html,
 body {
@@ -52,6 +53,7 @@ h5 {
 @include datalist-color($app-theme);
 @include todo-color($app-theme);
 @include pipeline-color($app-theme);
+@include find-store-color($app-theme);
 
 .darkMode {
   @include mat.all-component-colors($dark-theme);
@@ -63,4 +65,5 @@ h5 {
   @include datalist-color($dark-theme);
   @include todo-color($dark-theme);
   @include pipeline-color($dark-theme);
+  @include find-store-color($dark-theme);
 }

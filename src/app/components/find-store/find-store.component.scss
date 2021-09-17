@@ -1,0 +1,63 @@
+.search-area {
+  position: relative;
+  width: 100%;
+  min-width: 150px;
+  margin-right: 16px;
+  margin-bottom: 8px;
+  overflow: hidden;
+  border-radius: 4px;
+  .search-area_input {
+    width: 100%;
+    border: none;
+    outline: none;
+    padding: 16px;
+    height: 90%;
+    -webkit-appearance: none;
+    transition: width 0.4s ease-in-out;
+    font-size: 1rem;
+  }
+  .search-person::placeholder {
+    font-size: 1rem;
+    color: #131f69;
+    letter-spacing: 0.1rem;
+  }
+  .search-area_button {
+    position: absolute;
+    right: 0px;
+    top: 0px;
+    height: 100%;
+  }
+}
+
+.map-zoom-button {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  background-color: white;
+  position: absolute;
+  right: 28px;
+  z-index: 10;
+  font-size: 2rem;
+  font-weight: 300;
+  text-align: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 4px;
+  &.zoom-in {
+    bottom: 270px;
+  }
+  &.zoom-out {
+    bottom: 225px;
+  }
+}
+
+.mat-list-icon {
+  color: rgba(0, 0, 0, 0.54);
+}
+
+.location-icon {
+  position: relative;
+  top:1px;
+  
+  font-size:36px;
+}

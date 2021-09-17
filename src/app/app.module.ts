@@ -6,7 +6,12 @@ import { CookieService } from 'ngx-cookie-service';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { GoogleMapsModule } from '@angular/google-maps';
-import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+
+import {
+  HttpClientModule,
+  HttpClientJsonpModule,
+  HTTP_INTERCEPTORS,
+} from '@angular/common/http';
 import { NgxEchartsModule } from 'ngx-echarts';
 
 import { AppRoutingModule } from './app-routing.module';

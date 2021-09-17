@@ -1,16 +1,19 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
 import { MapInfoWindow, MapMarker, GoogleMap } from '@angular/google-maps';
 import { GoogleMapService } from 'src/app/services/google-map.service';
-// Create an Observable that will start listening to geolocation updates
+
+import { Observable, of } from 'rxjs';
+import { catchError, map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-find-store',
   templateUrl: './find-store.component.html',
   styleUrls: ['./find-store.component.scss'],
 })
-export class FindStoreComponent implements OnInit {
+export class FindStoreComponent implements OnInit, AfterViewInit {
   @ViewChild(GoogleMap, { static: false }) map!: GoogleMap; // false: resolve after change detection.
   @ViewChild(MapInfoWindow, { static: false }) info!: MapInfoWindow;
+  storeArray: string[] = ['a', 'b'];
 
   zoom = 12;
   center!: google.maps.LatLngLiteral;
@@ -37,26 +40,31 @@ export class FindStoreComponent implements OnInit {
     if (!navigator.geolocation || !navigator.geolocation.getCurrentPosition) {
       console.log('not support');
     } else {
-      console.log('p1 is');
-      navigator.geolocation.getCurrentPosition(
-        () => {},
-        () => {},
-        options
-      );
-      navigator.geolocation.getCurrentPosition(
-        (position) => {
-          console.log('p2 is', position);
+      this.getCurrentPosition()
+        .then((data) => {
           this.center = {
-            lat: position.coords.latitude,
-            lng: position.coords.longitude,
+            lat: data.lat,
+            lng: data.lng,
           };
-        },
-        (err) => {
-          console.log('err', err);
-        }
-      );
+        })
+        .catch((err) => alert(err));
     }
   }
+
+  getCurrentPosition(): Promise<any> {
+    return new Promise((resolve, reject) => {
+      navigator.geolocation.getCurrentPosition(
+        (resp) => {
+          resolve({ lng: resp.coords.longitude, lat: resp.coords.latitude });
+        },
+        (err) => {
+          reject(err);
+        }
+      );
+    });
+  }
+
+  ngAfterViewInit() {}
 
   zoomIn(): void {
     if (this.zoom < (this.options.maxZoom ? this.options.maxZoom : 7)) {
@@ -80,23 +88,6 @@ export class FindStoreComponent implements OnInit {
       timeout: 5000,
       maximumAge: 60000,
     };
-
-    if (!navigator.geolocation || !navigator.geolocation.getCurrentPosition) {
-      console.log('boj is pr');
-    }
-    navigator.geolocation.getCurrentPosition(
-      (position) => {
-        console.log('p2 is', position);
-        this.center = {
-          lat: position.coords.latitude,
-          lng: position.coords.longitude,
-        };
-      },
-      (err) => {
-        console.log('err', err);
-      },
-      options
-    );
 
     // if (!this.center) {
     //   const xx = this.map.getCenter();
@@ -132,7 +123,7 @@ export class FindStoreComponent implements OnInit {
   }
 
   getPositionByZipCode(zipCode: string): void {
-    this.mapService.getPositionByZipCode(zipCode);
+    // this.mapService.getPositionByZipCode(zipCode);
   }
 
   calculateDistance(pointA: any, pointB: any): void {

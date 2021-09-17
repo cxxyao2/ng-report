@@ -1,7 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, Validators, FormGroup } from '@angular/forms';
 import { BreakpointObserver } from '@angular/cdk/layout';
-import { StepperOrientation } from '@angular/material/stepper';
+import { MatStepper, StepperOrientation } from '@angular/material/stepper';
 import { Observable, Subscription } from 'rxjs';
 import { finalize, map } from 'rxjs/operators';
 import { HttpClient, HttpEventType } from '@angular/common/http';
@@ -21,6 +21,7 @@ import { STEPPER_GLOBAL_OPTIONS } from '@angular/cdk/stepper';
   ],
 })
 export class AddClientComponent implements OnInit {
+  @ViewChild('stepper') stepper!: MatStepper;
   isLinear = false;
   firstFormGroup!: FormGroup;
   secondFormGroup!: FormGroup;
@@ -100,5 +101,10 @@ export class AddClientComponent implements OnInit {
   reset() {
     this.uploadProgress = null;
     this.uploadSub = null;
+  }
+  submit(){
+    // TODO add a potential client to DB
+    
+    this.stepper.reset();
   }
 }

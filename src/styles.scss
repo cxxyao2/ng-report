@@ -8,6 +8,7 @@
 @import "../src/app/components/calendar/calendar";
 @import "../src/app/shared/data-list/data-list";
 @import "../src/app/components/todo/todo";
+@import "../src/app/components/pipelines/pipeline";
 
 html,
 body {
@@ -50,6 +51,7 @@ h5 {
 @include scheduler-color($app-theme);
 @include datalist-color($app-theme);
 @include todo-color($app-theme);
+@include pipeline-color($app-theme);
 
 .darkMode {
   @include mat.all-component-colors($dark-theme);
@@ -60,4 +62,5 @@ h5 {
   @include scheduler-color($dark-theme);
   @include datalist-color($dark-theme);
   @include todo-color($dark-theme);
+  @include pipeline-color($dark-theme);
 }

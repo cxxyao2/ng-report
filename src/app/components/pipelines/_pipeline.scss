@@ -1,0 +1,22 @@
+@use 'sass:map';
+@use '~@angular/material' as mat;
+
+@mixin pipeline-color($config-or-theme, $shadow-color: rgba(0, 0, 255, 0.1)) {
+  $config: mat.get-color-config($config-or-theme);
+  $primary: map.get($config, primary);
+  $accent: map.get($config, accent);
+  $warn: map.get($config, warn);
+  $holiday-color: mat.get-color-from-palette($primary, 50);
+
+  app-pipelines {
+    .authorized {
+      color: mat.get-color-from-palette($primary);
+    }
+    .unauthorized {
+      color: mat.get-color-from-palette($warn);
+    }
+    .authorize-button {
+      background-color: mat.get-color-from-palette($primary, 50);
+    }
+  }
+}

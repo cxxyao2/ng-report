@@ -1,16 +1,26 @@
 <h2>Pipeline Management</h2>
-<div>new clients are registered <button mat-raised-button>Refresh</button></div>
-<mat-list>
-  <mat-list-item *ngFor="let message of messages; trackBy: trackByPipelineId">
-    <img
-      matListAvatar
-      src="https://source.unsplash.com/IuLgi9PWETU/50x50"
-      alt="hi"
-    />
-    <h3 matLine>{{ message.from }}</h3>
-    <p matLine>
-      <span> {{ message.subject }} </span>
-      <span class="demo-2"> -- {{ message.content }} </span>
-    </p>
-  </mat-list-item>
-</mat-list>
+<div>
+  <button mat-raised-button (click)="addNewMessage()">Add</button>
+</div>
+<div class="list-wrapper">
+  <mat-list>
+    <mat-list-item *ngFor="let message of messages; trackBy: trackByPipelineId">
+      <img
+        matListAvatar
+        src="https://source.unsplash.com/random/100x100?car"
+        alt="..."
+      />
+      <h3 matLine>{{ message.from }}</h3>
+      <p matLine>1234 Lorant Street, Quebec, QC, H4Y 4Y6</p>
+      <p matLine style="display: flex; gap: 8px; flex-wrap: wrap">
+        <span style="display: inline-flex;"
+          >Golden Credit :$10k Authorized
+        </span>
+
+        <span style="display: inline-flex" class="authorize-button"
+          >Authorize</span
+        >
+      </p>
+    </mat-list-item>
+  </mat-list>
+</div>

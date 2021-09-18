@@ -1,5 +1,5 @@
 <main>
-  <h3>Find a store</h3>
+  <h2>Find a store</h2>
 
   <div class="search-area">
     <input
@@ -7,52 +7,46 @@
       class="search-area_input"
       autocomplete
       placeholder="enter zipcode"
-      (keyup.enter)="getPositionByZipCode(input.value)"
       #input
     />
-    <button mat-button class="search-area_button">
+    <button
+      mat-button
+      class="search-area_button"
+      (click)="getPositionByZipCode(input.value)"
+    >
       <mat-icon color="primary">search</mat-icon>
     </button>
   </div>
 
-  <div fxLayout="row wrap" fxLayoutGap="16px grid">
+  <div fxLayout="row wrap" fxLayoutGap="8px grid">
     <div fxFlex="30%" fxFlex.lt-md="100%">
-      <mat-card style="margin: 0; padding: 0">
-        <h3 style="padding: 0 16px">Showing 5 stores</h3>
-        <div style="display: flex; align-items: flex-start">
-          <div style="display: flex; flex-direction: column; margin: 0 16px">
-            <div
-              style="
-                position: relative;
-                width: 40px;
-                height: 40px;
-                border: 1px solid red;
-                display: table-cell;
-                vertical-align: top;
-              "
-            >
-              <span
-                style="
-                  position: absolute;
-                  left: 50%;
-                  top: 50%;
-                  transform: translate(-50%, -50%);
-                  z-index: 10;
-                  color: white;
-                "
-                >2</span
-              >
-              <mat-icon class="location-icon">place</mat-icon>
+      <mat-card class="main-card">
+        <div *ngIf="storeArray.length > 0; else no_data_alert">
+          <h3 class="location_list_header">Showing 5 stores</h3>
+          <ng-container *ngFor="let store of storeArray">
+            <hr class="location-divider" />
+            <div class="location">
+              <div class="location-icon-section">
+                <div class="location-icon-wrapper">
+                  <span class="location_icon_number">{{ store.ranking }}</span>
+                  <mat-icon class="location-icon">place</mat-icon>
+                </div>
+                <div>{{ store.distance }}</div>
+              </div>
+              <div class="location-text-wrapper">
+                <div class="location-name">{{ store.name }}</div>
+                <div>{{ store.address }}</div>
+                <div class="location-open-period">Open until 5:00</div>
+              </div>
             </div>
-            <div>1.1cm</div>
-          </div>
-          <div>
-            <div>first line</div>
-            <div>second line</div>
-          </div>
+          </ng-container>
         </div>
+        <ng-template #no_data_alert>
+          <p class="no-data-alert">No store data matching...</p></ng-template
+        >
       </mat-card>
     </div>
+
     <div fxFlex="70%" fxFlex.lt-md="100%" style="position: relative">
       <span class="map-zoom-button zoom-in" (click)="zoomIn()"
         ><mat-icon>add</mat-icon></span

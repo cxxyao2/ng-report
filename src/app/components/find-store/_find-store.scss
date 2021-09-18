@@ -14,5 +14,19 @@
         background-color: mat.get-color-from-palette($primary, 50);
       }
     }
+
+    .location-icon-section {
+      .location-icon-wrapper {
+        .location-icon {
+          color: mat.get-color-from-palette($primary,400);
+        }
+      }
+    }
+
+    .location-text-wrapper {
+      .location-name {
+        color: mat.get-color-from-palette($primary, 400);
+      }
+    }
   }
 }

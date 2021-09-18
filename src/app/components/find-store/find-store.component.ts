@@ -4,6 +4,16 @@ import { GoogleMapService } from 'src/app/services/google-map.service';
 
 import { Observable, of } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
+import { Stream } from 'stream';
+
+export interface Store {
+  name: string;
+  ranking: number;
+  distance: string;
+  address: string;
+  lat: number;
+  lng: number;
+}
 
 @Component({
   selector: 'app-find-store',
@@ -13,7 +23,8 @@ import { catchError, map } from 'rxjs/operators';
 export class FindStoreComponent implements OnInit, AfterViewInit {
   @ViewChild(GoogleMap, { static: false }) map!: GoogleMap; // false: resolve after change detection.
   @ViewChild(MapInfoWindow, { static: false }) info!: MapInfoWindow;
-  storeArray: string[] = ['a', 'b'];
+
+  storeArray: Store[] = [];
 
   zoom = 12;
   center!: google.maps.LatLngLiteral;
@@ -100,20 +111,22 @@ export class FindStoreComponent implements OnInit, AfterViewInit {
   }
 
   addMarker(): void {
-    this.markers.push({
-      position: {
-        lat: this.center.lat + ((Math.random() - 0.5) * 2) / 10,
-        lng: this.center.lng + ((Math.random() - 0.5) * 2) / 10,
-      },
-      label: {
-        color: 'red',
-        text: 'Marker label ' + (this.markers.length + 1),
-      },
-      title: 'Marker title ' + (this.markers.length + 1),
-      info: 'Marker info ' + (this.markers.length + 1),
-      options: {
-        animation: google.maps.Animation.BOUNCE,
-      },
+    this.storeArray.forEach((store) => {
+      this.markers.push({
+        position: {
+          lat: store.lat,
+          lng: store.lng,
+        },
+        label: {
+          color: 'gray',
+          text: store.name,
+        },
+        title: store.name,
+        info: store.name,
+        options: {
+          animation: google.maps.Animation.BOUNCE,
+        },
+      });
     });
   }
 
@@ -124,6 +137,49 @@ export class FindStoreComponent implements OnInit, AfterViewInit {
 
   getPositionByZipCode(zipCode: string): void {
     // this.mapService.getPositionByZipCode(zipCode);
+    this.storeArray = [
+      {
+        name: 'Bas-Laurant',
+        ranking: 1,
+        distance: '0.1km',
+        address: '5815 Sherbrooke St W, Montreal, Quebec H4A 1X4',
+        lat: 45.47,
+        lng: -73.63,
+      },
+      {
+        name: 'Lac-Saint',
+        ranking: 2,
+        distance: '0.2km',
+        address: '5107 Sherbrooke St W, Montreal',
+        lat: 45.47,
+        lng: -73.6,
+      },
+      {
+        name: 'Capitale',
+        ranking: 3,
+        distance: '1.1km',
+        address: '5107 Sherbrooke St W, Montreal',
+        lat: 45.47,
+        lng: -73.62,
+      },
+      {
+        name: 'Maurice',
+        ranking: 4,
+        distance: '2.1km',
+        address: '5351 Côte Saint Luc Rd, Montreal, Quebec H3X 2C3',
+        lat: 45.47,
+        lng: -73.65,
+      },
+      {
+        name: 'Estrie',
+        ranking: 5,
+        distance: '3.0km',
+        address: '5351 Côte Saint Luc Rd, Montreal, Quebec H3X 2C3',
+        lat: 45.47,
+        lng: -73.5,
+      },
+    ];
+    this.addMarker();
   }
 
   calculateDistance(pointA: any, pointB: any): void {

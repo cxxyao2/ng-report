@@ -34,6 +34,7 @@
   justify-content: center;
   align-items: center;
   background-color: white;
+  color: black;
   position: absolute;
   right: 28px;
   z-index: 10;
@@ -51,13 +52,75 @@
   }
 }
 
-.mat-list-icon {
-  color: rgba(0, 0, 0, 0.54);
+.main-card {
+  margin: 0;
+  padding: 0;
+  .no-data-alert {
+    padding:16px;font-size:1rem;
+  }
 }
 
-.location-icon {
-  position: relative;
-  top:1px;
-  
-  font-size:36px;
+
+
+.location_list_header {
+  padding: 8px 0 0 16px;
+}
+
+.location-divider {
+  border: 1px solid rgba(0, 0, 0, 0.25);
+  text-align: center;
+  margin: 8px auto;
+  width: 90%;
+  transform: scaleY(0.5);
+}
+
+.location {
+  display: flex;
+  align-items: flex-start;
+}
+
+.location-icon-section {
+  display: flex;
+  flex-direction: column;
+  margin: 0 16px;
+  .location-icon-wrapper {
+    position: relative;
+    width: 40px;
+    height: 40px;
+    display: table-cell;
+    vertical-align: top;
+    .location_icon_number {
+      position: absolute;
+      left: 13px;
+      top: 13px;
+      z-index: 10;
+      color: white;
+      font-weight: bolder;
+    }
+    .location-icon {
+      position: relative;
+      top: 1px;
+      font-size: 36px;
+    }
+  }
+}
+
+.location-text-wrapper {
+  display: flex;
+  flex-direction: column;
+  margin: 0 16px;
+  .location-name {
+    font-size: 1.1rem;
+  }
+  .location-open-period::before {
+    position: relative;
+    content: "";
+    display: inline-block;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    opacity: 0.6;
+    background-color: green;
+    margin-right: 4px;
+  }
 }

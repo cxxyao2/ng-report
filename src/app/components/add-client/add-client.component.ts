@@ -33,6 +33,11 @@ export class AddClientComponent implements OnInit {
   uploadProgress?: number | null;
   uploadSub?: Subscription | null;
   fileUrl?: any;
+  creditLevels = [
+    { label: 'golden', value: 'golden' },
+    { label: 'silver', value: 'silver' },
+    { label: 'iron', value: 'iron' },
+  ];
 
   constructor(
     private http: HttpClient,
@@ -102,9 +107,9 @@ export class AddClientComponent implements OnInit {
     this.uploadProgress = null;
     this.uploadSub = null;
   }
-  submit(){
+  submit() {
     // TODO add a potential client to DB
-    
+
     this.stepper.reset();
   }
 }

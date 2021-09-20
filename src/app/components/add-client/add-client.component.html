@@ -13,6 +13,17 @@
           required
         />
       </mat-form-field>
+      <mat-form-field appearance="fill">
+        <mat-label>Select</mat-label>
+        <mat-select>
+          <mat-option [value]="null">Default Option</mat-option>
+          <mat-option
+            *ngFor="let option of creditLevels"
+            [value]="option.value"
+            >{{ option.label }}</mat-option
+          >
+        </mat-select>
+      </mat-form-field>
       <div>
         <p>Go to a different step to see the error state</p>
         <button mat-button matStepperNext>Next</button>
@@ -73,7 +84,6 @@
       <div class="file-upload">
         {{ fileName || "No file uploaded yet." }}
 
-
         <!--todo show image <img *ngIf="fileName" src="{{ fileName }}" /> -->
 
         <button
@@ -100,9 +110,7 @@
     <div>
       <button mat-button matStepperPrevious>Back</button>
       <button mat-button (click)="stepper.reset()">Reset</button>
-      <button mat-button color="primary" (click)="submit()">
-        Upload
-      </button>
+      <button mat-button color="primary" (click)="submit()">Upload</button>
     </div>
   </mat-step>
 </mat-stepper>

@@ -35,7 +35,18 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 
 ## layout
 
-- breakpoint: 800px
-- Modern CSS: Grid Layout & Flex Box
+- breakpoint: 800px (exceptions: login, singup formss with big images)
+- Modern Layout: Grid & Flex Box
 - Mobile Friendly and full responsive
 - 2 Modes: Dark Mode & Light Mode
+- Back to top button
+- Spinner during http methods
+
+## Test list
+
+- Template forms
+- Reactive forms
+- Validators, asyncValidators
+- Pipes
+- Services
+- Http interceptors

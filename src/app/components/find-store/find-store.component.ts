@@ -30,7 +30,7 @@ export class FindStoreComponent implements OnInit, AfterViewInit {
   center!: google.maps.LatLngLiteral;
   options: google.maps.MapOptions = {
     mapTypeId: 'hybrid',
-    zoomControl: false,
+    zoomControl: false, //  add customized zoom button on map
     scrollwheel: false,
     disableDoubleClickZoom: true,
     maxZoom: 15,

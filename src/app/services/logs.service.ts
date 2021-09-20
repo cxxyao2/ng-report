@@ -10,9 +10,12 @@ import { LogRecord } from 'src/app/models/log-record';
   providedIn: 'root',
 })
 export class LogsService {
+  ipAddress = '';
   configUrl = environment.apiUrl + '/logs';
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) {
+    this.getIPAddress();
+  }
 
   getLog(id: string): Observable<LogRecord> {
     const url = `${this.configUrl}/${id}`; // DELETE api/heroes/42
@@ -43,15 +46,21 @@ export class LogsService {
       .pipe(retry(1), catchError(this.handleError));
   }
 
-  addLog(log: LogRecord) {
+  addLog(content: string) {
     // name ,categoryId='600103a5ffa4a7376471d64f'
     // code ?
-    return this.http.post(this.configUrl, log).pipe(
-      retry(1),
-      catchError((err: any, caught: Observable<any>) => {
-        return throwError(this.handleError(err, caught));
+    this.http
+      .post(this.configUrl, {
+        ip: this.ipAddress,
+        content: content,
       })
-    );
+      .subscribe();
+  }
+
+  getIPAddress() {
+    this.http.get('http://api.ipify.org/?format=json').subscribe((res: any) => {
+      this.ipAddress = res.ip;
+    });
   }
 
   /**

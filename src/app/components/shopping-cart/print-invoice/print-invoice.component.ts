@@ -2,7 +2,7 @@ import { AfterViewInit, Component, Input, ViewChild } from '@angular/core';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { MyCompany } from 'src/app/models/my-company';
-import { Client } from 'src/app/models/client';
+
 import { constants } from 'src/app/config/constants';
 import { PdfMakeService } from 'src/app/services/pdfmake.service';
 import { CartService } from 'src/app/services/cart.service';
@@ -34,7 +34,6 @@ const ELEMENT_DATA: PeriodicElement[] = [
 })
 export class PrintInvoiceComponent {
   @Input() myCompany!: MyCompany;
-  @Input() myClient!: Client;
 
   panelOpenState = false;
   displayedColumns: string[] = ['position', 'name', 'weight', 'symbol'];

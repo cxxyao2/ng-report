@@ -11,6 +11,7 @@ import {
   HttpClientModule,
   HttpClientJsonpModule,
   HTTP_INTERCEPTORS,
+  HttpClientXsrfModule,
 } from '@angular/common/http';
 import { NgxEchartsModule } from 'ngx-echarts';
 
@@ -57,6 +58,8 @@ import { LoginComponent } from './components/login/login.component';
 import { SignUpComponent } from './components/sign-up/sign-up.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { PipelinesComponent } from './components/pipelines/pipelines.component';
+import { httpInterceptorProviders } from './interceptors';
+import { XsrftokenInterceptor } from './interceptors/xsrftoken.interceptor';
 
 @NgModule({
   declarations: [
@@ -109,13 +112,17 @@ import { PipelinesComponent } from './components/pipelines/pipelines.component';
     ReactiveFormsModule,
     GoogleMapsModule,
     HttpClientModule,
+    HttpClientXsrfModule.withOptions({
+      cookieName: 'XSRF-TOKEN',
+      headerName: 'X-XSRF-TOKEN',
+    }),
     MaterialModule,
     NgxEchartsModule.forRoot({
       echarts: () => import('echarts'),
     }),
     AppRoutingModule,
   ],
-  providers: [CookieService],
+  providers: [CookieService, httpInterceptorProviders],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

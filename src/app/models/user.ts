@@ -2,7 +2,10 @@ export interface User {
   id: string;
   name: string;
   email: string;
-  locked: string; // 0-unlocked 1-locked
+  isFrozen: boolean; // 0-unlocked 1-locked
   password: string;
-  numberOfLoginAttempt: number; // maximum attempts:3;
+  failedCount: number; // maximum attempts:3;
+  isAdmin: boolean;
+  isManager: boolean;
+  isSalesperson: boolean;
 }

@@ -25,8 +25,3 @@ export class NetworkInterceptor implements HttpInterceptor {
     );
   }
 }
-
-// notes: if use this class as a http Interceptor,  will cause a  changeAfterHaveBeenChecked  error.
-//   providers: [
-//   { provide: HTTP_INTERCEPTORS, useClass: NetworkInterceptor, multi: true },
-// ],

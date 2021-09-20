@@ -2,7 +2,6 @@ import { Component, OnInit, Input } from '@angular/core';
 import { Product } from 'src/app/models/product';
 import { CartService } from 'src/app/services/cart.service';
 import { WishListService } from 'src/app/services/wish-list.service';
-import { MessageService } from '../../../services/message.service';
 import { PdfMakeService } from 'src/app/services/pdfmake.service';
 import { constants } from 'src/app/config/constants';
 
@@ -16,7 +15,6 @@ export class ProductItemComponent implements OnInit {
   showMore = false;
 
   constructor(
-    private msg: MessageService,
     private cartService: CartService,
     private wishListService: WishListService,
     private pdfService: PdfMakeService
@@ -25,23 +23,19 @@ export class ProductItemComponent implements OnInit {
   ngOnInit(): void {}
 
   handleAddToCart() {
-    this.cartService.addProductToCart(this.productItem).subscribe(() => {
-      this.msg.sendMsg(this.productItem.name);
-    });
+    this.cartService.addProductToCart(this.productItem).subscribe(() => {});
   }
 
   handleAddToWishList() {
-    this.wishListService.addToWishList(this.productItem._id).subscribe(() => {
-      this.msg.sendMsg(this.productItem.name);
-    });
+    this.wishListService
+      .addToWishList(this.productItem._id)
+      .subscribe(() => {});
   }
 
   handleRemoveFromWishList() {
     this.wishListService
       .removeFromWishList(this.productItem._id)
-      .subscribe(() => {
-        this.msg.sendMsg(this.productItem.name);
-      });
+      .subscribe(() => {});
   }
 
   openPdf(): void {

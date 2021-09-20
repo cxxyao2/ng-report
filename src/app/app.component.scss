@@ -23,7 +23,6 @@
 
 .is-handset .toolbar {
   position: fixed;
-
   height: 56px;
 }
 
@@ -96,11 +95,11 @@ h1.app-name {
   margin: 16px;
   min-height: calc(100vh - 140px);
 }
+
 mat-progress-spinner {
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  z-index: 101;
+  z-index: 1001;
 }
-

@@ -10,7 +10,7 @@ import {
 } from '@angular/core';
 import { BreakpointObserver } from '@angular/cdk/layout';
 import { Observable } from 'rxjs';
-import { map, shareReplay, tap } from 'rxjs/operators';
+import { map, shareReplay, tap, debounceTime } from 'rxjs/operators';
 import {
   MatBottomSheet,
   MatBottomSheetRef,

@@ -1,5 +1,5 @@
 // The base64 encoded file should be converted to Blob before bing uploaded to server.
-export function base64ToBlob(urlData, type) {
+function base64ToBlob(urlData, type) {
   let arr = urlData.split(",");
   // * and + are greedy ( the regex engine tried to find your pattern in the string )
   // matched as many characters as possible. We add ?  to make regex not greedy
@@ -29,11 +29,7 @@ export function base64ToBlob(urlData, type) {
   return blob;
 }
 
-export function saveBlobtoLocalFile(
-  blobData,
-  localFileName,
-  fileType = "jpeg"
-) {
+function saveBlobtoLocalFile(blobData, localFileName, fileType = "jpeg") {
   var file = new File([blobData], { type: fileType });
   // var file = new File(["foo"], "foo.txt", {
   //   type: "text/plain",
@@ -51,7 +47,7 @@ export function saveBlobtoLocalFile(
   URL.revokeObjectURL(fileURL); // free up storage
 }
 
-export function makeCSV(contents) {
+function makeCSV(contents) {
   let csv = "";
   contents.forEach((value) => {
     value.forEach((item, i) => {

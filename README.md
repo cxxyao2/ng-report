@@ -7,27 +7,35 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 - register & login with recaptcha
 - deploy web worker for analyzing mass data and image. no block the main thread.
 - attention to modularity && reusability
-- lazy loading
+- lazy loading (Angular && Webpack )
 - interceptors
 - guards, resolves
 - light/dark themes
 - i18n
+- download file formats: CSV and PDF
+- forget password/reset password emails
+- guard, resolve
+- reusable animations
 
 ## back-end : mongodb mongoose express node.js
 
-## third party packages
+## other importants third party packages
 
 - ngx-echarts v7.x: show graphs and charts
+- jwt-decode
+- ngx-cookie-service
+- pdfmake
+  (These package names are self-explanatory.No extra explanation here.)
 
 ## Main Functions
 
 ### Master Data Maintenance
 
-### Planning visiting itineraries
+### Contact Planning & Schedule
+
+### Client Management
 
 ### Place order
-
-### Build Channels
 
 ### Analyse sales data and salesperson performance
 
@@ -40,9 +48,10 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 - Mobile Friendly and full responsive
 - 2 Modes: Dark Mode & Light Mode
 - Back to top button
-- Spinner during http methods
+- Spinner during http actions
+- Error popup window
 
-## Test list
+## Test Object list
 
 - Template-driven forms
 - Reactive forms

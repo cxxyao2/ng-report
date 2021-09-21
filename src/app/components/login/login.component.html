@@ -4,7 +4,7 @@
       <span class="login-header">Login</span>
       <!-- login form -->
 
-      <form class="login-form" (ngSubmit)="login()" #authform="ngForm">
+      <form class="login-form" (ngSubmit)="login(authform)" #authform="ngForm">
         <div class="form-input-wrapper">
           <input
             ngModel
@@ -15,7 +15,6 @@
             class="login-input"
             minlength="6"
             maxlength="100"
-            [attr.pattern]="'/@/'"
             required
           />
         </div>
@@ -54,7 +53,11 @@
       </form>
       <div class="signup-link-wrapper">
         <span class="signup-notice">Don't have an account?</span>
-        <a class="signup-link" routerLink="/signup">Sign up</a>
+        <a class="signup-link" [routerLink]="['/signup']">Sign up</a>
+      </div>
+      <div class="signup-link-wrapper">
+        <span class="signup-notice">Forget your password?</span>
+        <a class="signup-link" routerLink="/forget-password">Reset Password</a>
       </div>
     </main>
 
@@ -66,3 +69,5 @@
     </aside>
   </div>
 </div>
+
+<app-error [message]="errorMessage"></app-error>

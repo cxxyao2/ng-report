@@ -26,12 +26,18 @@ import { ClientsComponent } from './components/clients/clients.component';
 import { LoginComponent } from './components/login/login.component';
 import { SignUpComponent } from './components/sign-up/sign-up.component';
 import { PipelinesComponent } from './components/pipelines/pipelines.component';
+import { AuthGuard } from './shared/auth.guard';
+import { ForgetPasswordComponent } from './components/forget-password/forget-password.component';
+import { ResetPasswordComponent } from './components/reset-password/reset-password.component';
+import { ChangePasswordComponent } from './components/change-password/change-password.component';
 
 const routes: Routes = [
-  { path: '', redirectTo: '/home', pathMatch: 'full' },
   { path: 'calendar', component: CalendarComponent },
   { path: 'login', component: LoginComponent },
   { path: 'signup', component: SignUpComponent },
+  { path: 'forget-password', component: ForgetPasswordComponent },
+  { path: 'reset-password', component: ResetPasswordComponent },
+  { path: 'change-password', component: ChangePasswordComponent },
   { path: 'calendar', component: CalendarComponent },
   { path: 'home', component: HomeComponent }, // public no-login
   { path: 'dash', component: DashboardComponent }, // user profile
@@ -43,7 +49,7 @@ const routes: Routes = [
   { path: 'by-employee', component: ReportByEmployeeComponent }, // manager role
   { path: 'todo', component: TodoComponent }, // salesperson role
   { path: 'place-order', component: ProductListComponent }, // salesperson role
-  {path:'pipeline',component:PipelinesComponent},
+  { path: 'pipeline', component: PipelinesComponent, canActivate: [AuthGuard] }, // manager, salesperson
   { path: 'capture-client', component: AddClientComponent }, // salesperson role
 
   {
@@ -75,6 +81,7 @@ const routes: Routes = [
 
   { path: 'about-me', component: AboutComponent }, // very important . the profile of developer
   { path: 'game-card', component: GameCardComponent }, // technique features
+  { path: '', redirectTo: '/home', pathMatch: 'full' },
   { path: '**', component: PageNotFoundComponent },
 ];
 

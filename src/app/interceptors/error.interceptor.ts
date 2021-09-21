@@ -4,7 +4,7 @@ import {
   HttpHandler,
   HttpEvent,
   HttpInterceptor,
-  HttpErrorResponse
+  HttpErrorResponse,
 } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { catchError, retry } from 'rxjs/operators';
@@ -26,7 +26,7 @@ export class ErrorInterceptor implements HttpInterceptor {
           // server-side error
           errorMessage = `Error Code: ${error.status}\nMessage: ${error.message} \n ${error.error}`;
         }
-        window.alert(errorMessage);
+        //  window.alert(errorMessage);
         return throwError(errorMessage);
       })
     );

@@ -1,40 +1,52 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 import { AuthService } from 'src/app/services/auth.service';
-// TODO waiting for deleting
-import { CustomerService } from 'src/app/services/customer.service';
+
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss'],
 })
 export class LoginComponent implements OnInit {
-  @ViewChild('authform') authForm!: NgForm;
+  unamePattern = '^[a-z0-9_-]{8,15}$';
+  pwdPattern = '^(?=.*d)(?=.*[a-z])(?=.*[A-Z])(?!.*s).{6,12}$';
+  mobnumPattern = '^((\\+91-?)|0)?[0-9]{10}$';
+
   errorMessage = '';
   hide = true;
   constructor(
     public authService: AuthService,
-    private cs: CustomerService,
-    public router: Router
+    private router: Router,
+    private route: ActivatedRoute
   ) {}
 
   ngOnInit() {}
 
-  login(): void {
-    if (!this.authForm.form.valid) {
+  login(form: NgForm): void {
+    if (!form.valid) {
       return;
     }
-
     this.authService
-      .login(
-        this.authForm.controls.email.value,
-        this.authForm.controls.password.value
-      )
-      .subscribe((data) => {
-        console.log('data is', data); // TODO
-      });
+      .login(form.controls.email.value, form.controls.password.value)
+      .subscribe(
+        (result) => {
+          // TODO
+          // 这里其他返回信息没用，主要是得到头部cookie中的token .
+          const token = '';
+
+          this.authService.loginWithJwt(result);
+          const returnUrl = this.route.snapshot.queryParamMap.get('returnUrl');
+          this.router.navigate([returnUrl || '/']);
+        },
+        (err) => {
+          this.errorMessage = err;
+          setTimeout(() => (this.errorMessage = ''), 3000);
+        }
+      );
+
+    // form.resetForm();
   }
 }

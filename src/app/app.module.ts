@@ -60,6 +60,12 @@ import { FooterComponent } from './components/footer/footer.component';
 import { PipelinesComponent } from './components/pipelines/pipelines.component';
 import { httpInterceptorProviders } from './interceptors';
 import { XsrftokenInterceptor } from './interceptors/xsrftoken.interceptor';
+import { UniqueUserDirective } from './shared/unique-user.directive';
+import { UniquePasswordDirective } from './shared/unique-password.directive';
+import { ChangePasswordComponent } from './components/change-password/change-password.component';
+import { ResetPasswordComponent } from './components/reset-password/reset-password.component';
+import { ForgetPasswordComponent } from './components/forget-password/forget-password.component';
+import { ErrorComponent } from './components/error/error.component';
 
 @NgModule({
   declarations: [
@@ -102,6 +108,12 @@ import { XsrftokenInterceptor } from './interceptors/xsrftoken.interceptor';
     SignUpComponent,
     FooterComponent,
     PipelinesComponent,
+    UniqueUserDirective,
+    UniquePasswordDirective,
+    ChangePasswordComponent,
+    ResetPasswordComponent,
+    ForgetPasswordComponent,
+    ErrorComponent,
   ],
   imports: [
     BrowserModule,

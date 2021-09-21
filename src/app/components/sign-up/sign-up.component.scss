@@ -1,6 +1,6 @@
 .main__container {
-  min-height: 90vh;
-  width: 90vw;
+  height: 90%;
+  width: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -18,43 +18,65 @@
   animation: fadein 1s ease-in-out;
 }
 
-.signup-header {
-  position: absolute;
-  top: 5rem;
-  font-size: 2.5rem;
-  color: #0c1066;
-  letter-spacing: 0.2rem;
-  font-weight: bold;
-  animation: slidedown 1.5s ease-in-out;
-}
-
 .signup-content {
   flex: 2 2;
   display: flex;
   flex-flow: column;
   justify-content: center;
   align-items: center;
-  animation: fadein 1.5s ease-in-out;
+  animation: fadein 1s ease-in-out;
   min-height: 100%;
 }
 
+.signup-header {
+  position: relative;
+  text-align: center;
+  top: 1.5rem;
+  font-size: 2.5rem;
+  color: #0c1066;
+  letter-spacing: 0.2rem;
+  font-weight: bold;
+  animation: slidedown 1s ease-in-out;
+}
+
 .signup-form {
+  position: relative;
+  top: 2.5rem;
   display: flex;
   flex-flow: column;
   width: 80%;
   align-items: center;
-  animation: slidedown 2s ease-in-out;
+  animation: slidedown 1s ease-in-out;
+}
+
+.form-input-wrapper {
+  position: relative;
+  width: 100%;
+  text-align: left;
+  margin-left: 1rem;
+  &.error {
+    border-left: 2px solid #ff3a82;
+    font-size: 14px;
+  }
+}
+.button-in-input {
+  position: absolute;
+  top: 20px;
+  right: 70px;
+  font-size: 30px;
+  color: #0c1066;
 }
 
 .signup-aside {
-  animation: fadein 2.25s ease-in-out;
+  animation: fadein 2s ease-in-out;
   flex: 3 3;
   display: flex;
   justify-content: flex-end;
   flex-flow: column;
   min-height: 100%;
   border-radius: 0 10px 10px 0;
-  background: url("https://source.unsplash.com/random/1200x900?mountain") no-repeat center center;
+  background: url("https://source.unsplash.com/random/1200x900?mountain")
+    no-repeat center center;
   background-size: cover;
   position: relative;
 }
@@ -78,7 +100,7 @@
   position: relative;
   z-index: 5;
   margin: 0 0 8rem 3rem;
-  animation: slideright 4s ease-out;
+  animation: slideright 1s ease-out;
 }
 
 .signup-welcome-text {
@@ -88,19 +110,18 @@
   font-size: 2.75rem;
   position: relative;
   z-index: 5;
-  animation: slideright 2s ease-out;
+  animation: slideright 1s ease-out;
 }
 
 .signup-input {
   margin: 1rem 0;
-  padding: 1.5rem;
+  padding: 1rem;
   border-radius: 2rem;
   outline: none;
   border: none;
-  box-shadow: 0 0 2rem rgba(0, 0, 255, 0.3);
+  box-shadow: 0 0 1rem rgba(0, 0, 255, 0.3);
   width: 80%;
 }
-
 
 .signup-btn {
   background-color: #00ff9b;
@@ -112,8 +133,11 @@
   font-size: 1.1rem;
   cursor: pointer;
   margin-top: 1.5rem;
-  width: 50%;
+  width: 40%;
   box-shadow: 0 0 2rem rgba(0, 0, 255, 0.1);
+}
+.signup-btn ~ .signup-btn {
+  margin-left: 1rem;
 }
 
 .signup-btn:hover {
@@ -133,7 +157,6 @@
   background: lightgray;
 }
 
-
 .login-link-wrapper {
   margin-top: 3rem;
   animation: slideup 1s ease-in-out;
@@ -145,4 +168,16 @@
   text-decoration: none;
   color: #ff3a82;
   margin-left: 1rem;
+}
+
+@media screen and (max-width: 1279px) {
+  .signup-aside {
+    display: none;
+  }
+}
+
+@media screen and (max-width: 599px) {
+  .button-in-input {
+    right: 50px;
+  }
 }

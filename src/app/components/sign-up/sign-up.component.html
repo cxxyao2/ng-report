@@ -4,33 +4,129 @@
       <span class="signup-header">Signup</span>
       <!-- signup form -->
 
-      <form class="signup-form" (ngSubmit)="signup($event)" #authform="ngForm">
-        <input
-          ngModel
-          type="email"
-          autofocus
-          placeholder="Email"
-          name="email"
-          class="signup-input"
-          required
-        />
-        <input
-          ngModel
-          type="password"
-          placeholder="Password"
-          name="password"
-          class="signup-input"
-          minlength="6"
-          required
-        />
-        <input
-          type="submit"
-          name="submit"
-          value="Signup"
-          class="signup-btn"
-          [class.btn-disabled]="!authform.form.valid"
-          [disabled]="!authform.form.valid"
-        />
+      <form
+        class="signup-form"
+        (ngSubmit)="signup()"
+        #authform="ngForm"
+        [formGroup]="myForm"
+      >
+        <div class="form-input-wrapper">
+          <input
+            type="text"
+            autofocus
+            placeholder="Enter your name"
+            formControlName="fullName"
+            class="signup-input"
+            maxlength="100"
+            required
+          />
+        </div>
+        <div
+          class="form-input-wrapper error"
+          *ngIf="fullName?.touched && fullName?.invalid"
+        >
+          {{ getNameMessage() }}
+        </div>
+        <div class="form-input-wrapper">
+          <input
+            type="email"
+            placeholder="pat@example.com"
+            formControlName="email"
+            class="signup-input"
+            minlength="6"
+            maxlength="100"
+            required
+          />
+        </div>
+        <div
+          class="form-input-wrapper error"
+          *ngIf="email?.touched && email?.invalid"
+        >
+          {{ getEmailMessage() }}
+        </div>
+        <div class="form-input-wrapper">
+          <input
+            [type]="hide ? 'password' : 'text'"
+            placeholder="Password"
+            formControlName="password"
+            class="signup-input"
+            minlength="6"
+            required
+          />
+          <button
+            mat-icon-button
+            matSuffix
+            class="button-in-input"
+            (click)="hide = !hide"
+            [attr.aria-label]="'Hide password'"
+            [attr.aria-pressed]="hide"
+          >
+            <mat-icon>{{ hide ? "visibility_off" : "visibility" }}</mat-icon>
+          </button>
+        </div>
+        <div
+          class="form-input-wrapper error"
+          *ngIf="password?.touched && password?.invalid"
+        >
+          {{ getPasswordMessage() }}
+        </div>
+        <div class="form-input-wrapper">
+          <input
+            [type]="hideRepeat ? 'password' : 'text'"
+            placeholder="Repeat your password"
+            formControlName="repeatPassword"
+            class="signup-input"
+            minlength="6"
+            required
+          />
+          <button
+            mat-icon-button
+            matSuffix
+            class="button-in-input"
+            (click)="hideRepeat = !hideRepeat"
+            [attr.aria-label]="'Hide repeatPassword'"
+            [attr.aria-pressed]="hide"
+          >
+            <mat-icon>{{
+              hideRepeat ? "visibility_off" : "visibility"
+            }}</mat-icon>
+          </button>
+        </div>
+        <div
+          class="form-input-wrapper error"
+          *ngIf="repeatPassword?.touched && repeatPassword?.invalid"
+        >
+          {{ getRepeatPasswordMessage() }}
+        </div>
+
+        <div
+          class="form-input-wrapper error"
+          *ngIf="
+            myForm?.touched &&
+            myForm?.invalid &&
+            repeatPassword?.value.length > 0 &&
+            myForm?.errors?.identifyPassword
+          "
+        >
+          RepeatPassword should be equal to password.
+        </div>
+        <div class="form-input-wrapper">
+          <input
+            type="submit"
+            name="submit"
+            value="Signup"
+            class="signup-btn"
+            [class.btn-disabled]="!authform.form.valid"
+            [disabled]="!authform.form.valid"
+          />
+          <input
+            type="button"
+            name="reset"
+            value="Reset"
+            class="signup-btn"
+            (click)="authform.reset()"
+          />
+        </div>
       </form>
       <div class="login-link-wrapper">
         <span class="login-notice">Already Have an account?</span>
@@ -41,9 +137,8 @@
     <!-- linking to signup -->
     <aside class="signup-aside">
       <div class="signup-aside-overlay"></div>
-      <h1 class="signup-welcome-text">Join Excel Company Today!</h1>
+      <h1 class="signup-welcome-text">Join Excellent Today!</h1>
       <hr class="signup-aside-hr" />
     </aside>
   </div>
 </div>
-

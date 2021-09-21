@@ -19,7 +19,8 @@ export class CustomerService {
 
   deleteCustomer(id: string) {
     const url = `${this.configUrl}/${id}`;
-    return this.http.delete(url, { withCredentials: true });
+    // TODO 正式上传要配置 return this.http.delete(url, { withCredentials: true });
+    return this.http.delete(url);
   }
 
   getCustomers(): Observable<Customer[]> {

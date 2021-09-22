@@ -63,9 +63,31 @@
 
       <a class="nav-link" routerLink="/home"><mat-icon>home</mat-icon>Home</a>
 
-      <a class="nav-link" (click)="logout()"
-        ><mat-icon>account_circle</mat-icon>Hello, Jennifer</a
+      <a
+        class="nav-link"
+        *ngIf="!this.authService.currentUser?.name"
+        routerLink="/login"
       >
+        <mat-icon>account_circle</mat-icon>Login
+      </a>
+      <a class="nav-link" *ngIf="this.authService.currentUser?.name">
+        <span
+          ><mat-icon>account_circle</mat-icon
+          ><button mat-button [matMenuTriggerFor]="profileMenu">
+            Hello,Jennifer
+          </button></span
+        ></a
+      >
+      <mat-menu #profileMenu="matMenu" yPosition="below">
+        <button mat-menu-item (click)="this.authService.logout()">
+          Logout
+        </button>
+        <button mat-menu-item routeLink="['/change-password']">
+          Change Password
+        </button>
+        <button mat-menu-item>Logs</button>
+      </mat-menu>
+
       <a
         class="nav-link"
         routerLink="/cart"

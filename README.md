@@ -7,7 +7,7 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 - register & login with recaptcha
 - deploy web worker for analyzing mass data and image. no block the main thread.
 - attention to modularity && reusability
-- lazy loading (Angular && Webpack )
+- lazy loading (1,Angular 2, Webpack )
 - interceptors
 - guards, resolves
 - light/dark themes
@@ -16,6 +16,7 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 - forget password/reset password emails
 - guard, resolve
 - reusable animations
+- DI( Dependency Injection): Services have different visible(usable) levels, e.g. app, component, component view etc.
 
 ## back-end : mongodb mongoose express node.js
 

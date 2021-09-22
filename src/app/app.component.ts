@@ -9,23 +9,19 @@ import {
   OnInit,
 } from '@angular/core';
 import { BreakpointObserver } from '@angular/cdk/layout';
-import { Observable } from 'rxjs';
-import { map, shareReplay, tap, debounceTime } from 'rxjs/operators';
-import {
-  MatBottomSheet,
-  MatBottomSheetRef,
-} from '@angular/material/bottom-sheet';
+import { CookieService } from 'ngx-cookie-service';
+import { map } from 'rxjs/operators';
+import { MatBottomSheet } from '@angular/material/bottom-sheet';
 import { CookiePopupComponent } from './components/cookie-popup/cookie-popup.component';
 
-import { ThemeService } from './services/theme.service';
+import { AuthService } from './services/auth.service';
 import { CartService } from './services/cart.service';
-
-import { NavItem } from './models/nav-item';
+import { ThemeService } from './services/theme.service';
 import { NavService } from './services/nav.service';
+import { NavItem } from './models/nav-item';
 import { LoadingService } from './services/loading.service';
 import { RouterOutlet } from '@angular/router';
 import { slideInAnimation } from 'src/app/animations/animations';
-import { CookieService } from 'ngx-cookie-service';
 
 @Component({
   selector: 'app-root',
@@ -89,6 +85,7 @@ export class AppComponent implements AfterViewInit {
     public themeService: ThemeService,
     private navService: NavService,
     public cartService: CartService,
+    public authService: AuthService,
     public loader: LoadingService,
     private cookieService: CookieService,
     private _bottomSheet: MatBottomSheet

@@ -70,4 +70,4 @@
   </div>
 </div>
 
-<app-error [message]="errorMessage"></app-error>
+<app-error *ngIf="errorMessage" [message]="errorMessage"></app-error>

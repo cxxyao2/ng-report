@@ -1,5 +1,8 @@
-import { Component } from '@angular/core';
-import { FormControl, Validators } from '@angular/forms';
+import { Component, OnInit } from '@angular/core';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
+
+import { uniquePasswordValidator } from 'src/app/shared/unique-password.directive';
 import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
@@ -7,33 +10,94 @@ import { AuthService } from 'src/app/services/auth.service';
   templateUrl: './change-password.component.html',
   styleUrls: ['./change-password.component.scss'],
 })
-export class ChangePasswordComponent {
-  email = new FormControl('', [Validators.required, Validators.email]);
+export class ChangePasswordComponent implements OnInit {
+  hideOld = true;
+  hideNew = true;
+  hideRepeatNew = true;
+
+  myForm!: FormGroup;
   errorMessage: string | null = null;
   successMessage: string | null = null;
 
-  constructor(private service: AuthService) {}
-  getErrorMessage() {
-    if (this.email.hasError('required')) {
-      return 'You must enter a value';
-    }
+  constructor(private authService: AuthService) {}
 
-    return this.email.hasError('email') ? 'Not a valid email' : '';
+  ngOnInit(): void {
+    this.myForm = new FormGroup(
+      {
+        oldPassword: new FormControl('', {
+          validators: [Validators.required, Validators.minLength(6)],
+          updateOn: 'blur',
+        }),
+        password: new FormControl('', {
+          validators: [Validators.required, Validators.minLength(6)],
+          updateOn: 'blur',
+        }),
+        repeatPassword: new FormControl('', {
+          validators: [Validators.required, Validators.minLength(6)],
+          updateOn: 'blur',
+        }),
+      },
+      { validators: uniquePasswordValidator, updateOn: 'submit' }
+    ); // <-- add custom validator at the FormGroup level
   }
 
-  sendEmail() {
-    if (this.email.valid) {
-      this.service.sendResetPasswordEmail(this.email.value).subscribe(
+  get oldPassword() {
+    return this.myForm.get('oldPassword');
+  }
+  get password() {
+    return this.myForm.get('password');
+  }
+
+  get repeatPassword() {
+    return this.myForm.get('repeatPassword');
+  }
+
+  getOldPasswordErrorMessage() {
+    if (this.oldPassword?.errors?.required) {
+      return 'old password is required';
+    }
+
+    if (this.oldPassword?.errors?.pattern) {
+      return 'old password is invalid';
+    }
+    return 'old password is invalid';
+  }
+
+  getNewPasswordErrorMessage() {
+    if (this.password?.errors?.required) {
+      return 'new password is required';
+    }
+
+    if (this.password?.errors?.pattern) {
+      return 'new password is invalid';
+    }
+    return 'new password is invalid';
+  }
+  getRepeatNewPasswordErrorMessage() {
+    if (this.repeatPassword?.errors?.required) {
+      return 'repeat-new-password is required';
+    }
+
+    if (this.repeatPassword?.errors?.pattern) {
+      return 'repeat-new-password is invalid';
+    }
+    return 'repeat-new-password is invalid';
+  }
+
+  changePassword() {
+    if (this.myForm.invalid) {
+      return;
+    }
+    this.authService
+      .updatePassword(this.oldPassword?.value, this.password?.value)
+      .subscribe(
         (data: any) => {
           this.successMessage = data.message;
         },
         (err) => {
           this.errorMessage = err;
-          setTimeout(() => {
-            this.errorMessage = null;
-          }, 3000);
+          setTimeout(() => (this.errorMessage = ''), 3000);
         }
       );
-    }
   }
 }

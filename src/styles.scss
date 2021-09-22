@@ -11,6 +11,8 @@
 @import "../src/app/components/pipelines/pipeline";
 @import "../src/app/components/find-store/find-store";
 @import "../src/app/components/forget-password/forget-password";
+@import "../src/app/components/sign-up/sign-up";
+@import "../src/app/components/change-password/change-password";
 
 html,
 body {
@@ -56,6 +58,8 @@ h5 {
 @include pipeline-color($app-theme);
 @include find-store-color($app-theme);
 @include forget-password-color($app-theme);
+@include signup-color($app-theme);
+@include change-password-color($app-theme);
 
 .darkMode {
   @include mat.all-component-colors($dark-theme);
@@ -69,6 +73,8 @@ h5 {
   @include pipeline-color($dark-theme);
   @include find-store-color($dark-theme);
   @include forget-password-color($dark-theme);
+  @include signup-color($dark-theme);
+  @include change-password-color($dark-theme);
 }
 
 @keyframes fadein {

@@ -54,8 +54,8 @@
   width: 100%;
   text-align: left;
   margin-left: 1rem;
+  padding-left: 8px;
   &.error {
-    border-left: 2px solid #ff3a82;
     font-size: 14px;
   }
 }
@@ -160,6 +160,7 @@
 .login-link-wrapper {
   margin-top: 3rem;
   animation: slideup 1s ease-in-out;
+  color: #333;
 }
 
 .login-link {

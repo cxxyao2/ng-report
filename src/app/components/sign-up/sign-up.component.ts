@@ -123,13 +123,15 @@ export class SignUpComponent implements OnInit {
         email: this.email?.value,
         password: this.password?.value,
       })
-      .subscribe((data) => {
-        //this.authService.loginWithJwt(data.token);
-        this.router.navigate(['/']);
-      },(err)=>{
-        this.errorMessage = err;
-           setTimeout(() => (this.errorMessage = ''), 3000);
-
-      });
+      .subscribe(
+        (data) => {
+          this.authService.loginWithJwt(data.token);
+          this.router.navigate(['/']);
+        },
+        (err) => {
+          this.errorMessage = err;
+          setTimeout(() => (this.errorMessage = ''), 3000);
+        }
+      );
   }
 }

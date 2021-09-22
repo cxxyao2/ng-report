@@ -9,6 +9,8 @@ import { AuthService } from 'src/app/services/auth.service';
 })
 export class ForgetPasswordComponent {
   email = new FormControl('', [Validators.required, Validators.email]);
+  errorMessage: string | null = null;
+  successMessage: string | null = null;
 
   constructor(private service: AuthService) {}
   getErrorMessage() {
@@ -21,7 +23,17 @@ export class ForgetPasswordComponent {
 
   sendEmail() {
     if (this.email.valid) {
-      this.service.sendResetPasswordEmail(this.email.value).subscribe();
+      this.service.sendResetPasswordEmail(this.email.value).subscribe(
+        (data: any) => {
+          this.successMessage = data.message;
+        },
+        (err) => {
+          this.errorMessage = err;
+          setTimeout(() => {
+            this.errorMessage = null;
+          }, 3000);
+        }
+      );
     }
   }
 }

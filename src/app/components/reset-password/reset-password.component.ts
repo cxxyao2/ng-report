@@ -4,7 +4,6 @@ import { ActivatedRoute } from '@angular/router';
 import { AuthService } from 'src/app/services/auth.service';
 import { uniquePasswordValidator } from 'src/app/shared/unique-password.directive';
 
-
 @Component({
   selector: 'app-reset-password',
   templateUrl: './reset-password.component.html',
@@ -15,7 +14,7 @@ export class ResetPasswordComponent {
   hideRepeat = true;
   token = '';
   myForm!: FormGroup;
-  successMessage:string |null = null;
+  successMessage: string | null = null;
 
   constructor(
     private route: ActivatedRoute,
@@ -30,12 +29,9 @@ export class ResetPasswordComponent {
   }
 
   resetPassword() {
-    this.authService.resetPassword('xx',this.token).subscribe(
-      (data:any)=>{
-        
-        //this.successMessage = data.message;
-      }
-    );
+    this.authService.resetPassword('xx', this.token).subscribe((data: any) => {
+      console.log('data is', data);
+      //this.successMessage = data.message;
+    });
   }
-
 }

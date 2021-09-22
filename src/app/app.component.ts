@@ -88,7 +88,8 @@ export class AppComponent implements AfterViewInit {
     public authService: AuthService,
     public loader: LoadingService,
     private cookieService: CookieService,
-    private _bottomSheet: MatBottomSheet
+    private _bottomSheet: MatBottomSheet,
+
   ) {}
 
   ngOnInit(): void {
@@ -135,4 +136,6 @@ export class AppComponent implements AfterViewInit {
       outlet && outlet.activatedRouteData && outlet.activatedRouteData.animation
     );
   }
+
+  
 }

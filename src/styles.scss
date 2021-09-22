@@ -1,5 +1,5 @@
 /* You can add global styles to this file, and also import other style files */
-@use '~@angular/material' as mat;
+@use "~@angular/material" as mat;
 @import "./app/theme";
 @import "../src/app/components/toolbar/menu-list-item/menu-list-item";
 @import "../src/app/components/shopping-cart/cart/cart-item/cart-item";
@@ -10,6 +10,7 @@
 @import "../src/app/components/todo/todo";
 @import "../src/app/components/pipelines/pipeline";
 @import "../src/app/components/find-store/find-store";
+@import "../src/app/components/forget-password/forget-password";
 
 html,
 body {
@@ -54,6 +55,7 @@ h5 {
 @include todo-color($app-theme);
 @include pipeline-color($app-theme);
 @include find-store-color($app-theme);
+@include forget-password-color($app-theme);
 
 .darkMode {
   @include mat.all-component-colors($dark-theme);
@@ -66,6 +68,7 @@ h5 {
   @include todo-color($dark-theme);
   @include pipeline-color($dark-theme);
   @include find-store-color($dark-theme);
+  @include forget-password-color($dark-theme);
 }
 
 @keyframes fadein {

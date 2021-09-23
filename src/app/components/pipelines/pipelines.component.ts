@@ -19,9 +19,10 @@ import { Customer } from 'src/app/models/customer';
   styleUrls: ['./pipelines.component.scss'],
 })
 export class PipelinesComponent implements OnInit {
-  customers$?: Observable<Customer[]>;
+  customers: Customer[] = [];
   updateClick$ = new Subject<void>();
   showNotification$?: Observable<boolean>;
+  errorMessage: string | null = null;
 
   constructor(private customerSrv: CustomerService) {}
 
@@ -37,7 +38,9 @@ export class PipelinesComponent implements OnInit {
         this.customerSrv.createDate = new Date();
       })
     );
-    this.customers$ = merge(initialCustomers$, updatedUsers$);
+    merge(initialCustomers$, updatedUsers$).subscribe((data: any) => {
+      this.customers = data;
+    });
 
     const show$ = this.getNew();
     const hide$ = this.updateClick$.pipe(mapTo(false));
@@ -67,11 +70,15 @@ export class PipelinesComponent implements OnInit {
   }
 
   updateCustomer(id = '') {
+    const idx = this.customers.findIndex((customer) => customer._id === id);
+    if (idx >= 0) {
+      this.customers.splice(idx, 1);
+    }
     this.customerSrv.updateCustomer(id, { isAuthorized: true }).subscribe(
-      (data) => {
-        console.log('data is', data);
-      },
-      (err) => {}
+      (data) => {},
+      (err) => {
+        this.errorMessage = err;
+      }
     );
   }
 }

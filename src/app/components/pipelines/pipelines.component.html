@@ -13,9 +13,7 @@
 </div>
 <div class="list-wrapper">
   <mat-list>
-    <ng-container
-      *ngFor="let customer of customers$ | async; trackBy: trackPipelineId"
-    >
+    <ng-container *ngFor="let customer of customers; trackBy: trackPipelineId">
       <mat-list-item>
         <img
           matListAvatar

@@ -2,6 +2,8 @@
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 11.0.4. In Sep 6 2021, @angular/core is upgraded to version ~12.2. @angular/material, @angular/flex-layout, @angular/google-maps all are upgraded.
 
+## Technical Points
+
 - secure google map key by HTTP referrer
 - prevent XSRF attack by cookie + token in http headers
 - register & login with recaptcha
@@ -30,17 +32,19 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 
 ## Main Functions
 
-### Master Data Maintenance
+- Master Data Maintenance
 
-### Contact Planning & Schedule
+- Contact Planning
 
-### Client Management
+- Pipeline Management
 
-### Place order
+- Order management
 
-### Analyse sales data and salesperson performance
+- Report center: graphs and chartsAnalyse based on sales data
 
-### Offer Technical Support
+- Technical Support
+
+- Home page: Announces featuring animations
 
 ## layout
 
@@ -52,7 +56,7 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 - Spinner during http actions
 - Error popup window
 
-## Test Object list
+## Test list
 
 - Template-driven forms
 - Reactive forms

@@ -14,7 +14,7 @@
 <div class="list-wrapper">
   <mat-list>
     <ng-container
-      *ngFor="let customer of customers$ | async; trackBy: pipelineId"
+      *ngFor="let customer of customers$ | async; trackBy: trackPipelineId"
     >
       <mat-list-item>
         <img
@@ -32,7 +32,9 @@
           </span>
         </p>
         <p>
-          <span class="authorize-button">Authorize</span>
+          <span class="authorize-button" (click)="updateCustomer(customer._id)"
+            >Authorize</span
+          >
         </p>
       </mat-list-item>
       <mat-divider></mat-divider>

@@ -1,5 +1,5 @@
-@use 'sass:map';
-@use '~@angular/material' as mat;
+@use "sass:map";
+@use "~@angular/material" as mat;
 
 @mixin pipeline-color($config-or-theme, $shadow-color: rgba(0, 0, 255, 0.1)) {
   $config: mat.get-color-config($config-or-theme);
@@ -18,6 +18,9 @@
     .authorize-button {
       background-color: mat.get-color-from-palette($primary, 50);
       color: #333;
+      &:hover {
+        background-color: mat.get-color-from-palette($primary, 200);
+      }
     }
     .unauthorize-button {
       background-color: mat.get-color-from-palette($warn, 50);

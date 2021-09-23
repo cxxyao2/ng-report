@@ -11,7 +11,6 @@ import {
 } from 'rxjs/operators';
 import { environment } from '../../environments/environment';
 import { Customer } from '../models/customer';
-import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 
 const CACHE_SIZE = 1;
 const REFRESH_INTERVAL = 10000; // 10 seconds
@@ -60,6 +59,10 @@ export class CustomerService {
     return this.http.get<Customer>(url);
   }
 
+  updateCustomer(id: string, updatePart: any) {
+    const url = `${this.configUrl}/${id}`;
+    return this.http.put(url, updatePart);
+  }
   deleteCustomer(id: string) {
     const url = `${this.configUrl}/${id}`;
     return this.http.delete(url);

@@ -44,7 +44,7 @@ export class PipelinesComponent implements OnInit {
     this.showNotification$ = merge(show$, hide$);
   }
 
-  pipelineId(index: number, customer: any) {
+  trackPipelineId(index: number, customer: any) {
     return customer._id;
   }
 
@@ -63,6 +63,15 @@ export class PipelinesComponent implements OnInit {
         }
         return of(false);
       })
+    );
+  }
+
+  updateCustomer(id = '') {
+    this.customerSrv.updateCustomer(id, { isAuthorized: true }).subscribe(
+      (data) => {
+        console.log('data is', data);
+      },
+      (err) => {}
     );
   }
 }

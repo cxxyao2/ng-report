@@ -3,7 +3,7 @@
 <mat-tab-group>
   <mat-tab>
     <ng-template mat-tab-label>
-      <mat-icon class="example-tab-icon">notifications_active</mat-icon>
+      <mat-icon [class.tab-notification-icon]="showNotification$ | async" >notifications_active</mat-icon>
       Unauthorized
     </ng-template>
     <ng-template matTabContent>

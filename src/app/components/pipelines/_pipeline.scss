@@ -9,6 +9,9 @@
   $holiday-color: mat.get-color-from-palette($primary, 50);
 
   app-pipelines {
+    .tab-notification-icon {
+      color: mat.get-color-from-palette($warn);
+    }
     .authorized {
       color: mat.get-color-from-palette($primary);
     }

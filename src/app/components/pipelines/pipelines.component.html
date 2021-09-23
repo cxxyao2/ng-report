@@ -1,41 +1,86 @@
 <h2 class="first-level-header">Pipeline Management</h2>
-<div class="list-wrapper" style="padding: 8px">
-  <p *ngIf="showNotification$ | async">
-    <button mat-raised-button color="accent" (click)="refreshDate()">
-      Refresh</button
-    ><span style="margin-left: 8px">New client registered</span>
-  </p>
-  <mat-radio-group aria-label="Select an option">
-    <mat-radio-button value="1">Authorized</mat-radio-button>
-    <mat-radio-button value="2">Unauthorized</mat-radio-button>
-    <mat-radio-button value="3">All</mat-radio-button>
-  </mat-radio-group>
-</div>
-<div class="list-wrapper">
-  <mat-list>
-    <ng-container *ngFor="let customer of customers; trackBy: trackPipelineId">
-      <mat-list-item>
-        <img
-          matListAvatar
-          src="https://source.unsplash.com/random/100x100?car"
-          alt="..."
-        />
-        <h3 matLine>{{ customer.name }}</h3>
-        <p matLine>{{ customer.address }}</p>
-        <p matLine>
-          <span [ngClass]="customer.isAuthorized ? '' : 'unauthorized'">
-            authorized: &nbsp;{{ customer.isAuthorized }} &nbsp;&nbsp;{{
-              customer.credit
-            }}
-          </span>
-        </p>
-        <p>
-          <span class="authorize-button" (click)="authorizeCustomer(customer._id)"
-            >Authorize</span
+
+<mat-tab-group>
+  <mat-tab>
+    <ng-template mat-tab-label>
+      <mat-icon class="example-tab-icon">notifications_active</mat-icon>
+      Unauthorized
+    </ng-template>
+    <ng-template matTabContent>
+      <div class="list-wrapper" style="padding: 8px">
+        <p *ngIf="showNotification$ | async" class="search-wrapper">
+          <button
+            mat-raised-button
+            class="refresh-button"
+            color="accent"
+            (click)="refreshDate()"
           >
+            Refresh</button
+          ><span style="margin-left: 8px">New client registered</span>
+
+          <mat-divider></mat-divider>
         </p>
-      </mat-list-item>
-      <mat-divider></mat-divider>
-    </ng-container>
-  </mat-list>
-</div>
+        <div *ngIf="customers.length >= 1; else noData">
+          <mat-list>
+            <ng-container
+              *ngFor="let customer of customers; trackBy: trackPipelineId"
+            >
+              <mat-list-item>
+                <img
+                  matListAvatar
+                  src="https://source.unsplash.com/random/100x100?car"
+                  alt="..."
+                />
+                <h3 matLine>{{ customer.name }}</h3>
+                <p matLine>{{ customer.address }}</p>
+                <p matLine>
+                  <span
+                    [ngClass]="
+                      customer.isAuthorized ? 'authorized' : 'unauthorized'
+                    "
+                  >
+                    Authorized: &nbsp;{{ customer.isAuthorized }} &nbsp;&nbsp;{{
+                      customer.credit
+                    }}
+                  </span>
+                </p>
+                <p>
+                  <span
+                    class="authorize-button"
+                    (click)="authorizeCustomer(customer._id)"
+                    >Authorize</span
+                  >
+                </p>
+              </mat-list-item>
+              <mat-divider></mat-divider>
+            </ng-container>
+          </mat-list>
+        </div>
+
+        <ng-template #noData>
+          <p>No data meet the selection criteria</p>
+        </ng-template>
+      </div>
+    </ng-template>
+  </mat-tab>
+  <mat-tab>
+    <ng-template mat-tab-label>
+      <mat-icon class="example-tab-icon">check_circle</mat-icon>
+      Authorized</ng-template
+    >
+    <ng-template matTabContent>
+      <app-pipeline-authorized></app-pipeline-authorized>
+    </ng-template>
+  </mat-tab>
+  <mat-tab>
+    <ng-template mat-tab-label>
+      <mat-icon class="example-tab-icon">search</mat-icon>
+      All</ng-template
+    >
+    <ng-template matTabContent>
+      <app-pipeline-all></app-pipeline-all>
+    </ng-template>
+  </mat-tab>
+</mat-tab-group>
+
+<app-error *ngIf="errorMessage" [message]="errorMessage"></app-error>

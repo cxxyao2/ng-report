@@ -53,7 +53,7 @@ const routes: Routes = [
   { path: 'by-employee', component: ReportByEmployeeComponent }, // manager role
   { path: 'todo', component: TodoComponent }, // salesperson role
   { path: 'place-order', component: ProductListComponent }, // salesperson role
-  { path: 'pipeline', component: PipelinesComponent, canActivate: [AuthGuard] }, // manager, salesperson
+  { path: 'pipeline', component: PipelinesComponent }, // manager, salesperson
   { path: 'capture-client', component: AddClientComponent }, // salesperson role
 
   {
@@ -76,6 +76,7 @@ const routes: Routes = [
     path: 'find-store',
     component: FindStoreComponent,
     data: { animation: 'FindStorePage' },
+    canActivate: [AuthGuard],
   },
   {
     path: 'technical-support',

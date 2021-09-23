@@ -1,0 +1,42 @@
+<div class="list-wrapper" style="padding: 8px">
+  <div *ngIf="customers.length >= 1; else noData">
+    <mat-list>
+      <ng-container
+        *ngFor="let customer of customers; trackBy: trackPipelineId"
+      >
+        <mat-list-item>
+          <img
+            matListAvatar
+            src="https://source.unsplash.com/random/100x100?car"
+            alt="..."
+          />
+          <h3 matLine>{{ customer.name }}</h3>
+          <p matLine>{{ customer.address }}</p>
+          <p matLine>
+            <span
+              [ngClass]="customer.isAuthorized ? 'authorized' : 'unauthorized'"
+            >
+              Authorized: &nbsp;{{ customer.isAuthorized }} &nbsp;&nbsp;{{
+                customer.credit
+              }}
+            </span>
+          </p>
+          <p>
+            <span
+              class="unauthorize-button"
+              (click)="frozeCustomer(customer._id)"
+              >UnAuthorize</span
+            >
+          </p>
+        </mat-list-item>
+        <mat-divider></mat-divider>
+      </ng-container>
+    </mat-list>
+  </div>
+
+  <ng-template #noData>
+    <p>No data meet the selection criteria</p>
+  </ng-template>
+</div>
+
+<app-error *ngIf="errorMessage" [message]="errorMessage"></app-error>

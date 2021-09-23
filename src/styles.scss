@@ -13,6 +13,7 @@
 @import "../src/app/components/forget-password/forget-password";
 @import "../src/app/components/sign-up/sign-up";
 @import "../src/app/components/change-password/change-password";
+@import "../src/app/components/pipeline-authorized/pipeline-authorized";
 
 html,
 body {
@@ -56,6 +57,7 @@ h5 {
 @include datalist-color($app-theme);
 @include todo-color($app-theme);
 @include pipeline-color($app-theme);
+@include pipeline-authorized-color($app-theme);
 @include find-store-color($app-theme);
 @include forget-password-color($app-theme);
 @include signup-color($app-theme);
@@ -71,6 +73,7 @@ h5 {
   @include datalist-color($dark-theme);
   @include todo-color($dark-theme);
   @include pipeline-color($dark-theme);
+  @include pipeline-authorized-color($dark-theme);
   @include find-store-color($dark-theme);
   @include forget-password-color($dark-theme);
   @include signup-color($dark-theme);

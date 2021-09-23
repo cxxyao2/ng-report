@@ -66,6 +66,8 @@ import { ChangePasswordComponent } from './components/change-password/change-pas
 import { ResetPasswordComponent } from './components/reset-password/reset-password.component';
 import { ForgetPasswordComponent } from './components/forget-password/forget-password.component';
 import { ErrorComponent } from './components/error/error.component';
+import { PipelineAuthorizedComponent } from './components/pipeline-authorized/pipeline-authorized.component';
+import { PipelineAllComponent } from './components/pipeline-all/pipeline-all.component';
 
 @NgModule({
   declarations: [
@@ -114,6 +116,8 @@ import { ErrorComponent } from './components/error/error.component';
     ResetPasswordComponent,
     ForgetPasswordComponent,
     ErrorComponent,
+    PipelineAuthorizedComponent,
+    PipelineAllComponent,
   ],
   imports: [
     BrowserModule,

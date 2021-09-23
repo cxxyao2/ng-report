@@ -1,0 +1,32 @@
+@use "sass:map";
+@use "~@angular/material" as mat;
+
+@mixin app-pipeline-all-color(
+  $config-or-theme,
+  $shadow-color: rgba(0, 0, 255, 0.1)
+) {
+  $config: mat.get-color-config($config-or-theme);
+  $primary: map.get($config, primary);
+  $accent: map.get($config, accent);
+  $warn: map.get($config, warn);
+  $holiday-color: mat.get-color-from-palette($primary, 50);
+
+  app-pipeline-authorized {
+    .authorized {
+      color: mat.get-color-from-palette($primary);
+    }
+    .unauthorized {
+      color: mat.get-color-from-palette($warn);
+    }
+  }
+
+  .search-wrapper {
+    input {
+      outline: 1px ridge mat.get-color-from-palette($primary, 50);
+      &:hover,
+      &:focus {
+        outline: 3px ridge mat.get-color-from-palette($primary, 100);
+      }
+    }
+  }
+}

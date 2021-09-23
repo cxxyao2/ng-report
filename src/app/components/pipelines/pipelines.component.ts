@@ -1,16 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { CustomerService } from 'src/app/services/customer.service';
 
-import { EMPTY, merge, Observable, of, Subject } from 'rxjs';
-import {
-  mapTo,
-  mergeMap,
-  skip,
-  take,
-  switchMap,
-  finalize,
-  tap,
-} from 'rxjs/operators';
+import { merge, Observable, of, Subject } from 'rxjs';
+import { mapTo, mergeMap, skip, switchMap, tap } from 'rxjs/operators';
 import { Customer } from 'src/app/models/customer';
 
 @Component({
@@ -27,9 +19,6 @@ export class PipelinesComponent implements OnInit {
   constructor(private customerSrv: CustomerService) {}
 
   ngOnInit(): void {
-    this.customerSrv.newCustomers.subscribe((data) => {
-      console.log(data);
-    });
     this.customerSrv.createDate = new Date();
     const initialCustomers$ = this.getCustomerOnce();
     const updatedUsers$ = this.updateClick$.pipe(
@@ -38,9 +27,17 @@ export class PipelinesComponent implements OnInit {
         this.customerSrv.createDate = new Date();
       })
     );
-    merge(initialCustomers$, updatedUsers$).subscribe((data: any) => {
-      this.customers = data;
-    });
+    merge(initialCustomers$, updatedUsers$).subscribe(
+      (data: any) => {
+        this.customers = data;
+      },
+      (err) => {
+        this.errorMessage = err;
+        setTimeout(() => {
+          this.errorMessage = null;
+        }, 3000);
+      }
+    );
 
     const show$ = this.getNew();
     const hide$ = this.updateClick$.pipe(mapTo(false));
@@ -78,19 +75,9 @@ export class PipelinesComponent implements OnInit {
       (data) => {},
       (err) => {
         this.errorMessage = err;
-      }
-    );
-  }
-
-  frozeCustomer(id = '') {
-    const idx = this.customers.findIndex((customer) => customer._id === id);
-    if (idx >= 0) {
-      this.customers.splice(idx, 1);
-    }
-    this.customerSrv.updateCustomer(id, { isAuthorized: false }).subscribe(
-      (data) => {},
-      (err) => {
-        this.errorMessage = err;
+        setTimeout(() => {
+          this.errorMessage = null;
+        }, 3000);
       }
     );
   }

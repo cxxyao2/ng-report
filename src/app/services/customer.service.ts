@@ -30,6 +30,11 @@ export class CustomerService {
     return this.http.get<Customer[]>(url);
   }
 
+  getAllAuthorizedCustomers() {
+    const url = `${this.configUrl}?isAuthorized=true`;
+    return this.http.get<Customer[]>(url);
+  }
+
   get newCustomers() {
     if (!this.cacheCustomers$) {
       const timer$ = timer(0, REFRESH_INTERVAL);

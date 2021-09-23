@@ -1,0 +1,53 @@
+<div class="list-wrapper" style="padding: 8px">
+  <p class="search-wrapper">
+    <input
+      type="text"
+      placeholder="Enter customer name"
+      [formControl]="criteria"
+      maxlength="50"
+      autofocus
+    />
+    <button
+      mat-raised-button
+      class="refresh-button"
+      color="accent"
+      (click)="search()"
+    >
+      <mat-icon>search</mat-icon>
+      Search
+    </button>
+  </p>
+  <div *ngIf="customers.length >= 1; else noData">
+    <mat-list>
+      <ng-container
+        *ngFor="let customer of customers; trackBy: trackPipelineId"
+      >
+        <mat-divider></mat-divider>
+        <mat-list-item>
+          <img
+            matListAvatar
+            src="https://source.unsplash.com/random/100x100?car"
+            alt="..."
+          />
+          <h3 matLine>{{ customer.name }}</h3>
+          <p matLine>{{ customer.address }}</p>
+          <p matLine>
+            <span
+              [ngClass]="customer.isAuthorized ? 'authorized' : 'unauthorized'"
+            >
+              Authorized: &nbsp;{{ customer.isAuthorized }} &nbsp;&nbsp;{{
+                customer.credit
+              }}
+            </span>
+          </p>
+        </mat-list-item>
+      </ng-container>
+    </mat-list>
+  </div>
+
+  <ng-template #noData>
+    <p>No data meet the selection criteria</p>
+  </ng-template>
+</div>
+
+<app-error *ngIf="errorMessage" [message]="errorMessage"></app-error>

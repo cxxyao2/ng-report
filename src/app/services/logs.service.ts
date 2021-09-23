@@ -18,14 +18,14 @@ export class LogsService {
   }
 
   getLog(id: string): Observable<LogRecord> {
-    const url = `${this.configUrl}/${id}`; // DELETE api/heroes/42
+    const url = `${this.configUrl}/${id}`;
     return this.http.get<LogRecord>(url);
   }
 
   getLogs(): Observable<LogRecord[]> {
     return this.http
       .get<LogRecord[]>(this.configUrl)
-      .pipe(retry(1), catchError(this.handleError));
+      .pipe(retry(1));
   }
 
   // href = 'https://api.github.com/search/issues';
@@ -43,7 +43,7 @@ export class LogsService {
     const requestUrl = `${this.configUrl}?startDate=${startDate}&endDate=${endDate}&userName=${userName}&content=${content}`;
     return this.http
       .get<LogRecord[]>(requestUrl)
-      .pipe(retry(1), catchError(this.handleError));
+      .pipe(retry(1));
   }
 
   addLog(content: string) {
@@ -63,22 +63,4 @@ export class LogsService {
     });
   }
 
-  /**
-   * Handle Http operation that failed.
-   * Let the app continue.
-   * @param operation - name of the operation that failed
-   * @param result - optional value to return as the observable result
-   */
-  private handleError(error: any, caught: Observable<any>): Observable<any> {
-    if (
-      error &&
-      error.error &&
-      (error.error.status === 'INVALID_TOKEN' ||
-        error.error.status === 'MAX_TOKEN_ISSUE_REACHED')
-    ) {
-      // this.logout(); this.router.navigate(['/login'])
-      return error;
-    }
-    return error;
-  }
 }

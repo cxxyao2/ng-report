@@ -37,10 +37,14 @@ const routes: Routes = [
   { path: 'signup', component: SignUpComponent },
   { path: 'forget-password', component: ForgetPasswordComponent },
   { path: 'reset-password', component: ResetPasswordComponent },
-  { path: 'change-password', component: ChangePasswordComponent },
+  {
+    path: 'change-password',
+    component: ChangePasswordComponent,
+    canActivate: [AuthGuard],
+  },
   { path: 'calendar', component: CalendarComponent },
   { path: 'home', component: HomeComponent }, // public no-login
-  { path: 'dash', component: DashboardComponent }, // user profile
+  { path: 'dash', component: DashboardComponent, canActivate: [AuthGuard] }, // user profile
   { path: 'add-product', component: AddProductComponent }, // administrator role
   { path: 'authorize', component: AddRoleToUserComponent }, // administrator role
   { path: 'list-logs', component: LoglistComponent }, // administrator role

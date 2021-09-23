@@ -1,7 +1,7 @@
 <h2 class="first-level-header">Pipeline Management</h2>
 <div class="list-wrapper" style="padding: 8px">
-  <p>
-    <button mat-raised-button color="accent" (click)="addNewMessage()">
+  <p *ngIf="showNotification$ | async">
+    <button mat-raised-button color="accent" (click)="refreshDate()">
       Refresh</button
     ><span style="margin-left: 8px">New client registered</span>
   </p>
@@ -13,19 +13,22 @@
 </div>
 <div class="list-wrapper">
   <mat-list>
-    <ng-container *ngFor="let message of messages; trackBy: trackByPipelineId">
+    <ng-container
+      *ngFor="let customer of customers$ | async; trackBy: pipelineId"
+    >
       <mat-list-item>
         <img
           matListAvatar
           src="https://source.unsplash.com/random/100x100?car"
           alt="..."
         />
-        <h3 matLine>{{ message.from }}</h3>
-        <p matLine>Quebec, H4X 3Y7</p>
+        <h3 matLine>{{ customer.name }}</h3>
+        <p matLine>{{ customer.address }}</p>
         <p matLine>
-          <span
-            [ngClass]="message.status === 'authorized' ? '' : 'unauthorized'"
-            >{{ message.status | titlecase }} , &nbsp;Golden Credit
+          <span [ngClass]="customer.isAuthorized ? '' : 'unauthorized'">
+            authorized: &nbsp;{{ customer.isAuthorized }} &nbsp;&nbsp;{{
+              customer.credit
+            }}
           </span>
         </p>
         <p>

@@ -7,13 +7,13 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 - register & login with recaptcha
 - deploy web worker for analyzing mass data and image. no block the main thread.
 - attention to modularity && reusability
-- lazy loading (1,Angular 2, Webpack )
+- lazy loading (1,Angular 2, Webpack ): dialog component, tab page component, administrator module
 - interceptors
 - guards, resolves
 - light/dark themes
 - i18n
 - download file formats: CSV and PDF
-- forget password/reset password emails
+- forget password/reset password emails, order notification email
 - guard, resolve
 - reusable animations
 - DI( Dependency Injection): Services have different visible(usable) levels, e.g. app, component, component view etc.
@@ -26,7 +26,7 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 - jwt-decode
 - ngx-cookie-service
 - pdfmake
-  (These package names are self-explanatory.No extra explanation here.)
+  (These package names are self-explanatory. No extra explanation.)
 
 ## Main Functions
 

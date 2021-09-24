@@ -78,11 +78,12 @@ export class CustomerService {
     return this.http.get<Customer[]>(url);
   }
 
-  addCustomer() {
-    return this.http.post(this.configUrl, {
-      name: 'engine oil ',
-      phone: '01-866-555-3333',
-      address: 'Roland Barthes Street 12, USA',
-    });
+  addCustomer(customer: Customer): Observable<Customer> {
+    return this.http.post<Customer>(this.configUrl, customer);
+    // return this.http.post(this.configUrl, {
+    //   name: 'engine oil ',
+    //   phone: '01-866-555-3333',
+    //   address: 'Roland Barthes Street 12, USA',
+    // });
   }
 }

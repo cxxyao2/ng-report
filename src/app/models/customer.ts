@@ -4,7 +4,7 @@ export interface Customer {
   address: string;
   _id?: string;
   imageUrl?: string;
-  credit?: 'golden' | 'silver' | 'iron';
+  credit?: string;
 
   latitude?: number;
   longitude?: number;

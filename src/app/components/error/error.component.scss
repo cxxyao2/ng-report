@@ -1,9 +1,8 @@
 .error-wrapper {
   position: fixed;
-  left: 50%;
+  left: 240px;
   top: 100px;
-  transform: translate(-50%, 0);
-  width: 100%;
+  width: calc(100% - 240px);
   background-color: crimson;
   color: white;
   height: 4rem;
@@ -16,11 +15,10 @@
   z-index: 9999999999;
 }
 
-.error-wrapper-active {
-  transform: translate(-50%, 0);
-}
-
 .error-message {
+  padding-left: 8px;
+  text-align: left;
+
   font-size: 14pxm;
   letter-spacing: inherit;
   text-transform: capitalize;
@@ -44,5 +42,7 @@
 @media screen and (max-width: 800px) {
   .error-wrapper {
     top: 60px;
+    width: 100%;
+    left:0;
   }
 }

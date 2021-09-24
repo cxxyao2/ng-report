@@ -1,7 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { CustomerService } from 'src/app/services/customer.service';
 
-import { merge, Observable, of, Subject } from 'rxjs';
+import { merge, Observable, of, Subject, Subscription } from 'rxjs';
 import { mapTo, mergeMap, skip, switchMap, tap } from 'rxjs/operators';
 import { Customer } from 'src/app/models/customer';
 
@@ -10,11 +10,12 @@ import { Customer } from 'src/app/models/customer';
   templateUrl: './pipelines.component.html',
   styleUrls: ['./pipelines.component.scss'],
 })
-export class PipelinesComponent implements OnInit {
+export class PipelinesComponent implements OnInit, OnDestroy {
   customers: Customer[] = [];
   updateClick$ = new Subject<void>();
   showNotification$?: Observable<boolean>;
   errorMessage: string | null = null;
+  customerSub?: Subscription;
 
   constructor(private customerSrv: CustomerService) {}
 
@@ -27,7 +28,7 @@ export class PipelinesComponent implements OnInit {
         this.customerSrv.createDate = new Date();
       })
     );
-    merge(initialCustomers$, updatedUsers$).subscribe(
+    this.customerSub = merge(initialCustomers$, updatedUsers$).subscribe(
       (data: any) => {
         this.customers = data;
       },
@@ -80,5 +81,9 @@ export class PipelinesComponent implements OnInit {
         }, 3000);
       }
     );
+  }
+
+  ngOnDestroy() {
+    this.customerSub?.unsubscribe();
   }
 }

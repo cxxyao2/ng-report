@@ -11,6 +11,7 @@ import { CustomerService } from 'src/app/services/customer.service';
 import { STEPPER_GLOBAL_OPTIONS } from '@angular/cdk/stepper';
 
 import { Customer } from '../../models/customer';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-add-client',
@@ -55,19 +56,21 @@ export class AddClientComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.firstFormGroup = this.fb.group({
-      name: ['', Validators.required, Validators.minLength(5)],
+      name: ['', [Validators.required, Validators.minLength(5)]],
       credit: ['', Validators.required],
     });
     this.secondFormGroup = this.fb.group({
       address: [
         '',
-        Validators.required,
-        Validators.minLength(5),
-        Validators.maxLength(200),
+        [
+          Validators.required,
+          Validators.minLength(5),
+          Validators.maxLength(200),
+        ],
       ],
     });
     this.thirdFormGroup = this.fb.group({
-      phone: ['', Validators.required, Validators.minLength(5)],
+      phone: ['', [Validators.required, Validators.minLength(5)]],
     });
     this.fourthFormGroup = this.fb.group({
       imageFile: ['', Validators.required],
@@ -144,17 +147,32 @@ export class AddClientComponent implements OnInit, OnDestroy {
       address: this.secondFormGroup.controls.address.value,
       phone: this.thirdFormGroup.controls.phone.value,
     };
-    this.customerSrv.addCustomer(customer).subscribe(
-      (data) => {
-        console.log('hi, data', data._id);
-      },
-      (err) => {
-        this.errorMessage = err;
-        setTimeout(() => {
-          this.errorMessage = '';
-        }, 3000);
-      }
-    );
+    this.customerSrv
+      .addCustomer(customer)
+      .pipe(
+        switchMap((newCustomer) => {
+          if (!this.file) {
+            return of(newCustomer);
+          }
+          const newFileName = newCustomer._id + '.jpg';
+          this.formData = new FormData();
+          this.formData.append('myFile', this.file, newFileName);
+          const url = environment.apiUrl;
+          return this.http.post(`${url}/files/upload`, this.formData);
+        })
+      )
+      .subscribe(
+        (data) => {
+          console.log('data', data);
+          this.allDataClear();
+        },
+        (err) => {
+          this.errorMessage = err;
+          setTimeout(() => {
+            this.errorMessage = '';
+          }, 3000);
+        }
+      );
   }
 
   ngOnDestroy() {

@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, OnDestroy } from '@angular/core';
 import { FormBuilder, Validators, FormGroup } from '@angular/forms';
 import { BreakpointObserver } from '@angular/cdk/layout';
 import { MatStepper, StepperOrientation } from '@angular/material/stepper';
@@ -23,7 +23,7 @@ import { Customer } from '../../models/customer';
     },
   ],
 })
-export class AddClientComponent implements OnInit {
+export class AddClientComponent implements OnInit, OnDestroy {
   @ViewChild('stepper') stepper!: MatStepper;
   isLinear = false;
   firstFormGroup!: FormGroup;
@@ -32,6 +32,7 @@ export class AddClientComponent implements OnInit {
   fourthFormGroup!: FormGroup;
   stepperOrientation!: Observable<StepperOrientation>;
   requiredFileType = 'image/*';
+  bufferValue = 100;
 
   uploadProgress?: number | null;
   uploadSub?: Subscription | null;
@@ -54,14 +55,19 @@ export class AddClientComponent implements OnInit {
 
   ngOnInit() {
     this.firstFormGroup = this.fb.group({
-      name: ['', Validators.required],
+      name: ['', Validators.required, Validators.minLength(5)],
       credit: ['', Validators.required],
     });
     this.secondFormGroup = this.fb.group({
-      address: ['', Validators.required],
+      address: [
+        '',
+        Validators.required,
+        Validators.minLength(5),
+        Validators.maxLength(200),
+      ],
     });
     this.thirdFormGroup = this.fb.group({
-      phone: ['', Validators.required],
+      phone: ['', Validators.required, Validators.minLength(5)],
     });
     this.fourthFormGroup = this.fb.group({
       imageFile: ['', Validators.required],
@@ -84,12 +90,11 @@ export class AddClientComponent implements OnInit {
         }, 10000);
         return;
       }
-      if (fileExtent !== 'jpeg') {
-        this.errorMessage =
-          'Image file name should end at .jpeg';
-        // setTimeout(() => {
-        //   this.errorMessage = '';
-        // }, 10000);
+      if (fileExtent !== 'jpg') {
+        this.errorMessage = 'Image file name should end at .jpg';
+        setTimeout(() => {
+          this.errorMessage = '';
+        }, 3000);
         return;
       }
 
@@ -107,14 +112,15 @@ export class AddClientComponent implements OnInit {
     }
   }
 
-  cancelUpload(): void {
-    this.uploadSub?.unsubscribe();
-    this.reset();
-  }
-
   reset() {
     this.uploadProgress = null;
     this.uploadSub = null;
+  }
+
+  allDataClear() {
+    this.stepper.reset();
+    this.file = null;
+    this.fileUrl = null;
   }
 
   submit() {
@@ -138,35 +144,20 @@ export class AddClientComponent implements OnInit {
       address: this.secondFormGroup.controls.address.value,
       phone: this.thirdFormGroup.controls.phone.value,
     };
-    this.customerSrv
-      .addCustomer(customer)
-      .pipe(
-        switchMap((data: any) => {
-          if (!this.file) {
-            return EMPTY;
-          }
-          const newFileName = data._id + '.jpeg';
-          this.formData = new FormData();
-          this.formData.append('myFile', this.file, newFileName);
-          return this.http
-            .post('http://localhost:5000/api/files/upload', this.formData, {
-              reportProgress: true,
-              observe: 'events',
-            })
-            .pipe(finalize(() => this.reset()));
-        })
-      )
-      .subscribe(
-        (data) => {
-          console.log('data is', data);
-        },
-        (err) => {
-          this.errorMessage = err;
-          setTimeout(() => {
-            this.errorMessage = '';
-          }, 3000);
-        }
-      );
-    this.stepper.reset();
+    this.customerSrv.addCustomer(customer).subscribe(
+      (data) => {
+        console.log('hi, data', data._id);
+      },
+      (err) => {
+        this.errorMessage = err;
+        setTimeout(() => {
+          this.errorMessage = '';
+        }, 3000);
+      }
+    );
+  }
+
+  ngOnDestroy() {
+    this.uploadSub?.unsubscribe();
   }
 }

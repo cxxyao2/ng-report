@@ -68,6 +68,7 @@ import { ForgetPasswordComponent } from './components/forget-password/forget-pas
 import { ErrorComponent } from './components/error/error.component';
 import { PipelineAuthorizedComponent } from './components/pipeline-authorized/pipeline-authorized.component';
 import { PipelineAllComponent } from './components/pipeline-all/pipeline-all.component';
+import { SuccessComponent } from './components/success/success.component';
 
 @NgModule({
   declarations: [
@@ -118,6 +119,7 @@ import { PipelineAllComponent } from './components/pipeline-all/pipeline-all.com
     ErrorComponent,
     PipelineAuthorizedComponent,
     PipelineAllComponent,
+    SuccessComponent,
   ],
   imports: [
     BrowserModule,

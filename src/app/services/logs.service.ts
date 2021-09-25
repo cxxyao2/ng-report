@@ -23,9 +23,7 @@ export class LogsService {
   }
 
   getLogs(): Observable<LogRecord[]> {
-    return this.http
-      .get<LogRecord[]>(this.configUrl)
-      .pipe(retry(1));
+    return this.http.get<LogRecord[]>(this.configUrl).pipe(retry(1));
   }
 
   // href = 'https://api.github.com/search/issues';
@@ -41,18 +39,22 @@ export class LogsService {
   ): Observable<LogRecord[]> {
     // http://localhost:5000/api/logs?startDate=2021-01-01&endDate=2022-12-01&userName=&content=insert
     const requestUrl = `${this.configUrl}?startDate=${startDate}&endDate=${endDate}&userName=${userName}&content=${content}`;
-    return this.http
-      .get<LogRecord[]>(requestUrl)
-      .pipe(retry(1));
+    return this.http.get<LogRecord[]>(requestUrl).pipe(retry(1));
   }
 
   addLog(content: string) {
     // name ,categoryId='600103a5ffa4a7376471d64f'
     // code ?
+    // this.http
+    //   .post(this.configUrl, {
+    //     ip: this.ipAddress,
+    //     content: content,
+    //   })
+    //   .subscribe();
+
     this.http
       .post(this.configUrl, {
-        ip: this.ipAddress,
-        content: content,
+        content,
       })
       .subscribe();
   }
@@ -62,5 +64,4 @@ export class LogsService {
       this.ipAddress = res.ip;
     });
   }
-
 }

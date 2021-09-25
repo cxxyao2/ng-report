@@ -18,6 +18,7 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 - forget password/reset password emails, order notification email
 - guard, resolve
 - reusable animations
+- create dynamic views by content projection 
 - DI( Dependency Injection): Services have different visible(usable) levels, e.g. app, component, component view etc.
 
 ## back-end : mongodb mongoose express node.js

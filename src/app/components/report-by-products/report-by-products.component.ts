@@ -3,7 +3,6 @@ import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { EChartsOption } from 'echarts';
 import { CreateGraphDataService } from 'src/app/services/create-graph-data.service';
-import { LoadingService } from 'src/app/services/loading.service';
 
 export interface PeriodicElement {
   name: string;
@@ -31,6 +30,9 @@ const ELEMENT_DATA: PeriodicElement[] = [
   styleUrls: ['./report-by-products.component.scss'],
 })
 export class ReportByProductsComponent implements OnInit, AfterViewInit {
+  pieData: any[] = [];
+  pieOptions: any;
+  barOptions: any;
   chartOption: EChartsOption = {
     xAxis: {
       type: 'category',
@@ -52,27 +54,64 @@ export class ReportByProductsComponent implements OnInit, AfterViewInit {
 
   @ViewChild(MatSort) sort!: MatSort;
 
-  constructor(
-    private dataService: CreateGraphDataService,
-    private loader: LoadingService
-  ) {}
+  constructor(private dataService: CreateGraphDataService) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.setOptions();
+  }
+
+  private setOptions() {
+    this.pieData = [
+      {
+        value: 60000,
+        name: 'Opus Mei',
+      },
+      {
+        value: 50000,
+        name: 'Blinky Scene',
+      },
+      {
+        value: 600000,
+        name: 'Governor Rover',
+      },
+    ];
+    this.pieOptions = {
+      tooltip: {
+        trigger: 'item',
+      },
+      series: [
+        {
+          type: 'pie',
+          radius: '60%',
+          data: this.pieData,
+          emphasis: {
+            itemStyle: {
+              shadowBlur: 10,
+              shadowOffsetX: 0,
+              shadowColor: 'rgba(0, 0, 0, 0.5)',
+            },
+          },
+        },
+      ],
+    };
+  }
 
   ngAfterViewInit() {
     this.dataSource.sort = this.sort;
   }
 
   createGraphData(): void {
-    this.loader.show();
     this.dataService.createProductData().subscribe(
       (data) => {
         console.log('hi,data is ', data);
       },
       (err) => {
         console.log(err);
-        this.loader.hide();
       }
     );
+  }
+
+  downloadData() {
+    // TODO
   }
 }

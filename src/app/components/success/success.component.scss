@@ -1,11 +1,11 @@
-.error-wrapper {
+.success-wrapper {
   position: fixed;
   left: 240px;
   top: 100px;
   width: calc(100% - 240px);
-  background-color: crimson;
-  color: white;
-  height: 4rem;
+  background-color: white;
+  color: #039be5;
+  height: 2rem;
   border-radius: 0.25rem 0.25rem 0 0;
   display: flex;
   justify-content: space-between;
@@ -15,9 +15,9 @@
   z-index: 9999999999;
 }
 
-.error-message {
+.success-message {
   text-align: left;
-  font-size: 14pxm;
+  font-size: 16pxm;
   letter-spacing: inherit;
   text-transform: capitalize;
   line-height: 1.1rem;
@@ -28,19 +28,10 @@
   width: 80%;
 }
 
-.error-btn {
-  outline: none;
-  border: none;
-  padding: 1rem;
-  background-color: rgba(255, 255, 255, 0.3);
-  font-size: 14px;
-  color: white;
-}
-
 @media screen and (max-width: 800px) {
-  .error-wrapper {
+  .success-wrapper {
     top: 60px;
     width: 100%;
-    left:0;
+    left: 0;
   }
 }

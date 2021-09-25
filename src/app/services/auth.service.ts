@@ -8,6 +8,7 @@ import { Observable, of, throwError } from 'rxjs';
 import { User } from '../models/user';
 import jwt_decode from 'jwt-decode';
 import { CookieService } from 'ngx-cookie-service';
+import { LogsService } from './logs.service';
 
 import { environment } from '../../environments/environment';
 
@@ -19,7 +20,11 @@ export class AuthService {
   tokenKey = 'token';
   currentUser: User | null = null;
 
-  constructor(private http: HttpClient, private cookieService: CookieService) {}
+  constructor(
+    private http: HttpClient,
+    private cookieService: CookieService,
+    private logsSrv: LogsService
+  ) {}
 
   registerUser(user: User): Observable<any> {
     const url = this.configUrl + '/users';
@@ -79,6 +84,7 @@ export class AuthService {
       'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MTQ2YTQxM2Q1MjQxNDY1NWE2ZTkxN2QiLCJuYW1lIjoiSmFuZTQiLCJpc0FkbWluIjpmYWxzZSwiaXNNYW5hZ2VyIjpmYWxzZSwiaXNTYWxlc3BlcnNvbiI6dHJ1ZSwiaWF0IjoxNjMyMTY2MzQ1fQ.4OpEEkDhHt1gN3MZu00Ns2QSA4b_c-IBvphjxR5w5ZY';
 
     localStorage.setItem(this.tokenKey, jwt);
+    this.logsSrv.addLog('login');
     this.setCurrentUser();
   }
 
@@ -97,6 +103,7 @@ export class AuthService {
     // TODO 需要清除cookie 和 localStorage
     // this.cookieService.deleteAll('/');
     //localStorage.removeItem(this.tokenKey);
+    this.logsSrv.addLog('logout');
     window.location.reload();
   }
 }

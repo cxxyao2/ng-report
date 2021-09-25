@@ -17,18 +17,24 @@
               formControlName="name"
               required
             />
+            <mat-error *ngIf="fullname?.invalid">{{
+              getFullnameErrorMessage()
+            }}</mat-error>
           </mat-form-field>
         </div>
         <div>
           <mat-form-field appearance="fill">
             <mat-label>Select</mat-label>
-            <mat-select formControlName="credit">
+            <mat-select formControlName="credit" required>
               <mat-option
                 *ngFor="let option of creditLevels"
                 [value]="option.value"
                 >{{ option.label }}</mat-option
               >
             </mat-select>
+            <mat-error *ngIf="credit?.invalid">{{
+              getCreditErrorMessage()
+            }}</mat-error>
           </mat-form-field>
         </div>
         <div>
@@ -47,11 +53,29 @@
           <mat-label>Address</mat-label>
           <input
             matInput
+            autofocus
             placeholder="Ex. 1 Main St, New York, NY"
             formControlName="address"
             required
           />
+          <mat-error *ngIf="address?.invalid">{{
+            getAddressErrorMessage()
+          }}</mat-error>
         </mat-form-field>
+        <div class="input-container">
+          <mat-form-field appearance="fill">
+            <mat-label>Email</mat-label>
+            <input
+              matInput
+              placeholder="pat@example.com"
+              formControlName="email"
+              required
+            />
+            <mat-error *ngIf="email?.invalid">{{
+              getEmailErrorMessage()
+            }}</mat-error>
+          </mat-form-field>
+        </div>
         <div>
           <p>Go to a different step to see the error state</p>
           <button mat-button matStepperPrevious>Back</button>
@@ -69,11 +93,16 @@
           <mat-label>Telelphone number</mat-label>
           <input
             matInput
+            autofocus
             placeholder="514-111-2222"
             formControlName="phone"
             required
           />
+          <mat-error *ngIf="phone?.invalid">{{
+            getPhoneErrorMessage()
+          }}</mat-error>
         </mat-form-field>
+
         <div>
           <p>Go to a different step to see the error state</p>
           <button mat-button matStepperPrevious>Back</button>
@@ -128,3 +157,4 @@
 </div>
 
 <app-error *ngIf="errorMessage" [message]="errorMessage"></app-error>
+<app-success *ngIf="successMessage" [message]="successMessage"></app-success>

@@ -23,7 +23,6 @@ import {
   map,
   delay,
 } from 'rxjs/operators';
-import { LoadingService } from 'src/app/services/loading.service';
 
 const ELEMENT_DATA: LogRecord[] = [
   {
@@ -187,24 +186,17 @@ export class LoglistComponent implements OnInit {
 
   constructor(
     public dialog: MatDialog,
-    private logService: LogsService,
-    private loading: LoadingService
+    private logService: LogsService
   ) {}
   ngOnInit() {
-    this.logService
-      .getLogs()
-      .pipe(tap(() => this.loading.show()))
-      .subscribe(
-        (data) => {
-          this.data = data;
-        },
-        (err) => {
-          console.log('error is', err);
-        },
-        () => {
-          setTimeout(() => this.loading.hide(), 1000);
-        }
-      );
+    this.logService.getLogs().subscribe(
+      (data) => {
+        this.data = data;
+      },
+      (err) => {
+        console.log('error is', err);
+      }
+    );
 
     merge(
       this.range.controls.end.valueChanges,

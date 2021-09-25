@@ -198,8 +198,10 @@ export class PrintInvoiceComponent {
   downloadCSV() {
     // PeriodicElement
     const initData = [...ELEMENT_DATA];
-    if (!(initData && initData.length >= 1)) return;
-    let output = [];
+    if (!(initData && initData.length >= 1)) {
+      return;
+    }
+    const output = [];
     const fields = Object.keys(initData[0]);
     output.push(fields);
     initData.forEach((row) => {

@@ -4,7 +4,6 @@ import { Observable, of, timer, throwError } from 'rxjs';
 
 import { environment } from '../../environments/environment';
 
-
 @Injectable({
   providedIn: 'root',
 })
@@ -19,7 +18,6 @@ export class ReportsService {
   ): Observable<[]> {
     // Jan: 0, Feb: 1,...
     const url = `${this.configUrl}/monthly-product?year=${year}&month=${month}`;
-    console.log('url is', url);
     return this.http.get<[]>(url);
   }
 

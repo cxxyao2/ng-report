@@ -4,12 +4,17 @@ import { MatTableDataSource } from '@angular/material/table';
 import { EChartsOption } from 'echarts';
 import { ReportsService } from 'src/app/services/reports.service';
 import { zip } from 'rxjs';
+import { MatPaginator } from '@angular/material/paginator';
+
+import * as fileConvert from 'src/assets/js/filetypeConvert.js';
 
 export interface PeriodicElement {
-  name: string;
   position: number;
-  weight: number;
-  symbol: string;
+  orderDate: Date;
+  productName: string;
+  customerName: string;
+  amount: number;
+  salespersonName: string;
 }
 
 export interface PieItem {
@@ -23,19 +28,6 @@ export interface GraphData {
   seriesData: number[];
 }
 
-const ELEMENT_DATA: PeriodicElement[] = [
-  { position: 1, name: 'Hydrogen', weight: 1.0079, symbol: 'H' },
-  { position: 2, name: 'Helium', weight: 4.0026, symbol: 'He' },
-  { position: 3, name: 'Lithium', weight: 6.941, symbol: 'Li' },
-  { position: 4, name: 'Beryllium', weight: 9.0122, symbol: 'Be' },
-  { position: 5, name: 'Boron', weight: 10.811, symbol: 'B' },
-  { position: 6, name: 'Carbon', weight: 12.0107, symbol: 'C' },
-  { position: 7, name: 'Nitrogen', weight: 14.0067, symbol: 'N' },
-  { position: 8, name: 'Oxygen', weight: 15.9994, symbol: 'O' },
-  { position: 9, name: 'Fluorine', weight: 18.9984, symbol: 'F' },
-  { position: 10, name: 'Neon', weight: 20.1797, symbol: 'Ne' },
-];
-
 @Component({
   selector: 'app-report-this-month',
   templateUrl: './report-this-month.component.html',
@@ -46,7 +38,11 @@ export class ReportThisMonthComponent implements OnInit, AfterViewInit {
   customerData?: Array<any>;
   salespersonData?: Array<any>;
   initSalesData?: Array<any>;
+  elementData: PeriodicElement[] = [];
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
+  @ViewChild(MatSort) sort!: MatSort;
 
+  queryDate = new Date();
   pieData: PieItem[] = []; // product
   barData: GraphData = { xAxisData: [], seriesData: [] };
   lineData: GraphData = { xAxisData: [], seriesData: [] };
@@ -61,19 +57,26 @@ export class ReportThisMonthComponent implements OnInit, AfterViewInit {
 
   barOptions!: EChartsOption;
 
-  displayedColumns: string[] = ['position', 'name', 'weight', 'symbol'];
-  dataSource = new MatTableDataSource(ELEMENT_DATA);
-
-  @ViewChild(MatSort) sort!: MatSort;
+  displayedColumns: string[] = [
+    'position',
+    'date',
+    'product',
+    'customer',
+    'amount',
+    'sales',
+  ];
+  dataSource?: MatTableDataSource<PeriodicElement>;
 
   constructor(private dataService: ReportsService) {}
 
   ngOnInit(): void {
+    const year = this.queryDate.getFullYear();
+    const month = this.queryDate.getMonth();
     zip(
-      this.dataService.getSpecificMonthProductSalesData(2021, 8),
-      this.dataService.getSpecificMonthCustomerSalesData(2021, 8),
-      this.dataService.getSpecificMonthSalespersonSalesData(2021, 8),
-      this.dataService.getSpecificMonthInitSalesData(2021, 8)
+      this.dataService.getSpecificMonthProductSalesData(year, month),
+      this.dataService.getSpecificMonthCustomerSalesData(year, month),
+      this.dataService.getSpecificMonthSalespersonSalesData(year, month),
+      this.dataService.getSpecificMonthInitSalesData(year, month)
     ).subscribe((data) => {
       this.productData = data[0];
       this.customerData = data[1];
@@ -83,7 +86,27 @@ export class ReportThisMonthComponent implements OnInit, AfterViewInit {
       this.setProductData();
       this.setCustomerData();
       this.setSalespersonData();
+      this.setInitSaleData();
     });
+  }
+
+  private setInitSaleData() {
+    if (this.initSalesData && this.initSalesData.length > 0) {
+      this.initSalesData.forEach((initOrder, index) => {
+        this.elementData.push({
+          position: index + 1,
+          orderDate: initOrder.createDate,
+          productName: initOrder.products_info.name,
+          customerName: initOrder.customers_info.name,
+          amount: initOrder.amount,
+          salespersonName: initOrder.salespersons_info.name,
+        });
+      });
+
+      this.dataSource = new MatTableDataSource(this.elementData);
+      this.dataSource.sort = this.sort;
+      this.dataSource.paginator = this.paginator;
+    }
   }
 
   private setProductData() {
@@ -219,11 +242,27 @@ export class ReportThisMonthComponent implements OnInit, AfterViewInit {
     };
   }
 
-  ngAfterViewInit() {
-    this.dataSource.sort = this.sort;
-  }
+  ngAfterViewInit() {}
 
   downloadData() {
-    // TODO
+    // PeriodicElement
+    const initData = [...this.elementData];
+    if (!(initData && initData.length >= 1)) {
+      return;
+    }
+    const output = [];
+    const fields = Object.keys(initData[0]);
+    output.push(fields);
+    initData.forEach((row) => {
+      let rowData = [];
+      for (const [key, value] of Object.entries(row)) {
+        rowData.push(value);
+      }
+      output.push(rowData);
+    });
+
+    const csvFileData = fileConvert.makeCSV(output);
+    const fileName = 'initSalesData';
+    fileConvert.saveBlobtoLocalFile(csvFileData, fileName + '.csv', 'text/csv');
   }
 }

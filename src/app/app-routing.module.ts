@@ -16,9 +16,7 @@ import { RoutineComponent } from './components/routine/routine.component';
 import { FindStoreComponent } from './components/find-store/find-store.component';
 import { EmailToUsComponent } from './components/email-to-us/email-to-us.component';
 import { TechnicalSupportComponent } from './components/technical-support/technical-support.component';
-import { ReportByProductsComponent } from './components/report-by-products/report-by-products.component';
 import { SchedulerComponent } from './components/scheduler/scheduler.component';
-import { ReportByEmployeeComponent } from './components/report-by-employee/report-by-employee.component';
 import { AddProductComponent } from './components/add-product/add-product.component';
 import { AddRoleToUserComponent } from './components/add-role-to-user/add-role-to-user.component';
 import { CalendarComponent } from './components/calendar/calendar.component';
@@ -30,6 +28,9 @@ import { AuthGuard } from './shared/auth.guard';
 import { ForgetPasswordComponent } from './components/forget-password/forget-password.component';
 import { ResetPasswordComponent } from './components/reset-password/reset-password.component';
 import { ChangePasswordComponent } from './components/change-password/change-password.component';
+import { ReportThisMonthComponent } from './components/report-this-month/report-this-month.component';
+import { ReportThisYearComponent } from './components/report-this-year/report-this-year.component';
+import { OrderQueryComponent } from './components/order-query/order-query.component';
 
 const routes: Routes = [
   { path: 'calendar', component: CalendarComponent },
@@ -49,8 +50,8 @@ const routes: Routes = [
   { path: 'authorize', component: AddRoleToUserComponent }, // administrator role
   { path: 'list-logs', component: LoglistComponent }, // administrator role
   { path: 'schedule', component: SchedulerComponent }, // manager role
-  { path: 'by-product', component: ReportByProductsComponent }, // manager role
-  { path: 'by-employee', component: ReportByEmployeeComponent }, // manager role
+  { path: 'monthly-analyze', component: ReportThisMonthComponent }, // manager role
+  { path: 'yearly-analyze', component: ReportThisYearComponent }, // manager role
   { path: 'todo', component: TodoComponent }, // salesperson role
   { path: 'place-order', component: ProductListComponent }, // salesperson role
   { path: 'pipeline', component: PipelinesComponent }, // manager, salesperson
@@ -60,7 +61,7 @@ const routes: Routes = [
     path: 'personal',
     children: [
       { path: 'clients', component: ClientsComponent },
-      { path: 'orders', component: ReportByEmployeeComponent },
+      { path: 'orders', component: OrderQueryComponent },
     ],
   }, // salesperson role
 

@@ -25,15 +25,56 @@ const ELEMENT_DATA: PeriodicElement[] = [
 ];
 
 @Component({
-  selector: 'app-report-by-products',
-  templateUrl: './report-by-products.component.html',
-  styleUrls: ['./report-by-products.component.scss'],
+  selector: 'app-report-this-year',
+  templateUrl: './report-this-year.component.html',
+  styleUrls: ['./report-this-year.component.scss'],
 })
-export class ReportByProductsComponent implements OnInit, AfterViewInit {
+export class ReportThisYearComponent implements OnInit, AfterViewInit {
   pieData: any[] = [];
   pieOptions: any;
-  barOptions: any;
-  chartOption: EChartsOption = {
+  barOptions = {
+    color: ['#3398DB'],
+    tooltip: {
+      trigger: 'axis',
+      axisPointer: {
+        type: 'shadow',
+      },
+    },
+    grid: {
+      left: '3%',
+      right: '4%',
+      bottom: '3%',
+      containLabel: true,
+    },
+    xAxis: [
+      {
+        type: 'category',
+        data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+        axisTick: {
+          alignWithLabel: true,
+        },
+      },
+    ],
+    yAxis: [
+      {
+        type: 'value',
+      },
+    ],
+    series: [
+      {
+        name: 'Counters',
+        type: 'bar',
+        barWidth: '60%',
+        data: [10, 52, 200, 334, 390, 330, 220],
+      },
+    ],
+  };
+  initOpts = {
+    renderer: 'svg',
+    width: 300,
+    height: 300,
+  };
+  LineOptions: EChartsOption = {
     xAxis: {
       type: 'category',
       data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],

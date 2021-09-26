@@ -14,6 +14,7 @@
 @import "../src/app/components/sign-up/sign-up";
 @import "../src/app/components/change-password/change-password";
 @import "../src/app/components/pipeline-authorized/pipeline-authorized";
+@import "../src/app/components/report-this-month/report-this-month";
 
 html,
 body {
@@ -62,6 +63,7 @@ h5 {
 @include forget-password-color($app-theme);
 @include signup-color($app-theme);
 @include change-password-color($app-theme);
+@include report-this-month-color($app-theme);
 
 .darkMode {
   @include mat.all-component-colors($dark-theme);
@@ -78,6 +80,7 @@ h5 {
   @include forget-password-color($dark-theme);
   @include signup-color($dark-theme);
   @include change-password-color($dark-theme);
+  @include report-this-month-color($dark-theme);
 }
 
 @keyframes fadein {

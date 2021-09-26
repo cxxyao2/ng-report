@@ -44,7 +44,16 @@ export class AppComponent implements AfterViewInit {
   ];
 
   managerItems: NavItem[] = [
-    { label: 'Data Analyse', icon: 'bar_chart', route: 'by-product' },
+    {
+      label: 'Monthly Data Analyse',
+      icon: 'bar_chart',
+      route: 'monthly-analyze',
+    },
+    {
+      label: 'Yearly Data Analyse',
+      icon: 'bar_chart',
+      route: 'yearly-analyze',
+    },
     { label: 'Pipeline Management', icon: 'contact_page', route: 'pipeline' },
     { label: 'Team Tasks', icon: 'edit_calendar', route: 'schedule' },
   ];
@@ -88,8 +97,7 @@ export class AppComponent implements AfterViewInit {
     public authService: AuthService,
     public loader: LoadingService,
     private cookieService: CookieService,
-    private _bottomSheet: MatBottomSheet,
-
+    private _bottomSheet: MatBottomSheet
   ) {}
 
   ngOnInit(): void {
@@ -136,6 +144,4 @@ export class AppComponent implements AfterViewInit {
       outlet && outlet.activatedRouteData && outlet.activatedRouteData.animation
     );
   }
-
-  
 }

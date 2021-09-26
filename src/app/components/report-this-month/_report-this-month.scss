@@ -1,0 +1,18 @@
+@use "sass:map";
+@use "~@angular/material" as mat;
+
+@mixin report-this-month-color(
+  $config-or-theme,
+  $shadow-color: rgba(0, 0, 255, 0.1)
+) {
+  $config: mat.get-color-config($config-or-theme);
+  $primary: map.get($config, primary);
+  $accent: map.get($config, accent);
+  $warn: map.get($config, warn);
+
+  app-report-this-month {
+    tr:nth-child(even) {
+      background-color: mat.get-color-from-palette($primary, 50);
+    }
+  }
+}

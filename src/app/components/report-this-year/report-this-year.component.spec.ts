@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ReportByEmployeeComponent } from './report-by-employee.component';
+import { ReportThisYearComponent } from './report-this-year.component';
 
-describe('ReportByEmployeeComponent', () => {
-  let component: ReportByEmployeeComponent;
-  let fixture: ComponentFixture<ReportByEmployeeComponent>;
+describe('ReportThisYearComponent', () => {
+  let component: ReportThisYearComponent;
+  let fixture: ComponentFixture<ReportThisYearComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ ReportByEmployeeComponent ]
+      declarations: [ ReportThisYearComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(ReportByEmployeeComponent);
+    fixture = TestBed.createComponent(ReportThisYearComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

@@ -42,13 +42,11 @@ import { RoutineComponent } from './components/routine/routine.component';
 import { SearchBoxComponent } from './components/toolbar/search-box/search-box.component';
 import { ScrollToTopComponent } from './components/scroll-to-top/scroll-to-top.component';
 import { WishListComponent } from './components/shopping-cart/wish-list/wish-list.component';
-import { ReportByProductsComponent } from './components/report-by-products/report-by-products.component';
 import { EmailToUsComponent } from './components/email-to-us/email-to-us.component';
 import { TechnicalSupportComponent } from './components/technical-support/technical-support.component';
 import { SchedulerComponent } from './components/scheduler/scheduler.component';
 import { AddProductComponent } from './components/add-product/add-product.component';
 import { AddRoleToUserComponent } from './components/add-role-to-user/add-role-to-user.component';
-import { ReportByEmployeeComponent } from './components/report-by-employee/report-by-employee.component';
 import { CalendarComponent } from './components/calendar/calendar.component';
 import { ConfirmComponent } from './shared/confirm/confirm.component';
 import { DataListComponent } from './shared/data-list/data-list.component';
@@ -69,57 +67,61 @@ import { ErrorComponent } from './components/error/error.component';
 import { PipelineAuthorizedComponent } from './components/pipeline-authorized/pipeline-authorized.component';
 import { PipelineAllComponent } from './components/pipeline-all/pipeline-all.component';
 import { SuccessComponent } from './components/success/success.component';
+import { ReportThisMonthComponent } from './components/report-this-month/report-this-month.component';
+import { ReportThisYearComponent } from './components/report-this-year/report-this-year.component';
+import { OrderQueryComponent } from './components/order-query/order-query.component';
 
 @NgModule({
   declarations: [
-    AppComponent,
-    HomeComponent,
-    AboutComponent,
-    PageNotFoundComponent,
-    DashboardComponent,
-    TodoComponent,
-    SearchBoxComponent,
-    GameCardComponent,
-    MenuListItemComponent,
-    CartComponent,
-    ProductItemComponent,
-    ProductListComponent,
-    CartItemComponent,
-    WishListComponent,
-    ScrollToTopComponent,
-    PrintInvoiceComponent,
-    LoglistComponent,
-    LogfilterComponent,
-    InfiniteListComponent,
-    ChipsMultiSelectComponent,
     AddClientComponent,
-    RoutineComponent,
-    FindStoreComponent,
-    ReportByProductsComponent,
-    EmailToUsComponent,
-    TechnicalSupportComponent,
-    SchedulerComponent,
+    AppComponent,
+    AboutComponent,
     AddProductComponent,
     AddRoleToUserComponent,
-    ReportByEmployeeComponent,
     CalendarComponent,
     ConfirmComponent,
-    DataListComponent,
     CookiePopupComponent,
     ClientsComponent,
-    LoginComponent,
-    SignUpComponent,
-    FooterComponent,
-    PipelinesComponent,
-    UniqueUserDirective,
-    UniquePasswordDirective,
     ChangePasswordComponent,
-    ResetPasswordComponent,
-    ForgetPasswordComponent,
+    CartComponent,
+    CartItemComponent,
+    ChipsMultiSelectComponent,
+    DashboardComponent,
+    DataListComponent,
+    EmailToUsComponent,
     ErrorComponent,
+    ForgetPasswordComponent,
+    FooterComponent,
+    FindStoreComponent,
+    GameCardComponent,
+    HomeComponent,
+    InfiniteListComponent,
+    LoginComponent,
+    LoglistComponent,
+    LogfilterComponent,
+    MenuListItemComponent,
+    OrderQueryComponent,
     PipelineAuthorizedComponent,
     PipelineAllComponent,
+    PageNotFoundComponent,
+    ProductItemComponent,
+    PrintInvoiceComponent,
+    ProductListComponent,
+    PipelinesComponent,
+    RoutineComponent,
+    ResetPasswordComponent,
+    ReportThisMonthComponent,
+    ReportThisYearComponent,
     SuccessComponent,
+    SearchBoxComponent,
+    ScrollToTopComponent,
+    TodoComponent,
+    SchedulerComponent,
+    SignUpComponent,
+    TechnicalSupportComponent,
+    UniqueUserDirective,
+    UniquePasswordDirective,
+    WishListComponent,
   ],
   imports: [
     BrowserModule,

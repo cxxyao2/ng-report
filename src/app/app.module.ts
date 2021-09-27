@@ -70,6 +70,12 @@ import { SuccessComponent } from './components/success/success.component';
 import { ReportThisMonthComponent } from './components/report-this-month/report-this-month.component';
 import { ReportThisYearComponent } from './components/report-this-year/report-this-year.component';
 import { OrderQueryComponent } from './components/order-query/order-query.component';
+import { MatGridListModule } from '@angular/material/grid-list';
+import { MatCardModule } from '@angular/material/card';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
+import { LayoutModule } from '@angular/cdk/layout';
 
 @NgModule({
   declarations: [
@@ -141,6 +147,12 @@ import { OrderQueryComponent } from './components/order-query/order-query.compon
       echarts: () => import('echarts'),
     }),
     AppRoutingModule,
+    MatGridListModule,
+    MatCardModule,
+    MatMenuModule,
+    MatIconModule,
+    MatButtonModule,
+    LayoutModule,
   ],
   providers: [CookieService, httpInterceptorProviders],
   bootstrap: [AppComponent],

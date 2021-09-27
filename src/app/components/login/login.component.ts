@@ -36,6 +36,7 @@ export class LoginComponent implements OnInit {
           // TODO
           // 这里其他返回信息没用，主要是得到头部cookie中的token .
           const token = '';
+          console.log('login le ');
 
           this.authService.loginWithJwt(result);
           const returnUrl = this.route.snapshot.queryParamMap.get('returnUrl');

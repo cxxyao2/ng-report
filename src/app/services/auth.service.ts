@@ -97,6 +97,8 @@ export class AuthService {
         this.currentUser = null;
       }
     }
+    // TODO ,等待删除
+    console.log('user is ', this.currentUser);
   }
 
   logout(): void {

@@ -1,18 +1,19 @@
-<div class="search-box-wrapper">
-  <input
-    #searchBox
-    [formControl]="productInput"
-    id="search-box"
-    name="search-box"
-    type="search"
-    aria-label="search"
-    placeholder="Search product..."
-    
-  />
-  <mat-icon *ngIf="searchBox.value === '' || searchBox.value === undefined"
-    >search</mat-icon
-  >
-  <mat-icon *ngIf="searchBox.value.length > 0" (click)="resetSearchTerm()"
-    >clear</mat-icon
-  >
-</div>
+<form role="search">
+  <div class="search-box-wrapper">
+    <input
+      #searchBox
+      [formControl]="productInput"
+      id="mySearch"
+      name="mySearch"
+      type="search"
+      aria-label="search"
+      placeholder="Search product..."
+    />
+    <mat-icon *ngIf="searchBox.value === '' || searchBox.value === undefined"
+      >search</mat-icon
+    >
+    <mat-icon *ngIf="searchBox.value.length > 0" (click)="resetSearchTerm()"
+      >clear</mat-icon
+    >
+  </div>
+</form>

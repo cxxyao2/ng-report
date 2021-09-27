@@ -10,12 +10,36 @@
   bottom: 15px;
 }
 
-.more-button {
-  position: absolute;
-  top: 5px;
-  right: 10px;
-}
-
 .dashboard-card-content {
   text-align: center;
+}
+
+.card-avatar {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  overflow: hidden;
+  object-fit: cover;
+  display: block;
+  border: 2px solid lightgray;
+}
+
+.fxflex {
+  border-radius: 8px;
+  box-shadow: 0 3px 2px -1px rgba(0, 0, 0, 0.2), 0 2px 5px 0 rgba(0, 0, 0, 0.14),
+    0 1px 4px 0 rgba(0, 0, 0, 0.12);
+  td {
+    padding: 8px;
+  }
+  .card-subtitle {
+    font-size: 1.1rem;
+    font-weight: bolder;
+  }
+  .divider-in-text {
+    padding: 0 4px;
+    font-weight: bold;
+  }
+  .social-media {
+    margin: 4px auto;
+  }
 }

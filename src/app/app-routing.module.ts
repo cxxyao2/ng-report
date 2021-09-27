@@ -45,7 +45,7 @@ const routes: Routes = [
   },
   { path: 'calendar', component: CalendarComponent },
   { path: 'home', component: HomeComponent }, // public no-login
-  { path: 'dash', component: DashboardComponent, canActivate: [AuthGuard] }, // user profile
+  { path: 'dashboard', component: DashboardComponent}, // user profile
   { path: 'add-product', component: AddProductComponent }, // administrator role
   { path: 'authorize', component: AddRoleToUserComponent }, // administrator role
   { path: 'list-logs', component: LoglistComponent }, // administrator role

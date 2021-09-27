@@ -1,19 +1,105 @@
 <div class="grid-container">
-  <!--1, modify password  TODO -->
-  <!--2, modify avitar  TODO -->
-  <!--3, login history review, including IP TODO-->
-
   <h1 class="mat-h1">Dashboard</h1>
   <mat-grid-list cols="2" rowHeight="350px">
-    <mat-grid-tile
-      *ngFor="let card of cards | async"
-      [colspan]="card.cols"
-      [rowspan]="card.rows"
-    >
+    <mat-grid-tile [colspan]="cards[0].cols" [rowspan]="cards[0].rows">
       <mat-card class="dashboard-card">
         <mat-card-header>
           <mat-card-title>
-            {{ card.title }}
+            {{ cards[0].title }}
+          </mat-card-title>
+        </mat-card-header>
+        <mat-card-content class="dashboard-card-content">
+          <div fxLayout="row wrap" fxLayoutAlign="space-around center" fxLayoutGap="16px">
+            <div fxFlex="50%" fxFlex.lt-md="100%" class="fxflex">
+              <table>
+                <tr style="vertical-align: top">
+                  <td >
+                    <img
+                      class="card-avatar"
+                      alt="avatar"
+                      src="https://source.unsplash.com/random/100x100?woman"
+                    />
+                  </td>
+                  <td style="text-align: left;">
+                    <p class="card-subtitle">{{ user.name }}</p>
+                    <p>
+                      Sales Manager <span class="divider-in-text">|</span>3th
+                      Department
+                    </p>
+                    <p>Senior Technicien</p>
+                    <p>Email: {{ user.email }}</p>
+                    <button mat-raised-button class="profie-button">
+                      Change Avatar
+                    </button>
+                  </td>
+                </tr>
+              </table>
+            </div>
+            <div fxFlex="45%" fxHide.lt-md class="fxflex">
+              <p class="social-midia">Twitter Account: Mark</p>
+              <p class="social-midia">Youtube Account: Mark</p>
+              <p class="social-midia">LinkedIn Account: Mark</p>
+            </div>
+          </div>
+        </mat-card-content>
+      </mat-card>
+    </mat-grid-tile>
+
+    <mat-grid-tile [colspan]="cards[1].cols" [rowspan]="cards[1].rows">
+      <mat-card class="dashboard-card">
+        <mat-card-header>
+          <mat-card-title>
+            {{ cards[1].title }}
+            <button
+              mat-icon-button
+              class="more-button"
+              [matMenuTriggerFor]="menu"
+              aria-label="Toggle menu"
+            >
+              <mat-icon>more_vert</mat-icon>
+            </button>
+            <mat-menu #menu="matMenu" xPosition="before">
+              <button mat-menu-item>Expand</button>
+              <button mat-menu-item>Remove</button>
+            </mat-menu>
+          </mat-card-title>
+        </mat-card-header>
+        <mat-card-content class="dashboard-card-content">
+          <div>Card Content Here</div>
+        </mat-card-content>
+      </mat-card>
+    </mat-grid-tile>
+
+    <mat-grid-tile [colspan]="cards[2].cols" [rowspan]="cards[2].rows">
+      <mat-card class="dashboard-card">
+        <mat-card-header>
+          <mat-card-title>
+            {{ cards[2].title }}
+            <button
+              mat-icon-button
+              class="more-button"
+              [matMenuTriggerFor]="menu"
+              aria-label="Toggle menu"
+            >
+              <mat-icon>more_vert</mat-icon>
+            </button>
+            <mat-menu #menu="matMenu" xPosition="before">
+              <button mat-menu-item>Expand</button>
+              <button mat-menu-item>Remove</button>
+            </mat-menu>
+          </mat-card-title>
+        </mat-card-header>
+        <mat-card-content class="dashboard-card-content">
+          <div>Card Content Here</div>
+        </mat-card-content>
+      </mat-card>
+    </mat-grid-tile>
+
+    <mat-grid-tile [colspan]="cards[3].cols" [rowspan]="cards[3].rows">
+      <mat-card class="dashboard-card">
+        <mat-card-header>
+          <mat-card-title>
+            {{ cards[3].title }}
             <button
               mat-icon-button
               class="more-button"

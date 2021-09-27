@@ -1,5 +1,7 @@
 <div class="container">
-  <h2 class="content-header">Sales Data Analyze ( {{ queryDate | date:'MMM y'}} )</h2>
+  <h2 class="content-header">
+    Sales Data Analyze ( {{ queryDate | date: "MMM y" }} )
+  </h2>
   <div class="content">
     <mat-tab-group mat-align-tabs="start">
       <mat-tab label="By Category">
@@ -98,7 +100,7 @@
             <mat-icon>file_download</mat-icon>
             Download
           </button>
-          <div class="mat-elevation-z8" >
+          <div class="mat-elevation-z8">
             <table mat-table [dataSource]="dataSource" *ngIf="dataSource">
               <!-- Position Column -->
               <ng-container matColumnDef="position">
@@ -162,3 +164,4 @@
     </mat-tab-group>
   </div>
 </div>
+<app-error *ngIf="errorMessage" [message]="errorMessage"></app-error>

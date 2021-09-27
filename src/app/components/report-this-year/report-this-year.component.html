@@ -1,1 +1,185 @@
-<p>report-this-year works!</p>
+<div class="container">
+  <h2 class="content-header">
+    Sales Data Analyze ( {{ queryDate | date: "MMM y" }} )
+  </h2>
+  <div class="create-data-section">
+    <mat-radio-group
+      [(ngModel)]="dataCreateOption"
+      aria-label="Select an data create method"
+    >
+      <mat-radio-button value="func">Function</mat-radio-button>
+      <mat-radio-button value="worker">WebWorker</mat-radio-button>
+    </mat-radio-group>
+
+    <button
+      class="create-button"
+      mat-raised-button
+      color="primary"
+      (click)="createData()"
+    >
+      Create Yearly Data
+    </button>
+  </div>
+  <div class="content">
+    <mat-tab-group mat-align-tabs="start">
+      <mat-tab label="By Category">
+        <mat-card class="content-body">
+          <div fxLayout="row wrap" fxLayoutGap="16px grid">
+            <div fxFlex="50%" fxFlex.lt-md="100%">
+              <div echarts [initOpts]="initOpts" [options]="pieOptions"></div>
+            </div>
+            <div fxFlex="50%" fxFlex.lt-md="100%">
+              <h3>Top 10 popular products</h3>
+              <table>
+                <tr>
+                  <th>No.</th>
+                  <th>Name</th>
+                  <th>Amount($)</th>
+                </tr>
+                <ng-container
+                  *ngFor="let item of pieData; let position = index"
+                >
+                  <tr>
+                    <td>{{ position + 1 }}</td>
+                    <td>{{ item.name }}</td>
+                    <td>{{ item.value }}</td>
+                  </tr>
+                </ng-container>
+              </table>
+            </div>
+          </div>
+        </mat-card>
+      </mat-tab>
+      <mat-tab label="By Customer">
+        <mat-card class="content-body">
+          <div fxLayout="row wrap" fxLayoutGap="16px grid">
+            <div fxFlex="50%" fxFlex.lt-md="100%">
+              <div *ngIf="barOptions" echarts [options]="barOptions"></div>
+            </div>
+
+            <div fxFlex="50%" fxFlex.lt-md="100%">
+              <h3>Top 10 VIP Customers</h3>
+              <table>
+                <tr>
+                  <th>No.</th>
+                  <th>Name</th>
+                  <th>Amount($)</th>
+                </tr>
+                <ng-container
+                  *ngFor="let item of barData.xAxisData; let position = index"
+                >
+                  <tr>
+                    <td>{{ position + 1 }}</td>
+                    <td>{{ item }}</td>
+                    <td>{{ barData.seriesData[position] }}</td>
+                  </tr>
+                </ng-container>
+              </table>
+            </div>
+          </div>
+        </mat-card></mat-tab
+      ><mat-tab label="By Salesperson">
+        <mat-card class="content-body">
+          <div fxLayout="row wrap" fxLayoutGap="16px grid">
+            <div fxFlex="50%" fxFlex.lt-md="100%">
+              <div echarts *ngIf="lineOptions" [options]="lineOptions"></div>
+            </div>
+
+            <div fxFlex="50%" fxFlex.lt-md="100%">
+              <h3>Top 10 Salespersons</h3>
+              <table>
+                <tr>
+                  <th>No.</th>
+                  <th>Name</th>
+                  <th>Amount($)</th>
+                </tr>
+                <ng-container
+                  *ngFor="let item of lineData.xAxisData; let position = index"
+                >
+                  <tr>
+                    <td>{{ position + 1 }}</td>
+                    <td>{{ item }}</td>
+                    <td>{{ lineData.seriesData[position] }}</td>
+                  </tr>
+                </ng-container>
+              </table>
+            </div>
+          </div>
+        </mat-card></mat-tab
+      >
+
+      <mat-tab label="InitData">
+        <mat-card class="content-body">
+          <button
+            mat-raised-button
+            class="download-button"
+            (click)="downloadData()"
+          >
+            <mat-icon>file_download</mat-icon>
+            Download
+          </button>
+          <div class="mat-elevation-z8">
+            <table mat-table [dataSource]="dataSource" *ngIf="dataSource">
+              <!-- Position Column -->
+              <ng-container matColumnDef="position">
+                <th mat-header-cell *matHeaderCellDef>No.</th>
+                <td mat-cell *matCellDef="let element">
+                  {{ element.position }}
+                </td>
+              </ng-container>
+
+              <!-- Order Data Column -->
+              <ng-container matColumnDef="date">
+                <th mat-header-cell *matHeaderCellDef>Date</th>
+                <td mat-cell *matCellDef="let element">
+                  {{ element.orderDate | date }}
+                </td>
+              </ng-container>
+
+              <!-- Product Name Column -->
+              <ng-container matColumnDef="product">
+                <th mat-header-cell *matHeaderCellDef>Product</th>
+                <td mat-cell *matCellDef="let element">
+                  {{ element.productName }}
+                </td>
+              </ng-container>
+
+              <!-- Customer Name Column -->
+              <ng-container matColumnDef="customer">
+                <th mat-header-cell *matHeaderCellDef>Customer</th>
+                <td mat-cell *matCellDef="let element">
+                  {{ element.customerName }}
+                </td>
+              </ng-container>
+
+              <!-- Amount Column-->
+              <ng-container matColumnDef="amount">
+                <th mat-header-cell *matHeaderCellDef>Amount</th>
+                <td mat-cell *matCellDef="let element">{{ element.amount }}</td>
+              </ng-container>
+
+              <!-- Salesperson Name Column -->
+              <ng-container matColumnDef="sales">
+                <th mat-header-cell *matHeaderCellDef>Salesperson</th>
+                <td mat-cell *matCellDef="let element">
+                  {{ element.salespersonName }}
+                </td>
+              </ng-container>
+
+              <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+              <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+            </table>
+
+            <mat-paginator
+              [pageSizeOptions]="[5, 10, 20]"
+              showFirstLastButtons
+              aria-label="Select page of periodic elements"
+            >
+            </mat-paginator>
+          </div>
+        </mat-card>
+      </mat-tab>
+    </mat-tab-group>
+  </div>
+</div>
+<app-error *ngIf="errorMessage" [message]="errorMessage"></app-error>

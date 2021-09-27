@@ -6,7 +6,7 @@ import { ReportsService } from 'src/app/services/reports.service';
 import { zip } from 'rxjs';
 import { MatPaginator } from '@angular/material/paginator';
 
-import * as fileConvert from 'src/assets/js/filetypeConvert.js';
+import * as fileConvert from 'src/app/utils/file-convert.util';
 
 export interface PeriodicElement {
   position: number;
@@ -39,6 +39,7 @@ export class ReportThisMonthComponent implements OnInit, AfterViewInit {
   salespersonData?: Array<any>;
   initSalesData?: Array<any>;
   elementData: PeriodicElement[] = [];
+  errorMessage = '';
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
 
@@ -77,17 +78,25 @@ export class ReportThisMonthComponent implements OnInit, AfterViewInit {
       this.dataService.getSpecificMonthCustomerSalesData(year, month),
       this.dataService.getSpecificMonthSalespersonSalesData(year, month),
       this.dataService.getSpecificMonthInitSalesData(year, month)
-    ).subscribe((data) => {
-      this.productData = data[0];
-      this.customerData = data[1];
-      this.salespersonData = data[2];
-      this.initSalesData = data[3];
+    ).subscribe(
+      (data) => {
+        this.productData = data[0];
+        this.customerData = data[1];
+        this.salespersonData = data[2];
+        this.initSalesData = data[3];
 
-      this.setProductData();
-      this.setCustomerData();
-      this.setSalespersonData();
-      this.setInitSaleData();
-    });
+        this.setProductData();
+        this.setCustomerData();
+        this.setSalespersonData();
+        this.setInitSaleData();
+      },
+      (err) => {
+        this.errorMessage = err;
+        setTimeout(() => {
+          this.errorMessage = '';
+        }, 3000);
+      }
+    );
   }
 
   private setInitSaleData() {

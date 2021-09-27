@@ -6,7 +6,7 @@ import { MyCompany } from 'src/app/models/my-company';
 import { constants } from 'src/app/config/constants';
 import { PdfMakeService } from 'src/app/services/pdfmake.service';
 import { CartService } from 'src/app/services/cart.service';
-import * as fileConvert from 'src/assets/js/filetypeConvert.js';
+import * as fileConvert from 'src/app/utils/file-convert.util';
 
 export interface PeriodicElement {
   name: string;

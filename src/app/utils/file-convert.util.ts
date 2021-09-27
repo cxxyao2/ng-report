@@ -1,6 +1,6 @@
 // The base64 encoded file should be converted to Blob before bing uploaded to server.
-function base64ToBlob(urlData, type) {
-  let arr = urlData.split(",");
+export function base64ToBlob(urlData: any, type: any) {
+  let arr = urlData.split(',');
   // * and + are greedy ( the regex engine tried to find your pattern in the string )
   // matched as many characters as possible. We add ?  to make regex not greedy
   let mime = arr[0].match(/:(.*?);/)[1] || type;
@@ -29,17 +29,20 @@ function base64ToBlob(urlData, type) {
   return blob;
 }
 
-function saveBlobtoLocalFile(blobData, localFileName, fileType = "jpeg") {
-  var file = new File([blobData], { type: fileType });
-  // var file = new File(["foo"], "foo.txt", {
-  //   type: "text/plain",
-  // });
+export function saveBlobtoLocalFile(
+  blobData: any,
+  localFileName: any,
+  fileType = 'jpeg'
+) {
+  let file = new File([blobData], 'foo.txt', {
+    type: fileType,
+  });
 
   //const blob = new Blob([output]);
   //  const fileDownloadUrl = URL.createObjectURL(blob);
 
-  const downloadAncher = document.createElement("a");
-  downloadAncher.style.display = "none";
+  const downloadAncher = document.createElement('a');
+  downloadAncher.style.display = 'none';
   const fileURL = URL.createObjectURL(file);
   downloadAncher.href = fileURL;
   downloadAncher.download = localFileName;
@@ -47,22 +50,22 @@ function saveBlobtoLocalFile(blobData, localFileName, fileType = "jpeg") {
   URL.revokeObjectURL(fileURL); // free up storage
 }
 
-function makeCSV(contents) {
-  let csv = "";
-  contents.forEach((value) => {
-    value.forEach((item, i) => {
-      let innerValue = item === null ? "" : "" + item;
+export function makeCSV(contents: any) {
+  let csv = '';
+  contents.forEach((value: any) => {
+    value.forEach((item:any, i:any) => {
+      let innerValue = item === null ? '' : '' + item;
       let result = innerValue.replace(/"/g, '""');
       // " , \n  That anyone of the 3 signs appears means the end of one line
       if (result.search(/("|,|\n)/g) >= 0) {
         result = '"' + result + '"';
       }
       if (i > 0) {
-        csv += ",";
+        csv += ',';
       }
       csv += result;
     });
-    csv += "\n";
+    csv += '\n';
   });
   return csv;
 }

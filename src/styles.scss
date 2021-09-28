@@ -16,6 +16,7 @@
 @import "../src/app/components/pipeline-authorized/pipeline-authorized";
 @import "../src/app/components/report-this-month/report-this-month";
 @import "../src/app/components/report-this-year/report-this-year";
+@import "../src/app/components/toolbar/search-box/search-box";
 
 html,
 body {
@@ -66,6 +67,7 @@ h5 {
 @include change-password-color($app-theme);
 @include report-this-month-color($app-theme);
 @include report-this-year-color($app-theme);
+@include searchbox-color($app-theme);
 
 .darkMode {
   @include mat.all-component-colors($dark-theme);
@@ -84,6 +86,7 @@ h5 {
   @include change-password-color($dark-theme);
   @include report-this-month-color($dark-theme);
   @include report-this-year-color($dark-theme);
+  @include searchbox-color($dark-theme);
 }
 
 @keyframes fadein {

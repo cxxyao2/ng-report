@@ -1,7 +1,7 @@
 @use "sass:map";
 @use "~@angular/material" as mat;
 
-@mixin scheduler-color($config-or-theme, $shadow-color: rgba(0, 0, 255, 0.1)) {
+@mixin searchbox-color($config-or-theme, $shadow-color: rgba(0, 0, 255, 0.1)) {
   $config: mat.get-color-config($config-or-theme);
   $primary: map.get($config, primary);
   $accent: map.get($config, accent);
@@ -10,7 +10,7 @@
   app-search-box {
     .search-input {
       &:hover {
-        border: 2px solid mat.get-color-from-palette($primary, 50);
+        border: 3px solid mat.get-color-from-palette($primary, 200);
       }
     }
   }

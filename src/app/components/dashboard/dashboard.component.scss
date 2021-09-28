@@ -39,7 +39,27 @@
     padding: 0 4px;
     font-weight: bold;
   }
+
+  svg.social {
+    height: 30px;
+    &.instagram {
+      background-color: coral;
+    }
+    &.twitter {
+      background-color: coral;
+    }
+    &.facebook {
+      background-color: coral;
+    }
+
+    &.linkedin {
+      background-color: coral;
+    }
+  }
+
   .social-media {
-    margin: 4px auto;
+    margin: 16px auto;
+    padding: 8px;
+    border-radius: 16px;
   }
 }

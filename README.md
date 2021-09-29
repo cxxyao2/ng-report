@@ -21,7 +21,7 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 - dynamic views by content projection
 - multiple level menus
 - DI( Dependency Injection): Services have different visible(usable) levels, e.g. app, component, component view etc.
-- Flex Layout
+- Flex Layout, responsive images, responsive layout
 - Material Design
 - FontAwesome
 

@@ -42,16 +42,7 @@ export class LogsService {
     return this.http.get<LogRecord[]>(requestUrl).pipe(retry(1));
   }
 
-  addLog(content: string) {
-    // name ,categoryId='600103a5ffa4a7376471d64f'
-    // code ?
-    // this.http
-    //   .post(this.configUrl, {
-    //     ip: this.ipAddress,
-    //     content: content,
-    //   })
-    //   .subscribe();
-
+  addLog(content: string):void {
     this.http
       .post(this.configUrl, {
         content,
@@ -59,7 +50,7 @@ export class LogsService {
       .subscribe();
   }
 
-  getIPAddress() {
+  getIPAddress():void {
     this.http.get('http://api.ipify.org/?format=json').subscribe((res: any) => {
       this.ipAddress = res.ip;
     });

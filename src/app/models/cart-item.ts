@@ -1,12 +1,14 @@
 export interface CartItem {
-  selected: boolean;
+  selected?: boolean;
   productId: string;
   productName: string;
   imageUrl: string;
-  qty: number;
+  quantity: number;
   price: number;
-  stock?: number;
-  clientId?: string;
-  salePersonId?: string;
-  _id?: string;
+  stock: number;
+  customerId?: string;
+  customerName?: string;
+  salespersonId?: string;
+  salespersonName?: string;
+  _id: string;
 }

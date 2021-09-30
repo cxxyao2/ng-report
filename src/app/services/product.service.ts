@@ -1,42 +1,21 @@
 import { Injectable } from '@angular/core';
 import { Product } from '../models/product';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { environment } from '../../environments/environment';
+import { Observable } from 'rxjs';
+import { retry } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ProductService {
-  products: Product[] = [
-    {
-      _id: '1',
-      name: 'a1',
-      description: 'simpele',
-      category: 'golden',
-      price: 12,
-      imageUrl: 'assets/e1_x9ck5u/e1_x9ck5u_c_scale,w_200.jpg',
-      qtyInStock: 12,
-    },
-    {
-      _id: '2',
-      name: 'a1',
-      description: 'simpele',
-      category: 'golden',
-      price: 12,
-      imageUrl: 'assets/e1_x9ck5u/e1_x9ck5u_c_scale,w_200.jpg',
-      qtyInStock: 12,
-    },
-    {
-      _id: '1',
-      name: 'a1',
-      description: 'simpele',
-      category: 'golden',
-      price: 12,
-      imageUrl: 'assets/e1_x9ck5u/e1_x9ck5u_c_scale,w_200.jpg',
-      qtyInStock: 12,
-    },
-  ];
-  constructor() {}
+  configUrl = environment.apiUrl + '/products';
+  products: Product[] = [];
 
-  getProducts(): Product[] {
-    return this.products;
+  constructor(private http: HttpClient) {}
+
+  getProducts(productName = ''): Observable<Product[]> {
+    const requestUrl = `${this.configUrl}?productName=${productName}`;
+    return this.http.get<Product[]>(requestUrl).pipe(retry(1));
   }
 }

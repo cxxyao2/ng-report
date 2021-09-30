@@ -1,10 +1,11 @@
 export interface Customer {
   name: string;
   phone: string;
+  email: string;
   address: string;
   _id?: string;
   imageUrl?: string;
-  credit?: string;
+  credit: string;
 
   latitude?: number;
   longitude?: number;

@@ -79,6 +79,8 @@ function createNewProduct(id: number): Product {
     category:
       categoryList[Math.round(Math.random() * (categoryList.length - 1))],
     price: 100,
-    qtyInStock: 200,
+    stock: 200,
+    imageUrl: 'products/e2',
+    isOnsale: true,
   };
 }

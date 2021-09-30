@@ -4,91 +4,88 @@ import { Observable, of } from 'rxjs';
 
 import { CartItem } from '../models/cart-item';
 import { Product } from '../models/product';
-
-const CartUrl = '';
+import { Customer } from '../models/customer';
+import { environment } from '../../environments/environment';
+import { User } from '../models/user';
+import { AuthService } from './auth.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class CartService {
-  items: CartItem[] = [
-    {
-      selected: true,
-      productId: 'xx',
-      productName: 'xx',
-      qty: 12,
-      price: 12,
-      clientId: 'aaa',
-      salePersonId: 'bbb',
-      imageUrl: 'assets/e1_x9ck5u/e1_x9ck5u_c_scale,w_200.jpg',
-    },
-    {
-      selected: true,
-      productId: 'xx',
-      productName: 'xx',
-      qty: 13,
-      price: 12,
-      clientId: 'aaa',
-      salePersonId: 'bbb',
-      imageUrl: 'assets/e1_x9ck5u/e1_x9ck5u_c_scale,w_200.jpg',
-    },
-  ];
+  configUrl = environment.apiUrl + '/carts';
 
-  constructor(private http: HttpClient) {}
+  items: CartItem[] = [];
+  currentCustomer?: Customer;
 
-  getTotal(): number {
+  constructor(private http: HttpClient, private authSrv: AuthService) {}
+
+  getTotalQuantity(): number {
     return this.items
-      .map((item) => (item.selected ? item.qty : 0))
+      .map((item) => (item.selected ? item.quantity : 0))
       .reduce((acc, value) => acc + value, 0);
   }
 
   getAmount(): number {
     return this.items
       .filter((item) => item.selected === true)
-      .reduce((acc, item) => acc + item.qty * item.price, 0);
+      .reduce((acc, item) => acc + item.quantity * item.price, 0);
   }
 
-  getCartItems(): Observable<CartItem[]> {
-    return this.http.get<CartItem[]>(CartUrl);
+  getCartItems(customerId?: string): Observable<CartItem[]> {
+    const getUrl = this.configUrl + '?customer=' + customerId;
+    return this.http.get<CartItem[]>(getUrl);
   }
 
-  removeProductFromCart(productId: string): void {
-    const idx = this.items.findIndex((item) => item.productId === productId);
+  removeProductFromCart(_id: string): Observable<CartItem> {
+    const idx = this.items.findIndex((item) => item._id === _id);
     if (idx >= 0) {
       this.items.splice(idx, 1);
     }
+    const deleteUrl = this.configUrl + '/' + _id;
+    return this.http.delete<CartItem>(deleteUrl);
   }
 
-  addProductToCart(product: Product): Observable<any> {
+  addProductToCart(product: Product): void {
     // 1, update local array
     // 2, update remote database
+
     let cartItem = this.items.find((item) => item._id === product._id);
     if (cartItem) {
-      cartItem.qty += 1;
+      cartItem.quantity += 1;
+      let putUrl = this.configUrl + '/' + cartItem._id;
+      this.http.put(putUrl, { quantity: cartItem.quantity }).subscribe();
     } else {
-      cartItem = {
+      const newItem = {
         selected: true,
         productId: product._id,
         productName: product.name,
-        qty: 1,
-        price: product.price ? product.price : 0,
-        clientId: 'aa',
-        salePersonId: 'bb',
+        quantity: 1,
+        price: product.price,
+        stock: product.stock,
+        customerId: this.currentCustomer?._id,
+        customerName: this.currentCustomer?.name,
+        salespersonId: this.authSrv.currentUser?._id,
+        salespersonName: this.authSrv.currentUser?.name,
         imageUrl: product.imageUrl ? product.imageUrl : '',
       };
+      this.http.post(this.configUrl, newItem).subscribe((data: any) => {
+        const _id = data._id;
+        this.items.push({ _id, ...newItem });
+      });
     }
-    return this.http.post(CartUrl, cartItem);
   }
 
-  updateProductQtyInCart(productId: string, qty: number): Observable<any> {
+  updateProductQtyInCart(_id: string, quantity: number): Observable<any> {
     // 1, update local array
     // 2, update remote database
-    let cartItem = this.items.find((item) => item._id === productId);
+    let cartItem = this.items.find((item) => item._id === _id);
     if (cartItem) {
-      cartItem.qty = qty;
-      return this.http.post(CartUrl, cartItem);
+      cartItem.quantity = quantity;
+      let putUrl = this.configUrl + '/' + _id;
+      return this.http.put(putUrl, { quantity });
     } else {
-      return of([]); // TODO error 处理
+      return of([]); // TODO error
     }
   }
 }

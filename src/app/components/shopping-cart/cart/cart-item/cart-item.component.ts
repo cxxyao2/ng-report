@@ -10,15 +10,7 @@ import { CartService } from 'src/app/services/cart.service';
   styleUrls: ['./cart-item.component.scss'],
 })
 export class CartItemComponent implements OnInit {
-  @Input() item: CartItem = {
-    _id: 'aa',
-    productId: 'bb',
-    qty: 12,
-    productName: 'productName',
-    selected: true,
-    imageUrl: 'xxx',
-    price: 888,
-  };
+  @Input() item!: CartItem;
   @ViewChild('qty') qty!: ElementRef;
   myForm!: FormGroup;
 
@@ -32,7 +24,7 @@ export class CartItemComponent implements OnInit {
   ngOnInit(): void {
     this.myForm = new FormGroup(
       {
-        productQty: new FormControl(this.item.qty, {
+        productQty: new FormControl(this.item.quantity, {
           validators: [
             Validators.required,
             Validators.min(0),

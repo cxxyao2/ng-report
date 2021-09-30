@@ -45,7 +45,7 @@ const routes: Routes = [
   },
   { path: 'calendar', component: CalendarComponent },
   { path: 'home', component: HomeComponent }, // public no-login
-  { path: 'dashboard', component: DashboardComponent}, // user profile
+  { path: 'dashboard', component: DashboardComponent }, // user profile
   { path: 'add-product', component: AddProductComponent }, // administrator role
   { path: 'authorize', component: AddRoleToUserComponent }, // administrator role
   { path: 'list-logs', component: LoglistComponent }, // administrator role
@@ -53,7 +53,7 @@ const routes: Routes = [
   { path: 'monthly-analyze', component: ReportThisMonthComponent }, // manager role
   { path: 'yearly-analyze', component: ReportThisYearComponent }, // manager role
   { path: 'todo', component: TodoComponent }, // salesperson role
-  { path: 'place-order', component: ProductListComponent }, // salesperson role
+  { path: 'product-list', component: ProductListComponent }, // salesperson role
   { path: 'pipeline', component: PipelinesComponent }, // manager, salesperson
   { path: 'capture-client', component: AddClientComponent }, // salesperson role
 

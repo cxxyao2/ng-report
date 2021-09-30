@@ -3,7 +3,8 @@ export interface Product {
   name: string;
   description: string;
   category: string;
-  imageUrl?: string;
+  imageUrl: string;
   price: number;
-  qtyInStock: number;
+  stock: number;
+  isOnsale:boolean;
 }

@@ -22,7 +22,9 @@
   <img
     class="product-image"
     mat-card-image
-    [src]="productItem.imageUrl"
+    sizes="(max-width: 1080px) 100vw, 1080px"
+    [src]="imgSrc"
+    [srcset]="imgSrcset"
     [alt]="productItem.name"
   />
 
@@ -37,15 +39,15 @@
 
     <p class="product-stock">
       <span>{{ productItem.price }}$</span>
-      <span *ngIf="productItem.qtyInStock > 0"
-        >{{ productItem.qtyInStock }} in stock</span
+      <span *ngIf="productItem.stock > 0"
+        >{{ productItem.stock }} in stock</span
       >
-      <span *ngIf="!(productItem.qtyInStock > 0)">out of stock</span>
+      <span *ngIf="!(productItem.stock > 0)">out of stock</span>
     </p>
   </mat-card-content>
   <mat-card-actions>
     <button
-      *ngIf="productItem.qtyInStock > 0"
+      *ngIf="productItem.stock > 0"
       mat-raised-button
       color="primary"
       (click)="handleAddToCart()"
@@ -53,7 +55,7 @@
       Add to Cart
     </button>
     <button
-      *ngIf="!(productItem.qtyInStock > 0)"
+      *ngIf="!(productItem.stock > 0)"
       mat-raised-button
       (click)="handleAddToWishList()"
     >
@@ -61,3 +63,5 @@
     </button>
   </mat-card-actions>
 </mat-card>
+
+<app-error *ngIf="errorMessage" [message]="errorMessage"></app-error>

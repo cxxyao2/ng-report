@@ -1,6 +1,14 @@
 import { Component, OnInit } from '@angular/core';
+import { FormControl } from '@angular/forms';
+import { Observable } from 'rxjs';
+import { map, startWith, switchMap } from 'rxjs/operators';
 import { Product } from 'src/app/models/product';
 import { ProductService } from 'src/app/services/product.service';
+import { SearchProductService } from 'src/app/services/search-product.service';
+import { CartService } from 'src/app/services/cart.service';
+import { Customer } from 'src/app/models/customer';
+import { CustomerService } from '../../../services/customer.service';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-product-list',
@@ -8,65 +16,44 @@ import { ProductService } from 'src/app/services/product.service';
   styleUrls: ['./product-list.component.scss'],
 })
 export class ProductListComponent implements OnInit {
-  productList: Product[] = [
-    {
-      _id: '1',
-      name: 'a1',
-      description:
-        'simpeleve technologve technologve technologve technologve technologve technolog',
-      category: 'golden',
-      price: 12,
-      imageUrl: 'assets/e1_x9ck5u/e1_x9ck5u_c_scale,w_200.jpg',
-      qtyInStock: 12,
-    },
-    {
-      _id: '2',
-      name: 'a2',
-      description:
-        'As automotive technology has advanced in recent decades, automakers around the world agreed that government requirements for fuel additives were not adequate since they have not changed to meet the performance demands of modern vehicles. If a fuel company can prove that their gas has additives and detergents that keep residue from building up on valves or in the combustion chamber, then they are qualified to call themselves a "top-tier" gasoline supplier. Top-tier fuel is formulated to keep engines running efficiently and reliably. Automakers claim that these requirements makes gas better for modern cars.',
-      category: 'silver',
-      price: 12,
-      imageUrl: 'assets/e1_x9ck5u/e1_x9ck5u_c_scale,w_200.jpg',
-      qtyInStock: 12,
-    },
-    {
-      _id: '3',
-      name: 'a3',
-      description:
-        'Gas stations in the US and many other nations are required to supply customers with consistent and clean gasoline.',
-      imageUrl: 'assets/e3_ewhset/e3_ewhset_c_scale,w_200.jpg',
-      category: 'iron',
-      price: 12,
-      qtyInStock: 0,
-    },
-    {
-      _id: '4',
-      name: 'a3',
-      description:
-        'Gas stations in the US and many other nations are required to supply customers with consistent and clean gasoline.',
-      imageUrl: 'assets/e3_ewhset/e3_ewhset_c_scale,w_200.jpg',
-      category: 'iron',
-      price: 12,
-      qtyInStock: 0,
-    },
-    {
-      _id: '5',
-      name: 'a3',
-      description:
-        'Gas stations in the US and many other nations are required to supply customers with consistent and clean gasoline.',
-      imageUrl: 'assets/e3_ewhset/e3_ewhset_c_scale,w_200.jpg',
-      category: 'iron',
-      price: 12,
-      qtyInStock: 0,
-    },
-  ];
+  productList?: Observable<Product[]>;
+  customerControl = new FormControl();
+  customers: Customer[] = [];
+  filteredOptions?: Observable<Customer[]>;
 
-  constructor(private productService: ProductService) {}
+
+  constructor(
+    private searchSrv: SearchProductService,
+    private productService: ProductService,
+    private cartSrv: CartService,
+    private customerSrv: CustomerService
+  ) {}
 
   ngOnInit(): void {
     // this.productList = this.productService.getProducts();
-  }
-  loadProducts() {}
+    this.productList = this.searchSrv.searchTermObs.pipe(
+      switchMap((term: any) => {
+        return this.productService.getProducts(term);
+      })
+    );
+    this.customerSrv.getCustomers().subscribe((data) => {
+      this.customers = [...data];
+    });
+    this.filteredOptions = this.customerControl.valueChanges.pipe(
+      startWith(''),
+      map((value) => this._filter(value))
+    );
+}
 
-  loadWishList() {}
+  private _filter(value: string): Customer[] {
+    const filterValue = value.toLowerCase();
+
+    return this.customers.filter((customer) =>
+      customer.name.toLowerCase().includes(filterValue)
+    );
+  }
+
+  updateCurrentCustomer(customer: Customer) {
+    this.cartSrv.currentCustomer = { ...customer };
+  }
 }

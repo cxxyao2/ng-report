@@ -26,9 +26,9 @@ export class AuthService {
     private logsSrv: LogsService
   ) {}
 
-  registerUser(user: User): Observable<any> {
+  registerUser(user: User): Observable<User> {
     const url = this.configUrl + '/users';
-    return this.http.post(url, user);
+    return this.http.post<User>(url, user);
   }
 
   findUserByEmail(email: string): Observable<User[]> {

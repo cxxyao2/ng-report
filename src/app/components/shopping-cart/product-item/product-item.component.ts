@@ -4,7 +4,7 @@ import { CartService } from 'src/app/services/cart.service';
 import { WishListService } from 'src/app/services/wish-list.service';
 import { PdfMakeService } from 'src/app/services/pdfmake.service';
 import { constants } from 'src/app/config/constants';
-
+import { environment } from 'src/environments/environment';
 @Component({
   selector: 'app-product-item',
   templateUrl: './product-item.component.html',
@@ -12,7 +12,10 @@ import { constants } from 'src/app/config/constants';
 })
 export class ProductItemComponent implements OnInit {
   @Input() productItem!: Product;
+  imgSrc = '';
+  imgSrcset = '';
   showMore = false;
+  errorMessage = '';
 
   constructor(
     private cartService: CartService,
@@ -20,22 +23,49 @@ export class ProductItemComponent implements OnInit {
     private pdfService: PdfMakeService
   ) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.getImageSrcset();
+  }
+
+  getImageSrcset() {
+    const apiUrl = environment.imageUrl + '/' + this.productItem.imageUrl + '/';
+
+    // products/e2 => https://xxx.xxx.xxx.xx:5000/products/e2/w-200.jpg 200w,
+    this.imgSrcset =
+      apiUrl +
+      'w_200.jpg 200w,' +
+      apiUrl +
+      'w_699.jpg 699w,' +
+      apiUrl +
+      'w_1080.jpg 1080w,';
+    this.imgSrc = apiUrl + 'w_1080.jpg';
+  }
 
   handleAddToCart() {
-    this.cartService.addProductToCart(this.productItem).subscribe(() => {});
+    if (!this.cartService.currentCustomer) {
+      this.errorMessage =
+        'Please select a customer before add products to cart.';
+      setTimeout(() => {
+        this.errorMessage = '';
+      }, 2000);
+      return;
+    }
+    this.cartService.addProductToCart(this.productItem);
   }
 
   handleAddToWishList() {
-    this.wishListService
-      .addToWishList(this.productItem._id)
-      .subscribe(() => {});
+    if (!this.cartService.currentCustomer) {
+      this.errorMessage =
+        'Please select a customer before add products to cart.';
+      setTimeout(() => {
+        this.errorMessage = '';
+      }, 2000);
+    }
+    this.wishListService.addToWishList(this.productItem._id);
   }
 
   handleRemoveFromWishList() {
-    this.wishListService
-      .removeFromWishList(this.productItem._id)
-      .subscribe(() => {});
+    this.wishListService.removeFromWishList(this.productItem._id);
   }
 
   openPdf(): void {

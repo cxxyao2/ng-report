@@ -1,54 +1,26 @@
 import { Component, OnInit } from '@angular/core';
 import { CartItem } from 'src/app/models/cart-item';
 import { ActivatedRoute, Router } from '@angular/router';
+import { CartService } from 'src/app/services/cart.service';
 @Component({
   selector: 'app-cart',
   templateUrl: './cart.component.html',
   styleUrls: ['./cart.component.scss'],
 })
 export class CartComponent implements OnInit {
-  cartItems: CartItem[] = [
-    {
-      selected: true,
-      _id: '1',
-      productId: '1',
-      productName:
-        'One state may require a minimum octOne state may require a minimum octanOne state may require a minimum octanane',
-      qty: 4,
-      price: 100,
-      stock: 3000,
-      imageUrl: 'assets/e1_x9ck5u/e1_x9ck5u_c_scale,w_200.jpg',
-    },
-    {
-      selected: true,
-      _id: '2',
-      productId: '2',
-      productName:
-        'One state may require a minimum octOne state may require a minimum octanOne state may require a minimum octanane',
-      qty: 4,
-      price: 100,
-      stock: 2000,
-      imageUrl: 'assets/e1_x9ck5u/e1_x9ck5u_c_scale,w_200.jpg',
-    },
-    {
-      selected: true,
-      _id: '3',
-      productId: '3',
-      productName:
-        'One state may require a minimum octOne state may require a minimum octanOne state may require a minimum octanane',
-      qty: 4,
-      price: 100,
-      stock: 1000,
-      imageUrl: 'assets/e1_x9ck5u/e1_x9ck5u_c_scale,w_200.jpg',
-    },
-  ];
+  cartItems: CartItem[] = [];
 
   cartTotal = 0;
-  constructor(private router: Router, private route: ActivatedRoute) {}
+  constructor(
+    private cartSrv: CartService,
+    private router: Router,
+    private route: ActivatedRoute
+  ) {}
 
   ngOnInit(): void {
+    this.cartItems = [...this.cartSrv.items];
     this.cartItems.forEach((item) => {
-      this.cartTotal += item.price * item.qty;
+      this.cartTotal += item.price * item.quantity;
     });
   }
 

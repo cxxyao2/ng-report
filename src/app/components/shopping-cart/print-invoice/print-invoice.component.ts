@@ -135,8 +135,8 @@ export class PrintInvoiceComponent {
               ...items.map((item) => [
                 item.productName,
                 item.price,
-                item.qty,
-                (item.price * item.qty).toFixed(2),
+                item.quantity,
+                (item.price * item.quantity).toFixed(2),
               ]),
               [
                 { text: 'SubTotal', colSpan: 3, alignment: 'right' },

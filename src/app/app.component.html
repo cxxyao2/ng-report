@@ -94,7 +94,7 @@
         *ngIf="cartService.items.length > 0"
       >
         <mat-icon
-          [matBadge]="cartService.getTotal()"
+          [matBadge]="cartService.getTotalQuantity()"
           matBadgeColor="accent"
           aria-label="Shopping cart icon"
           >shopping_cart</mat-icon

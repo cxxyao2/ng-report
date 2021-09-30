@@ -7,7 +7,7 @@
     <app-cart-item [item]="item"></app-cart-item>
   </ng-container>
   <div class='cart-amount'>
-    <p>Total&nbsp;(12 items): <strong>1122.15$</strong></p>
+    <p>Total&nbsp;({{cartItems.length}} items): <strong>{{cartTotal}}$</strong></p>
     <button mat-raised-button color="primary" (click)="printInvoice()">proceed to checkout</button>
   </div>
 </mat-card>

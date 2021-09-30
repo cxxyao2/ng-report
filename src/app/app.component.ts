@@ -60,7 +60,7 @@ export class AppComponent implements AfterViewInit {
 
   salespersonItems: NavItem[] = [
     { label: 'Contact Management', icon: 'location_on', route: 'todo' },
-    { label: 'Place Order', icon: 'add_shopping_cart', route: 'place-order' },
+    { label: 'Place Order', icon: 'add_shopping_cart', route: 'product-list' },
     {
       label: 'Lead Management',
       icon: 'person_add',

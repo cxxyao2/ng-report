@@ -1,10 +1,37 @@
-<h3 style="text-align: center">Search result is : 3 articles</h3>
+<h2>Select Products</h2>
+
+<div>
+  <form class="search-form">
+    <mat-form-field class="input-area-full-width" appearance="fill">
+      <mat-label>Customer Name</mat-label>
+      <input
+        type="text"
+        placeholder="Pick one"
+        aria-label="customer"
+        matInput
+        #customerInput
+        [formControl]="customerControl"
+        [matAutocomplete]="auto"
+      />
+      <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
+        <mat-option
+          *ngFor="let option of filteredOptions | async"
+          [value]="option.name"
+          (onSelectionChange)="updateCurrentCustomer(option)"
+        >
+          {{ option.name }}
+        </mat-option>
+      </mat-autocomplete>
+    </mat-form-field>
+  </form>
+</div>
+<h3>Search result is : {{ (productList | async)?.length }} articles</h3>
 <div fxLayout="row wrap" fxLayoutGap="16px grid">
   <div
     fxFlex="25%"
     fxFlex.xs="100%"
     fxFlex.sm="33%"
-    *ngFor="let item of productList"
+    *ngFor="let item of productList | async"
   >
     <app-product-item [productItem]="item"></app-product-item>
   </div>

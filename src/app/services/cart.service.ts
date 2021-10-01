@@ -8,6 +8,8 @@ import { Customer } from '../models/customer';
 import { environment } from '../../environments/environment';
 import { User } from '../models/user';
 import { AuthService } from './auth.service';
+import { constants } from 'src/app/config/constants';
+import { map } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root',
@@ -49,8 +51,9 @@ export class CartService {
   addProductToCart(product: Product): void {
     // 1, update local array
     // 2, update remote database
-
-    let cartItem = this.items.find((item) => item._id === product._id);
+    console.log('hi,product is', product);
+    console.log('items is', this.items);
+    let cartItem = this.items.find((item) => item.productId === product._id);
     if (cartItem) {
       cartItem.quantity += 1;
       let putUrl = this.configUrl + '/' + cartItem._id;
@@ -70,6 +73,7 @@ export class CartService {
         imageUrl: product.imageUrl ? product.imageUrl : '',
       };
       this.http.post(this.configUrl, newItem).subscribe((data: any) => {
+        console.log('new ');
         const _id = data._id;
         this.items.push({ _id, ...newItem });
       });
@@ -79,13 +83,73 @@ export class CartService {
   updateProductQtyInCart(_id: string, quantity: number): Observable<any> {
     // 1, update local array
     // 2, update remote database
-    let cartItem = this.items.find((item) => item._id === _id);
+    let cartItem = this.items.find((item) => item.productId === _id);
     if (cartItem) {
       cartItem.quantity = quantity;
       let putUrl = this.configUrl + '/' + _id;
       return this.http.put(putUrl, { quantity });
     } else {
-      return of([]); // TODO error
+      return of([]);
     }
+  }
+
+  addCartItemsOrder() {
+    const orderDetailUrl = environment.apiUrl + '/orders';
+    // firstly, save order header
+    // secondly, save order detail with header information
+    const headerUrl = environment.apiUrl + '/orderheaders';
+    const orderDate = new Date();
+    const year = orderDate.getFullYear();
+    const month = orderDate.getMonth() + 1;
+    const day = orderDate.getDate();
+    let monthString = '';
+    if (month < 10) {
+      monthString = '0' + month;
+    }
+    const orderDateString = year.toString() + '-' + monthString + '-' + day;
+
+    const subTotal = this.getAmount();
+    const taxTPS = subTotal * constants.tps;
+    const taxTVQ = subTotal * constants.tvq;
+    const total = subTotal + taxTPS + taxTVQ;
+
+    this.http
+      .post(headerUrl, {
+        customerId: this.currentCustomer?._id,
+        orderDate: orderDateString,
+      })
+      .subscribe((headerData: any) => {
+        const productItems = [...this.items];
+        for (const item of productItems) {
+          // 1,add to order
+          if (item.selected) {
+            this.http
+              .post(orderDetailUrl, {
+                orderHeader: headerData._id,
+                orderDate: headerData.orderDate,
+                customerId: this.currentCustomer?._id,
+                productId: item.productId,
+                quantity: item.quantity,
+                price: item.price,
+                amount: item.price * item.quantity,
+              })
+              .subscribe();
+          }
+          // 2,remove from cart
+          this.removeProductFromCart(item._id).subscribe();
+        }
+
+        // 3, send an email
+
+        this.authSrv
+          .sendPlaceOrderEmail(
+            this.currentCustomer?.email,
+            this.currentCustomer?.name,
+            subTotal,
+            taxTPS + taxTVQ,
+            total
+          )
+          .subscribe();
+      });
   }
 }

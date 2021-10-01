@@ -5,6 +5,8 @@ import { catchError, retry, switchMap } from 'rxjs/operators';
 
 import { environment } from '../../environments/environment';
 import { OrderItem } from '../models/order-item';
+import { CartItem } from '../models/cart-item';
+import { CartService } from './cart.service';
 
 @Injectable({
   providedIn: 'root',
@@ -31,24 +33,5 @@ export class OrderService {
     // http://localhost:5000/api/Orders?startDate=2021-01-01&endDate=2022-12-01&userName=&content=insert
     const requestUrl = `${this.configUrl}?startDate=${startDate}&endDate=${endDate}&createuser=${salespersonId}`;
     return this.http.get<OrderItem[]>(requestUrl).pipe(retry(1));
-  }
-
-  addOrder(content: OrderItem[], customerId: string): void {
-    // firstly, save order header
-    // secondly, save order detail with header information
-    const headerUrl = environment.apiUrl + '/orderheaders';
-    this.http
-      .post(headerUrl, {
-        content,
-      })
-      .pipe(
-        switchMap((headerData: any) => {
-          return this.http.post(this.configUrl, {
-            ...content,
-            headerId: headerData._id,
-          });
-        })
-      )
-      .subscribe();
   }
 }

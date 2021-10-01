@@ -41,6 +41,23 @@ export class AuthService {
     return this.http.post(url, { email: email });
   }
 
+  sendPlaceOrderEmail(
+    email?: string,
+    customerName?: string,
+    orderAmount?: number,
+    orderTax?: number,
+    orderTotal?: number
+  ) {
+    const url = this.configUrl + '/auth/send-place-order-email';
+    return this.http.post(url, {
+      email,
+      name: customerName,
+      amount: orderAmount,
+      tax: orderTax,
+      total: orderTotal,
+    });
+  }
+
   resetPassword(newPassword: string, token: string) {
     const url = this.configUrl + '/auth/reset-password?token=' + token;
     return this.http.post(url, { newPassword: newPassword });

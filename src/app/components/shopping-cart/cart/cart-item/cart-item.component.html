@@ -1,14 +1,25 @@
 <form [formGroup]="myForm">
   <div class="item-wrapper">
-    <div class="item-image-wrapper">
-      <input
-        #selectedFlag
-        type="checkbox"
-        checked="item.checked"
-        (change)="onSelectedChange(selectedFlag.checked)"
-      />
-      <img class="item-image" [src]="item.imageUrl" alt="xxx" />
+    <div style="display: inline-block;text-align: start;">  <input
+      #selectedFlag
+      type="checkbox"
+      checked="item.selected"
+      (change)="onSelectedChange(selectedFlag.checked)"
+    />
+
     </div>
+
+
+
+      <img
+        class="item-image"
+        mat-card-image
+        sizes="(max-width: 1080px) 100vw, 1080px"
+        [src]="imgSrc"
+        [srcset]="imgSrcset"
+        [alt]="item.productName"
+      />
+
     <div class="item-main-info">
       <p
         [ngClass]="{ 'item-description': !showMore }"
@@ -16,7 +27,7 @@
       >
         {{ item.productName }}
       </p>
-      <div class="item-price small-screen my">{{ item.price }}$</div>
+      <div class="item-price small-screen">{{ item.price }}$</div>
       <p>{{ item.stock }} in stock</p>
       <div>
         Qty: &nbsp;

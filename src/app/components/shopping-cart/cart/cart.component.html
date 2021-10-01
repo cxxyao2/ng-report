@@ -1,13 +1,19 @@
 <mat-card class="cart-wrapper">
   <h2>Shopping Cart</h2>
   <hr class="cart-divider" />
-  <div *ngIf="cartItems.length === 0">Your cart is Empty.</div>
+  <div *ngIf="cartSrv.items.length === 0">Your cart is Empty.</div>
 
-  <ng-container *ngFor="let item of cartItems">
+  <ng-container *ngFor="let item of cartSrv.items">
     <app-cart-item [item]="item"></app-cart-item>
   </ng-container>
-  <div class='cart-amount'>
-    <p>Total&nbsp;({{cartItems.length}} items): <strong>{{cartTotal}}$</strong></p>
-    <button mat-raised-button color="primary" (click)="printInvoice()">proceed to checkout</button>
+  <div class="cart-amount">
+    <p>
+      Total&nbsp;({{ cartSrv.items.length }} items):
+      <strong>{{ cartSrv.getAmount() }}$</strong>
+    </p>
+    <button mat-raised-button color="primary" (click)="printInvoice()">
+      proceed to checkout
+    </button>
   </div>
 </mat-card>
+<app-error *ngIf="errorMessage" [message]="errorMessage"></app-error>

@@ -13,6 +13,14 @@
   cursor: pointer;
   transition: all 0.3s;
 }
+.client-section {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+  gap: 8px;
+}
 table {
   width: 100%;
 }

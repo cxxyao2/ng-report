@@ -1,4 +1,4 @@
-<h2 class="title">Print Invoice</h2>
+<h2 >Print Invoice</h2>
 <div>
   <span
     style="color: green"
@@ -25,24 +25,23 @@
       <mat-expansion-panel-header>
         <mat-panel-title> Client Information </mat-panel-title>
       </mat-expansion-panel-header>
-      <div
-        style="
-          display: flex;
-          flex-wrap: wrap;
-          align-items: center;
-          justify-content: space-between;
-          margin-bottom: 16px;
-          gap: 8px;
-        "
-      >
-        <span><strong>Client No:&nbsp;</strong>123</span>
-        <span><strong>Client Name:&nbsp;</strong>Start-up New Brach</span>
-        <span><strong>Address:&nbsp;</strong>Ouhagan Califolia</span>
-        <span><strong>Tel:&nbsp;</strong>(01) 1234 4567</span>
+      <div class="client-section">
+        <span
+          ><strong>Client No:&nbsp;</strong
+          >{{ orderCustomer._id | slice: -5 }}</span
+        >
+        <span><strong>Client Name:&nbsp;</strong>{{ orderCustomer.name }}</span>
+        <span><strong>Address:&nbsp;</strong>{{ orderCustomer.address }}</span>
+        <span><strong>Tel:&nbsp;</strong>{{ orderCustomer.phone }}</span>
       </div>
       <mat-divider></mat-divider>
       <p style="text-align: right">
-        <button mat-flat-button style="margin-top: 16px" color="primary">
+        <button
+          mat-flat-button
+          style="margin-top: 16px"
+          color="primary"
+          (click)="getCustomerDetails()"
+        >
           Refresh
         </button>
       </p>
@@ -54,7 +53,7 @@
     <!-- Position Column -->
     <ng-container matColumnDef="position">
       <th mat-header-cell *matHeaderCellDef mat-sort-header>No.</th>
-      <td mat-cell *matCellDef="let element">{{ element.position }}</td>
+      <td mat-cell *matCellDef="let element; let i = index">{{ i }}</td>
       <td mat-footer-cell *matFooterCellDef>Total</td>
     </ng-container>
 
@@ -65,19 +64,19 @@
       <td mat-footer-cell *matFooterCellDef>&nbsp;</td>
     </ng-container>
 
-    <!-- Weight Column -->
+    <!-- Quantity Column -->
     <ng-container matColumnDef="weight">
       <th mat-header-cell *matHeaderCellDef mat-sort-header>Weight</th>
-      <td mat-cell *matCellDef="let element">{{ element.weight }}</td>
+      <td mat-cell *matCellDef="let element">{{ element.quantity }}</td>
       <td mat-footer-cell *matFooterCellDef>
         {{ getTotalCost() | currency }}
       </td>
     </ng-container>
 
-    <!-- Symbol Column -->
+    <!-- Price Column -->
     <ng-container matColumnDef="symbol">
       <th mat-header-cell *matHeaderCellDef mat-sort-header>Symbol</th>
-      <td mat-cell *matCellDef="let element">{{ element.symbol }}</td>
+      <td mat-cell *matCellDef="let element">{{ element.price }}</td>
       <td mat-footer-cell *matFooterCellDef>&nbsp;</td>
     </ng-container>
 

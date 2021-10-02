@@ -23,7 +23,8 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 - DI( Dependency Injection): Services have different visible(usable) levels, e.g. app, component, component view etc.
 - Flex Layout, responsive images, responsive layout
 - Material Design
-- FontAwesome
+- SSR: server-side rendering
+- Unified error message
 
 ## back-end : mongodb mongoose express node.js
 

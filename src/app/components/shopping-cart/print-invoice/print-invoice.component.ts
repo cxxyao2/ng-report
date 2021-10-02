@@ -1,61 +1,90 @@
-import { AfterViewInit, Component, Input, ViewChild } from '@angular/core';
+import { Component, Input, ViewChild, OnInit } from '@angular/core';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
-import { MyCompany } from 'src/app/models/my-company';
 
 import { constants } from 'src/app/config/constants';
 import { PdfMakeService } from 'src/app/services/pdfmake.service';
-import { CartService } from 'src/app/services/cart.service';
 import * as fileConvert from 'src/app/utils/file-convert.util';
+import { OrderService } from '../../../services/order.service';
+import { CustomerService } from 'src/app/services/customer.service';
+import { ActivatedRoute } from '@angular/router';
 
-export interface PeriodicElement {
-  name: string;
-  position: number;
-  weight: number;
-  symbol: string;
-}
+import { Customer } from 'src/app/models/customer';
+import { OrderItem } from '../../../models/order-item';
+import { switchMap } from 'rxjs/operators';
 
-const ELEMENT_DATA: PeriodicElement[] = [
-  { position: 1, name: 'Hydrogen', weight: 1.0079, symbol: 'H' },
-  { position: 2, name: 'Helium', weight: 4.0026, symbol: 'He' },
-  { position: 3, name: 'Lithium', weight: 6.941, symbol: 'Li' },
-  { position: 4, name: 'Beryllium', weight: 9.0122, symbol: 'Be' },
-  { position: 5, name: 'Boron', weight: 10.811, symbol: 'B' },
-  { position: 6, name: 'Carbon', weight: 12.0107, symbol: 'C' },
-  { position: 7, name: 'Nitrogen', weight: 14.0067, symbol: 'N' },
-  { position: 8, name: 'Oxygen', weight: 15.9994, symbol: 'O' },
-  { position: 9, name: 'Fluorine', weight: 18.9984, symbol: 'F' },
-  { position: 10, name: 'Neon', weight: 20.1797, symbol: 'Ne' },
-];
 @Component({
   selector: 'app-print-invoice',
   templateUrl: './print-invoice.component.html',
   styleUrls: ['./print-invoice.component.scss'],
 })
-export class PrintInvoiceComponent {
-  @Input() myCompany!: MyCompany;
-
+export class PrintInvoiceComponent implements OnInit {
   panelOpenState = false;
-  displayedColumns: string[] = ['position', 'name', 'weight', 'symbol'];
-  dataSource = new MatTableDataSource(ELEMENT_DATA);
+  displayedColumns: string[] = ['position', 'name', 'price', 'quantity'];
+  dataSource!: MatTableDataSource<OrderItem>;
+  orderCustomer!: Customer;
+  errorMessage = '';
+  orderDetails!: OrderItem[];
 
   @ViewChild(MatSort) sort!: MatSort;
 
   constructor(
     private pdfService: PdfMakeService,
-    private cartService: CartService
+    private orderService: OrderService,
+    private customerService: CustomerService,
+    private route: ActivatedRoute
   ) {}
 
-  ngAfterViewInit() {
-    this.dataSource.sort = this.sort;
+  ngOnInit(): void {
+    this.getOrderDetails();
+    this.getCustomerDetails();
+  }
+
+  getCustomerDetails(): void {
+    this.route.queryParams
+      .pipe(
+        switchMap((params) => {
+          console.log('cusotmer', params.customerId);
+          return this.customerService.getCustomer(params.customerId);
+        })
+      )
+      .subscribe(
+        (data) => {
+          this.orderCustomer = data;
+        },
+        (err) => {
+          this.errorMessage = err;
+          setTimeout(() => {
+            this.errorMessage = '';
+          }, 3000);
+        }
+      );
+  }
+
+  getOrderDetails(): void {
+    const orderHeaderId =
+      this.route.snapshot.paramMap.get('orderHeaderId') || '';
+
+    this.orderService.getOrderByHeaderId(orderHeaderId).subscribe(
+      (data) => {
+        this.orderDetails = data;
+        this.dataSource = new MatTableDataSource([...data]);
+        this.dataSource.sort = this.sort;
+      },
+      (err) => {
+        this.errorMessage = err;
+        setTimeout(() => {
+          this.errorMessage = '';
+        }, 3000);
+      }
+    );
   }
 
   /** Gets the total cost of all transactions. */
   getTotalCost() {
-    // return this.transactions
-    //   .map((t) => t.cost)
-    //   .reduce((acc, value) => acc + value, 0);
-    return 1111;
+    return this.orderDetails
+      .map((t) => t.quantity * t.price)
+      .reduce((acc, value) => acc + value, 0);
   }
 
   openPdf(): void {
@@ -67,13 +96,9 @@ export class PrintInvoiceComponent {
     //  myClient: Client;
     //   myCompany: MyCompany;
     //   items: CartItem[];
-    //   subTotal: number;
-    //   discount: number;
-    //   taxTPS: number;
-    //   taxTVQ: number;
-    //   total: number;
-    const items = this.cartService.items;
-    const subTotal = this.cartService.getAmount();
+
+    const items = [...this.orderDetails];
+    const subTotal = this.getTotalCost();
     const taxTPS = subTotal * constants.tps;
     const taxTVQ = subTotal * constants.tvq;
     const total = subTotal + taxTPS + taxTVQ;
@@ -107,10 +132,10 @@ export class PrintInvoiceComponent {
                 text: 'BILLED TO',
                 bold: true,
               },
-              { text: 'best client is google' },
-              { text: '2322 golden street' },
-              { text: 'software@gmail.com' },
-              { text: '01-514-111-222' },
+              { text: this.orderCustomer?.name },
+              { text: this.orderCustomer?.address },
+              { text: this.orderCustomer?.email },
+              { text: this.orderCustomer?.phone },
             ],
             [
               {
@@ -197,7 +222,7 @@ export class PrintInvoiceComponent {
 
   downloadCSV() {
     // PeriodicElement
-    const initData = [...ELEMENT_DATA];
+    const initData = [...this.orderDetails];
     if (!(initData && initData.length >= 1)) {
       return;
     }
@@ -205,7 +230,7 @@ export class PrintInvoiceComponent {
     const fields = Object.keys(initData[0]);
     output.push(fields);
     initData.forEach((row) => {
-      let rowData = [];
+      const rowData = [];
       for (const [key, value] of Object.entries(row)) {
         rowData.push(value);
       }
@@ -213,7 +238,7 @@ export class PrintInvoiceComponent {
     });
 
     const csvFileData = fileConvert.makeCSV(output);
-    const fileName = 'testcsv';
+    const fileName = 'order-details';
     fileConvert.saveBlobtoLocalFile(csvFileData, fileName + '.csv', 'text/csv');
   }
 }

@@ -125,7 +125,7 @@ export class SignUpComponent implements OnInit {
       })
       .subscribe(
         (data) => {
-          this.authService.currentUser = {...data};
+          this.authService.currentUser = { ...data.data };
           this.authService.loginWithJwt('TODO');
           this.router.navigate(['/']);
         },

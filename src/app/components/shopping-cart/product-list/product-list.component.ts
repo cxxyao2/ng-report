@@ -20,7 +20,7 @@ export class ProductListComponent implements OnInit {
   customerControl = new FormControl();
   customers: Customer[] = [];
   filteredOptions?: Observable<Customer[]>;
-
+  errorMessage = '';
 
   constructor(
     private searchSrv: SearchProductService,
@@ -43,7 +43,7 @@ export class ProductListComponent implements OnInit {
       startWith(''),
       map((value) => this._filter(value))
     );
-}
+  }
 
   private _filter(value: string): Customer[] {
     const filterValue = value.toLowerCase();
@@ -55,5 +55,17 @@ export class ProductListComponent implements OnInit {
 
   updateCurrentCustomer(customer: Customer) {
     this.cartSrv.currentCustomer = { ...customer };
+    // get cart items
+    this.cartSrv.getCartItems().subscribe(
+      (data) => {
+        this.cartSrv.items = data;
+      },
+      (err) => {
+        this.errorMessage = err;
+        setTimeout(() => {
+          this.errorMessage = '';
+        }, 3000);
+      }
+    );
   }
 }

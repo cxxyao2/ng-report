@@ -107,6 +107,8 @@ export class AppComponent implements AfterViewInit {
       .subscribe((data) => {
         this.themeService.setHandset(data);
       });
+
+    this.authService.setCurrentUser();
   }
 
   toggleTheme(): void {

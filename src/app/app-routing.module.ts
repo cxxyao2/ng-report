@@ -66,7 +66,7 @@ const routes: Routes = [
   }, // salesperson role
 
   { path: 'cart', component: CartComponent },
-  { path: 'cart/print', component: PrintInvoiceComponent },
+  { path: 'cart/print/:orderHeaderId', component: PrintInvoiceComponent },
   { path: 'routine', component: RoutineComponent },
   {
     path: 'email-to-us',

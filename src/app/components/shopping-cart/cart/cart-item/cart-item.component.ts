@@ -1,4 +1,12 @@
-import { Component, OnInit, Input, ViewChild, ElementRef } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  Input,
+  Output,
+  EventEmitter,
+  ViewChild,
+  ElementRef,
+} from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 import { CartItem } from 'src/app/models/cart-item';
@@ -12,12 +20,12 @@ import { environment } from 'src/environments/environment';
 })
 export class CartItemComponent implements OnInit {
   @Input() item!: CartItem;
+  @Output() deletedItemEvent = new EventEmitter<string>();
   @ViewChild('qty') qty!: ElementRef;
   myForm!: FormGroup;
   imgSrc = '';
   imgSrcset = '';
 
-  selected = false;
   showMore = false;
   qtyReadOnly = true;
   updateButtonText = 'edit';
@@ -44,12 +52,15 @@ export class CartItemComponent implements OnInit {
   get productQty() {
     return this.myForm.get('productQty');
   }
+
   onSelectedChange(value: boolean) {
-    this.selected = value;
+    this.item.selected = value;
+    this.service.toggleProductSelected(this.item._id, value).subscribe();
   }
 
   onDelete(): void {
-    this.service.removeProductFromCart(this.item.productId);
+    this.service.removeProductFromCart(this.item._id).subscribe();
+    // this.deletedItemEvent.emit(this.item._id);
   }
 
   onUpdate(): void {
@@ -62,10 +73,9 @@ export class CartItemComponent implements OnInit {
       if (this.productQty?.valid) {
         this.qtyReadOnly = true;
         this.updateButtonText = 'edit';
-        this.service.updateProductQtyInCart(
-          this.item.productId,
-          this.productQty?.value
-        );
+        this.service
+          .updateProductQtyInCart(this.item._id, this.productQty?.value)
+          .subscribe();
       }
     }
   }

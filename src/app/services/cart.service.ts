@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable, of } from 'rxjs';
+import { Observable, of, from as observableFrom, forkJoin, zip } from 'rxjs';
 
 import { CartItem } from '../models/cart-item';
 import { Product } from '../models/product';
@@ -9,7 +9,7 @@ import { environment } from '../../environments/environment';
 import { User } from '../models/user';
 import { AuthService } from './auth.service';
 import { constants } from 'src/app/config/constants';
-import { map } from 'rxjs/operators';
+import { concatMap, switchMap } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root',
@@ -34,25 +34,38 @@ export class CartService {
       .reduce((acc, item) => acc + item.quantity * item.price, 0);
   }
 
-  getCartItems(customerId?: string): Observable<CartItem[]> {
-    const getUrl = this.configUrl + '?customer=' + customerId;
+  getCartItems(): Observable<CartItem[]> {
+    const customer = this.currentCustomer?._id;
+    const createUser = this.authSrv.currentUser?._id;
+    const getUrl =
+      this.configUrl + '?createUser=' + createUser + '&customer=' + customer;
     return this.http.get<CartItem[]>(getUrl);
   }
 
-  removeProductFromCart(_id: string): Observable<CartItem> {
-    const idx = this.items.findIndex((item) => item._id === _id);
+  removeProductFromCart(id: string): Observable<any> {
+    const idx = this.items.findIndex((item) => item._id === id);
     if (idx >= 0) {
       this.items.splice(idx, 1);
     }
-    const deleteUrl = this.configUrl + '/' + _id;
-    return this.http.delete<CartItem>(deleteUrl);
+    const deleteUrl = this.configUrl + '?id=' + id;
+    return this.http.delete(deleteUrl);
+  }
+
+  clearCart(): Observable<any> {
+    const customerId = this.currentCustomer?._id;
+    const createUserId = this.authSrv.currentUser?._id;
+    const deleteUrl =
+      this.configUrl +
+      '?customer=' +
+      customerId +
+      '&createUser=' +
+      createUserId;
+    return this.http.delete(deleteUrl);
   }
 
   addProductToCart(product: Product): void {
     // 1, update local array
     // 2, update remote database
-    console.log('hi,product is', product);
-    console.log('items is', this.items);
     let cartItem = this.items.find((item) => item.productId === product._id);
     if (cartItem) {
       cartItem.quantity += 1;
@@ -83,17 +96,31 @@ export class CartService {
   updateProductQtyInCart(_id: string, quantity: number): Observable<any> {
     // 1, update local array
     // 2, update remote database
-    let cartItem = this.items.find((item) => item.productId === _id);
+    const cartItem = this.items.find((item) => item._id === _id);
     if (cartItem) {
       cartItem.quantity = quantity;
-      let putUrl = this.configUrl + '/' + _id;
+      const putUrl = this.configUrl + '/' + _id;
       return this.http.put(putUrl, { quantity });
     } else {
       return of([]);
     }
   }
 
-  addCartItemsOrder() {
+  toggleProductSelected(_id: string, selected: boolean): Observable<any> {
+    const idx = this.items.findIndex((item) => item._id === _id);
+
+    if (idx >= 0) {
+      const cartItem = { ...this.items[idx] };
+      cartItem.selected = selected;
+      this.items.splice(idx, 1, cartItem);
+      const putUrl = this.configUrl + '/' + _id;
+      return this.http.put(putUrl, { selected });
+    } else {
+      return of([]);
+    }
+  }
+
+  addCartItemsOrder(): Observable<any> {
     const orderDetailUrl = environment.apiUrl + '/orders';
     // firstly, save order header
     // secondly, save order detail with header information
@@ -102,7 +129,8 @@ export class CartService {
     const year = orderDate.getFullYear();
     const month = orderDate.getMonth() + 1;
     const day = orderDate.getDate();
-    let monthString = '';
+
+    let monthString = month.toString();
     if (month < 10) {
       monthString = '0' + month;
     }
@@ -113,43 +141,40 @@ export class CartService {
     const taxTVQ = subTotal * constants.tvq;
     const total = subTotal + taxTPS + taxTVQ;
 
-    this.http
+    const selectedItems = this.items.filter((item) => item.selected === true);
+
+    // 1,add to order header
+    return this.http
       .post(headerUrl, {
         customerId: this.currentCustomer?._id,
         orderDate: orderDateString,
       })
-      .subscribe((headerData: any) => {
-        const productItems = [...this.items];
-        for (const item of productItems) {
-          // 1,add to order
-          if (item.selected) {
-            this.http
-              .post(orderDetailUrl, {
-                orderHeader: headerData._id,
-                orderDate: headerData.orderDate,
-                customerId: this.currentCustomer?._id,
-                productId: item.productId,
-                quantity: item.quantity,
-                price: item.price,
-                amount: item.price * item.quantity,
+      .pipe(
+        switchMap((headerData: any) => {
+          return forkJoin({
+            v1: observableFrom(selectedItems).pipe(
+              concatMap((item) => {
+                return this.http.post(orderDetailUrl, {
+                  orderHeader: headerData._id,
+                  orderDate: headerData.orderDate,
+                  customerId: this.currentCustomer?._id,
+                  productId: item.productId,
+                  quantity: item.quantity,
+                  price: item.price,
+                  amount: item.price * item.quantity,
+                });
               })
-              .subscribe();
-          }
-          // 2,remove from cart
-          this.removeProductFromCart(item._id).subscribe();
-        }
-
-        // 3, send an email
-
-        this.authSrv
-          .sendPlaceOrderEmail(
-            this.currentCustomer?.email,
-            this.currentCustomer?.name,
-            subTotal,
-            taxTPS + taxTVQ,
-            total
-          )
-          .subscribe();
-      });
+            ),
+            v2: this.authSrv.sendPlaceOrderEmail(
+              this.currentCustomer?.email,
+              this.currentCustomer?.name,
+              subTotal,
+              taxTPS + taxTVQ,
+              total
+            ),
+          });
+        })
+      );
   }
+
 }

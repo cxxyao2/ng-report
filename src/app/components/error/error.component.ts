@@ -12,4 +12,8 @@ export class ErrorComponent implements OnInit {
   constructor() {}
 
   ngOnInit() {}
+
+  hideMe() {
+    this.message = null;
+  }
 }

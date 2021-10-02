@@ -1,15 +1,13 @@
 <form [formGroup]="myForm">
   <div class="item-wrapper">
-    <div style="display: inline-block;text-align: start;">  <input
+    <div style="display: inline-block;text-align: start;">
+      <input
       #selectedFlag
       type="checkbox"
-      checked="item.selected"
+      [checked]="item.selected"
       (change)="onSelectedChange(selectedFlag.checked)"
     />
-
     </div>
-
-
 
       <img
         class="item-image"
@@ -46,7 +44,7 @@
           >
         </mat-form-field>
 
-        <button mat-raised-button color="primary" (click)="onUpdate()">
+        <button mat-raised-button type="submit" color="primary" (click)="onUpdate()">
           {{ updateButtonText }}
         </button>
         <button mat-raised-button (click)="onDelete()">delete</button>

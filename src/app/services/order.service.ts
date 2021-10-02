@@ -21,6 +21,11 @@ export class OrderService {
     return this.http.get<OrderItem>(url);
   }
 
+  getOrderByHeaderId(headerId: string): Observable<OrderItem[]> {
+    const url = `${this.configUrl}/orderHeader=${headerId}`;
+    return this.http.get<OrderItem[]>(url);
+  }
+
   getOrders(): Observable<OrderItem[]> {
     return this.http.get<OrderItem[]>(this.configUrl).pipe(retry(1));
   }

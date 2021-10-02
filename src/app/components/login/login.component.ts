@@ -4,6 +4,10 @@ import { NgForm } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 
 import { AuthService } from 'src/app/services/auth.service';
+import { CartService } from 'src/app/services/cart.service';
+import { CustomerService } from 'src/app/services/customer.service';
+import { switchMap } from 'rxjs/operators';
+import { of } from 'rxjs';
 
 @Component({
   selector: 'app-login',
@@ -20,7 +24,9 @@ export class LoginComponent implements OnInit {
   constructor(
     public authService: AuthService,
     private router: Router,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private cartService: CartService,
+    private customerService: CustomerService
   ) {}
 
   ngOnInit() {}
@@ -33,18 +39,18 @@ export class LoginComponent implements OnInit {
       .login(form.controls.email.value, form.controls.password.value)
       .subscribe(
         (result) => {
-          // TODO
-          // 这里其他返回信息没用，主要是得到头部cookie中的token .
           const token = '';
-          console.log('login le ');
-
+          this.authService.currentUser = result.data;
+          console.log('TODO login', this.authService.currentUser);
           this.authService.loginWithJwt(result);
           const returnUrl = this.route.snapshot.queryParamMap.get('returnUrl');
           this.router.navigate([returnUrl || '/']);
         },
         (err) => {
           this.errorMessage = err;
-          setTimeout(() => (this.errorMessage = ''), 3000);
+          setTimeout(() => {
+            this.errorMessage = '';
+          }, 3000);
         }
       );
 

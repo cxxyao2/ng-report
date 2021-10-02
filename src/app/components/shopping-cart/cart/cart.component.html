@@ -8,7 +8,7 @@
   </ng-container>
   <div class="cart-amount">
     <p>
-      Total&nbsp;({{ cartSrv.items.length }} items):
+      Total&nbsp;({{ cartSrv.getTotalQuantity() }} items):
       <strong>{{ cartSrv.getAmount() }}$</strong>
     </p>
     <button mat-raised-button color="primary" (click)="printInvoice()">

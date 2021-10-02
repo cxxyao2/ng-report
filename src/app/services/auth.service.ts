@@ -9,6 +9,7 @@ import { User } from '../models/user';
 import jwt_decode from 'jwt-decode';
 import { CookieService } from 'ngx-cookie-service';
 import { LogsService } from './logs.service';
+import { UserService } from './user.service';
 
 import { environment } from '../../environments/environment';
 
@@ -23,12 +24,13 @@ export class AuthService {
   constructor(
     private http: HttpClient,
     private cookieService: CookieService,
-    private logsSrv: LogsService
+    private logsSrv: LogsService,
+    private userService: UserService
   ) {}
 
-  registerUser(user: User): Observable<User> {
+  registerUser(user: User): Observable<any> {
     const url = this.configUrl + '/users';
-    return this.http.post<User>(url, user);
+    return this.http.post(url, user);
   }
 
   findUserByEmail(email: string): Observable<User[]> {
@@ -102,9 +104,9 @@ export class AuthService {
 
     localStorage.setItem(this.tokenKey, jwt);
     this.logsSrv.addLog('login');
-    this.setCurrentUser();
   }
 
+ 
   setCurrentUser() {
     const jwt = localStorage.getItem(this.tokenKey);
     if (jwt && jwt.length >= 1) {
@@ -114,8 +116,6 @@ export class AuthService {
         this.currentUser = null;
       }
     }
-    // TODO ,等待删除
-    console.log('user is ', this.currentUser);
   }
 
   logout(): void {

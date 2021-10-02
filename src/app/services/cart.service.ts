@@ -9,7 +9,7 @@ import { environment } from '../../environments/environment';
 import { User } from '../models/user';
 import { AuthService } from './auth.service';
 import { constants } from 'src/app/config/constants';
-import { concatMap, switchMap } from 'rxjs/operators';
+import { concatMap, switchMap, catchError } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root',
@@ -120,7 +120,7 @@ export class CartService {
     }
   }
 
-  addCartItemsOrder(): Observable<any> {
+  addCartItemsToOrder(): Observable<any> {
     const orderDetailUrl = environment.apiUrl + '/orders';
     // firstly, save order header
     // secondly, save order detail with header information
@@ -150,31 +150,37 @@ export class CartService {
         orderDate: orderDateString,
       })
       .pipe(
+        catchError((err) => of('orderHeader save error ' + err)),
         switchMap((headerData: any) => {
           return forkJoin({
             v1: observableFrom(selectedItems).pipe(
               concatMap((item) => {
-                return this.http.post(orderDetailUrl, {
-                  orderHeader: headerData._id,
-                  orderDate: headerData.orderDate,
-                  customerId: this.currentCustomer?._id,
-                  productId: item.productId,
-                  quantity: item.quantity,
-                  price: item.price,
-                  amount: item.price * item.quantity,
-                });
+                return this.http
+                  .post(orderDetailUrl, {
+                    orderHeader: headerData._id,
+                    orderDate: headerData.orderDate,
+                    customerId: this.currentCustomer?._id,
+                    productId: item.productId,
+                    quantity: item.quantity,
+                    price: item.price,
+                    amount: item.price * item.quantity,
+                  })
+                  .pipe(
+                    catchError((err) => of('order detail save error' + err))
+                  );
               })
             ),
-            v2: this.authSrv.sendPlaceOrderEmail(
-              this.currentCustomer?.email,
-              this.currentCustomer?.name,
-              subTotal,
-              taxTPS + taxTVQ,
-              total
-            ),
+            v2: this.authSrv
+              .sendPlaceOrderEmail(
+                this.currentCustomer?.email,
+                this.currentCustomer?.name,
+                subTotal,
+                taxTPS + taxTVQ,
+                total
+              )
+              .pipe(catchError((err) => of('send email error is' + err))),
           });
         })
       );
   }
-
 }

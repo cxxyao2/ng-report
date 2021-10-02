@@ -2,7 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { CartItem } from 'src/app/models/cart-item';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CartService } from 'src/app/services/cart.service';
-import { switchMap } from 'rxjs/operators';
+import { catchError, switchMap } from 'rxjs/operators';
+import { of } from 'rxjs';
 
 @Component({
   selector: 'app-cart',
@@ -25,12 +26,14 @@ export class CartComponent implements OnInit {
     let orderHeaderId = '';
 
     this.cartSrv
-      .addCartItemsOrder()
+      .addCartItemsToOrder()
       .pipe(
         switchMap((data) => {
           console.log('order save data is', data.v1.orderHeader);
           orderHeaderId = data.v1.orderHeader;
-          return this.cartSrv.clearCart();
+          return this.cartSrv
+            .clearCart()
+            .pipe(catchError((err) => of('clear cart error' + err)));
         })
       )
       .subscribe(

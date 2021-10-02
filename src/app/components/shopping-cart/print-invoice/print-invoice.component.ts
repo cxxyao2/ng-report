@@ -64,6 +64,7 @@ export class PrintInvoiceComponent implements OnInit {
   getOrderDetails(): void {
     const orderHeaderId =
       this.route.snapshot.paramMap.get('orderHeaderId') || '';
+    console.log('order header id print', orderHeaderId);
 
     this.orderService.getOrderByHeaderId(orderHeaderId).subscribe(
       (data) => {

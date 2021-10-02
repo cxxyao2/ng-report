@@ -1,4 +1,10 @@
-import { Component, Input, ViewChild, OnInit } from '@angular/core';
+import {
+  Component,
+  Input,
+  ViewChild,
+  OnInit,
+  AfterViewInit,
+} from '@angular/core';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 
@@ -11,18 +17,19 @@ import { ActivatedRoute } from '@angular/router';
 
 import { Customer } from 'src/app/models/customer';
 import { OrderItem } from '../../../models/order-item';
-import { switchMap } from 'rxjs/operators';
+import { switchMap, tap, map } from 'rxjs/operators';
+import { of, throwError } from 'rxjs';
 
 @Component({
   selector: 'app-print-invoice',
   templateUrl: './print-invoice.component.html',
   styleUrls: ['./print-invoice.component.scss'],
 })
-export class PrintInvoiceComponent implements OnInit {
+export class PrintInvoiceComponent implements OnInit, AfterViewInit {
   panelOpenState = false;
   displayedColumns: string[] = ['position', 'name', 'price', 'quantity'];
   dataSource!: MatTableDataSource<OrderItem>;
-  orderCustomer!: Customer;
+  orderCustomer?: Customer;
   errorMessage = '';
   orderDetails!: OrderItem[];
 
@@ -37,15 +44,36 @@ export class PrintInvoiceComponent implements OnInit {
 
   ngOnInit(): void {
     this.getOrderDetails();
-    this.getCustomerDetails();
   }
 
-  getCustomerDetails(): void {
-    this.route.queryParams
+  ngAfterViewInit() {
+    this.dataSource.sort = this.sort;
+  }
+
+  getOrderDetails(): void {
+    const orderHeaderId =
+      this.route.snapshot.paramMap.get('orderHeaderId') || '';
+    if (orderHeaderId.trim().length < 1) {
+      this.errorMessage = 'Please select an valid order.';
+      setTimeout(() => {
+        this.errorMessage = '';
+      }, 3000);
+      return;
+    }
+
+    this.orderService
+      .getOrderByHeaderId(orderHeaderId)
       .pipe(
-        switchMap((params) => {
-          console.log('cusotmer', params.customerId);
-          return this.customerService.getCustomer(params.customerId);
+        tap((data) => {
+          this.orderDetails = data;
+          this.dataSource = new MatTableDataSource([...data]);
+        }),
+        switchMap((data) => {
+          if (data && data.length >= 1) {
+            return this.customerService.getCustomer(data[0].customerId);
+          } else {
+            return throwError(of('No valid customer for this order.'));
+          }
         })
       )
       .subscribe(
@@ -61,34 +89,37 @@ export class PrintInvoiceComponent implements OnInit {
       );
   }
 
-  getOrderDetails(): void {
-    const orderHeaderId =
-      this.route.snapshot.paramMap.get('orderHeaderId') || '';
-    console.log('order header id print', orderHeaderId);
-
-    this.orderService.getOrderByHeaderId(orderHeaderId).subscribe(
-      (data) => {
-        this.orderDetails = data;
-        this.dataSource = new MatTableDataSource([...data]);
-        this.dataSource.sort = this.sort;
-      },
-      (err) => {
-        this.errorMessage = err;
-        setTimeout(() => {
-          this.errorMessage = '';
-        }, 3000);
-      }
-    );
+  getCustomerDetails(): void {
+    if (this.orderCustomer !== undefined && this.orderCustomer._id) {
+      this.customerService.getCustomer(this.orderCustomer._id).subscribe(
+        (data) => {
+          this.orderCustomer = data;
+        },
+        (err) => {
+          this.errorMessage = err;
+          setTimeout(() => {
+            this.errorMessage = '';
+          }, 3000);
+        }
+      );
+    }
   }
 
   /** Gets the total cost of all transactions. */
-  getTotalCost() {
+  getTotalCost(): number {
     return this.orderDetails
       .map((t) => t.quantity * t.price)
       .reduce((acc, value) => acc + value, 0);
   }
 
   openPdf(): void {
+    if (!(this.orderDetails && this.orderDetails.length > 0)) {
+      this.errorMessage = 'No data for output.';
+      setTimeout(() => {
+        this.errorMessage = '';
+      }, 3000);
+      return;
+    }
     const docDefinition = this.generateInvoiceData();
     this.pdfService.generatePDF(docDefinition);
   }
@@ -222,7 +253,14 @@ export class PrintInvoiceComponent implements OnInit {
   }
 
   downloadCSV() {
-    // PeriodicElement
+    if (!(this.orderDetails && this.orderDetails.length > 0)) {
+      this.errorMessage = 'No data for output.';
+      setTimeout(() => {
+        this.errorMessage = '';
+      }, 3000);
+      return;
+    }
+
     const initData = [...this.orderDetails];
     if (!(initData && initData.length >= 1)) {
       return;

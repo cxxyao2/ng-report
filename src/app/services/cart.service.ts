@@ -166,7 +166,9 @@ export class CartService {
                     amount: item.price * item.quantity,
                   })
                   .pipe(
-                    catchError((err) => of('order detail save error' + err))
+                    catchError((err) => {
+                      return of('order detail save error' + err);
+                    })
                   );
               })
             ),
@@ -178,7 +180,16 @@ export class CartService {
                 taxTPS + taxTVQ,
                 total
               )
-              .pipe(catchError((err) => of('send email error is' + err))),
+              .pipe(
+                catchError((err) => {
+                  console.log(
+                    'email error , email is ',
+                    this.currentCustomer?.email,
+                    JSON.stringify(err)
+                  );
+                  return of('send email error is' + err);
+                })
+              ),
           });
         })
       );

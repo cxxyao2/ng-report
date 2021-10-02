@@ -37,10 +37,8 @@ export class CartComponent implements OnInit {
         })
       )
       .subscribe(
-        (data) => {
-          console.log('clear cart data is', data);
+        () => {
           this.router.navigate(['print', orderHeaderId], {
-            queryParams: { customerId },
             relativeTo: this.route,
             queryParamsHandling: 'preserve',
           });
@@ -49,32 +47,5 @@ export class CartComponent implements OnInit {
           console.error('error is', err);
         }
       );
-
-    // if (
-    //   result.orderHeaderId !== undefined &&
-    //   result.orderHeaderId.trim().length > 0
-    // ) {
-    //   orderHeaderId = result.orderHeaderId;
-    //   this.cartSrv.clearCart().subscribe(
-    //     () => {
-    //       this.router.navigate(['print', orderHeaderId], {
-    //         queryParams: { customerId },
-    //         relativeTo: this.route,
-    //         queryParamsHandling: 'preserve',
-    //       });
-    //     },
-    //   );
-    // }
   }
-
-  // TODO
-  // deleteItemFromCart(itemId: string) {
-  //   console.log('delete is 1 ', itemId);
-  //   console.log('array is ', this.cartItems);
-  //   const idx = this.cartItems?.findIndex((item) => item._id === itemId);
-  //   if (idx && idx >= 0) {
-  //     console.log('delete is 2', itemId);
-  //     this.cartItems?.splice(idx, 1);
-  //   }
-  // }
 }

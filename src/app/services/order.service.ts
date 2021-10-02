@@ -22,7 +22,7 @@ export class OrderService {
   }
 
   getOrderByHeaderId(headerId: string): Observable<OrderItem[]> {
-    const url = `${this.configUrl}/orderHeader=${headerId}`;
+    const url = `${this.configUrl}?orderHeader=${headerId}`;
     return this.http.get<OrderItem[]>(url);
   }
 

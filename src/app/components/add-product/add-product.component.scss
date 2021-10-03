@@ -1,17 +1,20 @@
 table {
   width: 100%;
-  text-align: center;
 
-  th.mat-header-cell {
-    text-align: center;
-  }
 
-  td,
-  th {
-    box-shadow: -1px 1px 1px rgba(0, 0, 0, 0.12);
-  }
 }
 
-.third-row-header {
-  display: none;
+.input-area-full-width {
+  width: 100%;
 }
+
+
+
+.mat-row:hover .mat-cell {
+  border-color: currentColor;
+}
+
+.demo-row-is-clicked {
+  font-weight: bold;
+}
+

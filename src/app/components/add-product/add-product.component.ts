@@ -3,17 +3,23 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { Product } from 'src/app/models/product';
+import {
+  MatDialog,
+  MatDialogRef,
+  MAT_DIALOG_DATA,
+} from '@angular/material/dialog';
+import { AddProductDetailsComponent } from 'src/app/components/add-product-details/add-product-details.component';
 
 /** Constants used to fill up our data base. */
 const FRUITS: string[] = [
-  'blueberry',
-  'lychee',
-  'kiwi',
-  'mango',
-  'peach',
-  'lime',
-  'pomegranate',
-  'pineapple',
+  'Rislone 34700-4PK',
+  'Carbhub 541-0765',
+  'RVS Technology G6 Engine ',
+  'Hot Shot"s Secret Gasoline',
+  'Craftsman 2500-Watt ',
+  'HITTIME Fuel ',
+  '55 Gallon to 275',
+  'NOCO Boost Plus ',
 ];
 
 /**
@@ -38,14 +44,30 @@ export class AddProductComponent implements AfterViewInit {
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
 
-  constructor() {
+  clickedRows = new Set<Product>();
+
+  constructor(public dialog: MatDialog) {
     // Create 100 products
     const products = Array.from({ length: 100 }, (_, k) =>
-      createNewProduct(k + 1)
+      this.createNewProduct(k + 1)
     );
 
     // Assign the data to the data source for the table to render
     this.dataSource = new MatTableDataSource(products);
+  }
+
+  openDialog(): void {
+    // todo
+    let product: Product = this.createNewProduct(1);
+    const dialogRef = this.dialog.open(AddProductDetailsComponent, {
+      width: '300px',
+      data: product,
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      console.log('The dialog was closed');
+      product = result;
+    });
   }
 
   ngAfterViewInit() {
@@ -61,26 +83,30 @@ export class AddProductComponent implements AfterViewInit {
       this.dataSource.paginator.firstPage();
     }
   }
-}
 
-/** Builds and returns a new Product. */
-function createNewProduct(id: number): Product {
-  const categoryList = ['golden', 'silver', 'iron'];
-  const name =
-    FRUITS[Math.round(Math.random() * (FRUITS.length - 1))] +
-    ' ' +
-    FRUITS[Math.round(Math.random() * (FRUITS.length - 1))].charAt(0) +
-    '.';
+  trackProduct(index: number, product: any) {
+    return product._id;
+  }
 
-  return {
-    _id: id.toString(),
-    name,
-    description: Math.round(Math.random() * 100).toString(),
-    category:
-      categoryList[Math.round(Math.random() * (categoryList.length - 1))],
-    price: 100,
-    stock: 200,
-    imageUrl: 'products/e2',
-    isOnsale: true,
-  };
+  /** Builds and returns a new Product. */
+  createNewProduct(id: number): Product {
+    const categoryList = ['golden', 'silver', 'iron'];
+    const name =
+      FRUITS[Math.round(Math.random() * (FRUITS.length - 1))] +
+      ' ' +
+      FRUITS[Math.round(Math.random() * (FRUITS.length - 1))].charAt(0) +
+      '.';
+
+    return {
+      _id: id.toString(),
+      name,
+      description: Math.round(Math.random() * 100).toString(),
+      category:
+        categoryList[Math.round(Math.random() * (categoryList.length - 1))],
+      price: 100,
+      stock: 200,
+      imageUrl: 'products/e2',
+      isOnsale: true,
+    };
+  }
 }

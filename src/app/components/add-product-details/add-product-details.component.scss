@@ -1,0 +1,19 @@
+:host {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.container {
+  max-width: 500px;
+  width: 100%;
+  margin: 16px;
+}
+
+.btn-disabled {
+  background-color: lightgray;
+}
+
+.btn-disabled:hover {
+  background: lightgray;
+}

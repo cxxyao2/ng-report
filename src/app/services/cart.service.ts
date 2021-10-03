@@ -86,7 +86,6 @@ export class CartService {
         imageUrl: product.imageUrl ? product.imageUrl : '',
       };
       this.http.post(this.configUrl, newItem).subscribe((data: any) => {
-        console.log('new ');
         const _id = data._id;
         this.items.push({ _id, ...newItem });
       });

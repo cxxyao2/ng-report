@@ -3,7 +3,7 @@ import { Product } from 'src/app/models/product';
 import { CartService } from 'src/app/services/cart.service';
 import { WishListService } from 'src/app/services/wish-list.service';
 import { PdfMakeService } from 'src/app/services/pdfmake.service';
-import { constants } from 'src/app/config/constants';
+
 import { environment } from 'src/environments/environment';
 
 import { HttpClient } from '@angular/common/http';

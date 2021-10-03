@@ -2,7 +2,7 @@
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 11.0.4. In Sep 6 2021, @angular/core is upgraded to version ~12.2. @angular/material, @angular/flex-layout, @angular/google-maps all are upgraded.
 
-## Technical Points
+## Technical Features
 
 - secure google map key by HTTP referrer
 - prevent XSRF attack by cookie + token in http headers
@@ -46,7 +46,7 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 
 - Order management
 
-- Report center: graphs and chartsAnalyse based on sales data
+- Report center: graphs and charts based on initial sales data
 
 - Technical Support
 

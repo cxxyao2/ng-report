@@ -98,7 +98,7 @@ export class AddClientComponent implements OnInit {
         this.errorMessage = 'Image file size should be smaller than 1M.';
         setTimeout(() => {
           this.errorMessage = '';
-        }, 10000);
+        }, 3000);
         return;
       }
       if (fileExtent !== 'jpg') {
@@ -179,7 +179,7 @@ export class AddClientComponent implements OnInit {
       return 'Too short: ' + JSON.stringify(this.address?.errors?.minlength);
     }
 
-    if (this.address?.errors?.minlength) {
+    if (this.address?.errors?.maxlength) {
       return 'Too long: ' + JSON.stringify(this.address?.errors?.length);
     }
 

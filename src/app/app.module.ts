@@ -76,6 +76,7 @@ import { MatMenuModule } from '@angular/material/menu';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { LayoutModule } from '@angular/cdk/layout';
+import { AddProductDetailsComponent } from './components/add-product-details/add-product-details.component';
 
 @NgModule({
   declarations: [
@@ -128,6 +129,7 @@ import { LayoutModule } from '@angular/cdk/layout';
     UniqueUserDirective,
     UniquePasswordDirective,
     WishListComponent,
+    AddProductDetailsComponent,
   ],
   imports: [
     BrowserModule,

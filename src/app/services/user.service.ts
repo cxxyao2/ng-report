@@ -23,8 +23,8 @@ export class UserService {
     return this.http.get<User[]>(this.configUrl).pipe(retry(1));
   }
 
-  updateUser(user: User): Observable<User> {
-    const url = `${this.configUrl}/${user._id}`;
-    return this.http.put<User>(url, user);
+  updateUser(userId?: string, updatePart?: any): Observable<User> {
+    const url = `${this.configUrl}/${userId}`;
+    return this.http.put<User>(url, updatePart);
   }
 }

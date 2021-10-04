@@ -4,7 +4,6 @@ import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { environment } from '../../environments/environment';
 import { Observable } from 'rxjs';
 import { retry } from 'rxjs/operators';
-import { ConfigurableFocusTrap } from '@angular/cdk/a11y';
 
 @Injectable({
   providedIn: 'root',
@@ -27,5 +26,11 @@ export class ProductService {
 
   addProduct(product: Product): Observable<Product> {
     return this.http.post<Product>(this.configUrl, product);
+  }
+
+  deleteProduct(product: Product): Observable<Product> {
+    const deleteUrl = `${this.configUrl}/${product._id}`;
+
+    return this.http.delete<Product>(deleteUrl);
   }
 }

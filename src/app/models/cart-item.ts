@@ -1,6 +1,6 @@
 export interface CartItem {
   selected?: boolean;
-  // productId: string;
+  productId?: string;
   productName: string;
   imageUrl: string;
   quantity: number;

@@ -1,0 +1,22 @@
+@use "sass:map";
+@use "~@angular/material" as mat;
+
+@mixin product-details-color(
+  $config-or-theme,
+  $shadow-color: rgba(0, 0, 255, 0.1)
+) {
+  $config: mat.get-color-config($config-or-theme);
+  $primary: map.get($config, primary);
+  $accent: map.get($config, accent);
+  $warn: map.get($config, warn);
+
+  app-add-product-details {
+    .form-error {
+      padding-left: 16px;
+      color: mat.get-color-from-palette($warn);
+      border-left: 2px solid mat.get-color-from-palette($warn);
+      box-shadow: 0px 2px 4px -1px $shadow-color, 0px 4px 5px 0px $shadow-color,
+        0px 1px 10px 0px $shadow-color;
+    }
+  }
+}

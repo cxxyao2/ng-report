@@ -1,8 +1,5 @@
 import { Component, OnInit, Inject } from '@angular/core';
-import {
-  MatDialogRef,
-  MAT_DIALOG_DATA,
-} from '@angular/material/dialog';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 
 import {
   Form,
@@ -13,8 +10,6 @@ import {
 } from '@angular/forms';
 import { Product } from 'src/app/models/product';
 import { ProductDialogData } from 'src/app/models/product-dialog-data';
-import { ProductService } from 'src/app/services/product.service';
-
 
 @Component({
   selector: 'app-add-product-details',
@@ -23,56 +18,83 @@ import { ProductService } from 'src/app/services/product.service';
 })
 export class AddProductDetailsComponent implements OnInit {
   productForm: FormGroup;
-  product?: Product;
   errorMessage = '';
+  isOnsale = false;
 
-  nameControl = new FormControl('', [
+  nameControl = new FormControl(this.data.product.name, [
     Validators.required,
     Validators.minLength(5),
     Validators.maxLength(100),
   ]);
-  descriptionControl = new FormControl('', [
+  descriptionControl = new FormControl(this.data.product.description, [
     Validators.required,
     Validators.minLength(5),
     Validators.maxLength(200),
   ]);
-  categoryControl = new FormControl('', [
+  categoryControl = new FormControl(this.data.product.category, [
     Validators.required,
-    Validators.minLength(5),
-    Validators.maxLength(200),
   ]);
 
-  priceControl = new FormControl(0, [
+  priceControl = new FormControl(this.data.product.price, [
     Validators.required,
     Validators.min(0),
     Validators.max(10000),
   ]);
 
-  stockControl = new FormControl(0, [
+  stockControl = new FormControl(this.data.product.stock, [
     Validators.required,
     Validators.min(0),
     Validators.max(10000),
   ]);
-
-  onSaleControl = new FormControl(false);
 
   constructor(
     fb: FormBuilder,
-    private service: ProductService,
     public dialogRef: MatDialogRef<AddProductDetailsComponent>,
     @Inject(MAT_DIALOG_DATA) public data: ProductDialogData
   ) {
     this.productForm = fb.group({
-      onSale: this.onSaleControl,
+      name: this.nameControl,
+      description: this.descriptionControl,
+      category: this.categoryControl,
+      price: this.priceControl,
+      stock: this.stockControl,
     });
   }
 
+  getProductId() {
+    return this.data.product._id ? this.data.product._id : '';
+  }
+
+  getTitle() {
+    return this.data.isAdd ? 'Add A Product' : 'Edit A Product';
+  }
+
   onSubmit() {
-    if (this.data.isAdd) {
-      this.addProduct();
-    } else {
-      this.updateProduct();
+    if (
+      this.productForm.untouched &&
+      this.isOnsale === this.data.product.isOnsale
+    ) {
+      this.dialogRef.close();
+      return;
     }
+    if (this.productForm.touched && this.productForm.invalid) {
+      this.errorMessage = 'Please enter valid product data.';
+      return;
+    }
+
+    const product: Product = {
+      name: this.nameControl.value,
+      description: this.descriptionControl.value,
+      category: this.categoryControl.value,
+      price: this.priceControl.value,
+      stock: this.stockControl.value,
+      isOnsale: this.isOnsale,
+    };
+    if (!this.data.isAdd) {
+      product._id = this.data.product._id;
+    }
+
+    this.dialogRef.close(product);
   }
 
   getNameErrorMessage() {
@@ -86,78 +108,56 @@ export class AddProductDetailsComponent implements OnInit {
     if (this.nameControl.hasError('maxlength')) {
       return 'Name can be max 100 characters long.';
     }
+    return 'Enter a valid name';
   }
 
   getDescriptionErrorMessage() {
-    if (this.nameControl.hasError('required')) {
-      return 'You must enter a name';
+    if (this.descriptionControl.hasError('required')) {
+      return 'You must enter a description';
     }
-    if (this.nameControl.hasError('minlength')) {
-      return 'Name must be at least 5 characters long.';
+    if (this.descriptionControl.hasError('minlength')) {
+      return 'Description must be at least 5 characters long.';
     }
 
-    if (this.nameControl.hasError('maxlength')) {
-      return 'Name can be max 100 characters long.';
+    if (this.descriptionControl.hasError('maxlength')) {
+      return 'Description can be max 200 characters long.';
     }
+    return 'Enter a valid description';
   }
 
   getPriceErrorMessage() {
-    if (this.nameControl.hasError('required')) {
-      return 'You must enter a name';
+    if (this.priceControl.hasError('required')) {
+      return 'You must enter a price';
     }
-    if (this.nameControl.hasError('minlength')) {
-      return 'Name must be at least 5 characters long.';
+    if (this.priceControl.hasError('min')) {
+      return 'Price must be bigger than  0.';
     }
 
-    if (this.nameControl.hasError('maxlength')) {
-      return 'Name can be max 100 characters long.';
+    if (this.priceControl.hasError('max')) {
+      return 'Price should be less than 10000.';
     }
+    return 'Enter a valid price';
   }
 
   getStockErrorMessage() {
-    if (this.nameControl.hasError('required')) {
-      return 'You must enter a name';
+    if (this.stockControl.hasError('required')) {
+      return 'You must enter a stock';
     }
-    if (this.nameControl.hasError('minlength')) {
-      return 'Name must be at least 5 characters long.';
+    if (this.stockControl.hasError('min')) {
+      return 'Stock must be bigger than 0';
     }
 
-    if (this.nameControl.hasError('maxlength')) {
-      return 'Name can be max 100 characters long.';
+    if (this.stockControl.hasError('max')) {
+      return 'Stock should be less than 10000.';
     }
+    return 'Enter a valid stock';
   }
 
-  ngOnInit(): void {}
-
-  OnCancelClick(){
-    this.dialogRef.close();
+  ngOnInit(): void {
+    this.isOnsale = this.data.product.isOnsale;
   }
 
-  addProduct() {
-    if (this.product) {
-      this.service.addProduct(this.product).subscribe(
-        (data) => {},
-        (err) => {
-          this.errorMessage = err;
-          setTimeout(() => {
-            this.errorMessage = '';
-          }, 3000);
-        }
-      );
-    }
-  }
-
-  updateProduct() {
-    if (this.product) {
-      this.service.updateProduct(this.product).subscribe(
-        (data) => {},
-        (err) => {
-          this.errorMessage = err;
-          setTimeout(() => {
-            this.errorMessage = '';
-          }, 3000);
-        }
-      );
-    }
+  setOnsale(isOnsale: boolean) {
+    this.isOnsale = isOnsale;
   }
 }

@@ -12,7 +12,7 @@ export class WishListService {
 
   constructor(private http: HttpClient, private cartSrv: CartService) {}
 
-  addToWishList(itemId: string): void {
+  addToWishList(itemId?: string): void {
     this.http
       .post(this.configUrl, {
         customerId: this.cartSrv.currentCustomer?._id,
@@ -21,7 +21,7 @@ export class WishListService {
       .subscribe();
   }
 
-  removeFromWishList(id: string) {
+  removeFromWishList(id?: string) {
     const deleteUrl = this.configUrl + '/' + id;
     this.http.delete(deleteUrl).subscribe();
   }

@@ -46,9 +46,7 @@ export class PrintInvoiceComponent implements OnInit, AfterViewInit {
     this.getOrderDetails();
   }
 
-  ngAfterViewInit() {
-    this.dataSource.sort = this.sort;
-  }
+  ngAfterViewInit() {}
 
   getOrderDetails(): void {
     const orderHeaderId =
@@ -67,6 +65,7 @@ export class PrintInvoiceComponent implements OnInit, AfterViewInit {
         tap((data) => {
           this.orderDetails = data;
           this.dataSource = new MatTableDataSource([...data]);
+          this.dataSource.sort = this.sort;
         }),
         switchMap((data) => {
           if (data && data.length >= 1) {
@@ -107,9 +106,13 @@ export class PrintInvoiceComponent implements OnInit, AfterViewInit {
 
   /** Gets the total cost of all transactions. */
   getTotalCost(): number {
-    return this.orderDetails
-      .map((t) => t.quantity * t.price)
-      .reduce((acc, value) => acc + value, 0);
+    if (this.orderDetails !== undefined && this.orderDetails.length > 0) {
+      return this.orderDetails
+        .map((t) => t.quantity * t.price)
+        .reduce((acc, value) => acc + value, 0);
+    } else {
+      return 0;
+    }
   }
 
   openPdf(): void {

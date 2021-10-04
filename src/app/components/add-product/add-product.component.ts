@@ -1,14 +1,17 @@
-import { AfterViewInit, Component, ViewChild } from '@angular/core';
-import { MatPaginator } from '@angular/material/paginator';
-import { MatSort } from '@angular/material/sort';
-import { MatTableDataSource } from '@angular/material/table';
+import { AfterViewInit, OnInit, Component, ViewChild } from '@angular/core';
+import { DataSource } from '@angular/cdk/collections';
+import { Observable, of, ReplaySubject } from 'rxjs';
+
 import { Product } from 'src/app/models/product';
+import { ProductDialogData } from 'src/app/models/product-dialog-data';
 import {
   MatDialog,
   MatDialogRef,
   MAT_DIALOG_DATA,
 } from '@angular/material/dialog';
 import { AddProductDetailsComponent } from 'src/app/components/add-product-details/add-product-details.component';
+import { ProductService } from 'src/app/services/product.service';
+import { switchMap } from 'rxjs/operators';
 
 /** Constants used to fill up our data base. */
 const FRUITS: string[] = [
@@ -23,7 +26,7 @@ const FRUITS: string[] = [
 ];
 
 /**
- * @title Data table with sorting, pagination, and filtering.
+ * @title Product Table Based on Observable
  */
 
 @Component({
@@ -31,57 +34,168 @@ const FRUITS: string[] = [
   templateUrl: './add-product.component.html',
   styleUrls: ['./add-product.component.scss'],
 })
-export class AddProductComponent implements AfterViewInit {
-  displayedColumns: string[] = [
-    'action',
-    'id',
-    'name',
-    'description',
-    'category',
-  ];
-  dataSource: MatTableDataSource<Product>;
+export class AddProductComponent implements AfterViewInit, OnInit {
+  displayedColumns: string[] = ['action', 'name', 'category', 'price', 'stock'];
+  dataToDisplay: Product[] = [];
+  dataSource = new ProductDataSource(this.dataToDisplay);
+  errorMessage = '';
+  rowCount = 0;
 
-  @ViewChild(MatPaginator) paginator!: MatPaginator;
-  @ViewChild(MatSort) sort!: MatSort;
+  constructor(public dialog: MatDialog, private service: ProductService) {}
 
-  clickedRows = new Set<Product>();
+  ngOnInit() {
+    this.service.getProducts().subscribe(
+      (data) => {
+        this.dataToDisplay = data;
+        if (data !== undefined && data !== null) {
+          this.rowCount = data.length;
+        }
+        this.dataSource.setData(this.dataToDisplay);
+      },
+      (err) => {
+        this.errorMessage = err;
+        setTimeout(() => {
+          this.errorMessage = '';
+        }, 3000);
+      }
+    );
+  }
 
-  constructor(public dialog: MatDialog) {
-    // Create 100 products
-    const products = Array.from({ length: 100 }, (_, k) =>
-      this.createNewProduct(k + 1)
+  addProduct(): void {
+    let dialogData: ProductDialogData = {
+      isAdd: true,
+      product: this.createNewProduct(1),
+    };
+
+    const dialogRef = this.dialog.open(AddProductDetailsComponent, {
+      width: '100%',
+      data: dialogData,
+      disableClose: true,
+    });
+
+    dialogRef
+      .afterClosed()
+      .pipe(
+        switchMap((result) => {
+          if (result && 'price' in result) {
+            return this.service.addProduct(result);
+          } else {
+            return of(null);
+          }
+        })
+      )
+      .subscribe(
+        (newProduct) => {
+          if (newProduct !== undefined && newProduct !== null) {
+            this.updateDataToDisplay(newProduct);
+          }
+        },
+        (err) => {
+          this.errorMessage = err;
+          setTimeout(() => {
+            this.errorMessage = '';
+          }, 3000);
+        }
+      );
+  }
+
+  updateDataToDisplay(product: Product) {
+    const idx = this.dataToDisplay.findIndex(
+      (item) => item._id === product?._id
+    );
+    if (idx >= 0) {
+      this.dataToDisplay.splice(idx, 1, product);
+    } else {
+      this.dataToDisplay.push(product);
+    }
+    if (this.dataToDisplay !== undefined && this.dataToDisplay !== null) {
+      this.rowCount = this.dataToDisplay.length;
+    }
+    this.dataSource.setData(this.dataToDisplay);
+  }
+
+  editProduct(product: Product): void {
+    let dialogData: ProductDialogData = {
+      isAdd: false,
+      product: product,
+    };
+
+    const dialogRef = this.dialog.open(AddProductDetailsComponent, {
+      width: '100%',
+      data: dialogData,
+      disableClose: true,
+    });
+
+    dialogRef
+      .afterClosed()
+      .pipe(
+        switchMap((result) => {
+          if (result && 'price' in result) {
+            return this.service.updateProduct(result);
+          } else {
+            return of(null);
+          }
+        })
+      )
+      .subscribe(
+        (newProduct) => {
+          if (newProduct !== undefined && newProduct !== null) {
+            this.updateDataToDisplay(newProduct);
+          }
+        },
+        (err) => {
+          this.errorMessage = err;
+          setTimeout(() => {
+            this.errorMessage = '';
+          }, 3000);
+        }
+      );
+  }
+
+  deleteProduct(product: Product): void {
+    const idx = this.dataToDisplay.findIndex(
+      (record) => record._id === product._id
     );
 
-    // Assign the data to the data source for the table to render
-    this.dataSource = new MatTableDataSource(products);
+    this.service.deleteProduct(product).subscribe(
+      () => {},
+      (err) => {
+        this.errorMessage = err;
+        setTimeout(() => {
+          this.errorMessage = '';
+        }, 3000);
+      }
+    );
+    if (idx >= 0) {
+      this.dataToDisplay.splice(idx, 1);
+      if (this.dataToDisplay !== undefined && this.dataToDisplay !== null) {
+        this.rowCount = this.dataToDisplay.length;
+      }
+      this.dataSource.setData(this.dataToDisplay);
+    }
   }
 
-  openDialog(): void {
-    // todo
-    let product: Product = this.createNewProduct(1);
-    const dialogRef = this.dialog.open(AddProductDetailsComponent, {
-      width: '300px',
-      data: product,
-    });
-
-    dialogRef.afterClosed().subscribe((result) => {
-      console.log('The dialog was closed');
-      product = result;
-    });
-  }
-
-  ngAfterViewInit() {
-    this.dataSource.paginator = this.paginator;
-    this.dataSource.sort = this.sort;
-  }
+  ngAfterViewInit() {}
 
   applyFilter(event: Event) {
-    const filterValue = (event.target as HTMLInputElement).value;
-    this.dataSource.filter = filterValue.trim().toLowerCase();
-
-    if (this.dataSource.paginator) {
-      this.dataSource.paginator.firstPage();
+    let filterValue = (event.target as HTMLInputElement).value;
+    let filteredArray: Product[] = [];
+    filterValue = filterValue.trim().toLowerCase();
+    if (filterValue === undefined || filterValue.length <= 0) {
+      filteredArray = [...this.dataToDisplay];
+    } else {
+      filteredArray = this.dataToDisplay.filter(
+        (item) =>
+          item.name.includes(filterValue) ||
+          item.description.includes(filterValue) ||
+          item.price.toString().includes(filterValue) ||
+          item.stock.toString().includes(filterValue)
+      );
     }
+    if (filteredArray !== undefined && filteredArray !== null) {
+      this.rowCount = filteredArray.length;
+    }
+    this.dataSource.setData(filteredArray);
   }
 
   trackProduct(index: number, product: any) {
@@ -90,7 +204,6 @@ export class AddProductComponent implements AfterViewInit {
 
   /** Builds and returns a new Product. */
   createNewProduct(id: number): Product {
-    const categoryList = ['golden', 'silver', 'iron'];
     const name =
       FRUITS[Math.round(Math.random() * (FRUITS.length - 1))] +
       ' ' +
@@ -100,13 +213,31 @@ export class AddProductComponent implements AfterViewInit {
     return {
       _id: id.toString(),
       name,
-      description: Math.round(Math.random() * 100).toString(),
-      category:
-        categoryList[Math.round(Math.random() * (categoryList.length - 1))],
-      price: 100,
-      stock: 200,
+      description: '',
+      category: 'gas',
+      price: 0,
+      stock: 0,
       imageUrl: 'products/e2',
-      isOnsale: true,
+      isOnsale: false,
     };
+  }
+}
+
+class ProductDataSource extends DataSource<Product> {
+  private _dataStream = new ReplaySubject<Product[]>();
+
+  constructor(initialData: Product[]) {
+    super();
+    this.setData(initialData);
+  }
+
+  connect(): Observable<Product[]> {
+    return this._dataStream;
+  }
+
+  disconnect() {}
+
+  setData(data: Product[]) {
+    this._dataStream.next(data);
   }
 }

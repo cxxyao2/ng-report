@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable,  } from 'rxjs';
-import {  retry } from 'rxjs/operators';
+import { Observable } from 'rxjs';
+import { retry } from 'rxjs/operators';
 
 import { environment } from '../../environments/environment';
 import { User } from '../models/user';
@@ -21,5 +21,10 @@ export class UserService {
 
   getUsers(): Observable<User[]> {
     return this.http.get<User[]>(this.configUrl).pipe(retry(1));
+  }
+
+  updateUser(user: User): Observable<User> {
+    const url = `${this.configUrl}/${user._id}`;
+    return this.http.put<User>(url, user);
   }
 }

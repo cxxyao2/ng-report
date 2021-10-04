@@ -4,111 +4,11 @@ import { FormControl } from '@angular/forms';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatSort } from '@angular/material/sort';
 import { MatChipInputEvent } from '@angular/material/chips';
+import { User } from 'src/app/models/user';
 
-export interface UserElement {
-  name: string;
-  locked: boolean;
-  salesperson: boolean;
-  manager: boolean;
-  admin: boolean;
-}
 export interface SearchItem {
   name: string;
 }
-
-const ELEMENT_DATA: UserElement[] = [
-  {
-    name: 'Hydrogen',
-    locked: false,
-    salesperson: true,
-    manager: true,
-    admin: true,
-  },
-  {
-    name: 'Admin',
-    locked: true,
-    salesperson: true,
-    manager: true,
-    admin: true,
-  },
-  {
-    name: 'Tommy',
-    locked: false,
-    salesperson: true,
-    manager: true,
-    admin: true,
-  },
-  {
-    name: 'Dragon',
-    locked: true,
-    salesperson: true,
-    manager: false,
-    admin: true,
-  },
-  {
-    name: 'Hydrogen',
-    locked: false,
-    salesperson: true,
-    manager: true,
-    admin: true,
-  },
-  {
-    name: 'Hydrogen',
-    locked: false,
-    salesperson: true,
-    manager: true,
-    admin: true,
-  },
-  {
-    name: 'Hydrogen',
-    locked: false,
-    salesperson: true,
-    manager: true,
-    admin: true,
-  },
-  {
-    name: 'Hydrogen',
-    locked: false,
-    salesperson: true,
-    manager: true,
-    admin: true,
-  },
-  {
-    name: 'Hydrogen',
-    locked: false,
-    salesperson: true,
-    manager: true,
-    admin: true,
-  },
-  {
-    name: 'Hydrogen',
-    locked: false,
-    salesperson: true,
-    manager: true,
-    admin: true,
-  },
-  {
-    name: 'Hydrogen',
-    locked: false,
-    salesperson: true,
-    manager: true,
-    admin: true,
-  },
-  {
-    name: 'Hydrogen',
-    locked: false,
-    salesperson: true,
-    manager: true,
-    admin: true,
-  },
-  {
-    name: 'Hydrogen',
-    locked: false,
-    salesperson: true,
-    manager: true,
-    admin: true,
-  },
-];
 
 @Component({
   selector: 'app-add-role-to-user',
@@ -119,7 +19,7 @@ export class AddRoleToUserComponent implements OnInit, AfterViewInit {
   displayedColumns = ['name', 'locked', 'salesperson', 'manager', 'admin'];
 
   positionFilter = new FormControl();
-  dataSource = new MatTableDataSource(ELEMENT_DATA);
+  dataSource = new MatTableDataSource([]); // TODO
   nameFilter = new FormControl();
   private filterValues = { id: '', name: '' };
   @ViewChild(MatSort) sort!: MatSort;
@@ -214,6 +114,4 @@ export class AddRoleToUserComponent implements OnInit, AfterViewInit {
   ngAfterViewInit() {
     this.dataSource.sort = this.sort;
   }
-
-
 }

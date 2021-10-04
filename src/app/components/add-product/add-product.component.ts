@@ -12,6 +12,14 @@ import {
 import { AddProductDetailsComponent } from 'src/app/components/add-product-details/add-product-details.component';
 import { ProductService } from 'src/app/services/product.service';
 import { switchMap } from 'rxjs/operators';
+import {
+  animate,
+  state,
+  style,
+  transition,
+  trigger,
+} from '@angular/animations';
+import { environment } from 'src/environments/environment';
 
 /** Constants used to fill up our data base. */
 const FRUITS: string[] = [
@@ -33,6 +41,16 @@ const FRUITS: string[] = [
   selector: 'app-add-product',
   templateUrl: './add-product.component.html',
   styleUrls: ['./add-product.component.scss'],
+  animations: [
+    trigger('detailExpand', [
+      state('collapsed', style({ height: '0px', minHeight: '0' })),
+      state('expanded', style({ height: '*' })),
+      transition(
+        'expanded <=> collapsed',
+        animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)')
+      ),
+    ]),
+  ],
 })
 export class AddProductComponent implements AfterViewInit, OnInit {
   displayedColumns: string[] = ['action', 'name', 'category', 'price', 'stock'];
@@ -40,6 +58,7 @@ export class AddProductComponent implements AfterViewInit, OnInit {
   dataSource = new ProductDataSource(this.dataToDisplay);
   errorMessage = '';
   rowCount = 0;
+  expandedElement: Product | null = null; // show collapsed image and descriptions
 
   constructor(public dialog: MatDialog, private service: ProductService) {}
 
@@ -59,6 +78,14 @@ export class AddProductComponent implements AfterViewInit, OnInit {
         }, 3000);
       }
     );
+  }
+
+  getImageSrc(productItem:Product) {
+    const apiUrl = environment.imageUrl + '/' + productItem.imageUrl + '/';
+
+    // products/e2 => https://xxx.xxx.xxx.xx:5000/products/e2/w-200.jpg 200w,
+
+    return apiUrl + 'w_200.jpg';
   }
 
   addProduct(): void {
@@ -186,8 +213,8 @@ export class AddProductComponent implements AfterViewInit, OnInit {
     } else {
       filteredArray = this.dataToDisplay.filter(
         (item) =>
-          item.name.includes(filterValue) ||
-          item.description.includes(filterValue) ||
+          item.name.toLowerCase().includes(filterValue) ||
+          item.description.toLowerCase().includes(filterValue) ||
           item.price.toString().includes(filterValue) ||
           item.stock.toString().includes(filterValue)
       );

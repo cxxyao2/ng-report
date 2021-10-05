@@ -22,27 +22,34 @@ export class LogsService {
     return this.http.get<LogRecord>(url);
   }
 
-  getLogs(): Observable<LogRecord[]> {
-    return this.http.get<LogRecord[]>(this.configUrl).pipe(retry(1));
+  deleteLog(id: string): Observable<LogRecord> {
+    const url = `${this.configUrl}/${id}`;
+    return this.http.delete<LogRecord>(url);
   }
 
-  // href = 'https://api.github.com/search/issues';
-  // requestUrl = `${href}?q=repo:angular/components&sort=${sort}&order=${order}&page=${
-  //   page + 1
-  // }`;
-
-  getFilterdLogs(
-    startDate: Date,
-    endDate: Date,
-    userName = '',
-    content = ''
+  getLogs(
+    startDate?: Date,
+    endDate?: Date,
+    userId?: string,
+    content?: string
   ): Observable<LogRecord[]> {
-    // http://localhost:5000/api/logs?startDate=2021-01-01&endDate=2022-12-01&userName=&content=insert
-    const requestUrl = `${this.configUrl}?startDate=${startDate}&endDate=${endDate}&userName=${userName}&content=${content}`;
-    return this.http.get<LogRecord[]>(requestUrl).pipe(retry(1));
+    let url = this.configUrl;
+
+    if (
+      startDate !== undefined &&
+      endDate !== undefined &&
+      userId !== undefined &&
+      userId !== null
+    ) {
+      url = `${this.configUrl}?startDate=${startDate}&endDate=${endDate}&userId=${userId}&content=${content}`;
+    } else if (startDate !== undefined && endDate !== undefined) {
+      url = `${this.configUrl}?startDate=${startDate}&endDate=${endDate}`;
+    }
+
+    return this.http.get<LogRecord[]>(url).pipe(retry(1));
   }
 
-  addLog(content: string):void {
+  addLog(content: string): void {
     this.http
       .post(this.configUrl, {
         content,
@@ -50,7 +57,7 @@ export class LogsService {
       .subscribe();
   }
 
-  getIPAddress():void {
+  getIPAddress(): void {
     this.http.get('http://api.ipify.org/?format=json').subscribe((res: any) => {
       this.ipAddress = res.ip;
     });

@@ -1,8 +1,8 @@
 export interface LogRecord {
+  createUser: string; // = user._id
   userName: string;
   content: string;
-  logDate?: Date;
-  loginIP?: string;
-  logType?: string; // E -error O - operation
-  _id?: string; // Record Id in database
+  createDate?: Date;
+  ip: string;
+  _id: string;
 }

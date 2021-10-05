@@ -8,7 +8,7 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 - prevent XSRF attack by cookie + token in http headers
 - register & login with recaptcha
 - deploy web worker for analyzing mass data and image. no block the main thread.
-- attention to modularity && reusability
+- modularity && reusability
 - lazy loading (1,Angular 2, Webpack ): dialog component, some tab content(when activated), administrator module
 - interceptors
 - guards, resolves
@@ -23,8 +23,20 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 - DI( Dependency Injection): Services have different visible(usable) levels, e.g. app, component, component view etc.
 - Flex Layout, responsive images, responsive layout
 - Material Design
+  - table:row/expanded row/array-based datasource/observable datasource/infinite scroll table... )
+  - dialog /lazy loading dialog/ reusable confirm dialog
+  - tabs
+  - spinner
+  - select
+  - expansion panel
+  - datepicker
+  - divider
+  - stepper
+  - reactive form , template-driven form, form input autocomplete, checkbox, image...
+  - custom FormControl (chips group)
+  - ...
 - SSR: server-side rendering
-- Unified error message
+- Unify error message component
 
 ## back-end : mongodb mongoose express node.js
 

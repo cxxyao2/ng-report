@@ -1,16 +1,43 @@
-<h2 mat-dialog-title>Add more filters</h2>
-<div mat-dialog-content>
-  <mat-form-field appearance="fill">
-    <mat-label>User Name</mat-label>
-    <input matInput [(ngModel)]="data.userName">
-  </mat-form-field>
-  <mat-form-field appearance="fill">
-    <mat-label>Log Content</mat-label>
-    <input matInput [(ngModel)]="data.content">
-  </mat-form-field>
-</div>
-<div mat-dialog-actions>
-  <button mat-button (click)="onNoClick()">Cancel</button>
-  <button mat-button [mat-dialog-close]="data" cdkFocusInitial>Confirm</button>
-</div>
-
+<form [formGroup]="myForm" (ngSubmit)="onSubmit()">
+  <h2 mat-dialog-title>Add more filters</h2>
+  <div mat-dialog-content>
+    <mat-form-field class="full-width" appearance="fill">
+      <mat-label>User Name</mat-label>
+      <input
+        type="text"
+        placeholder="{{ data.userName }}"
+        aria-label="Name"
+        matInput
+        [formControl]="nameControl"
+        [matAutocomplete]="auto"
+      />
+      <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
+        <mat-option
+          *ngFor="let option of filteredOptions | async"
+          [value]="option.name"
+        >
+          {{ option.name }}
+        </mat-option>
+      </mat-autocomplete>
+    </mat-form-field>
+    <mat-form-field class="full-width" appearance="fill">
+      <mat-label>Log Content</mat-label>
+      <input
+        type="text"
+        placeholder="{{ data.content }}"
+        aria-label="log content"
+        matInput
+        [formControl]="contentControl"
+      />
+    </mat-form-field>
+  </div>
+  <div *ngIf="errorMessage" class="input-error">
+    {{ errorMessage }}
+  </div>
+  <div mat-dialog-actions>
+    <button mat-button mat-dialog-close>Cancel</button>
+    <button mat-button type="submit" (click)="onSubmit()" cdkFocusInitial>
+      Confirm
+    </button>
+  </div>
+</form>

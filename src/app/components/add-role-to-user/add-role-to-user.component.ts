@@ -54,8 +54,6 @@ export class AddRoleToUserComponent implements OnInit, AfterViewInit {
     }
     const newUser = { ...this.userArray[idx] };
 
-    console.log('user', user, columnName, 'value', columnValue);
-
     switch (columnName) {
       case 'isFrozen':
         updatePart = { isFrozen: columnValue };
@@ -76,8 +74,6 @@ export class AddRoleToUserComponent implements OnInit, AfterViewInit {
     }
 
     this.userArray.splice(idx, 1, { ...newUser });
-    // TODO 看是否需要重新设置 this.dataSource.data = [...this.userArray];
-
 
     this.service.updateUser(user._id, updatePart).subscribe(
       () => {},

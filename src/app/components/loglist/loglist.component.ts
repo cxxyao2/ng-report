@@ -1,160 +1,28 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit, ViewChild } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
-import {
-  MatDialog,
-  MatDialogRef,
-  MAT_DIALOG_DATA,
-} from '@angular/material/dialog';
+import { MatSort } from '@angular/material/sort';
+import { MatTableDataSource } from '@angular/material/table';
+
+import { MatDialog } from '@angular/material/dialog';
 
 import { SelectionModel } from '@angular/cdk/collections';
 
 import { LogfilterComponent } from '../logfilter/logfilter.component';
 import { LogRecord } from 'src/app/models/log-record';
 import { LogsService } from 'src/app/services/logs.service';
-import { merge, of, scheduled, Subject } from 'rxjs';
-import {
-  catchError,
-  mergeAll,
-  switchMap,
-  debounceTime,
-  mergeMap,
-  flatMap,
-  tap,
-  map,
-  delay,
-} from 'rxjs/operators';
 
-const ELEMENT_DATA: LogRecord[] = [
-  {
-    _id: '1',
-    userName: 'Hydrogen',
-    content: 'insert data into table orders,data is ...',
-    logType: 'O',
-    logDate: new Date('2021-09-01'),
-    loginIP: '201.01.11.01',
-  },
-  {
-    _id: '2',
-    userName: 'Helium',
-    content:
-      'delete data into table orders,elete delete delete delete delete delete delete delete ddata is ...',
-    logType: 'O',
-    logDate: new Date('2021-09-01'),
-    loginIP: '201.01.11.01',
-  },
-  {
-    _id: '3',
-    userName: 'LithiumLithiumLithiumLithiumLithium',
-    content: 'insert data into table orders,data is ...',
-    logType: 'O',
-    logDate: new Date('2021-09-01'),
-    loginIP: '201.01.11.01',
-  },
-  {
-    _id: '4',
-    userName: 'Beryllium',
-    content: 'insert data into table orders,data is ...',
-    logType: 'O',
-    logDate: new Date('2021-09-01'),
-    loginIP: '201.01.11.01',
-  },
-  {
-    _id: '5',
-    userName: 'Boron',
-    content: 'insert data into table orders,data is ...',
-    logType: 'O',
-    logDate: new Date('2021-09-01'),
-    loginIP: '201.01.11.01',
-  },
-  {
-    _id: '6',
-    userName: 'Carbon',
-    content: 'insert data into table orders,data is ...',
-    logType: 'E',
-    logDate: new Date('2021-09-01'),
-    loginIP: '201.01.11.02',
-  },
-  {
-    _id: '7',
-    userName: 'Nitrogen',
-    content: 'insert data into table orders,data is ...',
-    logType: 'O',
-    logDate: new Date('2021-09-01'),
-    loginIP: '201.01.11.01',
-  },
-  {
-    _id: '8',
-    userName: 'Oxygen',
-    content: 'insert data into table orders,data is ...',
-    logType: 'O',
-    logDate: new Date('2021-09-01'),
-    loginIP: '201.01.11.01',
-  },
-  {
-    _id: '9',
-    userName: 'Fluorine',
-    content: 'insert data into table orders,data is ...',
-    logType: 'O',
-    logDate: new Date('2021-09-01'),
-    loginIP: '201.01.11.01',
-  },
-  {
-    _id: '10',
-    userName: 'Neon',
-    content: 'insert data into table orders,data is ...',
-    logType: 'O',
-    logDate: new Date('2021-09-01'),
-    loginIP: '201.01.11.01',
-  },
-  {
-    _id: '10',
-    userName: 'Neon',
-    content: 'insert data into table orders,data is ...',
-    logType: 'O',
-    logDate: new Date('2021-09-01'),
-    loginIP: '201.01.11.01',
-  },
-  {
-    _id: '10',
-    userName: 'Neon',
-    content: 'insert data into table orders,data is ...',
-    logType: 'O',
-    logDate: new Date('2021-09-01'),
-    loginIP: '201.01.11.01',
-  },
-  {
-    _id: '10',
-    userName: 'Neon',
-    content: 'insert data into table orders,data is ...',
-    logType: 'O',
-    logDate: new Date('2021-09-01'),
-    loginIP: '201.01.11.01',
-  },
-  {
-    _id: '10',
-    userName: 'Neon',
-    content: 'insert data into table orders,data is ...',
-    logType: 'O',
-    logDate: new Date('2021-09-01'),
-    loginIP: '201.01.11.01',
-  },
-  {
-    _id: '10',
-    userName: 'Neon',
-    content: 'insert data into table orders,data is ...',
-    logType: 'O',
-    logDate: new Date('2021-09-01'),
-    loginIP: '201.01.11.01',
-  },
-  {
-    _id: '10',
-    userName: 'Neon',
-    content: 'insert data into table orders,data is ...',
-    logType: 'O',
-    logDate: new Date('2021-09-01'),
-    loginIP: '201.01.11.01',
-  },
-];
+import { of, from as observableFrom } from 'rxjs';
+
+import { catchError, concatMap, debounceTime, switchMap } from 'rxjs/operators';
+import { MatPaginator } from '@angular/material/paginator';
+import {
+  ConfirmDialogData,
+  DialogService,
+} from 'src/app/services/dialog.service';
+/**
+ * Log Management: Remove Data
+ * Sort, filter, Paginator
+ */
 
 @Component({
   selector: 'app-loglist',
@@ -162,68 +30,102 @@ const ELEMENT_DATA: LogRecord[] = [
   styleUrls: ['./loglist.component.scss'],
 })
 export class LoglistComponent implements OnInit {
-  dialogFilterData?: LogRecord | null;
-  dialogSubject = new Subject<LogRecord>();
-  range = new FormGroup({
-    start: new FormControl(),
-    end: new FormControl(),
-  });
-
-  showDeleteAlert = true;
   displayedColumns: string[] = [
     'select',
-    '_id',
-    'logType',
     'logDate',
     'userName',
     'content',
     'loginIP',
     'star',
   ];
+  dataSource = new MatTableDataSource<LogRecord>();
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
+  @ViewChild(MatSort) sort!: MatSort;
+
+  dialogFilterData: any;
+  range = new FormGroup({
+    start: new FormControl(),
+    end: new FormControl(),
+  });
+
+  showDeleteAlert = true;
 
   selection = new SelectionModel<LogRecord>(true, []);
   data: LogRecord[] = [];
+  errorMessage = '';
 
   constructor(
     public dialog: MatDialog,
-    private logService: LogsService
+    private logService: LogsService,
+    private dialogSrv: DialogService
   ) {}
   ngOnInit() {
     this.logService.getLogs().subscribe(
       (data) => {
         this.data = data;
+        this.dataSource = new MatTableDataSource(data);
+        this.dataSource.paginator = this.paginator;
+        this.dataSource.sort = this.sort;
       },
       (err) => {
-        console.log('error is', err);
+        this.errorMessage = err;
+        setTimeout(() => {
+          this.errorMessage = '';
+        }, 3000);
       }
     );
+  }
 
-    merge(
-      this.range.controls.end.valueChanges,
-      this.range.controls.start.valueChanges,
-      this.dialogSubject
-    )
-      .pipe(
-        switchMap(() =>
-          this.logService.getFilterdLogs(
-            this.range.controls.start.value || new Date('Jan 1,1970'),
-            this.range.controls.end.value || new Date(),
-            this.dialogFilterData?.userName || '',
-            this.dialogFilterData?.content || ''
-          )
-        )
+  searchDate() {
+    if (this.range.get('start')?.errors || this.range.get('end')?.errors) {
+      this.errorMessage = 'Please enter valid date range.';
+      setTimeout(() => {
+        this.errorMessage = '';
+      }, 3000);
+      return;
+    }
+    const startDate = this.range.controls.start.value;
+    const endDate = this.range.controls.end.value;
+
+    this.logService
+      .getLogs(
+        startDate || new Date('Jan 1,1970'),
+        endDate || new Date(),
+        this.dialogFilterData?.userId,
+        this.dialogFilterData?.content
       )
       .subscribe(
         (data: any) => {
+          this.dialogFilterData = null;
           this.data = data;
+          this.dataSource.data = this.data;
+          if (this.dataSource.paginator) {
+            this.dataSource.paginator.firstPage();
+          }
         },
-        (err) => console.log('error', err)
+        (err) => {
+          this.errorMessage = err;
+          setTimeout(() => {
+            this.errorMessage = '';
+          }, 3000);
+        }
       );
-    // this.range.controls.end.valueChanges.subscribe((data) =>
-    //   console.log('data is ', data)
-    //scheduled([ob1, ob2, ob3], scheduled).pipe(mergeAll());
-    // );
   }
+
+  ngAfterViewInit() {
+    this.dataSource.paginator = this.paginator;
+    this.dataSource.sort = this.sort;
+  }
+
+  applyFilter(event: Event) {
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.dataSource.filter = filterValue.trim().toLowerCase();
+
+    if (this.dataSource.paginator) {
+      this.dataSource.paginator.firstPage();
+    }
+  }
+
   /** Whether the number of selected elements matches the total number of rows. */
   isAllSelected() {
     const numSelected = this.selection.selected.length;
@@ -248,34 +150,99 @@ export class LoglistComponent implements OnInit {
     }`;
   }
 
-  deleteLogItem(_id: string): void {
-    console.log('_id is ', _id);
-    // TODO
+  deleteAllLogsInSelection(): void {
+    const deletedLogs = [...this.selection.selected];
+    const errorArray = [];
+    if (deletedLogs && deletedLogs.length > 0) {
+      observableFrom(deletedLogs)
+        .pipe(
+          concatMap((log: LogRecord) => {
+            return this.logService.deleteLog(log._id).pipe(
+              catchError((err) => {
+                errorArray.push(err);
+                return of('error' + err);
+              })
+            );
+          })
+        )
+        .subscribe(
+          () => {
+            // 1 , delete from data
+            deletedLogs.forEach((deleteLog) => {
+              let idx = this.data.findIndex((log) => log._id === deleteLog._id);
+              if (idx >= 0) {
+                this.data.splice(idx, 1);
+              }
+            });
+            this.dataSource.data = this.data;
+            if (this.dataSource.paginator) {
+              this.dataSource.paginator.firstPage();
+            }
+            // 2, delete from selection
+            this.selection.clear();
+          },
+          (err) => {
+            this.errorMessage = err;
+            setTimeout(() => {
+              this.errorMessage = '';
+            }, 3000);
+          }
+        );
+    }
+  }
+
+  deleteLogItem(deletedLog: LogRecord): void {
+    let idx = this.data.findIndex((item) => item._id === deletedLog._id);
+    if (idx >= 0) {
+      this.data.splice(idx, 1);
+      this.dataSource.data = this.data;
+      if (this.dataSource.paginator) {
+        this.dataSource.paginator.firstPage();
+      }
+      this.logService.deleteLog(deletedLog._id).subscribe(
+        () => {},
+        (err) => {
+          this.errorMessage = err;
+          setTimeout(() => {
+            this.errorMessage = '';
+          }, 3000);
+        }
+      );
+    }
   }
 
   editLogItem(item: LogRecord): void {
-    // TODO call a edit dialog
-    console.log('_id is ', item);
+    this.dialogSrv
+      .confirmDialog({
+        title: 'Log Details',
+        message: `userName: ${item.userName} operation: ${item.content}`,
+        confirmText: 'OK',
+        cancelText: 'Cancel',
+      })
+      .subscribe();
   }
 
   hideDeleteAlert() {
     this.showDeleteAlert = false;
+    setTimeout(() => {
+      this.showDeleteAlert = true;
+    }, 10000); // after 10 seconds
   }
 
   openDialog(): void {
     this.dialogFilterData = {
-      userName: 'aa',
-      content: 'bb',
+      userName: 'Alex',
+      content: 'login',
     };
     const dialogRef = this.dialog.open(LogfilterComponent, {
-      width: '250px',
+      width: '80%',
       data: this.dialogFilterData,
     });
 
     dialogRef.afterClosed().subscribe((result) => {
-      console.log('The dialog was closed', result);
-      this.dialogFilterData = result;
-      this.dialogSubject.next(result);
+      if (result) {
+        this.dialogFilterData = result;
+      }
     });
   }
 }

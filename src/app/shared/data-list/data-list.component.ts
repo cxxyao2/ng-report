@@ -1,11 +1,10 @@
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, Inject } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 
 export interface ListElement {
   _id: string;
   name: string;
-  other: string;
 }
 
 export interface StringArrayWithTitle {
@@ -18,16 +17,15 @@ export interface StringArrayWithTitle {
   templateUrl: './data-list.component.html',
   styleUrls: ['./data-list.component.scss'],
 })
-export class DataListComponent implements OnInit {
-  displayedColumns: string[] = ['id', 'name', 'other'];
-  dataSource: MatTableDataSource<ListElement>;
+export class DataListComponent  {
+  displayedColumns: string[] = ['id', 'name'];
+  dataSource = new MatTableDataSource<ListElement>();
 
   constructor(
     public dialogRef: MatDialogRef<DataListComponent>,
     @Inject(MAT_DIALOG_DATA) public data: StringArrayWithTitle
   ) {
-    this.dataSource = new MatTableDataSource(data.dataArray);
-    console.log('this.data source', data.dataArray);
+    this.dataSource.data = data.dataArray;
   }
 
   ngOnInit(): void {

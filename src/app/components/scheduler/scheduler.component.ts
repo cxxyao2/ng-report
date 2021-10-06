@@ -1,62 +1,210 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
 import { MatSelectionListChange } from '@angular/material/list/selection-list';
+import { MatDialog } from '@angular/material/dialog';
+import { MatTable } from '@angular/material/table';
+
 import { DayInCalendar } from '../calendar/calendar.component';
 
 import { DialogService } from 'src/app/services/dialog.service';
-import {
-  DataListComponent,
-  ListElement,
-  StringArrayWithTitle,
-} from 'src/app/shared/data-list/data-list.component';
-import { MatDialog } from '@angular/material/dialog';
-export interface ScheduleElement {
-  name: string | null;
-  period: string;
-}
+import { CustomerService } from '../../services/customer.service';
+import { UserService } from 'src/app/services/user.service';
+import { ContactPlanService } from 'src/app/services/contact-plan.service';
 
-const ELEMENT_DATA: ScheduleElement[] = [
-  { name: null, period: '8:00-9:00' },
-  { name: null, period: '9:00-10:00' },
-  { name: 'Boron', period: '10:00-11:00' },
-  { name: 'Carbon', period: '11:00-12:00' },
-  { name: 'Nitrogen', period: '12:00-13:00' },
-  { name: 'Oxygen', period: '13:00-14:00' },
-  { name: 'Fluorine', period: '14:00-15:00' },
-  { name: 'Neon', period: '15:00-16:00' },
-  { name: 'Oxygen', period: '16:00-17:00' },
-];
+import { DataListComponent } from 'src/app/shared/data-list/data-list.component';
+import { Customer } from 'src/app/models/customer';
+import { User } from 'src/app/models/user';
+import { switchMap } from 'rxjs/operators';
+import { of } from 'rxjs';
+import { ContactPlan } from '../../models/contact-plan';
+
+/**
+ * mock an autocomplete input
+ */
 @Component({
   selector: 'app-scheduler',
   templateUrl: './scheduler.component.html',
   styleUrls: ['./scheduler.component.scss'],
 })
-export class SchedulerComponent implements OnInit {
+export class SchedulerComponent implements OnInit, AfterViewInit {
+  @ViewChild(MatTable) table!: MatTable<ContactPlan>;
+  errorMessage = '';
   showPersonList = false;
-  isValidPerson = false;
-  selectedPerson = '';
-  selectedDay: Date | null = null;
-  allPersons: string[] = [
-    'Alex',
-    'Bob',
-    'Tom',
-    'Hans',
-    'Boots',
-    'Clogs',
-    'Loafers',
-    'Moccasins',
-    'Sneakers',
-  ];
-
-  personList: string[] = ['Alex', 'Bob', 'Tom', 'Hans'];
+  isValidPerson = true;
+  selectedPerson: User | null = null;
+  selectedDate: Date | null = null;
+  selectedCustomer: Customer | null = null;
+  allPersons: User[] = [];
+  allCustomers: Customer[] = [];
+  filterdPerson: User[] = [];
+  enteredSalesperson = '';
 
   displayedColumns: string[] = ['action', 'name', 'period'];
-  dataSource = [...ELEMENT_DATA];
+  initPlans: ContactPlan[] = [];
+  dataSource: ContactPlan[] = [];
 
-  constructor(public dialog: MatDialog, public dialogService: DialogService) {}
+  constructor(
+    private dialog: MatDialog,
+    private dialogService: DialogService,
+    private customerService: CustomerService,
+    private userService: UserService,
+    private planService: ContactPlanService
+  ) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.initPlans = createNewContactPlan(8, 17);
+    this.dataSource = [...this.initPlans];
+    this.userService.getUsers().subscribe(
+      (data) => {
+        this.allPersons = data;
+      },
+      (err) => {
+        this.errorMessage = err;
+        setTimeout(() => {
+          this.errorMessage = '';
+        }, 3000);
+      }
+    );
+    this.customerService.getCustomers().subscribe(
+      (data) => {
+        this.allCustomers = data;
+      },
+      (err) => {
+        this.errorMessage = err;
+        setTimeout(() => {
+          this.errorMessage = '';
+        }, 3000);
+      }
+    );
+  }
 
-  openDeleteDialog(arg: ScheduleElement) {
+  ngAfterViewInit() {
+    if (this.table) this.table.renderRows();
+  }
+
+  selectPLanDate(event: DayInCalendar | null): void {
+    this.selectedDate = event ? event.dateElement : null;
+  }
+
+  /* Custom Data-list: Select Salesperson Begin */
+  onInputChange(inputPerson: string): void {
+    this.isValidPerson = true;
+    this.dataSource=[...this.initPlans];
+     this.table.renderRows();
+    if (inputPerson.length > 0) {
+      this.filterdPerson = this.allPersons.filter(
+        (person) =>
+          person.name.toLowerCase().indexOf(inputPerson.toLowerCase()) >= 0
+      );
+    } else {
+      this.filterdPerson = this.allPersons.slice(0);
+    }
+
+    this.showPersonList = true;
+  }
+
+  selectPersonByEnter(inputPerson: string): void {
+    let idx = -1;
+    this.isValidPerson = false;
+   this.dataSource = [...this.initPlans];
+     this.table.renderRows();
+    if (inputPerson.trim().length === 0) {
+      this.selectedPerson = null;
+      this.enteredSalesperson = '';
+      this.isValidPerson = true;
+    }
+    if (inputPerson.trim().length > 0) {
+      idx = this.allPersons.findIndex(
+        (person) =>
+          person.name.toLowerCase().indexOf(inputPerson.toLowerCase()) >= 0
+      );
+      if (idx >= 0) {
+        this.isValidPerson = true;
+        this.selectedPerson = this.allPersons[idx];
+        this.enteredSalesperson = this.selectedPerson.name;
+      } else {
+        this.isValidPerson = false;
+        this.selectedPerson = null;
+        this.enteredSalesperson = '';
+      }
+    }
+    this.showPersonList = false;
+  }
+
+  selectPerson(event: MatSelectionListChange): void {
+    this.showPersonList = false;
+    this.isValidPerson = true;
+    this.selectedPerson = null;
+   this.dataSource = [...this.initPlans];
+    this.table.renderRows();
+    this.enteredSalesperson = event.source.selectedOptions.selected[0].value;
+    const findPerson = this.allPersons.find(
+      (person) => person.name === this.enteredSalesperson
+    );
+    if (findPerson) {
+      this.selectedPerson = { ...findPerson };
+      this.enteredSalesperson = this.selectedPerson.name;
+    }
+  }
+  /* Custom Data-list: Select Salesperson End */
+
+  getTaskList(): void {
+    if (this.selectedPerson === null) {
+      this.errorMessage = 'Please select  salesperson.';
+      setTimeout(() => {
+        this.errorMessage = '';
+      }, 2000);
+      return;
+    }
+
+    if (this.selectedDate === null) {
+      this.errorMessage = 'Please select  task date.';
+      setTimeout(() => {
+        this.errorMessage = '';
+      }, 2000);
+      return;
+    }
+
+    const dateString = getStringFromDate(this.selectedDate);
+
+    this.planService
+      .getContactPlans(dateString, this.selectedPerson._id || '')
+      .subscribe(
+        (data) => {
+          data.forEach((record) => {
+            let per = record.contactPeriod;
+            console.log('recod.contactPeriod', record.contactPeriod);
+            let idx = -1;
+
+            idx = this.dataSource.findIndex(
+              (planItem) => planItem.contactPeriod === per
+            );
+
+            // for (let item of this.dataSource) {
+            //   console.log('imte contactPeriod ', item.contactPeriod);
+            //   console.log(
+            //     'item.pre === rep,',
+            //     item.contactPeriod,
+            //     per,
+            //     item.contactPeriod === per
+            //   );
+            // }
+
+            if (idx >= 0) {
+              this.dataSource.splice(idx, 1, { ...record });
+            }
+          });
+          this.table.renderRows();
+        },
+        (err) => {
+          this.errorMessage = err;
+          setTimeout(() => {
+            this.errorMessage = '';
+          }, 3000);
+        }
+      );
+  }
+
+  deletePLan(arg: ContactPlan) {
     this.dialogService
       .confirmDialog({
         title: 'Scheduling',
@@ -64,88 +212,212 @@ export class SchedulerComponent implements OnInit {
         confirmText: 'Yes',
         cancelText: 'No',
       })
-      .subscribe((confirm) => {
-        if (confirm) {
-          const idx = this.dataSource.findIndex(
-            (element) => element.period === arg.period
-          );
-          if (idx >= 0) {
-            this.dataSource[idx].name = null;
+      .pipe(
+        switchMap((confirm) => {
+          if (confirm) {
+            return this.planService.deleteContactPlan(arg._id);
+          } else {
+            return of(null);
           }
+        })
+      )
+      .subscribe(
+        (data) => {
+          let idx = this.dataSource.findIndex(
+            (plan) => plan.contactPeriod === data?.contactPeriod
+          );
+          if (idx >= 0 && data !== null) {
+            this.dataSource[idx].customerId = '';
+            this.dataSource[idx].customerName = '';
+          }
+
+          this.table.renderRows();
+        },
+        (err) => {
+          this.errorMessage = err;
+          setTimeout(() => {
+            this.errorMessage = '';
+          }, 3000);
         }
-      });
-  }
-
-  inputPersonChange(inputPerson: string): void {
-    this.isValidPerson = true;
-    if (inputPerson.length > 0) {
-      this.personList = this.allPersons.filter((person) =>
-        person.toLowerCase().includes(inputPerson.toLowerCase())
       );
-    } else {
-      this.personList = this.allPersons.slice(0);
-    }
-    this.showPersonList = true;
   }
 
-  selectPersonByEnter(inputPerson: string): void {
-    let idx = -1;
-    this.isValidPerson = false;
-    if (inputPerson.trim().length === 0) {
-      this.selectedPerson = '';
-      this.isValidPerson = true;
-    }
-    if (inputPerson.trim().length > 0) {
-      this.selectedPerson = inputPerson.trim();
-      idx = this.allPersons.findIndex((person) =>
-        person.toLowerCase().includes(inputPerson.toLowerCase())
-      );
-      if (idx >= 0) {
-        this.isValidPerson = true;
-        this.selectedPerson = this.allPersons[idx];
-      }
-    }
-
-    this.showPersonList = false;
-  }
-
-  getTaskList(): void {
-    if (!(this.isValidPerson && this.selectedPerson.length >= 1)) {
+  addPlan(argPlan: ContactPlan): void {
+    if (this.selectedPerson === null) {
+      this.errorMessage = 'Please select  salesperson.';
+      setTimeout(() => {
+        this.errorMessage = '';
+      }, 2000);
       return;
     }
-  }
-  selectDate(event: DayInCalendar | null): void {
-    this.selectedDay = event ? event.dateElement : null;
-  }
 
-  selectPerson(event: MatSelectionListChange): void {
-    this.showPersonList = false;
-    this.isValidPerson = true;
-    this.selectedPerson = event.source.selectedOptions.selected[0]?.value;
-  }
+    if (this.selectedDate === null) {
+      this.errorMessage = 'Please select task date.';
+      setTimeout(() => {
+        this.errorMessage = '';
+      }, 2000);
+      return;
+    }
 
-  addClient(selectedPeriod: ScheduleElement): void {
+    const dateString = getStringFromDate(this.selectedDate);
+
     const dataList = {
-      title: 'Select a Client',
-      dataArray: [
-        { _id: '1', name: 'aa', other: 'aa1' },
-        { _id: '2', name: 'bb', other: 'bb1' },
-      ],
+      title: 'Select a Customer',
+      dataArray: this.allCustomers,
     };
     const dialogRef = this.dialog.open(DataListComponent, {
       width: '80%',
-      maxWidth: '600px',
+      maxWidth: '400px',
       data: dataList,
+      disableClose: true,
     });
-    dialogRef.afterClosed().subscribe((element) => {
-      if (element !== false) {
-        const idx = this.dataSource.findIndex(
-          (data) => data.period === selectedPeriod.period
-        );
-        if (idx >= 0) {
-          this.dataSource[idx].name = element.name;
+    dialogRef
+      .afterClosed()
+      .pipe(
+        switchMap((returnValue) => {
+          if (returnValue) {
+            this.selectedCustomer = returnValue;
+            const addPart = {
+              customerId: this.selectedCustomer?._id,
+              salespersonId: this.selectedPerson?._id,
+              contactDate: dateString,
+              contactPeriod: argPlan.contactPeriod,
+            };
+            return this.planService.addContactPlan(addPart);
+          } else {
+            return of(null);
+          }
+        })
+      )
+      .subscribe(
+        (data) => {
+          let idx = this.dataSource.findIndex(
+            (plan) => plan.contactPeriod === data?.contactPeriod
+          );
+          if (idx >= 0 && data !== null) {
+            this.dataSource[idx]._id = data._id;
+            this.dataSource[idx].customerName =
+              this.selectedCustomer?.name || '';
+            this.dataSource[idx].customerId = this.selectedCustomer?._id || '';
+            this.dataSource[idx].salespersonId = this.selectedPerson?._id || '';
+          }
+
+          this.table.renderRows();
+        },
+        (err) => {
+          this.errorMessage = err;
+          setTimeout(() => {
+            this.errorMessage = '';
+          }, 3000);
         }
-      }
-    });
+      );
   }
+
+  updatePlan(initPlan: ContactPlan): void {
+    if (!this.selectedPerson) {
+      this.errorMessage = 'Please select salesperson firstly.';
+      setTimeout(() => {
+        this.errorMessage = '';
+      }, 3000);
+      return;
+    }
+
+    if (!this.selectedDate) {
+      this.errorMessage = 'Please select  date firstly.';
+      setTimeout(() => {
+        this.errorMessage = '';
+      }, 3000);
+      return;
+    }
+
+    const dataList = {
+      title: 'Select a Customer',
+      dataArray: this.allCustomers,
+    };
+    const dialogRef = this.dialog.open(DataListComponent, {
+      width: '80%',
+      maxWidth: '400px',
+      data: dataList,
+      disableClose: true,
+    });
+    dialogRef
+      .afterClosed()
+      .pipe(
+        switchMap((returnValue) => {
+          if (returnValue) {
+            this.selectedCustomer = returnValue;
+            const updatepart = {
+              customerId: this.selectedCustomer?._id,
+              salespersonId: initPlan.salespersonId,
+              contactDate: initPlan.contactDate,
+              contactPeriod: initPlan.contactPeriod,
+            };
+            return this.planService.updateContactPlan(initPlan._id, updatepart);
+          } else {
+            return of(null);
+          }
+        })
+      )
+      .subscribe(
+        (data) => {
+          let idx = this.dataSource.findIndex(
+            (plan) => plan.contactPeriod === data?.contactPeriod
+          );
+          if (idx >= 0 && data !== null) {
+            this.dataSource[idx]._id = data._id;
+            this.dataSource[idx].customerName =
+              this.selectedCustomer?.name || '';
+            this.dataSource[idx].customerId = this.selectedCustomer?._id || '';
+          }
+          this.table.renderRows();
+        },
+        (err) => {
+          this.errorMessage = err;
+          setTimeout(() => {
+            this.errorMessage = '';
+          }, 3000);
+        }
+      );
+  }
+}
+
+// startHour: 8(:00)  endHour: 17(:00)
+function createNewContactPlan(
+  startHour: number,
+  endHour: number
+): ContactPlan[] {
+  let planArray: ContactPlan[] = [];
+  for (var i = startHour; i < endHour; i++) {
+    let start = i.toString();
+    let finalStart = start.padStart(2, '0') + ':00'; // 8:00 -> 08:00
+    let end = (i + 1).toString();
+    let finalEnd = end.padStart(2, '0') + ':00'; // 8:00 -> 08:00
+    let plan = {
+      _id: '',
+      customerId: '',
+      customerName: '',
+      contactDate: '',
+      contactPeriod: `${finalStart}-${finalEnd}`, // 09:00-10:00
+      salespersonId: '',
+      salespersonName: '',
+    };
+    planArray.push(plan);
+  }
+
+  return planArray;
+}
+
+function getStringFromDate(argDate: Date) {
+  const year = argDate.getFullYear();
+  const month = argDate.getMonth() + 1;
+  const day = argDate.getDate();
+
+  let monthString = month.toString();
+  let dayString = day.toString();
+  let finalMonth = monthString.padStart(2, '0');
+  let finalDay = dayString.padStart(2, '0'); //-9
+
+  // YYYY-mm-DD
+  const dateString = year.toString() + '-' + finalMonth + '-' + finalDay;
+  return dateString;
 }

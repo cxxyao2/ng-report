@@ -15,6 +15,7 @@ export class TodoComponent implements OnInit {
   @ViewChild(GoogleMap, { static: false }) map!: GoogleMap; // false: resolve after change detection.
   @ViewChild(MapInfoWindow, { static: false }) info!: MapInfoWindow;
 
+  errorMessage = '';
   zoom = 12;
   center!: google.maps.LatLngLiteral;
   options: google.maps.MapOptions = {

@@ -77,3 +77,4 @@
   <button (click)="logCenter()">Log center</button>
   <button (click)="addMarker()">Add marker</button>
 </div>
+<app-error *ngIf="errorMessage" [message]="errorMessage"></app-error>

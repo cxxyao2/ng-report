@@ -101,7 +101,7 @@
             Download
           </button>
           <div class="mat-elevation-z8">
-            <table mat-table [dataSource]="dataSource" *ngIf="dataSource">
+            <table mat-table matSort [dataSource]="dataSource" *ngIf="dataSource">
               <!-- Position Column -->
               <ng-container matColumnDef="position">
                 <th mat-header-cell *matHeaderCellDef>No.</th>
@@ -112,7 +112,7 @@
 
               <!-- Order Data Column -->
               <ng-container matColumnDef="date">
-                <th mat-header-cell *matHeaderCellDef>Date</th>
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>Date</th>
                 <td mat-cell *matCellDef="let element">
                   {{ element.orderDate | date }}
                 </td>
@@ -120,7 +120,7 @@
 
               <!-- Product Name Column -->
               <ng-container matColumnDef="product">
-                <th mat-header-cell *matHeaderCellDef>Product</th>
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>Product</th>
                 <td mat-cell *matCellDef="let element">
                   {{ element.productName }}
                 </td>
@@ -128,7 +128,7 @@
 
               <!-- Customer Name Column -->
               <ng-container matColumnDef="customer">
-                <th mat-header-cell *matHeaderCellDef>Customer</th>
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>Customer</th>
                 <td mat-cell *matCellDef="let element">
                   {{ element.customerName }}
                 </td>
@@ -136,7 +136,7 @@
 
               <!-- Amount Column-->
               <ng-container matColumnDef="amount">
-                <th mat-header-cell *matHeaderCellDef>Amount</th>
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>Amount</th>
                 <td mat-cell *matCellDef="let element">{{ element.amount }}</td>
               </ng-container>
 

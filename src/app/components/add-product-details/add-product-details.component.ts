@@ -24,7 +24,7 @@ export class AddProductDetailsComponent implements OnInit {
   nameControl = new FormControl(this.data.product.name, [
     Validators.required,
     Validators.minLength(5),
-    Validators.maxLength(100),
+    Validators.maxLength(20),
   ]);
   descriptionControl = new FormControl(this.data.product.description, [
     Validators.required,
@@ -106,7 +106,7 @@ export class AddProductDetailsComponent implements OnInit {
     }
 
     if (this.nameControl.hasError('maxlength')) {
-      return 'Name can be max 100 characters long.';
+      return 'Name can be max 20 characters long.';
     }
     return 'Enter a valid name';
   }

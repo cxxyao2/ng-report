@@ -66,7 +66,7 @@ export class ReportThisMonthComponent implements OnInit, AfterViewInit {
     'amount',
     'sales',
   ];
-  dataSource?: MatTableDataSource<PeriodicElement>;
+  dataSource = new MatTableDataSource<PeriodicElement>();
 
   constructor(private dataService: ReportsService) {}
 
@@ -105,14 +105,18 @@ export class ReportThisMonthComponent implements OnInit, AfterViewInit {
         this.elementData.push({
           position: index + 1,
           orderDate: initOrder.createDate,
-          productName: initOrder.products_info.name,
-          customerName: initOrder.customers_info.name,
+          productName: initOrder.products_info
+            ? initOrder.products_info.name
+            : 'deleted product',
+          customerName: initOrder.customers_info
+            ? initOrder.customers_info.name
+            : 'deleted customer',
           amount: initOrder.amount,
           salespersonName: initOrder.salespersons_info.name,
         });
       });
 
-      this.dataSource = new MatTableDataSource(this.elementData);
+      this.dataSource.data = this.elementData;
       this.dataSource.sort = this.sort;
       this.dataSource.paginator = this.paginator;
     }

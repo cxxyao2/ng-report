@@ -34,6 +34,7 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
   - stepper
   - reactive form , template-driven form, form input autocomplete, checkbox, image...
   - custom FormControl (chips group)
+  - drag && drop
   - ...
 - SSR: server-side rendering
 - Unify error message component

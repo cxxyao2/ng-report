@@ -64,7 +64,7 @@ export class AppComponent implements AfterViewInit {
     {
       label: 'Lead Management',
       icon: 'person_add',
-      route: 'capture-client',
+      route: 'add-client',
     },
     {
       label: 'Personal Data',

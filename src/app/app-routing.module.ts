@@ -55,7 +55,7 @@ const routes: Routes = [
   { path: 'todo', component: TodoComponent }, // salesperson role
   { path: 'product-list', component: ProductListComponent }, // salesperson role
   { path: 'pipeline', component: PipelinesComponent }, // manager, salesperson
-  { path: 'capture-client', component: AddClientComponent }, // salesperson role
+  { path: 'add-client', component: AddClientComponent }, // salesperson role
 
   {
     path: 'personal',

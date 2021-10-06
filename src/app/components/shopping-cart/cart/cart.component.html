@@ -1,5 +1,6 @@
 <mat-card class="cart-wrapper">
   <h2>Shopping Cart</h2>
+  <h3>{{ getCustomerName() }}</h3>
   <hr class="cart-divider" />
   <div *ngIf="cartSrv.items.length === 0">Your cart is Empty.</div>
 

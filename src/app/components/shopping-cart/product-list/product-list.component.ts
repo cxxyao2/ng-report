@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
-import { Observable } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { map, startWith, switchMap } from 'rxjs/operators';
 import { Product } from 'src/app/models/product';
 import { ProductService } from 'src/app/services/product.service';
@@ -16,11 +16,16 @@ import { environment } from 'src/environments/environment';
   styleUrls: ['./product-list.component.scss'],
 })
 export class ProductListComponent implements OnInit {
-  productList?: Observable<Product[]>;
+  categories: string[] = ['Gasoline', 'Diesel', 'Lubricant'];
+  chipsControl = new FormControl(['Gasoline']);
+
+  productList: Product[] = [];
+  filteredProductList: Product[] = [];
   customerControl = new FormControl();
   customers: Customer[] = [];
   filteredOptions?: Observable<Customer[]>;
   errorMessage = '';
+  sub?: Subscription;
 
   constructor(
     private searchSrv: SearchProductService,
@@ -31,11 +36,16 @@ export class ProductListComponent implements OnInit {
 
   ngOnInit(): void {
     // this.productList = this.productService.getProducts();
-    this.productList = this.searchSrv.searchTermObs.pipe(
-      switchMap((term: any) => {
-        return this.productService.getProducts(term);
-      })
-    );
+    this.sub = this.searchSrv.searchTermObs
+      .pipe(
+        switchMap((term: any) => {
+          return this.productService.getProducts(term);
+        })
+      )
+      .subscribe((data) => {
+        this.productList = [...data];
+        this.filteredProductList = [...data];
+      });
     this.customerSrv.getCustomers().subscribe((data) => {
       this.customers = [...data];
     });
@@ -43,6 +53,17 @@ export class ProductListComponent implements OnInit {
       startWith(''),
       map((value) => this._filter(value))
     );
+    this.chipsControl.valueChanges.subscribe((data) => {
+      this.filteredProductList = [];
+      data.forEach((category: string) => {
+        let result = this.productList.filter(
+          (product) =>
+            category.toLowerCase().indexOf(product.category.toLowerCase()) >= 0
+        );
+        if (result && result.length >= 1)
+          this.filteredProductList = [...this.filteredProductList, ...result];
+      });
+    });
   }
 
   private _filter(value: string): Customer[] {

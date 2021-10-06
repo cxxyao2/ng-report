@@ -3,6 +3,13 @@ table {
   width: 100%;
 }
 
+tr.example-element-row:hover {
+  background: whitesmoke;
+}
+
+tr.example-element-row:active {
+  background: #efefef;
+}
 .mat-form-field {
   font-size: 14px;
   width: 100%;

@@ -21,6 +21,14 @@ export class CartComponent implements OnInit {
 
   ngOnInit(): void {}
 
+  getCustomerName() {
+    if (this.cartSrv.currentCustomer) {
+      return 'Client: ' + this.cartSrv.currentCustomer.name;
+    } else {
+      return '';
+    }
+  }
+
   printInvoice(): void {
     const customerId = this.cartSrv.currentCustomer?._id;
     let orderHeaderId = '';

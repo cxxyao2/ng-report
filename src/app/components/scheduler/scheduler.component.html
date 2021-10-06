@@ -1,6 +1,6 @@
 <div fxLayout="row wrap" fxLayoutGap="16px grid">
   <div class="calendar-section" fxFlex="50%" fxFlex.xs="100%">
-    <app-calendar (itemEvent)="selectDate($event)"></app-calendar>
+    <app-calendar (itemEvent)="selectPLanDate($event)"></app-calendar>
   </div>
   <div class="task-section" fxFlex="50%" fxFlex.xs="100%">
     <div class="search-area">
@@ -8,24 +8,25 @@
         type="text"
         class="search-area_input"
         autocomplete
-        placeholder="search salesperson"
-        [(ngModel)]="selectedPerson"
+        placeholder="Enter salesperson..."
+        maxlength=20
+        [(ngModel)]="enteredSalesperson"
         (keyup.enter)="selectPersonByEnter(input.value)"
-        (ngModelChange)="inputPersonChange(input.value)"
+        (ngModelChange)="onInputChange(input.value)"
         #input
       />
-      <button mat-button class="search-area_button">
+      <button mat-button class="search-area_button" (click)="getTaskList()">
         <mat-icon color="primary">search</mat-icon>
       </button>
     </div>
-    <ng-container *ngIf="!isValidPerson && selectedPerson.trim().length > 0">
-      <mat-card class="search-area_error">
+    <ng-container *ngIf="!isValidPerson">
+      <mat-card class="search-area_input-error">
         No data matching the filter "{{ input.value }}".</mat-card
       >
     </ng-container>
 
     <div
-      *ngIf="showPersonList && personList.length >= 1"
+      *ngIf="showPersonList && filterdPerson.length >= 1"
       class="data-list-wrapper"
     >
       <mat-card>
@@ -34,8 +35,11 @@
           [multiple]="false"
           (selectionChange)="selectPerson($event)"
         >
-          <mat-list-option *ngFor="let person of personList" [value]="person">
-            {{ person }}
+          <mat-list-option
+            *ngFor="let person of filterdPerson"
+            [value]="person.name"
+          >
+            {{ person.name }}
           </mat-list-option>
         </mat-selection-list>
       </mat-card>
@@ -49,22 +53,22 @@
           <td mat-cell *matCellDef="let element">
             <div
               class="th_icon bigger-padding"
-              *ngIf="!element.name"
-              (click)="addClient(element)"
+              *ngIf="!element.customerName"
+              (click)="addPlan(element)"
             >
               <mat-icon>add</mat-icon>
             </div>
             <div
               class="th_icon"
-              *ngIf="element.name"
-              (click)="addClient(element)"
+              *ngIf="element.customerName"
+              (click)="updatePlan(element)"
             >
               <mat-icon>edit</mat-icon>
             </div>
             <div
               class="th_icon"
-              *ngIf="element.name"
-              (click)="openDeleteDialog(element)"
+              *ngIf="element.customerName"
+              (click)="deletePLan(element)"
             >
               <mat-icon>delete</mat-icon>
             </div>
@@ -73,27 +77,27 @@
         <!-- Name Column -->
         <ng-container matColumnDef="name">
           <th mat-header-cell *matHeaderCellDef>Name</th>
-          <td mat-cell *matCellDef="let element">{{ element.name }}</td>
+          <td mat-cell *matCellDef="let element">{{ element.customerName }}</td>
         </ng-container>
 
         <!-- Period Column -->
         <ng-container matColumnDef="period">
-          <th mat-header-cell *matHeaderCellDef class="text-right">Peroid</th>
+          <th mat-header-cell *matHeaderCellDef class="text-right">Period</th>
           <td mat-cell *matCellDef="let element" class="text-right">
-            {{ element.period }}
+            {{ element.contactPeriod }}
           </td>
         </ng-container>
 
-        <!-- Table Title SelectedDate Row -->
+        <!-- SelectedDate Row -->
         <ng-container matColumnDef="table-title">
           <th
             mat-header-cell
             *matHeaderCellDef
             colspan="3"
-            class="table-main-title"
+            class="selected-date-column"
           >
-            {{ selectedDay ? (selectedDay | date: "dd MMMM yyyy") : "" }}
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Task List
+            {{ selectedDate ? (selectedDate | date: "dd MMMM yyyy") : "" }}
+            &nbsp;&nbsp;&nbsp;&nbsp;Task List
           </th>
         </ng-container>
 
@@ -105,3 +109,4 @@
     </div>
   </div>
 </div>
+<app-error *ngIf="errorMessage" [message]="errorMessage"></app-error>

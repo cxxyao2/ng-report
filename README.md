@@ -38,6 +38,7 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
   - ...
 - SSR: server-side rendering
 - Unify error message component
+- Prevent memeory leak: Unsubscribe in ngOnDestroy + TakeUntil + ng lint
 
 ## back-end : mongodb mongoose express node.js
 

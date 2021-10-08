@@ -1,80 +1,99 @@
-<div class="header">
-  <h2>Contact Management</h2>
-  <div>
-    <mat-form-field appearance="fill">
-      <mat-label>Choose a date</mat-label>
-      <input matInput [matDatepicker]="picker" />
-      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-      <mat-datepicker #picker></mat-datepicker>
-    </mat-form-field>
-  </div>
-</div>
-
-<div fxLayout="row wrap" fxLayoutGap="16px grid">
-  <div fxFlex="50%" fxFlex.xs="100%">
-    <h3>Tour Plan</h3>
-
-    <div
-      cdkDropList
-      #todoList="cdkDropList"
-      [cdkDropListData]="todo"
-      [cdkDropListConnectedTo]="doneList"
-      class="list"
-      (cdkDropListDropped)="drop($event)"
-    >
-      <div class="list-item" *ngFor="let item of todo" cdkDrag>{{ item }}</div>
+<div>
+  <div class="header">
+    <h2>Contact Management</h2>
+    <div class="search-section">
+      <mat-form-field appearance="fill">
+        <mat-label>Choose a date</mat-label>
+        <input matInput [formControl]="dateControl" [matDatepicker]="picker" />
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+      </mat-form-field>
+      <button mat-raised-button (click)="getInitTask()">Get Init Task</button>
+      <button mat-raised-button color="primary" (click)="onSubmit()">
+        Confirm
+      </button>
     </div>
   </div>
 
-  <div fxFlex="50%" fxFlex.xs="100%">
-    <h3>Waiting List</h3>
-    <div
-      cdkDropList
-      #doneList="cdkDropList"
-      [cdkDropListData]="done"
-      [cdkDropListConnectedTo]="todoList"
-      class="list"
-      (cdkDropListDropped)="drop($event)"
-    >
-      <div class="list-item" *ngFor="let item of done" cdkDrag>{{ item }}</div>
+  <div *ngIf="initPlans.length >= 1; else noData">
+    <div fxLayout="row wrap" fxLayoutGap="16px grid">
+      <div fxFlex="45%" fxFlex.xs="100%">
+        <h3>Visit Plan</h3>
+
+        <div
+          cdkDropList
+          id="todo"
+          #todoList="cdkDropList"
+          [cdkDropListData]="todo"
+          [cdkDropListConnectedTo]="doneList"
+          class="list"
+          (cdkDropListDropped)="drop($event)"
+        >
+          <div
+            class="list-item"
+            *ngFor="let item of todo; let i = index"
+            cdkDrag
+          >
+            {{ getStringFromPosition(i) }}&nbsp;&nbsp;{{ item }}
+          </div>
+        </div>
+      </div>
+
+      <div fxFlex="45%" fxFlex.xs="100%">
+        <h3>Waiting List</h3>
+        <div
+          id="done"
+          cdkDropList
+          #doneList="cdkDropList"
+          [cdkDropListData]="done"
+          [cdkDropListConnectedTo]="todoList"
+          class="list"
+          (cdkDropListDropped)="drop($event)"
+        >
+          <div class="list-item" *ngFor="let item of done" cdkDrag>
+            {{ item }}
+          </div>
+        </div>
+      </div>
     </div>
+
+    <h3 class="todo-summary">
+      Summary: Today you need visit {{ todo.length }} clients and drive
+      {{ tourLength }} kilometers. Good trip.
+    </h3>
   </div>
 
-  <h3 class="todo-summary">
-    Summary: Today you need visit {{ todo.length }} clients and drive
-    {{ tourLength }} kilometers. Good ride.
-  </h3>
+  <ng-template #noData>
+    <mat-card>No data matching the criteria.</mat-card>
+  </ng-template>
+
+  <mat-divider style="margin: 8px auto"></mat-divider>
+
+  <div class="map-wrapper">
+    <google-map
+      height="500px"
+      width="100%"
+      [zoom]="zoom"
+      [center]="center"
+      [options]="options"
+      (mapClick)="click($event)"
+    >
+      <map-marker
+        #markerElem="mapMarker"
+        *ngFor="let marker of markers"
+        [position]="marker.position"
+        [label]="marker.label"
+        [title]="marker.title"
+        [options]="marker.options"
+        (mapClick)="openInfo(markerElem, marker.info)"
+      ></map-marker>
+
+      <map-info-window style="width: 150px; height: 150px; color: blue">{{
+        infoContent
+      }}</map-info-window>
+    </google-map>
+  </div>
 </div>
-<mat-divider style="margin: 8px auto"></mat-divider>
+<app-success *ngIf="successMessage" [message]="successMessage"></app-success>
 
-<div class="map-wrapper" style="margin-top: 16px">
-  <google-map
-    height="500px"
-    width="100%"
-    [zoom]="zoom"
-    [center]="center"
-    [options]="options"
-    (mapClick)="click($event)"
-  >
-    <map-marker
-      #markerElem="mapMarker"
-      *ngFor="let marker of markers"
-      [position]="marker.position"
-      [label]="marker.label"
-      [title]="marker.title"
-      [options]="marker.options"
-      (mapClick)="openInfo(markerElem, marker.info)"
-    ></map-marker>
-
-    <map-info-window style="width: 150px; height: 150px; color: blue">{{
-      infoContent
-    }}</map-info-window>
-  </google-map>
-
-  <!--Use custome zoom buttons-->
-  <button (click)="zoomIn()">Zoom in</button>
-  <button (click)="zoomOut()">Zoom out</button>
-  <button (click)="logCenter()">Log center</button>
-  <button (click)="addMarker()">Add marker</button>
-</div>
 <app-error *ngIf="errorMessage" [message]="errorMessage"></app-error>

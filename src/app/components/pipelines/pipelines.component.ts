@@ -1,8 +1,15 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { CustomerService } from 'src/app/services/customer.service';
 
-import { merge, Observable, of, Subject, Subscription } from 'rxjs';
-import { mapTo, mergeMap, skip, switchMap, tap } from 'rxjs/operators';
+import { merge, Observable, of, Subject } from 'rxjs';
+import {
+  mapTo,
+  mergeMap,
+  skip,
+  switchMap,
+  tap,
+  takeUntil,
+} from 'rxjs/operators';
 import { Customer } from 'src/app/models/customer';
 
 @Component({
@@ -11,11 +18,12 @@ import { Customer } from 'src/app/models/customer';
   styleUrls: ['./pipelines.component.scss'],
 })
 export class PipelinesComponent implements OnInit, OnDestroy {
+  destroy$: Subject<void> = new Subject<void>();
+
   customers: Customer[] = [];
   updateClick$ = new Subject<void>();
   showNotification$?: Observable<boolean>;
   errorMessage: string | null = null;
-  customerSub?: Subscription;
 
   constructor(private customerSrv: CustomerService) {}
 
@@ -28,17 +36,19 @@ export class PipelinesComponent implements OnInit, OnDestroy {
         this.customerSrv.createDate = new Date();
       })
     );
-    this.customerSub = merge(initialCustomers$, updatedUsers$).subscribe(
-      (data: any) => {
-        this.customers = data;
-      },
-      (err) => {
-        this.errorMessage = err;
-        setTimeout(() => {
-          this.errorMessage = null;
-        }, 3000);
-      }
-    );
+    merge(initialCustomers$, updatedUsers$)
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(
+        (data: any) => {
+          this.customers = data;
+        },
+        (err) => {
+          this.errorMessage = err;
+          setTimeout(() => {
+            this.errorMessage = null;
+          }, 3000);
+        }
+      );
 
     const show$ = this.getNew();
     const hide$ = this.updateClick$.pipe(mapTo(false));
@@ -72,18 +82,22 @@ export class PipelinesComponent implements OnInit, OnDestroy {
     if (idx >= 0) {
       this.customers.splice(idx, 1);
     }
-    this.customerSrv.updateCustomer(id, { isAuthorized: true }).subscribe(
-      (data) => {},
-      (err) => {
-        this.errorMessage = err;
-        setTimeout(() => {
-          this.errorMessage = null;
-        }, 3000);
-      }
-    );
+    this.customerSrv
+      .updateCustomer(id, { isAuthorized: true })
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(
+        (data) => {},
+        (err) => {
+          this.errorMessage = err;
+          setTimeout(() => {
+            this.errorMessage = null;
+          }, 3000);
+        }
+      );
   }
 
-  ngOnDestroy() {
-    this.customerSub?.unsubscribe();
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 }

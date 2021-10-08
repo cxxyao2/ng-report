@@ -5,7 +5,7 @@
 >
   <mat-toolbar color="primary" class="toolbar">
     <mat-toolbar-row
-      *ngIf="!(themeService.isHandset | async)"
+      *ngIf="(themeService.isHandset | async) === false"
       class="pliable-toolbar"
     >
       <span class="link-item"

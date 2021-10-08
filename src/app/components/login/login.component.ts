@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, OnDestroy } from '@angular/core';
 import { NgForm } from '@angular/forms';
 
 import { ActivatedRoute, Router } from '@angular/router';
@@ -6,15 +6,16 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth.service';
 import { CartService } from 'src/app/services/cart.service';
 import { CustomerService } from 'src/app/services/customer.service';
-import { switchMap } from 'rxjs/operators';
-import { of } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
+import { Subject } from 'rxjs';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss'],
 })
-export class LoginComponent implements OnInit {
+export class LoginComponent implements OnInit, OnDestroy {
+  destroy$: Subject<void> = new Subject<void>();
   unamePattern = '^[a-z0-9_-]{8,15}$';
   pwdPattern = '^(?=.*d)(?=.*[a-z])(?=.*[A-Z])(?!.*s).{6,12}$';
   mobnumPattern = '^((\\+91-?)|0)?[0-9]{10}$';
@@ -37,6 +38,7 @@ export class LoginComponent implements OnInit {
     }
     this.authService
       .login(form.controls.email.value, form.controls.password.value)
+      .pipe(takeUntil(this.destroy$))
       .subscribe(
         (result) => {
           const token = '';
@@ -55,5 +57,10 @@ export class LoginComponent implements OnInit {
       );
 
     // form.resetForm();
+  }
+
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 }

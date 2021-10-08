@@ -2,15 +2,13 @@ import {
   Component,
   ViewChild,
   ElementRef,
-  ViewEncapsulation,
   AfterViewInit,
-  Inject,
-  HostListener,
-  OnInit,
+  OnDestroy,
 } from '@angular/core';
 import { BreakpointObserver } from '@angular/cdk/layout';
 import { CookieService } from 'ngx-cookie-service';
-import { map } from 'rxjs/operators';
+import { map, takeUntil } from 'rxjs/operators';
+import { Subject } from 'rxjs';
 import { MatBottomSheet } from '@angular/material/bottom-sheet';
 import { CookiePopupComponent } from './components/cookie-popup/cookie-popup.component';
 
@@ -29,9 +27,10 @@ import { slideInAnimation } from 'src/app/animations/animations';
   styleUrls: ['./app.component.scss'],
   animations: [slideInAnimation],
 })
-export class AppComponent implements AfterViewInit {
+export class AppComponent implements AfterViewInit, OnDestroy {
   @ViewChild('drawer') appDrawer!: ElementRef;
   @ViewChild('spin') spin?: ElementRef;
+  destroy$: Subject<void> = new Subject<void>();
   title = 'ng-center';
   isDark = false;
   currentLanguage = 'english';
@@ -55,7 +54,7 @@ export class AppComponent implements AfterViewInit {
       route: 'yearly-analyze',
     },
     { label: 'Pipeline Management', icon: 'contact_page', route: 'pipeline' },
-    { label: 'Team Tasks', icon: 'edit_calendar', route: 'schedule' },
+    { label: 'Task Management', icon: 'edit_calendar', route: 'assign-task' },
   ];
 
   salespersonItems: NavItem[] = [
@@ -103,7 +102,10 @@ export class AppComponent implements AfterViewInit {
   ngOnInit(): void {
     this.breakpointObserver
       .observe(['(max-width: 800px)'])
-      .pipe(map((result) => result.matches))
+      .pipe(
+        map((result) => result.matches),
+        takeUntil(this.destroy$)
+      )
       .subscribe((data) => {
         this.themeService.setHandset(data);
       });
@@ -139,11 +141,14 @@ export class AppComponent implements AfterViewInit {
     }
   }
 
-  logout(): void {}
-
-  prepareRoute(outlet: RouterOutlet) {
+  prepareRoute(outlet: RouterOutlet): boolean {
     return (
       outlet && outlet.activatedRouteData && outlet.activatedRouteData.animation
     );
+  }
+
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 }

@@ -1,8 +1,8 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, OnDestroy } from '@angular/core';
 import { FormBuilder, Validators, FormGroup } from '@angular/forms';
 import { MatStepper, StepperOrientation } from '@angular/material/stepper';
-import { Observable, of } from 'rxjs';
-import { map, switchMap } from 'rxjs/operators';
+import { Observable, of, Subject } from 'rxjs';
+import { map, switchMap, takeUntil } from 'rxjs/operators';
 import { HttpClient } from '@angular/common/http';
 
 import { ThemeService } from 'src/app/services/theme.service';
@@ -17,8 +17,10 @@ import { environment } from 'src/environments/environment';
   styleUrls: ['./add-client.component.scss'],
   providers: [],
 })
-export class AddClientComponent implements OnInit {
+export class AddClientComponent implements OnInit, OnDestroy {
   @ViewChild('stepper') stepper!: MatStepper;
+  destroy$: Subject<void> = new Subject<void>();
+
   isLinear = false;
   firstFormGroup!: FormGroup;
   secondFormGroup!: FormGroup;
@@ -245,7 +247,8 @@ export class AddClientComponent implements OnInit {
           this.formData.append('myFile', this.file, newFileName);
           const url = environment.apiUrl;
           return this.http.post(`${url}/files/upload`, this.formData);
-        })
+        }),
+        takeUntil(this.destroy$)
       )
       .subscribe(
         (data: any) => {
@@ -265,5 +268,9 @@ export class AddClientComponent implements OnInit {
           }, 3000);
         }
       );
+  }
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 }

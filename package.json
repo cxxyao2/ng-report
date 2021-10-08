@@ -38,6 +38,7 @@
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "~12.2.4",
+    "@angular-extensions/lint-rules": "^1.2.1",
     "@angular/cli": "~12.2.4",
     "@angular/compiler-cli": "~12.2.4",
     "@types/jasmine": "~3.6.0",

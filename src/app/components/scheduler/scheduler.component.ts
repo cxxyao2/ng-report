@@ -16,6 +16,7 @@ import { User } from 'src/app/models/user';
 import { switchMap } from 'rxjs/operators';
 import { of } from 'rxjs';
 import { ContactPlan } from '../../models/contact-plan';
+import { convertDateToYYYYmmDD } from '../../utils/date-convert.util';
 
 /**
  * mock an autocomplete input
@@ -88,8 +89,8 @@ export class SchedulerComponent implements OnInit, AfterViewInit {
   /* Custom Data-list: Select Salesperson Begin */
   onInputChange(inputPerson: string): void {
     this.isValidPerson = true;
-    this.dataSource=[...this.initPlans];
-     this.table.renderRows();
+    this.dataSource = [...this.initPlans];
+    this.table.renderRows();
     if (inputPerson.length > 0) {
       this.filterdPerson = this.allPersons.filter(
         (person) =>
@@ -102,11 +103,11 @@ export class SchedulerComponent implements OnInit, AfterViewInit {
     this.showPersonList = true;
   }
 
-  selectPersonByEnter(inputPerson: string): void {
+  selectPersonByPressEnter(inputPerson: string): void {
     let idx = -1;
     this.isValidPerson = false;
-   this.dataSource = [...this.initPlans];
-     this.table.renderRows();
+    this.dataSource = [...this.initPlans];
+    this.table.renderRows();
     if (inputPerson.trim().length === 0) {
       this.selectedPerson = null;
       this.enteredSalesperson = '';
@@ -134,7 +135,7 @@ export class SchedulerComponent implements OnInit, AfterViewInit {
     this.showPersonList = false;
     this.isValidPerson = true;
     this.selectedPerson = null;
-   this.dataSource = [...this.initPlans];
+    this.dataSource = [...this.initPlans];
     this.table.renderRows();
     this.enteredSalesperson = event.source.selectedOptions.selected[0].value;
     const findPerson = this.allPersons.find(
@@ -164,7 +165,7 @@ export class SchedulerComponent implements OnInit, AfterViewInit {
       return;
     }
 
-    const dateString = getStringFromDate(this.selectedDate);
+    const dateString = convertDateToYYYYmmDD(this.selectedDate);
 
     this.planService
       .getContactPlans(dateString, this.selectedPerson._id || '')
@@ -259,7 +260,7 @@ export class SchedulerComponent implements OnInit, AfterViewInit {
       return;
     }
 
-    const dateString = getStringFromDate(this.selectedDate);
+    const dateString = convertDateToYYYYmmDD(this.selectedDate);
 
     const dataList = {
       title: 'Select a Customer',
@@ -405,19 +406,4 @@ function createNewContactPlan(
   }
 
   return planArray;
-}
-
-function getStringFromDate(argDate: Date) {
-  const year = argDate.getFullYear();
-  const month = argDate.getMonth() + 1;
-  const day = argDate.getDate();
-
-  let monthString = month.toString();
-  let dayString = day.toString();
-  let finalMonth = monthString.padStart(2, '0');
-  let finalDay = dayString.padStart(2, '0'); //-9
-
-  // YYYY-mm-DD
-  const dateString = year.toString() + '-' + finalMonth + '-' + finalDay;
-  return dateString;
 }

@@ -1,9 +1,16 @@
-import { AfterViewInit, OnInit, Component, ViewChild } from '@angular/core';
+import {
+  AfterViewInit,
+  OnInit,
+  Component,
+  ViewChild,
+  OnDestroy,
+} from '@angular/core';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { EChartsOption } from 'echarts';
 
-import { zip } from 'rxjs';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 import { MatPaginator } from '@angular/material/paginator';
 
 import * as fileConvert from 'src/app/utils/file-convert.util';
@@ -34,7 +41,10 @@ export interface GraphData {
   templateUrl: './report-this-year.component.html',
   styleUrls: ['./report-this-year.component.scss'],
 })
-export class ReportThisYearComponent implements OnInit, AfterViewInit {
+export class ReportThisYearComponent
+  implements OnInit, AfterViewInit, OnDestroy
+{
+  destroy$: Subject<void> = new Subject<void>();
   productData?: Array<any>;
   customerData?: any;
   salespersonData?: any;
@@ -114,17 +124,20 @@ export class ReportThisYearComponent implements OnInit, AfterViewInit {
     console.log('workder start', new Date());
     const year = this.queryDate.getFullYear();
     const month = this.queryDate.getMonth();
-    this.dataService.createProductData(counter).subscribe((data: any) => {
-      console.log('data is ', data);
-      this.productData = data.productsData;
-      this.customerData = data.customersData;
-      this.salespersonData = data.salesData;
-      this.initSalesData = data.initOrders;
-      this.setProductData();
-      this.setCustomerData();
-      this.setSalespersonData();
-      this.setInitSaleData();
-    });
+    this.dataService
+      .createProductData(counter)
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((data: any) => {
+        console.log('data is ', data);
+        this.productData = data.productsData;
+        this.customerData = data.customersData;
+        this.salespersonData = data.salesData;
+        this.initSalesData = data.initOrders;
+        this.setProductData();
+        this.setCustomerData();
+        this.setSalespersonData();
+        this.setInitSaleData();
+      });
     console.log('worker end', new Date());
     // this.dataService.createProductData(10000).subscribe(
     //   (data: any) => {
@@ -296,5 +309,10 @@ export class ReportThisYearComponent implements OnInit, AfterViewInit {
     if (this.dataCreateOption === 'func') {
       this.getDataFromFunction(counter2);
     }
+  }
+
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 }

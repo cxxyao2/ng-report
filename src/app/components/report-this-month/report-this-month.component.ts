@@ -1,9 +1,16 @@
-import { AfterViewInit, OnInit, Component, ViewChild } from '@angular/core';
+import {
+  AfterViewInit,
+  OnInit,
+  Component,
+  ViewChild,
+  OnDestroy,
+} from '@angular/core';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { EChartsOption } from 'echarts';
 import { ReportsService } from 'src/app/services/reports.service';
-import { zip } from 'rxjs';
+import { zip, Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 import { MatPaginator } from '@angular/material/paginator';
 
 import * as fileConvert from 'src/app/utils/file-convert.util';
@@ -33,7 +40,11 @@ export interface GraphData {
   templateUrl: './report-this-month.component.html',
   styleUrls: ['./report-this-month.component.scss'],
 })
-export class ReportThisMonthComponent implements OnInit, AfterViewInit {
+export class ReportThisMonthComponent
+  implements OnInit, AfterViewInit, OnDestroy
+{
+  destroy$: Subject<void> = new Subject<void>();
+
   productData?: Array<any>;
   customerData?: Array<any>;
   salespersonData?: Array<any>;
@@ -78,25 +89,27 @@ export class ReportThisMonthComponent implements OnInit, AfterViewInit {
       this.dataService.getSpecificMonthCustomerSalesData(year, month),
       this.dataService.getSpecificMonthSalespersonSalesData(year, month),
       this.dataService.getSpecificMonthInitSalesData(year, month)
-    ).subscribe(
-      (data) => {
-        this.productData = data[0];
-        this.customerData = data[1];
-        this.salespersonData = data[2];
-        this.initSalesData = data[3];
+    )
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(
+        (data) => {
+          this.productData = data[0];
+          this.customerData = data[1];
+          this.salespersonData = data[2];
+          this.initSalesData = data[3];
 
-        this.setProductData();
-        this.setCustomerData();
-        this.setSalespersonData();
-        this.setInitSaleData();
-      },
-      (err) => {
-        this.errorMessage = err;
-        setTimeout(() => {
-          this.errorMessage = '';
-        }, 3000);
-      }
-    );
+          this.setProductData();
+          this.setCustomerData();
+          this.setSalespersonData();
+          this.setInitSaleData();
+        },
+        (err) => {
+          this.errorMessage = err;
+          setTimeout(() => {
+            this.errorMessage = '';
+          }, 3000);
+        }
+      );
   }
 
   private setInitSaleData() {
@@ -277,5 +290,10 @@ export class ReportThisMonthComponent implements OnInit, AfterViewInit {
     const csvFileData = fileConvert.makeCSV(output);
     const fileName = 'initSalesData';
     fileConvert.saveBlobtoLocalFile(csvFileData, fileName + '.csv', 'text/csv');
+  }
+
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 }

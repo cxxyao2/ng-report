@@ -7,8 +7,8 @@ export interface Customer {
   imageUrl?: string;
   credit: string;
 
-  latitude?: number;
-  longitude?: number;
+  latitude?: string;
+  longitude?: string;
   isAuthorized?: boolean;
 
   createDate?: Date;

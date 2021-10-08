@@ -46,6 +46,7 @@ export class CartComponent implements OnInit {
       )
       .subscribe(
         () => {
+          this.cartSrv.items = [];
           this.router.navigate(['print', orderHeaderId], {
             relativeTo: this.route,
             queryParamsHandling: 'preserve',

@@ -49,7 +49,7 @@ const routes: Routes = [
   { path: 'add-product', component: AddProductComponent }, // administrator role
   { path: 'authorize', component: AddRoleToUserComponent }, // administrator role
   { path: 'list-logs', component: LoglistComponent }, // administrator role
-  { path: 'schedule', component: SchedulerComponent }, // manager role
+  { path: 'assign-task', component: SchedulerComponent }, // manager role
   { path: 'monthly-analyze', component: ReportThisMonthComponent }, // manager role
   { path: 'yearly-analyze', component: ReportThisYearComponent }, // manager role
   { path: 'todo', component: TodoComponent }, // salesperson role

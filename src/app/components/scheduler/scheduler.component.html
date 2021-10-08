@@ -11,7 +11,7 @@
         placeholder="Enter salesperson..."
         maxlength=20
         [(ngModel)]="enteredSalesperson"
-        (keyup.enter)="selectPersonByEnter(input.value)"
+        (keyup.enter)="selectPersonByPressEnter(input.value)"
         (ngModelChange)="onInputChange(input.value)"
         #input
       />

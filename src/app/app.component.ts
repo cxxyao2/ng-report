@@ -71,11 +71,11 @@ export class AppComponent implements AfterViewInit, OnDestroy {
       route: 'personal',
       children: [
         {
-          label: 'Sales Pipeline',
+          label: 'Contact Customer',
           icon: 'contact_page',
-          route: 'personal/clients',
+          route: 'personal/contact-customer',
         },
-        { label: 'Sales Data', icon: 'sell', route: 'personal/orders' },
+        { label: 'Order Review', icon: 'sell', route: 'personal/orders' },
       ],
     },
   ];

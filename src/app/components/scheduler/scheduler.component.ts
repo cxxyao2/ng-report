@@ -99,7 +99,6 @@ export class SchedulerComponent implements OnInit, AfterViewInit {
     } else {
       this.filterdPerson = this.allPersons.slice(0);
     }
-
     this.showPersonList = true;
   }
 
@@ -361,7 +360,7 @@ export class SchedulerComponent implements OnInit, AfterViewInit {
       )
       .subscribe(
         (data) => {
-          let idx = this.dataSource.findIndex(
+          const idx = this.dataSource.findIndex(
             (plan) => plan.contactPeriod === data?.contactPeriod
           );
           if (idx >= 0 && data !== null) {
@@ -387,13 +386,13 @@ function createNewContactPlan(
   startHour: number,
   endHour: number
 ): ContactPlan[] {
-  let planArray: ContactPlan[] = [];
-  for (var i = startHour; i < endHour; i++) {
-    let start = i.toString();
-    let finalStart = start.padStart(2, '0') + ':00'; // 8:00 -> 08:00
-    let end = (i + 1).toString();
-    let finalEnd = end.padStart(2, '0') + ':00'; // 8:00 -> 08:00
-    let plan = {
+  const planArray: ContactPlan[] = [];
+  for (let i = startHour; i < endHour; i++) {
+    const start = i.toString();
+    const finalStart = start.padStart(2, '0') + ':00'; // 8:00 -> 08:00
+    const end = (i + 1).toString();
+    const finalEnd = end.padStart(2, '0') + ':00'; // 8:00 -> 08:00
+    const plan = {
       _id: '',
       customerId: '',
       customerName: '',

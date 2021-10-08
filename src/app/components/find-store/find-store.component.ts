@@ -130,7 +130,7 @@ export class FindStoreComponent implements OnInit, AfterViewInit {
     });
   }
 
-  openInfo(marker: any, content = ''): void {
+  openInfo(marker: MapMarker, content = ''): void {
     this.infoContent = content;
     this.info.open(marker);
   }

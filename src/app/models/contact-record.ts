@@ -10,5 +10,6 @@ export interface ContactRecord {
   latitude: number;
   longitude: number;
   notes: string;
+  isVisited: boolean;
   _id?: string;
 }

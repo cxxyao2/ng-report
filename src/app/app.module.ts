@@ -51,7 +51,6 @@ import { CalendarComponent } from './components/calendar/calendar.component';
 import { ConfirmComponent } from './shared/confirm/confirm.component';
 import { DataListComponent } from './shared/data-list/data-list.component';
 import { CookiePopupComponent } from './components/cookie-popup/cookie-popup.component';
-import { ClientsComponent } from './components/clients/clients.component';
 import { LoginComponent } from './components/login/login.component';
 import { SignUpComponent } from './components/sign-up/sign-up.component';
 import { FooterComponent } from './components/footer/footer.component';
@@ -77,6 +76,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { LayoutModule } from '@angular/cdk/layout';
 import { AddProductDetailsComponent } from './components/add-product-details/add-product-details.component';
+import { ContactCustomerComponent } from './components/contact-customer/contact-customer.component';
 
 @NgModule({
   declarations: [
@@ -88,7 +88,6 @@ import { AddProductDetailsComponent } from './components/add-product-details/add
     CalendarComponent,
     ConfirmComponent,
     CookiePopupComponent,
-    ClientsComponent,
     ChangePasswordComponent,
     CartComponent,
     CartItemComponent,
@@ -130,6 +129,7 @@ import { AddProductDetailsComponent } from './components/add-product-details/add
     UniquePasswordDirective,
     WishListComponent,
     AddProductDetailsComponent,
+    ContactCustomerComponent,
   ],
   imports: [
     BrowserModule,

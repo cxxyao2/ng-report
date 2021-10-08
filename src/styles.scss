@@ -18,6 +18,7 @@
 @import "../src/app/components/report-this-year/report-this-year";
 @import "../src/app/components/toolbar/search-box/search-box";
 @import "../src/app/components/add-product-details/product-details";
+@import "../src/app/components/contact-customer/contact-customer";
 
 html,
 body {
@@ -70,6 +71,7 @@ h5 {
 @include report-this-year-color($app-theme);
 @include searchbox-color($app-theme);
 @include product-details-color($app-theme);
+@include contact-customer-color($app-theme);
 
 .darkMode {
   @include mat.all-component-colors($dark-theme);
@@ -90,6 +92,7 @@ h5 {
   @include report-this-year-color($dark-theme);
   @include searchbox-color($dark-theme);
   @include product-details-color($dark-theme);
+  @include contact-customer-color($dark-theme);
 }
 
 @keyframes fadein {

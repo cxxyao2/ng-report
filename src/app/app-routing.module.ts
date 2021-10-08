@@ -20,7 +20,6 @@ import { SchedulerComponent } from './components/scheduler/scheduler.component';
 import { AddProductComponent } from './components/add-product/add-product.component';
 import { AddRoleToUserComponent } from './components/add-role-to-user/add-role-to-user.component';
 import { CalendarComponent } from './components/calendar/calendar.component';
-import { ClientsComponent } from './components/clients/clients.component';
 import { LoginComponent } from './components/login/login.component';
 import { SignUpComponent } from './components/sign-up/sign-up.component';
 import { PipelinesComponent } from './components/pipelines/pipelines.component';
@@ -31,6 +30,7 @@ import { ChangePasswordComponent } from './components/change-password/change-pas
 import { ReportThisMonthComponent } from './components/report-this-month/report-this-month.component';
 import { ReportThisYearComponent } from './components/report-this-year/report-this-year.component';
 import { OrderQueryComponent } from './components/order-query/order-query.component';
+import { ContactCustomerComponent } from './components/contact-customer/contact-customer.component';
 
 const routes: Routes = [
   { path: 'calendar', component: CalendarComponent },
@@ -60,7 +60,7 @@ const routes: Routes = [
   {
     path: 'personal',
     children: [
-      { path: 'clients', component: ClientsComponent },
+      { path: 'contact-customer', component: ContactCustomerComponent },
       { path: 'orders', component: OrderQueryComponent },
     ],
   }, // salesperson role
@@ -93,6 +93,7 @@ const routes: Routes = [
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule],
+
+exports: [RouterModule],
 })
 export class AppRoutingModule {}

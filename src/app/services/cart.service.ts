@@ -10,6 +10,7 @@ import { User } from '../models/user';
 import { AuthService } from './auth.service';
 import { constants } from 'src/app/config/constants';
 import { concatMap, switchMap, catchError } from 'rxjs/operators';
+import { convertDateToYYYYmmDD } from '../utils/date-convert.util';
 
 @Injectable({
   providedIn: 'root',
@@ -125,16 +126,9 @@ export class CartService {
     // secondly, save order detail with header information
     const headerUrl = environment.apiUrl + '/orderheaders';
     const orderDate = new Date();
-    const year = orderDate.getFullYear();
-    const month = orderDate.getMonth() + 1;
-    const day = orderDate.getDate();
 
-    let monthString = month.toString();
-    if (month < 10) {
-      monthString = '0' + month;
-    }
-    const orderDateString = year.toString() + '-' + monthString + '-' + day;
-
+    const orderDateString = convertDateToYYYYmmDD(orderDate);
+    
     const subTotal = this.getAmount();
     const taxTPS = subTotal * constants.tps;
     const taxTVQ = subTotal * constants.tvq;
@@ -142,7 +136,7 @@ export class CartService {
 
     const selectedItems = this.items.filter((item) => item.selected === true);
 
-    // 1,add to order header
+    // 1,add an order header
     return this.http
       .post(headerUrl, {
         customerId: this.currentCustomer?._id,

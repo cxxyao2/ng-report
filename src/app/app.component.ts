@@ -75,7 +75,7 @@ export class AppComponent implements AfterViewInit, OnDestroy {
           icon: 'contact_page',
           route: 'personal/contact-customer',
         },
-        { label: 'Order Review', icon: 'sell', route: 'personal/orders' },
+        { label: 'Order Review', icon: 'sell', route: 'personal/order-review' },
       ],
     },
   ];

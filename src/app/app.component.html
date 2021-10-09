@@ -61,7 +61,10 @@
 
       <app-search-box></app-search-box>
 
-      <a class="nav-link" routerLink="/home"><mat-icon>home</mat-icon>Home</a>
+
+
+
+      <a class="nav-link" style="margin-left:16px;" routerLink="/home" *ngIf="(themeService.isHandset | async) === false"><mat-icon>home</mat-icon>Home</a>
 
       <a
         class="nav-link"
@@ -72,9 +75,9 @@
       </a>
       <a class="nav-link" *ngIf="this.authService.currentUser?.name">
         <span
-          ><mat-icon>account_circle</mat-icon
-          ><button mat-button [matMenuTriggerFor]="profileMenu">
-            Hello,{{this.authService.currentUser?.name}}
+          ><button mat-button [matMenuTriggerFor]="profileMenu"><mat-icon>account_circle</mat-icon
+          >
+            {{this.authService.currentUser?.name}}
           </button></span
         ></a
       >

@@ -5,8 +5,7 @@ import { catchError, retry, switchMap } from 'rxjs/operators';
 
 import { environment } from '../../environments/environment';
 import { OrderItem } from '../models/order-item';
-import { CartItem } from '../models/cart-item';
-import { CartService } from './cart.service';
+import { OrderHeader } from '../models/order-header';
 
 @Injectable({
   providedIn: 'root',
@@ -31,12 +30,24 @@ export class OrderService {
   }
 
   getFilterdOrders(
-    startDate: Date,
-    endDate: Date,
+    startDate: string,
+    endDate: string,
     salespersonId = ''
   ): Observable<OrderItem[]> {
-    // http://localhost:5000/api/Orders?startDate=2021-01-01&endDate=2022-12-01&userName=&content=insert
-    const requestUrl = `${this.configUrl}?startDate=${startDate}&endDate=${endDate}&createuser=${salespersonId}`;
+    // http://localhost:5000/api/Orders?startdate=2021-01-01&enddate=2022-12-01&userName=&content=insert
+    const requestUrl = `${this.configUrl}?startdate=${startDate}&enddate=${endDate}&createuser=${salespersonId}`;
     return this.http.get<OrderItem[]>(requestUrl).pipe(retry(1));
+  }
+
+  getOrderHeaders(
+    startDate: string,
+    endDate: string,
+    salespersonId = ''
+  ): Observable<OrderHeader[]> {
+    // http(s)://xxx.xxx.xxx.xxx:xxxx/api/orderheaders?startdate=2022-09-12&enddate=2022-09-13&createuser=2322332323
+    const requestUrl =
+      environment.apiUrl +
+      `/orderheaders?startdate=${startDate}&enddate=${endDate}&createuser=${salespersonId}`;
+    return this.http.get<OrderHeader[]>(requestUrl).pipe(retry(1));
   }
 }

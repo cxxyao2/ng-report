@@ -3,7 +3,7 @@
   width: 100%;
   min-width: 150px;
   height: 100%;
-  margin-right: 16px;
+  margin: 0 16px;
   mat-icon {
     position: absolute;
     right: 5px;
@@ -24,6 +24,6 @@ input {
   -webkit-appearance: none;
   transition: width 0.4s ease-in-out;
   &:focus {
-    width: 105%;
+    width: 102%;
   }
 }

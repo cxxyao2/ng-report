@@ -1,12 +1,12 @@
 import { Component, OnInit, AfterViewInit, ViewChild } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
+
 import { MatSort } from '@angular/material/sort';
+import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 
 import { MatDialog } from '@angular/material/dialog';
-
 import { SelectionModel } from '@angular/cdk/collections';
-
 import { LogfilterComponent } from '../logfilter/logfilter.component';
 import { LogRecord } from 'src/app/models/log-record';
 import { LogsService } from 'src/app/services/logs.service';
@@ -14,7 +14,6 @@ import { LogsService } from 'src/app/services/logs.service';
 import { of, from as observableFrom } from 'rxjs';
 
 import { catchError, concatMap, debounceTime, switchMap } from 'rxjs/operators';
-import { MatPaginator } from '@angular/material/paginator';
 import {
   ConfirmDialogData,
   DialogService,

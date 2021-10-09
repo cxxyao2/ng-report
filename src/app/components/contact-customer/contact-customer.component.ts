@@ -10,8 +10,9 @@ import { MapInfoWindow, MapMarker, GoogleMap } from '@angular/google-maps';
 import { ContactRecord } from 'src/app/models/contact-record';
 import { ContactRecordService } from 'src/app/services/contact-record.service';
 import { takeUntil } from 'rxjs/operators';
-import { AuthService } from 'src/app/services/auth.service';
 import { Subject } from 'rxjs';
+import { AuthService } from 'src/app/services/auth.service';
+
 
 import { convertDateToYYYYmmDD } from '../../utils/date-convert.util';
 

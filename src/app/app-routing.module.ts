@@ -61,7 +61,7 @@ const routes: Routes = [
     path: 'personal',
     children: [
       { path: 'contact-customer', component: ContactCustomerComponent },
-      { path: 'orders', component: OrderQueryComponent },
+      { path: 'order-review', component: OrderQueryComponent },
     ],
   }, // salesperson role
 
@@ -94,6 +94,6 @@ const routes: Routes = [
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
 
-exports: [RouterModule],
+  exports: [RouterModule],
 })
 export class AppRoutingModule {}

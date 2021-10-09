@@ -4,6 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { CartService } from 'src/app/services/cart.service';
 import { catchError, switchMap } from 'rxjs/operators';
 import { of } from 'rxjs';
+import { StringDecoder } from 'string_decoder';
 
 @Component({
   selector: 'app-cart',
@@ -21,7 +22,7 @@ export class CartComponent implements OnInit {
 
   ngOnInit(): void {}
 
-  getCustomerName() {
+  getCustomerName(): string {
     if (this.cartSrv.currentCustomer) {
       return 'Client: ' + this.cartSrv.currentCustomer.name;
     } else {

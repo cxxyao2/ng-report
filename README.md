@@ -21,7 +21,7 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 - dynamic views by content projection
 - multiple level menus
 - DI( Dependency Injection): Services have different visible(usable) levels, e.g. app, component, component view etc.
-- Flex Layout, responsive images, responsive layout
+- fxLayout, responsive images, responsive layout
 - Material Design
   - table:row/expanded row/array-based datasource/observable datasource/infinite scroll table... )
   - dialog /lazy loading dialog/ reusable confirm dialog

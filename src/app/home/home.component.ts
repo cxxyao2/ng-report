@@ -29,6 +29,7 @@ import { Component, OnInit } from '@angular/core';
             position: 'absolute',
             left: '0',
             top: '0',
+            opacity: 0,
             transform: 'translateX(100%)',
           })
         ),
@@ -38,19 +39,23 @@ import { Component, OnInit } from '@angular/core';
 })
 export class HomeComponent implements OnInit {
   activeSlideIdx = 0;
-  slides = ['a', 'b'];
+  slides = [0, 1, 2];
   constructor() {}
 
   ngOnInit(): void {}
 
-  plusSlides(incrementIdx: number) {
+  plusSlides(incrementIdx: number): void {
     this.activeSlideIdx += incrementIdx;
-    if (this.activeSlideIdx > 2) this.activeSlideIdx = 0;
-    if (this.activeSlideIdx < 0) this.activeSlideIdx = 2;
+    if (this.activeSlideIdx > 2) {
+      this.activeSlideIdx = 0;
+    }
+    if (this.activeSlideIdx < 0) {
+      this.activeSlideIdx = 2;
+    }
   }
 
-  jumpToSlide(index: number) {
+  jumpToSlide(index: number): void {
+    console.log('hi', index);
     this.activeSlideIdx = index;
-    console.log('index is', index);
   }
 }

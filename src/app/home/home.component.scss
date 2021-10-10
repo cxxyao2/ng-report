@@ -3,40 +3,59 @@
   width: 100%;
   border-radius: 8px;
   overflow: hidden;
-  box-shadow: 0px 2px 4px -1px rgba(0, 0, 255, 0.1),
-    0px 4px 5px 0px rgba(0, 0, 255, 0.1), 0px 1px 10px 0px rgba(0, 0, 255, 0.1);
 }
 
-.prev, .next {
+.slide-image {
+  width: 100%;
+  vertical-align: middle;
+  object-fit: cover;
+  height: 300px;
+}
+
+.slideshow-text-wrapper {
+  padding: 8px;
+}
+
+.slideshow-text-header {
+  margin-top: 16px;
+  font-size: 24px;
+}
+
+.slideshow-text-details {
+  margin: 16px 0;
+}
+
+.prev,
+.next {
   cursor: pointer;
   position: absolute;
   top: 50%;
   width: auto;
   margin-top: -22px;
   padding: 16px;
-  color: red;
+  color: #979797;
   font-weight: bold;
   font-size: 18px;
   transition: 0.6s ease;
   border-radius: 0 3px 3px 0;
+  &:hover {
+    background-color: #dadada;
+  }
 }
 
-/* 定位 "下一张" 按钮靠右 */
+
 .next {
   right: 0;
   border-radius: 3px 0 0 3px;
 }
 
-
-.slideshow-text {
-  padding:8px;
-}
 .slideshow-dots {
   position: absolute;
   bottom: 20px;
   right: 10px;
   text-align: center;
   list-style: none;
+  z-index: 100;
 }
 .slideshow-dots li {
   display: inline;
@@ -49,10 +68,10 @@
   width: 20px;
   height: 20px;
   margin: 0 5px;
-  background: red;
   border-radius: 20px;
-  opacity: 0.5;
+  opacity: 0.3;
   transition: 0.3s;
+  text-indent: 1000px;
 }
 .slideshow-dots li.active a {
   opacity: 1;
@@ -65,7 +84,8 @@
       margin-top: 16px;
     }
   }
-  .prev, .next {
-    top:150px;
+  .prev,
+  .next {
+    top: 150px;
   }
 }

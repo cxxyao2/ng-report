@@ -1,0 +1,19 @@
+@use "sass:map";
+@use "~@angular/material" as mat;
+
+@mixin home-color($config-or-theme, $shadow-color: rgba(0, 0, 255, 0.1)) {
+  $config: mat.get-color-config($config-or-theme);
+  $primary: map.get($config, primary);
+  $accent: map.get($config, accent);
+  $warn: map.get($config, warn);
+
+  app-home {
+    .slideshow-container {
+      box-shadow: 0px 2px 4px -1px $shadow-color, 0px 4px 5px 0px $shadow-color,
+        0px 1px 10px 0px $shadow-color;
+    }
+    .slideshow-dots a {
+      background-color: mat.get-color-from-palette($primary, 300);
+    }
+  }
+}

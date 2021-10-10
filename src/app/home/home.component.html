@@ -5,24 +5,14 @@
     fxLayout="row wrap "
     fxLayoutAlign="space-between"
   >
-    <div fxFlex="48%" fxFlex.lt-md="100%" style="align-self: center">
-      <img
-        src="./assets/homepage.jpg"
-        style="
-          width: 100%;
-          vertical-align: middle;
-          object-fit: cover;
-          max-height: 300px;
-        "
-        alt="home"
-      />
+    <div fxFlex="48%" fxFlex.lt-md="100%">
+      <img src="./assets/station.jpg" class="slide-image" alt="slide image" />
     </div>
-
-    <div fxFlex="48%" fxFlex.lt-md="100%" class="slideshow-text">
-      <h3 style="font-size: 24px">Best gas station near your house</h3>
-      <span>24/7 service without stopping</span>
-      <p style="margin: 16px 0">
-        <button mat-raised-button color="primary">
+    <div fxFlex="48%" fxFlex.lt-md="100%" class="slideshow-text-wrapper">
+      <h3 class="slideshow-text-header">Best gas station near your house</h3>
+      <h4>24/7 service without stopping</h4>
+      <p class="slideshow-text-details">
+        <button mat-raised-button color="primary" routerLink="/find-store">
           Know more...<mat-icon>navigate_next</mat-icon>
         </button>
       </p>
@@ -35,26 +25,15 @@
     fxLayout="row wrap "
     fxLayoutAlign="space-between"
   >
-    <div fxFlex="46%" fxFlex.lt-md="100%">
-      <img
-        src="./assets/homepage.jpg"
-        style="
-          width: 100%;
-          object-fit: cover;
-          vertical-align: middle;
-          max-height: 300px;
-        "
-        alt="home"
-      />
+    <div fxFlex="48%" fxFlex.lt-md="100%">
+      <img src="./assets/garage.jpg" class="slide-image" alt="slide image" />
     </div>
-
-    <div fxFlex="50%" fxFlex.lt-md="100%" class="slideshow-text">
-      <h3 style="font-size: 24px">Best engineers. Best service.</h3>
-
-      <div style="display: flex; justify-content: flex-start">
+    <div fxFlex="48%" fxFlex.lt-md="100%" class="slideshow-text-area">
+      <h3 class="slideshow-text-header">Best engineers. Best service.</h3>
+      <div style="display: flex; justify-content: flex-start; padding: 8px">
         <div style="border-right: 1px solid lightgray; padding-right: 8px">
           <p style="font-size: 16px; font-weight: bold">1200</p>
-          <p>qualified engeers</p>
+          <p>qualified engineers</p>
         </div>
         <div style="padding-left: 8px">
           <p style="font-size: 16px; font-weight: bold">12000</p>
@@ -70,35 +49,29 @@
     fxLayout="row wrap "
     fxLayoutAlign="space-between"
   >
-    <div fxFlex="46%" fxFlex.lt-md="100%">
+    <div fxFlex="48%" fxFlex.lt-md="100%">
       <img
-        src="./assets/homepage.jpg"
-        style="
-          width: 100%;
-          object-fit: cover;
-          vertical-align: middle;
-          max-height: 300px;
-        "
-        alt="home"
+        src="./assets/carwashing.jpg"
+        class="slide-image"
+        alt="slide image"
       />
     </div>
-
-    <div fxFlex="50%" fxFlex.lt-md="100%" class="slideshow-text">
-      <h3 style="font-size: 24px">All in One Platform</h3>
-
-      <div style="padding: 8px">
-        From Oct 1 2021 , we will supply 12,000 free films for subscribers.
-        Download your favorites series now.
-      </div>
+    <div fxFlex="48%" fxFlex.lt-md="100%" class="slideshow-text-area">
+      <h3 class="slideshow-text-header">All in One</h3>
+      <p class="slideshow-text-details">
+        From Oct 1 2021 , we will supply one year free car-washing service for
+        customers whose order value is more than $100. Download our app for more
+        information about discounts and products on-sale.
+      </p>
     </div>
   </div>
 
   <ul class="slideshow-dots">
     <li
-      *ngFor="let slide of slides; let i = index"
-      [ngClass]="{ active: i === activeSlideIdx }"
+      *ngFor="let slide of slides"
+      [ngClass]="{ active: slide === activeSlideIdx }"
     >
-      <a (click)="jumpToSlide(i)">{{ i + 1 }}</a>
+      <a (click)="jumpToSlide(slide)">{{ slide + 1 }}</a>
     </li>
   </ul>
   <a class="prev" (click)="plusSlides(-1)">❮</a>

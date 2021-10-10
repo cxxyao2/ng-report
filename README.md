@@ -34,10 +34,11 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
   - stepper
   - reactive form , template-driven form, form input autocomplete, checkbox, image...
   - custom FormControl (chips group)
+  - multi-slot content projection
   - drag && drop
   - ...
 - SSR: server-side rendering
-- Unify error message component
+- Unified error and success message prompt
 - Prevent memeory leak: Unsubscribe in ngOnDestroy + TakeUntil + ng lint
 
 ## back-end : mongodb mongoose express node.js

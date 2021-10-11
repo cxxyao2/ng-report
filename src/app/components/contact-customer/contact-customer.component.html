@@ -1,7 +1,7 @@
 <div>
   <form class="main-form" (ngSubmit)="onSubmit()" [formGroup]="frmGroup">
     <h2>Contact Customer</h2>
-    <div fxLayout="row wrap" fxLayoutGap="8px grid">
+    <div fxLayout="row wrap" fxLayoutAlign="space-between">
       <div fxFlex="40%" fxFlex.lt-md="100%">
         <mat-card>
           <mat-card-content>
@@ -16,18 +16,27 @@
               [multiple]="false"
               (selectionChange)="setSelectedRecord($event)"
             >
-              <mat-list-option
-                *ngFor="let record of contactRecords"
-                [value]="record._id"
+              <ng-container
+                *ngIf="contactRecords && contactRecords.length > 0; else noData"
               >
-                {{ record.customerName }}
-              </mat-list-option>
+                <mat-list-option
+                  *ngFor="let record of contactRecords"
+                  [value]="record._id"
+                >
+                  {{ record.customerName }}
+                </mat-list-option>
+              </ng-container>
+              <ng-template #noData>
+                <div style="margin-left: 16px">
+                  No visit plan data matching today.
+                </div>
+              </ng-template>
             </mat-selection-list>
           </mat-card-content>
         </mat-card>
       </div>
 
-      <div fxFlex="50%" fxFlex.lt-md="100%">
+      <div fxFlex="55%" fxFlex.lt-md="100%" class="notes-wrapper">
         <mat-card>
           <mat-card-content>
             <h3 style="padding: 0 16px">
@@ -62,7 +71,7 @@
               }}</span></mat-list-item
             >
           </mat-list>
-          <div>
+          <div >
             <mat-form-field class="input-area-full-width" appearance="fill">
               <mat-label>Notes</mat-label>
               <textarea

@@ -9,12 +9,6 @@
       class="pliable-toolbar"
     >
       <span class="link-item"
-        ><a [routerLink]="['/find-store']">PRODUCT MANUAL</a></span
-      >
-      <span class="link-item"
-        ><a [routerLink]="['/technical-support']">TECHNICAL SUPPORT</a></span
-      >
-      <span class="link-item"
         ><a [routerLink]="['/email-to-us']">EMAIL</a></span
       >
       <span class="link-item"
@@ -61,10 +55,13 @@
 
       <app-search-box></app-search-box>
 
-
-
-
-      <a class="nav-link" style="margin-left:16px;" routerLink="/home" *ngIf="(themeService.isHandset | async) === false"><mat-icon>home</mat-icon>Home</a>
+      <a
+        class="nav-link"
+        style="margin-left: 16px"
+        routerLink="/home"
+        *ngIf="(themeService.isHandset | async) === false"
+        ><mat-icon>home</mat-icon>Home</a
+      >
 
       <a
         class="nav-link"
@@ -75,9 +72,9 @@
       </a>
       <a class="nav-link" *ngIf="this.authService.currentUser?.name">
         <span
-          ><button mat-button [matMenuTriggerFor]="profileMenu"><mat-icon>account_circle</mat-icon
-          >
-            {{this.authService.currentUser?.name}}
+          ><button mat-button [matMenuTriggerFor]="profileMenu">
+            <mat-icon>account_circle</mat-icon>
+            {{ this.authService.currentUser?.name }}
           </button></span
         ></a
       >
@@ -136,16 +133,10 @@
           *ngFor="let item of salespersonItems"
           [item]="item"
         ></app-menu-list-item>
-        <mat-divider></mat-divider>
-        <h3 mat-subheader>More Information</h3>
-        <app-menu-list-item
-          *ngFor="let item of othersItems"
-          [item]="item"
-        ></app-menu-list-item>
       </mat-nav-list>
     </mat-sidenav>
     <mat-sidenav-content>
-      <div class="content-wrapper" >
+      <div class="content-wrapper">
         <router-outlet #outlet="outlet"></router-outlet>
       </div>
       <mat-progress-spinner

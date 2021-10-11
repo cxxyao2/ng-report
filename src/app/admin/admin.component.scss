@@ -1,5 +1,5 @@
 .grid-container {
-  margin: 20px;
+  margin: 16px;
 }
 
 .dashboard-card {
@@ -32,6 +32,11 @@
     0 1px 4px 0 rgba(0, 0, 0, 0.12);
 }
 
+.important-data {
+  font-weight: bold;
+  font-size: 1.1rem;
+}
+
 .fxflex {
   border-radius: 8px;
 
@@ -47,21 +52,44 @@
     font-weight: bold;
   }
 
-  svg.social {
-    height: 30px;
-    vertical-align: middle;
-    margin-right: 16px;
-  }
-
   .social-media {
-    @extend .box-shadow;
-    margin: 16px auto;
-    padding: 8px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    color: white;
     border-radius: 16px;
-    text-align: left;
-    a {
+    margin: 8px 0;
+    padding: 4px;
+    .media-text-area {
+      width: 120px;
+    }
+    &.twitter {
+      background-color: rgb(0, 172, 237);
+    }
+    &.facebook {
+      background-color: rgb(57, 83, 157);
+    }
+    &.linkedin {
+      background-color: rgb(0, 103, 155);
+    }
+    .media-icon {
+      width: 30px;
+      height: 30px;
+    }
+    .media-name {
+      font-size: 18px;
+      letter-spacing: 0.1rem;
+    }
+    .media-link {
+      font-size: 12px;
       text-decoration: none;
-      font-size: 1.1rem;
+      color: white;
+      opacity: 1;
+      transition: all 0.3s;
+      &:hover {
+        opacity: 0.5;
+      }
     }
   }
 }

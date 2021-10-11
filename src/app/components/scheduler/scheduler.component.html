@@ -1,6 +1,6 @@
 <div fxLayout="row wrap" fxLayoutGap="16px grid">
   <div class="calendar-section" fxFlex="50%" fxFlex.xs="100%">
-    <app-calendar (itemEvent)="selectPLanDate($event)"></app-calendar>
+    <app-calendar (itemEvent)="selectPLanDate($event)" [title]="'Team Task'"></app-calendar>
   </div>
   <div class="task-section" fxFlex="50%" fxFlex.xs="100%">
     <div class="search-area">
@@ -9,7 +9,7 @@
         class="search-area_input"
         autocomplete
         placeholder="Enter salesperson..."
-        maxlength=20
+        maxlength="20"
         [(ngModel)]="enteredSalesperson"
         (keyup.enter)="selectPersonByPressEnter(input.value)"
         (ngModelChange)="onInputChange(input.value)"

@@ -18,6 +18,7 @@ export interface gridTitleElement {
 })
 export class AdminComponent implements OnInit {
   cards: gridTitleElement[] = [];
+  currentMonth = new Date();
   /** Based on the screen size, switch from standard to one column per row */
   user: User = { name: '', email: '' };
   constructor(

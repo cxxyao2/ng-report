@@ -78,12 +78,6 @@ export class AppComponent implements AfterViewInit, OnDestroy {
     },
   ];
 
-  othersItems: NavItem[] = [
-    { label: 'AboutMe', icon: 'account_circle', route: 'about-me' },
-    { label: 'Help', icon: 'help', route: 'todo' },
-    { label: 'FAQs', icon: 'search', route: 'product-list' },
-  ];
-
   loading$ = this.loader.laoding$;
 
   constructor(

@@ -1,4 +1,4 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 
 export interface DayInCalendar {
   dateElement: Date | null;
@@ -14,6 +14,7 @@ export interface DayInCalendar {
   styleUrls: ['./calendar.component.scss'],
 })
 export class CalendarComponent implements OnInit {
+  @Input() title = '';
   @Output() itemEvent = new EventEmitter<DayInCalendar | null>();
   calendar: DayInCalendar[] = [];
   today = new Date();

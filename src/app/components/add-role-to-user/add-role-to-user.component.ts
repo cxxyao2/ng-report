@@ -1,4 +1,5 @@
 import { Component, OnInit, AfterViewInit, ViewChild } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 
 import { FormControl } from '@angular/forms';
 import { MatTableDataSource } from '@angular/material/table';
@@ -16,25 +17,15 @@ export class AddRoleToUserComponent implements OnInit, AfterViewInit {
   displayedColumns = ['name', 'locked', 'salesperson', 'manager', 'admin'];
   userArray: User[] = [];
   positionFilter = new FormControl();
-  dataSource = new MatTableDataSource();
+  dataSource = new MatTableDataSource<User>();
   nameFilter = new FormControl();
   errorMessage = '';
 
-  constructor(private service: UserService) {}
+  constructor(private route: ActivatedRoute, private service: UserService) {}
 
   ngOnInit() {
-    this.service.getUsers().subscribe(
-      (data) => {
-        this.userArray = data;
-        this.dataSource.data = data;
-      },
-      (err) => {
-        this.errorMessage = err;
-        setTimeout(() => {
-          this.errorMessage = '';
-        }, 3000);
-      }
-    );
+    this.userArray = this.route.snapshot.data['users'];
+    this.dataSource.data = [...this.userArray];
   }
 
   applyFilter(event: Event) {

@@ -19,13 +19,11 @@ import { NavService } from './services/nav.service';
 import { NavItem } from './models/nav-item';
 import { LoadingService } from './services/loading.service';
 import { RouterOutlet } from '@angular/router';
-import { slideInAnimation } from 'src/app/animations/animations';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
-  animations: [slideInAnimation],
 })
 export class AppComponent implements AfterViewInit, OnDestroy {
   @ViewChild('drawer') appDrawer!: ElementRef;

@@ -1,4 +1,4 @@
-<main>
+<div>
   <h2>Find a store</h2>
 
   <div class="search-area">
@@ -18,7 +18,7 @@
     </button>
   </div>
 
-  <div fxLayout="row wrap" fxLayoutGap="8px grid">
+  <div fxLayout="row wrap"   fxLayoutAlign="space-between">
     <div fxFlex="30%" fxFlex.lt-md="100%">
       <mat-card class="main-card">
         <div *ngIf="storeArray.length > 0; else no_data_alert">
@@ -47,7 +47,7 @@
       </mat-card>
     </div>
 
-    <div fxFlex="70%" fxFlex.lt-md="100%" style="position: relative">
+    <div fxFlex="70%" fxFlex.lt-md="100%">
       <span class="map-zoom-button zoom-in" (click)="zoomIn()"
         ><mat-icon>add</mat-icon></span
       >
@@ -76,4 +76,4 @@
       </google-map>
     </div>
   </div>
-</main>
+</div>

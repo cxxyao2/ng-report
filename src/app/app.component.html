@@ -145,7 +145,7 @@
       </mat-nav-list>
     </mat-sidenav>
     <mat-sidenav-content>
-      <div class="content-wrapper" [@routeAnimations]="prepareRoute(outlet)">
+      <div class="content-wrapper" >
         <router-outlet #outlet="outlet"></router-outlet>
       </div>
       <mat-progress-spinner

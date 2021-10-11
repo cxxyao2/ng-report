@@ -11,7 +11,7 @@ import {
 } from '@angular/material/dialog';
 import { AddProductDetailsComponent } from 'src/app/components/add-product-details/add-product-details.component';
 import { ProductService } from 'src/app/services/product.service';
-import { switchMap } from 'rxjs/operators';
+import { first, switchMap } from 'rxjs/operators';
 import {
   animate,
   state,
@@ -80,7 +80,7 @@ export class AddProductComponent implements AfterViewInit, OnInit {
     );
   }
 
-  getImageSrc(productItem:Product) {
+  getImageSrc(productItem: Product) {
     const apiUrl = environment.imageUrl + '/' + productItem.imageUrl + '/';
 
     // products/e2 => https://xxx.xxx.xxx.xx:5000/products/e2/w-200.jpg 200w,
@@ -109,7 +109,8 @@ export class AddProductComponent implements AfterViewInit, OnInit {
           } else {
             return of(null);
           }
-        })
+        }),
+        first()
       )
       .subscribe(
         (newProduct) => {

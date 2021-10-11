@@ -1,0 +1,204 @@
+.animatons_contain {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: space-around;
+  gap: 1rem;
+}
+
+.card_wrapper {
+  position: relative;
+  width: 19rem;
+  height: 20rem;
+  overflow: hidden;
+  border-radius: 1rem;
+}
+
+/* rise up */
+
+.card_area {
+  position: absolute;
+  width: 19rem;
+  height: 20rem;
+  border-radius: 1rem;
+  border: solid 1px transparent;
+  transition: all 1s;
+  overflow: hidden;
+}
+
+app-animate-card {
+  position: absolute;
+  z-index: 90;
+}
+
+#topCard {
+  z-index: 100;
+}
+
+@keyframes slide {
+  from {
+    bottom: -200px;
+    opacity: 0;
+  }
+  to {
+    bottom: -5px;
+    opacity: 1;
+  }
+}
+
+/* ruler */
+/* invisible or unstyled range inputs  */
+input[type="range"] {
+  -webkit-appearance: none; /* Hides the slider so that custom slider can be made */
+  width: 100%; /* Specific width is required for Firefox. */
+  background: transparent; /* Otherwise white in Chrome */
+}
+
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+}
+
+input[type="range"]:focus {
+  outline: none; /* Removes the blue border. You should probably do some kind of focus styling for accessibility reasons though. */
+}
+
+input[type="range"]::-ms-track {
+  width: 100%;
+  cursor: pointer;
+  /* Hides the slider so custom styles can be added */
+  background: transparent;
+  border-color: transparent;
+  color: transparent;
+}
+
+/*The widget that you click or drag along the track is called the thumb.*/
+/* Special styling for WebKit/Blink */
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  height: 1.3rem;
+  width: 1.3rem;
+  border-radius: 100%;
+  background: #2b244d;
+  cursor: pointer;
+  margin-top: -14px; /* You need to specify a margin in Chrome, but in Firefox and IE it is automatic */
+  box-shadow: 0 0 0 rgba(0, 0, 255, 0.5);
+}
+
+/* All the same stuff for Firefox */
+input[type="range"]::-moz-range-thumb {
+  height: 1.3rem;
+  width: 1.3rem;
+  border-radius: 100%;
+  background: #2b244d;
+  cursor: pointer;
+  margin-top: -14px; /* You need to specify a margin in Chrome, but in Firefox and IE it is automatic */
+  box-shadow: 0 0 0 rgba(0, 0, 255, 0.5);
+}
+
+/* All the same stuff for IE */
+input[type="range"]::-ms-thumb {
+  height: 1.3rem;
+  width: 1.3rem;
+  border-radius: 100%;
+  background: #2b244d;
+  cursor: pointer;
+  margin-top: -14px; /* You need to specify a margin in Chrome, but in Firefox and IE it is automatic */
+  box-shadow: 0 0 0 rgba(0, 0, 255, 0.5);
+}
+
+/*The line that the thumb moves across is called the track.*/
+input[type="range"]::-webkit-slider-runnable-track {
+  width: 100%;
+  height: 1rem;
+  cursor: pointer;
+  background-color: rgba(0, 0, 0, 0.5);
+  border-color: transparent;
+  border-radius: 0.5rem;
+  color: transparent;
+}
+
+input[type="range"]:focus::-webkit-slider-runnable-track {
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+input[type="range"]::-moz-range-track {
+  width: 100%;
+  height: 1rem;
+  cursor: pointer;
+  background-color: rgba(0, 0, 0, 0.5);
+  border-color: transparent;
+  border-radius: 0.5rem;
+  color: transparent;
+}
+
+input[type="range"]::-ms-track {
+  width: 100%;
+  height: 1rem;
+  cursor: pointer;
+  background-color: rgba(0, 0, 0, 0.5);
+  border-color: transparent;
+  border-radius: 0.5rem;
+  color: transparent;
+}
+
+input[type="range"]::-ms-fill-lower {
+  background: #2a6495;
+
+  border-radius: 2.6px;
+  box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d;
+}
+input[type="range"]:focus::-ms-fill-lower {
+  background: #3071a9;
+}
+input[type="range"]::-ms-fill-upper {
+  background: #3071a9;
+  border-radius: 2.6px;
+  box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d;
+}
+
+/*dark mode */
+
+.dark input[type="range"]::-webkit-slider-thumb {
+  background: white;
+}
+
+/* All the same stuff for Firefox */
+.dark input[type="range"]::-moz-range-thumb {
+  background: white;
+}
+
+/* All the same stuff for IE */
+.dark input[type="range"]::-ms-thumb {
+  background: white;
+}
+
+/*The line that the thumb moves across is called the track.*/
+.dark input[type="range"]::-webkit-slider-runnable-track {
+  background-color: #ff0070;
+}
+
+.dark input[type="range"]:focus::-webkit-slider-runnable-track {
+  background-color: #ff0070;
+}
+
+.dark input[type="range"]::-moz-range-track {
+  background-color: #ff0070;
+}
+
+.dark input[type="range"]::-ms-track {
+  background-color: #ff0070;
+}
+
+.dark input[type="range"]::-ms-fill-lower {
+  background: #2a6495;
+
+  border-radius: 2.6px;
+  box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d;
+}
+.dark input[type="range"]:focus::-ms-fill-lower {
+  background: #3071a9;
+}
+.dark input[type="range"]::-ms-fill-upper {
+  background: #3071a9;
+  border-radius: 2.6px;
+  box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d;
+}

@@ -29,7 +29,7 @@ import { HomeComponent } from './home/home.component';
 import { InfiniteListComponent } from './components/infinite-list/infinite-list.component';
 import { TodoComponent } from './components/todo/todo.component';
 import { FindStoreComponent } from './components/find-store/find-store.component';
-import { GameCardComponent } from './animations/game-card/game-card.component';
+import { GameCardComponent } from './shared/animations/game-card/game-card.component';
 import { LoglistComponent } from './components/loglist/loglist.component';
 import { LogfilterComponent } from './components/logfilter/logfilter.component';
 import { NetworkInterceptor } from './interceptors/network.interceptor';
@@ -77,7 +77,9 @@ import { MatButtonModule } from '@angular/material/button';
 import { LayoutModule } from '@angular/cdk/layout';
 import { AddProductDetailsComponent } from './components/add-product-details/add-product-details.component';
 import { ContactCustomerComponent } from './components/contact-customer/contact-customer.component';
-import { SlideBasicComponent } from './components/slide-basic/slide-basic.component';
+import { AnimateCardComponent } from './shared/animations/animate-card/animate-card.component';
+import { AnimateCardListComponent } from './shared/animations/animate-card-list/animate-card-list.component';
+import { SlideShowsComponent } from './components/slide-shows/slide-shows.component';
 
 @NgModule({
   declarations: [
@@ -131,7 +133,9 @@ import { SlideBasicComponent } from './components/slide-basic/slide-basic.compon
     WishListComponent,
     AddProductDetailsComponent,
     ContactCustomerComponent,
-    SlideBasicComponent,
+    AnimateCardComponent,
+    AnimateCardListComponent,
+    SlideShowsComponent,
   ],
   imports: [
     BrowserModule,

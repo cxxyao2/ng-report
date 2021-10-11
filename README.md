@@ -9,14 +9,15 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 - register & login with recaptcha
 - deploy web worker for analyzing mass data and image. no block the main thread.
 - modularity && reusability
-- lazy loading (1,Angular 2, Webpack ): dialog component, some tab content(when activated), administrator module
+  - reusable confirm dialog
+  - reusable router/card animations
+- lazy loading (1,Angular 2, Webpack ): dialog component, some tab content(when activated), feature module
 - interceptors
-- guards, resolves
+- guards, resolves,pipes,directives,validators
 - light/dark themes
 - i18n
 - download file formats: CSV and PDF
 - forget password/reset password emails, order notification email
-- guard, resolve
 - reusable animations
 - dynamic views by content projection
 - multiple level menus

@@ -1,124 +1,21 @@
-<div class="slideshow-container">
-  <div
-    @flyInOut
-    *ngIf="activeSlideIdx === 0"
-    fxLayout="row wrap "
-    fxLayoutAlign="space-between"
-  >
-    <div fxFlex="48%" fxFlex.lt-md="100%">
-      <img src="./assets/station.jpg" class="slide-image" alt="slide image" />
-    </div>
-    <div fxFlex="48%" fxFlex.lt-md="100%" class="slideshow-text-wrapper">
-      <h3 class="slideshow-text-header">Best gas station near your house</h3>
-      <h4>24/7 service without stopping</h4>
-      <p class="slideshow-text-details">
-        <button mat-raised-button color="primary" routerLink="/find-store">
-          Know more...<mat-icon>navigate_next</mat-icon>
-        </button>
-      </p>
-    </div>
-  </div>
-
-  <div
-    @flyInOut
-    *ngIf="activeSlideIdx === 1"
-    fxLayout="row wrap "
-    fxLayoutAlign="space-between"
-  >
-    <div fxFlex="48%" fxFlex.lt-md="100%">
-      <img src="./assets/garage.jpg" class="slide-image" alt="slide image" />
-    </div>
-    <div fxFlex="48%" fxFlex.lt-md="100%" class="slideshow-text-area">
-      <h3 class="slideshow-text-header">Best engineers. Best service.</h3>
-      <div style="display: flex; justify-content: flex-start; padding: 8px">
-        <div style="border-right: 1px solid lightgray; padding-right: 8px">
-          <p style="font-size: 16px; font-weight: bold">1200</p>
-          <p>qualified engineers</p>
-        </div>
-        <div style="padding-left: 8px">
-          <p style="font-size: 16px; font-weight: bold">12000</p>
-          <p>franchised service centers</p>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div
-    @flyInOut
-    *ngIf="activeSlideIdx === 2"
-    fxLayout="row wrap "
-    fxLayoutAlign="space-between"
-  >
-    <div fxFlex="48%" fxFlex.lt-md="100%">
-      <img
-        src="./assets/carwashing.jpg"
-        class="slide-image"
-        alt="slide image"
-      />
-    </div>
-    <div fxFlex="48%" fxFlex.lt-md="100%" class="slideshow-text-area">
-      <h3 class="slideshow-text-header">All in One</h3>
-      <p class="slideshow-text-details">
-        From Oct 1 2021 , we will supply one year free car-washing service for
-        customers whose order value is more than $100. Download our app for more
-        information about discounts and products on-sale.
-      </p>
-    </div>
-  </div>
-
-  <ul class="slideshow-dots">
-    <li
-      *ngFor="let slide of slides"
-      [ngClass]="{ active: slide === activeSlideIdx }"
-    >
-      <a (click)="jumpToSlide(slide)">{{ slide + 1 }}</a>
-    </li>
-  </ul>
-  <a class="prev" (click)="plusSlides(-1)">❮</a>
-  <a class="next" (click)="plusSlides(1)">❯</a>
-</div>
+<app-slide-shows></app-slide-shows>
+<app-animate-card-list></app-animate-card-list>
 <div style="margin: 16px 0; position: relative">
-  Lorem ipsum dolor sit, amet consectetur adipisicing elit. Rem nemo explicabo
-  iusto, quo numquam est placeat nam, voluptatem, odit molestiae fuga eligendi
-  dolorum esse obcaecati incidunt officia facere voluptates. Sit! Vitae tempore
-  id aspernatur quam doloribus explicabo dolores saepe molestiae in accusantium
-  illum quidem incidunt inventore deleniti dolor harum facilis mollitia, alias
-  aperiam natus officia porro. Voluptates quae placeat est. Dolorum
-  reprehenderit ab provident consectetur earum vitae adipisci, est libero
-  ratione repudiandae incidunt accusantium quaerat nihil nemo! Hic, inventore
-  consequuntur quos, quam cum impedit amet ipsa, quod perferendis maxime ad.
-  Recusandae, earum assumenda qui nostrum voluptatem eum provident! Sit
-  perspiciatis rem, animi illum eius iure, voluptas sequi odio, nisi fugit
-  repellendus accusamus voluptatem sunt officia aut exercitationem voluptatum
-  recusandae quaerat. Perspiciatis distinctio in deserunt provident possimus
-  veleniti autem. Exercitationem rerum temporibus ipsam, placeat natus corporis
-  id distinctio, porro, aspernatur corrupti consequatur quos amet. Quibusdam,
-  rem, tenetur sed dolor porro non dolores sit ipsam eius aliquid nulla hic qui?
+  <p class="introduction">
+    Find your nearest gas Station using our station locator tool, and plan your
+    route. And when you’re done, find out how new series V-Power Premium
+    Gasoline provides the best total engine protection you can get, delivering
+    unbeatable protection against gunk and corrosion and superior protection
+    against wear.
+  </p>
+  <br />
+  <p class="introduction">
+    Enjoy your journey with happiness and without any worry, because we put the
+    service back into service-station, ensuring you always leave us a little
+    happier than when you arrived.
+  </p>
 </div>
-<div
-  style="
-    position: relative;
-    margin: 0 auto;
-    padding: 0;
-    border-radius: 8px;
-    overflow: hidden;
-    width: 80%;
-    max-height: 90%;
-    border: 2px solid lightgray;
-  "
->
-  <img
-    src="./assets/homepage.jpg"
-    style="
-      -webkit-clip-path: polygon(0 1%, 100% 1%, 100% 100%, 0 47%);
-      clip-path: polygon(0 1%, 100% 1%, 100% 100%, 0 47%);
-      width: 100%;
-      object-fit: cover;
-      vertical-align: middle;
-      position: relative;
-    "
-  />
-  <h1 style="position: absolute; left: 10px; bottom: 10%">
-    Best gas and Best Service for all the world!
-  </h1>
+<div class="banner-wrapper">
+  <img src="./assets/homepage.jpg" class="banner-image" />
+  <h1 class="banner-text">Best gas and Best Service for all the world!</h1>
 </div>

@@ -5,7 +5,7 @@ import { AboutComponent } from './about/about.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { TodoComponent } from './components/todo/todo.component';
-import { GameCardComponent } from './animations/game-card/game-card.component';
+import { GameCardComponent } from './shared/animations/game-card/game-card.component';
 import { ProductListComponent } from './components/shopping-cart/product-list/product-list.component';
 import { CartComponent } from './components/shopping-cart/cart/cart.component';
 import { PrintInvoiceComponent } from './components/shopping-cart/print-invoice/print-invoice.component';
@@ -18,7 +18,6 @@ import { EmailToUsComponent } from './components/email-to-us/email-to-us.compone
 import { TechnicalSupportComponent } from './components/technical-support/technical-support.component';
 import { SchedulerComponent } from './components/scheduler/scheduler.component';
 import { AddProductComponent } from './components/add-product/add-product.component';
-import { AddRoleToUserComponent } from './components/add-role-to-user/add-role-to-user.component';
 import { CalendarComponent } from './components/calendar/calendar.component';
 import { LoginComponent } from './components/login/login.component';
 import { SignUpComponent } from './components/sign-up/sign-up.component';
@@ -31,6 +30,8 @@ import { ReportThisMonthComponent } from './components/report-this-month/report-
 import { ReportThisYearComponent } from './components/report-this-year/report-this-year.component';
 import { OrderQueryComponent } from './components/order-query/order-query.component';
 import { ContactCustomerComponent } from './components/contact-customer/contact-customer.component';
+import { UserResolver } from './services/user.resolver';
+import { AddRoleToUserComponent } from './components/add-role-to-user/add-role-to-user.component';
 
 const routes: Routes = [
   { path: 'calendar', component: CalendarComponent },
@@ -47,7 +48,16 @@ const routes: Routes = [
   { path: 'home', component: HomeComponent }, // public no-login
   { path: 'dashboard', component: DashboardComponent }, // user profile
   { path: 'add-product', component: AddProductComponent }, // administrator role
-  { path: 'authorize', component: AddRoleToUserComponent }, // administrator role
+  {
+    path: 'authorize',
+    component: AddRoleToUserComponent,
+    resolve: { users: UserResolver },
+  },
+  {
+    path: 'admin',
+    loadChildren: () =>
+      import('./admin/admin.module').then((m) => m.AdminModule),
+  },
   { path: 'list-logs', component: LoglistComponent }, // administrator role
   { path: 'assign-task', component: SchedulerComponent }, // manager role
   { path: 'monthly-analyze', component: ReportThisMonthComponent }, // manager role
@@ -71,23 +81,22 @@ const routes: Routes = [
   {
     path: 'email-to-us',
     component: EmailToUsComponent,
-    data: { animation: 'EmailPage' },
   },
   {
     path: 'find-store',
     component: FindStoreComponent,
-    data: { animation: 'FindStorePage' },
     canActivate: [AuthGuard],
   },
   {
     path: 'technical-support',
     component: TechnicalSupportComponent,
-    data: { animation: 'TechnicalPage' },
   },
 
   { path: 'about-me', component: AboutComponent }, // very important . the profile of developer
   { path: 'game-card', component: GameCardComponent }, // technique features
   { path: '', redirectTo: '/home', pathMatch: 'full' },
+  { path: 'admin', loadChildren: () => import('./admin/admin.module').then(m => m.AdminModule) },
+
   { path: '**', component: PageNotFoundComponent },
 ];
 

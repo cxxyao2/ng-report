@@ -6,6 +6,7 @@ import { Observable, of } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import { Stream } from 'stream';
 
+
 export interface Store {
   name: string;
   ranking: number;

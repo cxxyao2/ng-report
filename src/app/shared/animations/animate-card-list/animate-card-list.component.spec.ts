@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { SlideBasicComponent } from './slide-basic.component';
+import { AnimateCardListComponent } from './animate-card-list.component';
 
-describe('SlideBasicComponent', () => {
-  let component: SlideBasicComponent;
-  let fixture: ComponentFixture<SlideBasicComponent>;
+describe('AnimateCardListComponent', () => {
+  let component: AnimateCardListComponent;
+  let fixture: ComponentFixture<AnimateCardListComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ SlideBasicComponent ]
+      declarations: [ AnimateCardListComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(SlideBasicComponent);
+    fixture = TestBed.createComponent(AnimateCardListComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

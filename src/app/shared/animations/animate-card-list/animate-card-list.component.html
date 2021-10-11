@@ -1,0 +1,74 @@
+<!-- styled input , type :range -->
+<div
+  [ngClass]="{ dark: (themeSrv.isDarkTheme | async) }"
+  style="margin: 1rem auto; width: 100%; max-width: 300px; text-align: center"
+>
+  <input
+    type="range"
+    id="volume"
+    name="volume"
+    min="500"
+    max="2000"
+    #animateSpeed
+    [(ngModel)]="speed"
+  />
+  <span> Animation Speed: &nbsp;{{ animateSpeed.value }}&nbsp;ms</span>
+</div>
+<div class="animatons_contain">
+  <div class="card_wrapper">
+    <div class="card_area">
+      <app-animate-card
+        id="topCard"
+        *ngIf="showTop"
+        [@customSlide]="{ value: ':enter', params: { time: speed } }"
+        [imageSlogan]="imageSloganTop"
+        [imageSrc]="imageSrc"
+      ></app-animate-card>
+      <app-animate-card
+        id="topCard"
+        *ngIf="!showTop"
+        [@customSlide]="{ value: ':enter', params: { time: speed } }"
+        [imageSlogan]="imageSloganTop"
+        [imageSrc]="imageSrc"
+      ></app-animate-card>
+    </div>
+  </div>
+
+  <div class="card_wrapper">
+    <div class="card_area">
+      <app-animate-card
+        id="topCard"
+        *ngIf="showTop"
+        [@customRotate]="{ value: ':enter', params: { time: speed } }"
+        [imageSlogan]="imageSloganTop"
+        [imageSrc]="imageSrc"
+      ></app-animate-card>
+      <app-animate-card
+        id="topCard"
+        *ngIf="!showTop"
+        [@customRotate]="{ value: ':enter', params: { time: speed } }"
+        [imageSlogan]="imageSloganTop"
+        [imageSrc]="imageSrc"
+      ></app-animate-card>
+    </div>
+  </div>
+
+  <div class="card_wrapper">
+    <div class="card_area">
+      <app-animate-card
+        id="topCard"
+        *ngIf="showTop"
+        [@customFade]="{ value: ':enter', params: { time: speed } }"
+        [imageSlogan]="imageSloganTop"
+        [imageSrc]="imageSrc"
+      ></app-animate-card>
+      <app-animate-card
+        id="topCard"
+        *ngIf="!showTop"
+        [@customFade]="{ value: ':enter', params: { time: speed } }"
+        [imageSlogan]="imageSloganTop"
+        [imageSrc]="imageSrc"
+      ></app-animate-card>
+    </div>
+  </div>
+</div>

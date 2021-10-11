@@ -1,19 +1,22 @@
-<div>
-  <button (click)="toggle()">Toggle Open/Close</button>
-</div>
-
-<div [@openClose]="isOpen ? 'open' : 'closed'" class="open-close-container">
-  <h1>Email To Us</h1>
-  <form>
-    <label for="name">Your name:</label>
-    <input id="name" name="name" type="text" placeholder="enter your name..." />
-    <label>Your Comments:</label>
-    <textarea
-      id="comments"
-      name="comments"
-      rows="5"
-      cols="33"
-      placeholder="your comments..."
-    ></textarea>
-  </form>
+<div class="container">
+  <h2>Email To Us</h2>
+  <mat-card>
+    <form>
+      <label for="name">Your name:</label>
+      <input
+        id="name"
+        name="name"
+        type="text"
+        placeholder="enter your name..."
+      />
+      <label>Your Comments:</label>
+      <textarea
+        id="comments"
+        name="comments"
+        rows="5"
+        cols="33"
+        placeholder="your comments..."
+      ></textarea>
+    </form>
+  </mat-card>
 </div>

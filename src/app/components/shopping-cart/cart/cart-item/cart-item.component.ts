@@ -6,19 +6,23 @@ import {
   EventEmitter,
   ViewChild,
   ElementRef,
+  OnDestroy,
 } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 import { CartItem } from 'src/app/models/cart-item';
 import { CartService } from 'src/app/services/cart.service';
 import { environment } from 'src/environments/environment';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 
 @Component({
   selector: 'app-cart-item',
   templateUrl: './cart-item.component.html',
   styleUrls: ['./cart-item.component.scss'],
 })
-export class CartItemComponent implements OnInit {
+export class CartItemComponent implements OnInit, OnDestroy {
+  destroy$: Subject<void> = new Subject<void>();
   @Input() item!: CartItem;
   @Output() deletedItemEvent = new EventEmitter<string>();
   @ViewChild('qty') qty!: ElementRef;
@@ -53,13 +57,19 @@ export class CartItemComponent implements OnInit {
     return this.myForm.get('productQty');
   }
 
-  onSelectedChange(value: boolean) {
+  onSelectedChange(value: boolean): void {
     this.item.selected = value;
-    this.service.toggleProductSelected(this.item._id, value).subscribe();
+    this.service
+      .toggleProductSelected(this.item._id, value)
+      .pipe(takeUntil(this.destroy$))
+      .subscribe();
   }
 
   onDelete(): void {
-    this.service.removeProductFromCart(this.item._id).subscribe();
+    this.service
+      .removeProductFromCart(this.item._id)
+      .pipe(takeUntil(this.destroy$))
+      .subscribe();
     // this.deletedItemEvent.emit(this.item._id);
   }
 
@@ -75,12 +85,13 @@ export class CartItemComponent implements OnInit {
         this.updateButtonText = 'edit';
         this.service
           .updateProductQtyInCart(this.item._id, this.productQty?.value)
+          .pipe(takeUntil(this.destroy$))
           .subscribe();
       }
     }
   }
 
-  getImageSrcset() {
+  getImageSrcset(): void {
     const apiUrl = environment.imageUrl + '/' + this.item.imageUrl + '/';
 
     // products/e2 => https://xxx.xxx.xxx.xx:5000/products/e2/w-200.jpg 200w,
@@ -92,5 +103,10 @@ export class CartItemComponent implements OnInit {
       apiUrl +
       'w_1080.jpg 1080w,';
     this.imgSrc = apiUrl + 'w_1080.jpg';
+  }
+
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 }

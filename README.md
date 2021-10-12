@@ -11,7 +11,7 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 - modularity && reusability
   - reusable confirm dialog
   - reusable router/card animations
-- lazy loading (1,Angular 2, Webpack ): dialog component, some tab content(when activated), feature module
+- lazy loading (1,Angular 2, Webpack ): dialog component, some tab content(when activated), feature module (lazyloading + canLoad guard)
 - interceptors
 - guards, resolves,pipes,directives,validators
 - light/dark themes

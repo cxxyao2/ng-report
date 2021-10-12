@@ -1,6 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 
 import { UniqueUserValidator } from 'src/app/shared/unique-user.directive';
 import { uniquePasswordValidator } from 'src/app/shared/unique-password.directive';
@@ -11,7 +13,8 @@ import { AuthService } from 'src/app/services/auth.service';
   templateUrl: './sign-up.component.html',
   styleUrls: ['./sign-up.component.scss'],
 })
-export class SignUpComponent implements OnInit {
+export class SignUpComponent implements OnInit, OnDestroy {
+  destroy$: Subject<void> = new Subject<void>();
   hide = true;
   hideRepeat = true;
   myForm!: FormGroup;
@@ -123,6 +126,7 @@ export class SignUpComponent implements OnInit {
         email: this.email?.value,
         password: this.password?.value,
       })
+      .pipe(takeUntil(this.destroy$))
       .subscribe(
         (data) => {
           this.authService.currentUser = { ...data.data };
@@ -134,5 +138,10 @@ export class SignUpComponent implements OnInit {
           setTimeout(() => (this.errorMessage = ''), 3000);
         }
       );
+  }
+
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 }

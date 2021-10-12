@@ -1,4 +1,10 @@
-import { Component, OnInit, AfterViewInit, ViewChild } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  AfterViewInit,
+  OnDestroy,
+  ViewChild,
+} from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
 
 import { MatSort } from '@angular/material/sort';
@@ -11,9 +17,15 @@ import { LogfilterComponent } from '../logfilter/logfilter.component';
 import { LogRecord } from 'src/app/models/log-record';
 import { LogsService } from 'src/app/services/logs.service';
 
-import { of, from as observableFrom } from 'rxjs';
+import { of, from as observableFrom, Subject } from 'rxjs';
 
-import { catchError, concatMap, debounceTime, switchMap } from 'rxjs/operators';
+import {
+  catchError,
+  concatMap,
+  debounceTime,
+  switchMap,
+  takeUntil,
+} from 'rxjs/operators';
 import {
   ConfirmDialogData,
   DialogService,
@@ -28,7 +40,11 @@ import {
   templateUrl: './loglist.component.html',
   styleUrls: ['./loglist.component.scss'],
 })
-export class LoglistComponent implements OnInit {
+export class LoglistComponent implements OnInit, OnDestroy {
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
+  @ViewChild(MatSort) sort!: MatSort;
+  destroy$: Subject<void> = new Subject<void>();
+
   displayedColumns: string[] = [
     'select',
     'logDate',
@@ -38,8 +54,6 @@ export class LoglistComponent implements OnInit {
     'star',
   ];
   dataSource = new MatTableDataSource<LogRecord>();
-  @ViewChild(MatPaginator) paginator!: MatPaginator;
-  @ViewChild(MatSort) sort!: MatSort;
 
   dialogFilterData: any;
   range = new FormGroup({
@@ -59,20 +73,23 @@ export class LoglistComponent implements OnInit {
     private dialogSrv: DialogService
   ) {}
   ngOnInit() {
-    this.logService.getLogs().subscribe(
-      (data) => {
-        this.data = data;
-        this.dataSource = new MatTableDataSource(data);
-        this.dataSource.paginator = this.paginator;
-        this.dataSource.sort = this.sort;
-      },
-      (err) => {
-        this.errorMessage = err;
-        setTimeout(() => {
-          this.errorMessage = '';
-        }, 3000);
-      }
-    );
+    this.logService
+      .getLogs()
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(
+        (data) => {
+          this.data = data;
+          this.dataSource = new MatTableDataSource(data);
+          this.dataSource.paginator = this.paginator;
+          this.dataSource.sort = this.sort;
+        },
+        (err) => {
+          this.errorMessage = err;
+          setTimeout(() => {
+            this.errorMessage = '';
+          }, 3000);
+        }
+      );
   }
 
   searchDate() {
@@ -93,6 +110,7 @@ export class LoglistComponent implements OnInit {
         this.dialogFilterData?.userId,
         this.dialogFilterData?.content
       )
+      .pipe(takeUntil(this.destroy$))
       .subscribe(
         (data: any) => {
           this.dialogFilterData = null;
@@ -162,7 +180,8 @@ export class LoglistComponent implements OnInit {
                 return of('error' + err);
               })
             );
-          })
+          }),
+          takeUntil(this.destroy$)
         )
         .subscribe(
           () => {
@@ -198,15 +217,18 @@ export class LoglistComponent implements OnInit {
       if (this.dataSource.paginator) {
         this.dataSource.paginator.firstPage();
       }
-      this.logService.deleteLog(deletedLog._id).subscribe(
-        () => {},
-        (err) => {
-          this.errorMessage = err;
-          setTimeout(() => {
-            this.errorMessage = '';
-          }, 3000);
-        }
-      );
+      this.logService
+        .deleteLog(deletedLog._id)
+        .pipe(takeUntil(this.destroy$))
+        .subscribe(
+          () => {},
+          (err) => {
+            this.errorMessage = err;
+            setTimeout(() => {
+              this.errorMessage = '';
+            }, 3000);
+          }
+        );
     }
   }
 
@@ -218,6 +240,7 @@ export class LoglistComponent implements OnInit {
         confirmText: 'OK',
         cancelText: 'Cancel',
       })
+      .pipe(takeUntil(this.destroy$))
       .subscribe();
   }
 
@@ -238,10 +261,17 @@ export class LoglistComponent implements OnInit {
       data: this.dialogFilterData,
     });
 
-    dialogRef.afterClosed().subscribe((result) => {
-      if (result) {
-        this.dialogFilterData = result;
-      }
-    });
+    dialogRef
+      .afterClosed()
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((result) => {
+        if (result) {
+          this.dialogFilterData = result;
+        }
+      });
+  }
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 }

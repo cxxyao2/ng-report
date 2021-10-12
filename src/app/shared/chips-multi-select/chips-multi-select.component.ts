@@ -8,8 +8,8 @@ import {
 } from '@angular/core';
 import { MatChip, MatChipList } from '@angular/material/chips';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
-import { map } from 'rxjs/operators';
-import { Subscription } from 'rxjs';
+import { map, takeUntil } from 'rxjs/operators';
+import { Subject, Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-chips-multi-select',
@@ -28,6 +28,7 @@ export class ChipsMultiSelectComponent
 {
   @Input() options: string[] = [];
   @ViewChild(MatChipList) chipList!: MatChipList;
+  destroy$: Subject<void> = new Subject<void>();
   value: string[] = [];
   sub?: Subscription;
   disabled = false;
@@ -74,9 +75,12 @@ export class ChipsMultiSelectComponent
     }
   }
 
-  ngAfterViewInit() {
+  ngAfterViewInit(): void {
     this.sub = this.chipList.chipSelectionChanges
-      .pipe(map((event) => event.source))
+      .pipe(
+        map((event) => event.source),
+        takeUntil(this.destroy$)
+      )
       .subscribe((chip: any) => {
         if (chip.selected) {
           this.value = [...this.value, chip.value];
@@ -93,7 +97,9 @@ export class ChipsMultiSelectComponent
     this.disabled = isDisabled;
   }
 
-  ngOnDestroy() {
+  ngOnDestroy(): void {
     this.sub?.unsubscribe();
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 }

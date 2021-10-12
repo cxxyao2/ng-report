@@ -67,10 +67,10 @@ export class CartService {
   addProductToCart(product: Product): void {
     // 1, update local array
     // 2, update remote database
-    let cartItem = this.items.find((item) => item.productId === product._id);
+    const cartItem = this.items.find((item) => item.productId === product._id);
     if (cartItem) {
       cartItem.quantity += 1;
-      let putUrl = this.configUrl + '/' + cartItem._id;
+      const putUrl = this.configUrl + '/' + cartItem._id;
       this.http.put(putUrl, { quantity: cartItem.quantity }).subscribe();
     } else {
       const newItem = {
@@ -128,7 +128,7 @@ export class CartService {
     const orderDate = new Date();
 
     const orderDateString = convertDateToYYYYmmDD(orderDate);
-    
+
     const subTotal = this.getAmount();
     const taxTPS = subTotal * constants.tps;
     const taxTVQ = subTotal * constants.tvq;

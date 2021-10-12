@@ -5,7 +5,7 @@
   width: calc(100% - 240px);
   background-color: white;
   color: #039be5;
-  height: 2rem;
+  height: 4rem;
   border-radius: 0.25rem 0.25rem 0 0;
   display: flex;
   justify-content: space-between;
@@ -13,11 +13,14 @@
   padding: 0.5rem 1rem;
   transition: transform 1s ease-in-out;
   z-index: 9999999999;
+  box-shadow: 0 3px 5px -1px rgba(0, 0, 0, 0.2),
+    0 6px 10px 0 rgba(0, 0, 0, 0.14), 0 1px 18px 0 rgba(0, 0, 0, 0.12);
+  
 }
 
 .success-message {
   text-align: left;
-  font-size: 16pxm;
+  font-size: 14pxm;
   letter-spacing: inherit;
   text-transform: capitalize;
   line-height: 1.1rem;

@@ -62,12 +62,12 @@ export class AuthService {
 
   resetPassword(newPassword: string, token: string) {
     const url = this.configUrl + '/auth/reset-password?token=' + token;
-    return this.http.post(url, { newPassword: newPassword });
+    return this.http.post(url, { newPassword });
   }
 
   updatePassword(password: string, newPassword: string) {
     const url = this.configUrl + '/auth';
-    return this.http.put(url, { password: password, newPassword: newPassword });
+    return this.http.put(url, { password, newPassword });
   }
 
   login(email: string, password: string): Observable<any> {
@@ -76,20 +76,20 @@ export class AuthService {
     // TODO, 正式部署前放开
     // auth service 需要带withCredentials
     // 其他服务通过interceptor来携带了,待验证
-    // return this.http.post(
-    //   url,
-    //   {
-    //     email,
-    //     password,
-    //   },
-    //   {
-    //     withCredentials: true,
-    //   }
-    // );
-    return this.http.post(url, {
-      email,
-      password,
-    });
+    return this.http.post(
+      url,
+      {
+        email,
+        password,
+      },
+      {
+        withCredentials: true,
+      }
+    );
+    // return this.http.post(url, {
+    //   email,
+    //   password,
+    // });
   }
 
   getToken(): string {
@@ -99,14 +99,14 @@ export class AuthService {
 
   loginWithJwt(jwt: string) {
     // TODO  cookie能用后要去掉, 要用getToken()从cookie中获取
-    jwt =
-      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MTQ2YTQxM2Q1MjQxNDY1NWE2ZTkxN2QiLCJuYW1lIjoiSmFuZTQiLCJpc0FkbWluIjpmYWxzZSwiaXNNYW5hZ2VyIjpmYWxzZSwiaXNTYWxlc3BlcnNvbiI6dHJ1ZSwiaWF0IjoxNjMyMTY2MzQ1fQ.4OpEEkDhHt1gN3MZu00Ns2QSA4b_c-IBvphjxR5w5ZY';
+    // jwt =
+    //   'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MTQ2YTQxM2Q1MjQxNDY1NWE2ZTkxN2QiLCJuYW1lIjoiSmFuZTQiLCJpc0FkbWluIjpmYWxzZSwiaXNNYW5hZ2VyIjpmYWxzZSwiaXNTYWxlc3BlcnNvbiI6dHJ1ZSwiaWF0IjoxNjMyMTY2MzQ1fQ.4OpEEkDhHt1gN3MZu00Ns2QSA4b_c-IBvphjxR5w5ZY';
 
     localStorage.setItem(this.tokenKey, jwt);
     this.logsSrv.addLog('login');
   }
 
- 
+
   setCurrentUser() {
     const jwt = localStorage.getItem(this.tokenKey);
     if (jwt && jwt.length >= 1) {

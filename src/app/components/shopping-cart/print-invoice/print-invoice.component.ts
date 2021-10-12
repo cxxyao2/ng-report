@@ -4,6 +4,7 @@ import {
   ViewChild,
   OnInit,
   AfterViewInit,
+  OnDestroy,
 } from '@angular/core';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
@@ -17,15 +18,17 @@ import { ActivatedRoute } from '@angular/router';
 
 import { Customer } from 'src/app/models/customer';
 import { OrderItem } from '../../../models/order-item';
-import { switchMap, tap, map } from 'rxjs/operators';
-import { of, throwError } from 'rxjs';
+import { switchMap, tap, map, takeUntil } from 'rxjs/operators';
+import { of, throwError, Subject } from 'rxjs';
 
 @Component({
   selector: 'app-print-invoice',
   templateUrl: './print-invoice.component.html',
   styleUrls: ['./print-invoice.component.scss'],
 })
-export class PrintInvoiceComponent implements OnInit, AfterViewInit {
+export class PrintInvoiceComponent implements OnInit, OnDestroy, AfterViewInit {
+  destroy$: Subject<void> = new Subject<void>();
+
   panelOpenState = false;
   displayedColumns: string[] = ['position', 'name', 'price', 'quantity'];
   dataSource!: MatTableDataSource<OrderItem>;
@@ -73,7 +76,8 @@ export class PrintInvoiceComponent implements OnInit, AfterViewInit {
           } else {
             return throwError(of('No valid customer for this order.'));
           }
-        })
+        }),
+        takeUntil(this.destroy$)
       )
       .subscribe(
         (data) => {
@@ -90,17 +94,20 @@ export class PrintInvoiceComponent implements OnInit, AfterViewInit {
 
   getCustomerDetails(): void {
     if (this.orderCustomer !== undefined && this.orderCustomer._id) {
-      this.customerService.getCustomer(this.orderCustomer._id).subscribe(
-        (data) => {
-          this.orderCustomer = data;
-        },
-        (err) => {
-          this.errorMessage = err;
-          setTimeout(() => {
-            this.errorMessage = '';
-          }, 3000);
-        }
-      );
+      this.customerService
+        .getCustomer(this.orderCustomer._id)
+        .pipe(takeUntil(this.destroy$))
+        .subscribe(
+          (data) => {
+            this.orderCustomer = data;
+          },
+          (err) => {
+            this.errorMessage = err;
+            setTimeout(() => {
+              this.errorMessage = '';
+            }, 3000);
+          }
+        );
     }
   }
 
@@ -282,5 +289,10 @@ export class PrintInvoiceComponent implements OnInit, AfterViewInit {
     const csvFileData = fileConvert.makeCSV(output);
     const fileName = 'order-details';
     fileConvert.saveBlobtoLocalFile(csvFileData, fileName + '.csv', 'text/csv');
+  }
+
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 }

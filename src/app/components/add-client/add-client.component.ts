@@ -260,7 +260,7 @@ export class AddClientComponent implements OnInit, OnDestroy {
           this.allDataClear();
         },
         (err) => {
-          this.successMessage;
+          this.successMessage = '';
           this.errorMessage = err;
 
           setTimeout(() => {

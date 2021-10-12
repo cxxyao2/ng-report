@@ -1,6 +1,12 @@
-import { AfterViewInit, OnInit, Component, ViewChild } from '@angular/core';
+import {
+  AfterViewInit,
+  OnInit,
+  Component,
+  ViewChild,
+  OnDestroy,
+} from '@angular/core';
 import { DataSource } from '@angular/cdk/collections';
-import { Observable, of, ReplaySubject } from 'rxjs';
+import { Observable, of, ReplaySubject, Subject } from 'rxjs';
 
 import { Product } from 'src/app/models/product';
 import { ProductDialogData } from 'src/app/models/product-dialog-data';
@@ -11,7 +17,7 @@ import {
 } from '@angular/material/dialog';
 import { AddProductDetailsComponent } from 'src/app/components/add-product-details/add-product-details.component';
 import { ProductService } from 'src/app/services/product.service';
-import { first, switchMap } from 'rxjs/operators';
+import { first, switchMap, takeUntil } from 'rxjs/operators';
 import {
   animate,
   state,
@@ -52,7 +58,8 @@ const FRUITS: string[] = [
     ]),
   ],
 })
-export class AddProductComponent implements AfterViewInit, OnInit {
+export class AddProductComponent implements AfterViewInit, OnInit, OnDestroy {
+  destroy$: Subject<void> = new Subject<void>();
   displayedColumns: string[] = ['action', 'name', 'category', 'price', 'stock'];
   dataToDisplay: Product[] = [];
   dataSource = new ProductDataSource(this.dataToDisplay);
@@ -62,22 +69,25 @@ export class AddProductComponent implements AfterViewInit, OnInit {
 
   constructor(public dialog: MatDialog, private service: ProductService) {}
 
-  ngOnInit() {
-    this.service.getProducts().subscribe(
-      (data) => {
-        this.dataToDisplay = data;
-        if (data !== undefined && data !== null) {
-          this.rowCount = data.length;
+  ngOnInit(): void {
+    this.service
+      .getProducts()
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(
+        (data) => {
+          this.dataToDisplay = data;
+          if (data !== undefined && data !== null) {
+            this.rowCount = data.length;
+          }
+          this.dataSource.setData(this.dataToDisplay);
+        },
+        (err) => {
+          this.errorMessage = err;
+          setTimeout(() => {
+            this.errorMessage = '';
+          }, 3000);
         }
-        this.dataSource.setData(this.dataToDisplay);
-      },
-      (err) => {
-        this.errorMessage = err;
-        setTimeout(() => {
-          this.errorMessage = '';
-        }, 3000);
-      }
-    );
+      );
   }
 
   getImageSrc(productItem: Product) {
@@ -110,7 +120,7 @@ export class AddProductComponent implements AfterViewInit, OnInit {
             return of(null);
           }
         }),
-        first()
+        takeUntil(this.destroy$)
       )
       .subscribe(
         (newProduct) => {
@@ -163,7 +173,8 @@ export class AddProductComponent implements AfterViewInit, OnInit {
           } else {
             return of(null);
           }
-        })
+        }),
+        takeUntil(this.destroy$)
       )
       .subscribe(
         (newProduct) => {
@@ -185,15 +196,18 @@ export class AddProductComponent implements AfterViewInit, OnInit {
       (record) => record._id === product._id
     );
 
-    this.service.deleteProduct(product).subscribe(
-      () => {},
-      (err) => {
-        this.errorMessage = err;
-        setTimeout(() => {
-          this.errorMessage = '';
-        }, 3000);
-      }
-    );
+    this.service
+      .deleteProduct(product)
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(
+        () => {},
+        (err) => {
+          this.errorMessage = err;
+          setTimeout(() => {
+            this.errorMessage = '';
+          }, 3000);
+        }
+      );
     if (idx >= 0) {
       this.dataToDisplay.splice(idx, 1);
       if (this.dataToDisplay !== undefined && this.dataToDisplay !== null) {
@@ -226,7 +240,7 @@ export class AddProductComponent implements AfterViewInit, OnInit {
     this.dataSource.setData(filteredArray);
   }
 
-  trackProduct(index: number, product: any) {
+  trackProduct(index: number, product: any): void {
     return product._id;
   }
 
@@ -249,10 +263,15 @@ export class AddProductComponent implements AfterViewInit, OnInit {
       isOnsale: false,
     };
   }
+
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
+  }
 }
 
 class ProductDataSource extends DataSource<Product> {
-  private _dataStream = new ReplaySubject<Product[]>();
+  private dataStream = new ReplaySubject<Product[]>();
 
   constructor(initialData: Product[]) {
     super();
@@ -260,12 +279,12 @@ class ProductDataSource extends DataSource<Product> {
   }
 
   connect(): Observable<Product[]> {
-    return this._dataStream;
+    return this.dataStream;
   }
 
-  disconnect() {}
+  disconnect(): void {}
 
-  setData(data: Product[]) {
-    this._dataStream.next(data);
+  setData(data: Product[]): void {
+    this.dataStream.next(data);
   }
 }

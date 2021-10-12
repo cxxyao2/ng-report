@@ -5,9 +5,11 @@ import {
   ViewChild,
   NgZone,
   AfterViewInit,
+  OnDestroy,
 } from '@angular/core';
-import { timer } from 'rxjs';
-import { filter, map, pairwise, throttleTime } from 'rxjs/operators';
+
+import { filter, map, pairwise, throttleTime, takeUntil } from 'rxjs/operators';
+import { Subject, timer } from 'rxjs';
 
 export interface ImageItem {
   title: string;
@@ -19,8 +21,10 @@ export interface ImageItem {
   templateUrl: './infinite-list.component.html',
   styleUrls: ['./infinite-list.component.scss'],
 })
-export class InfiniteListComponent implements OnInit, AfterViewInit {
+export class InfiniteListComponent implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild('scroller') scroller!: CdkVirtualScrollViewport;
+  destroy$: Subject<void> = new Subject<void>();
+
   listItems: ImageItem[] = [];
   loading = false;
 
@@ -36,7 +40,8 @@ export class InfiniteListComponent implements OnInit, AfterViewInit {
         map(() => this.scroller.measureScrollOffset('bottom')),
         pairwise(),
         filter(([y1, y2]) => y2 < y1 && y2 < 140),
-        throttleTime(200)
+        throttleTime(200),
+        takeUntil(this.destroy$)
       )
       .subscribe(() => {
         //  the CDK virtual scroller runs outside the ngZone for performance reasons.
@@ -65,11 +70,16 @@ export class InfiniteListComponent implements OnInit, AfterViewInit {
         image: `https://source.unsplash.com/${images[randomPhotoId]}/50x50`,
       });
       this.loading = true;
-      timer(1000).subscribe(() => {
+      timer(1000).pipe(takeUntil(this.destroy$)).subscribe(() => {
         console.log('feach more...');
         this.loading = false;
         this.listItems = [...this.listItems, ...newItems];
       });
     }
+  }
+
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 }

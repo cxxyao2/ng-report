@@ -1,22 +1,51 @@
 <div class="container">
-  <h2>Email To Us</h2>
+  <h2>Contact Us</h2>
   <mat-card>
-    <form>
-      <label for="name">Your name:</label>
-      <input
-        id="name"
-        name="name"
-        type="text"
-        placeholder="enter your name..."
-      />
-      <label>Your Comments:</label>
-      <textarea
-        id="comments"
-        name="comments"
-        rows="5"
-        cols="33"
-        placeholder="your comments..."
-      ></textarea>
+    <form #myForm="ngForm">
+      <mat-form-field
+        hintLabel="Max 10 characters"
+        class="input-area-full-width"
+        appearance="fill"
+      >
+        <mat-label>Enter your name</mat-label>
+        <input
+          matInput
+          #input
+          id="name"
+          [(ngModel)]="name"
+          name="name"
+          type="text"
+          maxlength="10"
+          placeholder="Ex. Mr Alex"
+        />
+        <mat-hint align="end">{{ input.value?.length || 0 }}/10</mat-hint>
+      </mat-form-field>
+      <br />
+      <mat-form-field class="input-area-full-width" appearance="fill">
+        <mat-label>Textarea</mat-label>
+        <textarea
+          matInput
+          id="comments"
+          name="comments"
+          rows="5"
+          [(ngModel)]="comments"
+          placeholder="Give us more details about problem so we can help you better."
+        ></textarea>
+      </mat-form-field>
+      <div>
+        <button
+          mat-raised-button
+          color="primary"
+          type="submit"
+          (click)="onSubmit(myForm)"
+        >
+          Submit
+        </button>
+        <button mat-raised-button (click)="onReset(myForm)">Reset</button>
+      </div>
     </form>
   </mat-card>
 </div>
+
+<app-error *ngIf="errorMessage" [message]="errorMessage"></app-error>
+<app-success *ngIf="successMessage" [message]="successMessage"></app-success>

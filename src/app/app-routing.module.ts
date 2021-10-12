@@ -3,7 +3,6 @@ import { Routes, RouterModule } from '@angular/router';
 import { HomeComponent } from './home/home.component';
 import { AboutComponent } from './about/about.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
-import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { TodoComponent } from './components/todo/todo.component';
 import { GameCardComponent } from './shared/animations/game-card/game-card.component';
 import { ProductListComponent } from './components/shopping-cart/product-list/product-list.component';
@@ -18,7 +17,6 @@ import { EmailToUsComponent } from './components/email-to-us/email-to-us.compone
 import { TechnicalSupportComponent } from './components/technical-support/technical-support.component';
 import { SchedulerComponent } from './components/scheduler/scheduler.component';
 import { AddProductComponent } from './components/add-product/add-product.component';
-import { CalendarComponent } from './components/calendar/calendar.component';
 import { LoginComponent } from './components/login/login.component';
 import { SignUpComponent } from './components/sign-up/sign-up.component';
 import { PipelinesComponent } from './components/pipelines/pipelines.component';
@@ -32,9 +30,10 @@ import { OrderQueryComponent } from './components/order-query/order-query.compon
 import { ContactCustomerComponent } from './components/contact-customer/contact-customer.component';
 import { UserResolver } from './services/user.resolver';
 import { AddRoleToUserComponent } from './components/add-role-to-user/add-role-to-user.component';
+import { AdminServiceGuard } from './services/admin-service.guard';
+import { ManagerServiceGuard } from './services/manager-service.guard';
 
 const routes: Routes = [
-  { path: 'calendar', component: CalendarComponent },
   { path: 'login', component: LoginComponent },
   { path: 'signup', component: SignUpComponent },
   { path: 'forget-password', component: ForgetPasswordComponent },
@@ -44,24 +43,37 @@ const routes: Routes = [
     component: ChangePasswordComponent,
     canActivate: [AuthGuard],
   },
-  { path: 'calendar', component: CalendarComponent },
+
   { path: 'home', component: HomeComponent }, // public no-login
-  { path: 'dashboard', component: DashboardComponent }, // user profile
-  { path: 'add-product', component: AddProductComponent }, // administrator role
+  {
+    path: 'add-product',
+    component: AddProductComponent,
+    canActivate: [AdminServiceGuard],
+  }, // administrator role
   {
     path: 'authorize',
     component: AddRoleToUserComponent,
+    canActivate: [AdminServiceGuard],
     resolve: { users: UserResolver },
   },
   {
-    path: 'admin',
+    path: 'dashboard',
     loadChildren: () =>
       import('./admin/admin.module').then((m) => m.AdminModule),
-  },
-  { path: 'list-logs', component: LoglistComponent }, // administrator role
-  { path: 'assign-task', component: SchedulerComponent }, // manager role
-  { path: 'monthly-analyze', component: ReportThisMonthComponent }, // manager role
-  { path: 'yearly-analyze', component: ReportThisYearComponent }, // manager role
+    canLoad: [AdminServiceGuard],
+  }, // // user profile
+  {
+    path: 'list-logs',
+    component: LoglistComponent,
+    canActivate: [AdminServiceGuard],
+  }, // administrator role
+  {
+    path: 'assign-task',
+    component: SchedulerComponent,
+    canActivate: [ManagerServiceGuard],
+  }, // manager role
+  { path: 'monthly-analyze', component: ReportThisMonthComponent, canActivate: [ManagerServiceGuard] }, // manager role
+  { path: 'yearly-analyze', component: ReportThisYearComponent, canActivate: [ManagerServiceGuard] }, // manager role
   { path: 'todo', component: TodoComponent }, // salesperson role
   { path: 'product-list', component: ProductListComponent }, // salesperson role
   { path: 'pipeline', component: PipelinesComponent }, // manager, salesperson
@@ -75,34 +87,26 @@ const routes: Routes = [
     ],
   }, // salesperson role
 
-  { path: 'cart', component: CartComponent },
-  { path: 'cart/print/:orderHeaderId', component: PrintInvoiceComponent },
-  { path: 'routine', component: RoutineComponent },
+  { path: 'cart', component: CartComponent ,  canActivate: [AuthGuard],},
+  { path: 'cart/print/:orderHeaderId', component: PrintInvoiceComponent,  canActivate: [AuthGuard], },
+  { path: 'routine', component: RoutineComponent,  canActivate: [AuthGuard], },
   {
     path: 'email-to-us',
     component: EmailToUsComponent,
+      canActivate: [AuthGuard],
   },
   {
     path: 'find-store',
     component: FindStoreComponent,
     canActivate: [AuthGuard],
   },
-  {
-    path: 'technical-support',
-    component: TechnicalSupportComponent,
-  },
-
-  { path: 'about-me', component: AboutComponent }, // very important . the profile of developer
   { path: 'game-card', component: GameCardComponent }, // technique features
   { path: '', redirectTo: '/home', pathMatch: 'full' },
-  { path: 'admin', loadChildren: () => import('./admin/admin.module').then(m => m.AdminModule) },
-
   { path: '**', component: PageNotFoundComponent },
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
-
   exports: [RouterModule],
 })
 export class AppRoutingModule {}

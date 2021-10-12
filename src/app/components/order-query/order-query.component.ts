@@ -1,4 +1,10 @@
-import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  ViewChild,
+  AfterViewInit,
+  OnDestroy,
+} from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 
 import { takeUntil } from 'rxjs/operators';
@@ -18,7 +24,7 @@ import { convertDateToYYYYmmDD } from '../../utils/date-convert.util';
   templateUrl: './order-query.component.html',
   styleUrls: ['./order-query.component.scss'],
 })
-export class OrderQueryComponent implements OnInit, AfterViewInit {
+export class OrderQueryComponent implements OnInit,OnDestroy, AfterViewInit {
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
 

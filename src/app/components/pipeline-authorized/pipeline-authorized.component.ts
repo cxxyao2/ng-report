@@ -45,15 +45,18 @@ export class PipelineAuthorizedComponent implements OnInit, OnDestroy {
     if (idx >= 0) {
       this.customers.splice(idx, 1);
     }
-    this.customerSrv.updateCustomer(id, { isAuthorized: false }).subscribe(
-      (data) => {},
-      (err) => {
-        this.errorMessage = err;
-        setTimeout(() => {
-          this.errorMessage = null;
-        }, 3000);
-      }
-    );
+    this.customerSrv
+      .updateCustomer(id, { isAuthorized: false })
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(
+        (data) => {},
+        (err) => {
+          this.errorMessage = err;
+          setTimeout(() => {
+            this.errorMessage = null;
+          }, 3000);
+        }
+      );
   }
 
   ngOnDestroy(): void {

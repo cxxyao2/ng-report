@@ -1,17 +1,17 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { CartItem } from 'src/app/models/cart-item';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CartService } from 'src/app/services/cart.service';
-import { catchError, switchMap } from 'rxjs/operators';
-import { of } from 'rxjs';
-import { StringDecoder } from 'string_decoder';
+import { catchError, switchMap, takeUntil } from 'rxjs/operators';
+import { of, Subject } from 'rxjs';
 
 @Component({
   selector: 'app-cart',
   templateUrl: './cart.component.html',
   styleUrls: ['./cart.component.scss'],
 })
-export class CartComponent implements OnInit {
+export class CartComponent implements OnInit, OnDestroy {
+  destroy$: Subject<void> = new Subject<void>();
   errorMessage = '';
 
   constructor(
@@ -31,19 +31,27 @@ export class CartComponent implements OnInit {
   }
 
   printInvoice(): void {
-    const customerId = this.cartSrv.currentCustomer?._id;
+    const isValidCustomer = this.cartSrv.currentCustomer?.isAuthorized;
+    if (isValidCustomer === undefined || isValidCustomer === false) {
+      this.errorMessage =
+        'This customer is not yet authorized. Please contact your administrator.';
+      setTimeout(() => {
+        this.errorMessage = '';
+      }, 3000);
+      return;
+    }
     let orderHeaderId = '';
 
     this.cartSrv
       .addCartItemsToOrder()
       .pipe(
         switchMap((data) => {
-          console.log('order save data is', data.v1.orderHeader);
           orderHeaderId = data.v1.orderHeader;
           return this.cartSrv
             .clearCart()
             .pipe(catchError((err) => of('clear cart error' + err)));
-        })
+        }),
+        takeUntil(this.destroy$)
       )
       .subscribe(
         () => {
@@ -54,8 +62,16 @@ export class CartComponent implements OnInit {
           });
         },
         (err) => {
-          console.error('error is', err);
+          this.errorMessage = err;
+          setTimeout(() => {
+            this.errorMessage = '';
+          }, 3000);
         }
       );
+  }
+
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 }

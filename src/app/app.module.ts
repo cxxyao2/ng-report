@@ -24,7 +24,7 @@ import { AddClientComponent } from './components/add-client/add-client.component
 import { CartComponent } from './components/./shopping-cart/cart/cart.component';
 import { ChipsMultiSelectComponent } from './shared/chips-multi-select/chips-multi-select.component';
 import { CartItemComponent } from './components/shopping-cart/cart/cart-item/cart-item.component';
-import { DashboardComponent } from './components/dashboard/dashboard.component';
+
 import { HomeComponent } from './home/home.component';
 import { InfiniteListComponent } from './components/infinite-list/infinite-list.component';
 import { TodoComponent } from './components/todo/todo.component';
@@ -95,7 +95,6 @@ import { SlideShowsComponent } from './components/slide-shows/slide-shows.compon
     CartComponent,
     CartItemComponent,
     ChipsMultiSelectComponent,
-    DashboardComponent,
     DataListComponent,
     EmailToUsComponent,
     ErrorComponent,

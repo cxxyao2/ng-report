@@ -1,8 +1,14 @@
-import { Component, Inject, OnInit, AfterViewInit } from '@angular/core';
+import {
+  Component,
+  Inject,
+  OnInit,
+  AfterViewInit,
+  OnDestroy,
+} from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { Observable } from 'rxjs';
-import { map, startWith } from 'rxjs/operators';
+import { Observable, Subject } from 'rxjs';
+import { map, startWith, takeUntil } from 'rxjs/operators';
 
 import { UserService } from 'src/app/services/user.service';
 import { User } from 'src/app/models/user';
@@ -12,7 +18,8 @@ import { User } from 'src/app/models/user';
   templateUrl: './logfilter.component.html',
   styleUrls: ['./logfilter.component.scss'],
 })
-export class LogfilterComponent implements OnInit, AfterViewInit {
+export class LogfilterComponent implements OnInit, AfterViewInit, OnDestroy {
+  destroy$: Subject<void> = new Subject<void>();
   nameControl = new FormControl('', [
     Validators.required,
     Validators.maxLength(10),
@@ -37,17 +44,20 @@ export class LogfilterComponent implements OnInit, AfterViewInit {
   ngOnInit() {}
 
   ngAfterViewInit() {
-    this.service.getUsers().subscribe(
-      (data) => {
-        this.userArray = data;
-      },
-      (err) => {
-        this.errorMessage = err;
-        setTimeout(() => {
-          this.errorMessage = '';
-        }, 3000);
-      }
-    );
+    this.service
+      .getUsers()
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(
+        (data) => {
+          this.userArray = data;
+        },
+        (err) => {
+          this.errorMessage = err;
+          setTimeout(() => {
+            this.errorMessage = '';
+          }, 3000);
+        }
+      );
     this.filteredOptions = this.nameControl.valueChanges.pipe(
       startWith(''),
       map((value) => this._filter(value))
@@ -92,5 +102,10 @@ export class LogfilterComponent implements OnInit, AfterViewInit {
       userId,
       content: this.contentControl.value.trim(),
     });
+  }
+
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 }

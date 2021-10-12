@@ -257,7 +257,8 @@ export class TodoComponent implements OnInit, OnDestroy {
             } else {
               return of(null);
             }
-          })
+          }),
+          takeUntil(this.destroy$)
         )
         .subscribe(
           (data) => {
@@ -357,11 +358,6 @@ export class TodoComponent implements OnInit, OnDestroy {
     this.info.open(marker);
   }
 
-  ngOnDestroy(): void {
-    this.destroy$.next();
-    this.destroy$.complete();
-  }
-
   getStringFromPosition(index: number): string {
     const start = (index + 8).toString();
     const end = (index + 9).toString();
@@ -371,6 +367,11 @@ export class TodoComponent implements OnInit, OnDestroy {
     // YYYY-mm-DD
     const period = finalStart + ':00-' + finalEnd + ':00';
     return period;
+  }
+
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 }
 

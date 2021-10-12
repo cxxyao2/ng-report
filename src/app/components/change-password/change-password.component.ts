@@ -1,16 +1,20 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 
 import { uniquePasswordValidator } from 'src/app/shared/unique-password.directive';
 import { AuthService } from 'src/app/services/auth.service';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 
 @Component({
   selector: 'app-change-password',
   templateUrl: './change-password.component.html',
   styleUrls: ['./change-password.component.scss'],
 })
-export class ChangePasswordComponent implements OnInit {
+export class ChangePasswordComponent implements OnInit, OnDestroy {
+  destroy$: Subject<void> = new Subject<void>();
+
   hideOld = true;
   hideNew = true;
   hideRepeatNew = true;
@@ -52,7 +56,7 @@ export class ChangePasswordComponent implements OnInit {
     return this.myForm.get('repeatPassword');
   }
 
-  getOldPasswordErrorMessage() {
+  getOldPasswordErrorMessage(): string {
     if (this.oldPassword?.errors?.required) {
       return 'old password is required';
     }
@@ -63,7 +67,7 @@ export class ChangePasswordComponent implements OnInit {
     return 'old password is invalid';
   }
 
-  getNewPasswordErrorMessage() {
+  getNewPasswordErrorMessage(): string {
     if (this.password?.errors?.required) {
       return 'new password is required';
     }
@@ -73,7 +77,7 @@ export class ChangePasswordComponent implements OnInit {
     }
     return 'new password is invalid';
   }
-  getRepeatNewPasswordErrorMessage() {
+  getRepeatNewPasswordErrorMessage(): string {
     if (this.repeatPassword?.errors?.required) {
       return 'repeat-new-password is required';
     }
@@ -84,12 +88,13 @@ export class ChangePasswordComponent implements OnInit {
     return 'repeat-new-password is invalid';
   }
 
-  changePassword() {
+  changePassword(): void {
     if (this.myForm.invalid) {
       return;
     }
     this.authService
       .updatePassword(this.oldPassword?.value, this.password?.value)
+      .pipe(takeUntil(this.destroy$))
       .subscribe(
         (data: any) => {
           this.successMessage = data.message;
@@ -99,5 +104,10 @@ export class ChangePasswordComponent implements OnInit {
           setTimeout(() => (this.errorMessage = ''), 3000);
         }
       );
+  }
+
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 }

@@ -104,7 +104,6 @@ export class ReportThisYearComponent
 
   private getDataFromFunction(counter: number) {
     this.clearAllData();
-    console.log('fucntion begin', new Date());
     const year = this.queryDate.getFullYear();
     const month = this.queryDate.getMonth();
     const data = createYearlyMockData(counter);
@@ -116,19 +115,17 @@ export class ReportThisYearComponent
     this.setCustomerData();
     this.setSalespersonData();
     this.setInitSaleData();
-    console.log('fucntion end', new Date());
   }
 
-  private getDataFromWorker(counter: number) {
+  private getDataFromWorker(counter: number): void {
     this.clearAllData();
-    console.log('workder start', new Date());
+
     const year = this.queryDate.getFullYear();
     const month = this.queryDate.getMonth();
     this.dataService
       .createProductData(counter)
       .pipe(takeUntil(this.destroy$))
       .subscribe((data: any) => {
-        console.log('data is ', data);
         this.productData = data.productsData;
         this.customerData = data.customersData;
         this.salespersonData = data.salesData;
@@ -138,28 +135,9 @@ export class ReportThisYearComponent
         this.setSalespersonData();
         this.setInitSaleData();
       });
-    console.log('worker end', new Date());
-    // this.dataService.createProductData(10000).subscribe(
-    //   (data: any) => {
-    //     this.productData = data.productsData;
-    //     this.customerData = data.customersData;
-    //     this.salespersonData = data.salesData;
-    //     this.initSalesData = data.initOrders;
-    //     this.setProductData();
-    //     this.setCustomerData();
-    //     this.setSalespersonData();
-    //     this.setInitSaleData();
-    //   },
-    //   (err) => {
-    //     this.errorMessage = err;
-    //     setTimeout(() => {
-    //       this.errorMessage = '';
-    //     }, 3000);
-    //   }
-    // );
   }
 
-  private setInitSaleData() {
+  private setInitSaleData(): void {
     if (this.initSalesData && this.initSalesData.length > 0) {
       this.elementData = [...this.initSalesData];
       this.dataSource = new MatTableDataSource(this.elementData);
@@ -168,14 +146,14 @@ export class ReportThisYearComponent
     }
   }
 
-  private setProductData() {
+  private setProductData():void {
     if (this.productData && this.productData.length > 0) {
       this.pieData = [...this.productData];
       this.setPieData();
     }
   }
 
-  private setPieData() {
+  private setPieData():void {
     // pie
     this.pieOptions = {
       tooltip: {
@@ -257,7 +235,7 @@ export class ReportThisYearComponent
     }
   }
 
-  setLineData() {
+  setLineData():void {
     this.lineOptions = {
       xAxis: {
         type: 'category',
@@ -277,7 +255,7 @@ export class ReportThisYearComponent
 
   ngAfterViewInit() {}
 
-  downloadData() {
+  downloadData():void {
     // PeriodicElement
     const initData = [...this.elementData];
     if (!(initData && initData.length >= 1)) {
@@ -299,7 +277,7 @@ export class ReportThisYearComponent
     fileConvert.saveBlobtoLocalFile(csvFileData, fileName + '.csv', 'text/csv');
   }
 
-  createData() {
+  createData():void {
     const counter1 = 999;
     const counter2 = 888;
     if (this.dataCreateOption === 'worker') {

@@ -1,4 +1,10 @@
-import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  ViewChild,
+  OnDestroy,
+  AfterViewInit,
+} from '@angular/core';
 import { MatSelectionListChange } from '@angular/material/list/selection-list';
 import { MatDialog } from '@angular/material/dialog';
 import { MatTable } from '@angular/material/table';
@@ -13,8 +19,8 @@ import { ContactPlanService } from 'src/app/services/contact-plan.service';
 import { DataListComponent } from 'src/app/shared/data-list/data-list.component';
 import { Customer } from 'src/app/models/customer';
 import { User } from 'src/app/models/user';
-import { switchMap } from 'rxjs/operators';
-import { of } from 'rxjs';
+import { switchMap, takeUntil } from 'rxjs/operators';
+import { of, Subject } from 'rxjs';
 import { ContactPlan } from '../../models/contact-plan';
 import { convertDateToYYYYmmDD } from '../../utils/date-convert.util';
 
@@ -26,8 +32,10 @@ import { convertDateToYYYYmmDD } from '../../utils/date-convert.util';
   templateUrl: './scheduler.component.html',
   styleUrls: ['./scheduler.component.scss'],
 })
-export class SchedulerComponent implements OnInit, AfterViewInit {
+export class SchedulerComponent implements OnInit, OnDestroy, AfterViewInit {
   @ViewChild(MatTable) table!: MatTable<ContactPlan>;
+  destroy$: Subject<void> = new Subject<void>();
+
   errorMessage = '';
   showPersonList = false;
   isValidPerson = true;
@@ -54,28 +62,34 @@ export class SchedulerComponent implements OnInit, AfterViewInit {
   ngOnInit(): void {
     this.initPlans = createNewContactPlan(8, 17);
     this.dataSource = [...this.initPlans];
-    this.userService.getUsers().subscribe(
-      (data) => {
-        this.allPersons = data;
-      },
-      (err) => {
-        this.errorMessage = err;
-        setTimeout(() => {
-          this.errorMessage = '';
-        }, 3000);
-      }
-    );
-    this.customerService.getCustomers().subscribe(
-      (data) => {
-        this.allCustomers = data;
-      },
-      (err) => {
-        this.errorMessage = err;
-        setTimeout(() => {
-          this.errorMessage = '';
-        }, 3000);
-      }
-    );
+    this.userService
+      .getUsers()
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(
+        (data) => {
+          this.allPersons = data;
+        },
+        (err) => {
+          this.errorMessage = err;
+          setTimeout(() => {
+            this.errorMessage = '';
+          }, 3000);
+        }
+      );
+    this.customerService
+      .getCustomers()
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(
+        (data) => {
+          this.allCustomers = data;
+        },
+        (err) => {
+          this.errorMessage = err;
+          setTimeout(() => {
+            this.errorMessage = '';
+          }, 3000);
+        }
+      );
   }
 
   ngAfterViewInit() {
@@ -168,6 +182,7 @@ export class SchedulerComponent implements OnInit, AfterViewInit {
 
     this.planService
       .getContactPlans(dateString, this.selectedPerson._id || '')
+      .pipe(takeUntil(this.destroy$))
       .subscribe(
         (data) => {
           data.forEach((record) => {
@@ -178,16 +193,6 @@ export class SchedulerComponent implements OnInit, AfterViewInit {
             idx = this.dataSource.findIndex(
               (planItem) => planItem.contactPeriod === per
             );
-
-            // for (let item of this.dataSource) {
-            //   console.log('imte contactPeriod ', item.contactPeriod);
-            //   console.log(
-            //     'item.pre === rep,',
-            //     item.contactPeriod,
-            //     per,
-            //     item.contactPeriod === per
-            //   );
-            // }
 
             if (idx >= 0) {
               this.dataSource.splice(idx, 1, { ...record });
@@ -204,7 +209,7 @@ export class SchedulerComponent implements OnInit, AfterViewInit {
       );
   }
 
-  deletePLan(arg: ContactPlan) {
+  deletePLan(arg: ContactPlan): void {
     this.dialogService
       .confirmDialog({
         title: 'Scheduling',
@@ -219,7 +224,8 @@ export class SchedulerComponent implements OnInit, AfterViewInit {
           } else {
             return of(null);
           }
-        })
+        }),
+        takeUntil(this.destroy$)
       )
       .subscribe(
         (data) => {
@@ -230,7 +236,6 @@ export class SchedulerComponent implements OnInit, AfterViewInit {
             this.dataSource[idx].customerId = '';
             this.dataSource[idx].customerName = '';
           }
-
           this.table.renderRows();
         },
         (err) => {
@@ -287,7 +292,8 @@ export class SchedulerComponent implements OnInit, AfterViewInit {
           } else {
             return of(null);
           }
-        })
+        }),
+        takeUntil(this.destroy$)
       )
       .subscribe(
         (data) => {
@@ -356,7 +362,8 @@ export class SchedulerComponent implements OnInit, AfterViewInit {
           } else {
             return of(null);
           }
-        })
+        }),
+        takeUntil(this.destroy$)
       )
       .subscribe(
         (data) => {
@@ -378,6 +385,11 @@ export class SchedulerComponent implements OnInit, AfterViewInit {
           }, 3000);
         }
       );
+  }
+
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 }
 

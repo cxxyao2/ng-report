@@ -1,4 +1,10 @@
-import { Component, HostBinding, Input, OnInit } from '@angular/core';
+import {
+  Component,
+  HostBinding,
+  Input,
+  OnInit,
+  OnDestroy,
+} from '@angular/core';
 import { Router } from '@angular/router';
 
 import { NavItem } from 'src/app/models/nav-item';
@@ -10,6 +16,10 @@ import {
   transition,
   trigger,
 } from '@angular/animations';
+
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
+
 
 @Component({
   selector: 'app-menu-list-item',
@@ -23,7 +33,9 @@ import {
     ]),
   ],
 })
-export class MenuListItemComponent implements OnInit {
+export class MenuListItemComponent implements OnInit, OnDestroy {
+  destroy$: Subject<void> = new Subject<void>();
+
   expanded = false;
   @HostBinding('attr.aria-expanded') ariaExpanded = this.expanded;
   @Input() item!: NavItem;
@@ -36,12 +48,14 @@ export class MenuListItemComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.navService.currentUrl.subscribe((url) => {
-      if (this.item.route && url) {
-        this.expanded = url.indexOf(`/${this.item.route}`) === 0;
-        this.ariaExpanded = this.expanded;
-      }
-    });
+    this.navService.currentUrl
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((url) => {
+        if (this.item.route && url) {
+          this.expanded = url.indexOf(`/${this.item.route}`) === 0;
+          this.ariaExpanded = this.expanded;
+        }
+      });
   }
 
   onItemSelected(item: NavItem): void {
@@ -57,5 +71,10 @@ export class MenuListItemComponent implements OnInit {
     if (item.children && item.children.length) {
       this.expanded = !this.expanded;
     }
+  }
+
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 }

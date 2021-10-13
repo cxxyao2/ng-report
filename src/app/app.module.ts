@@ -56,9 +56,8 @@ import { SignUpComponent } from './components/sign-up/sign-up.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { PipelinesComponent } from './components/pipelines/pipelines.component';
 import { httpInterceptorProviders } from './interceptors';
-import { XsrftokenInterceptor } from './interceptors/xsrftoken.interceptor';
-import { UniqueUserDirective } from './shared/unique-user.directive';
-import { UniquePasswordDirective } from './shared/unique-password.directive';
+import { UniqueUserDirective } from './services/unique-user.directive';
+import { UniquePasswordDirective } from './services/unique-password.directive';
 import { ChangePasswordComponent } from './components/change-password/change-password.component';
 import { ResetPasswordComponent } from './components/reset-password/reset-password.component';
 import { ForgetPasswordComponent } from './components/forget-password/forget-password.component';
@@ -80,6 +79,7 @@ import { ContactCustomerComponent } from './components/contact-customer/contact-
 import { AnimateCardComponent } from './shared/animations/animate-card/animate-card.component';
 import { AnimateCardListComponent } from './shared/animations/animate-card-list/animate-card-list.component';
 import { SlideShowsComponent } from './components/slide-shows/slide-shows.component';
+import { FileSizePipe } from './services/file-size.pipe';
 
 @NgModule({
   declarations: [
@@ -135,6 +135,7 @@ import { SlideShowsComponent } from './components/slide-shows/slide-shows.compon
     AnimateCardComponent,
     AnimateCardListComponent,
     SlideShowsComponent,
+    FileSizePipe,
   ],
   imports: [
     BrowserModule,

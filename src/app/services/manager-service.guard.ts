@@ -1,5 +1,11 @@
 import { Injectable } from '@angular/core';
-import { ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot, UrlTree } from '@angular/router';
+import {
+  ActivatedRouteSnapshot,
+  CanActivate,
+  Router,
+  RouterStateSnapshot,
+  UrlTree,
+} from '@angular/router';
 import { Observable } from 'rxjs';
 import { AuthService } from './auth.service';
 
@@ -16,10 +22,9 @@ export class ManagerServiceGuard implements CanActivate {
       return true;
     }
 
-    // // Navigate to /login?returnUrl=xxxxx
-    this.router.navigate(['/login'], {
-      queryParams: { returnUrl: state.url },
-    });
+    // Navigate to /home
+    window.alert('You are not authorized to visit this page');
+    this.router.navigate(['/home']);
     return false;
   }
 }

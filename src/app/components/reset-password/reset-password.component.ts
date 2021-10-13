@@ -37,10 +37,7 @@ export class ResetPasswordComponent implements OnDestroy {
     this.authService
       .resetPassword('xx', this.token)
       .pipe(takeUntil(this.destroy$))
-      .subscribe((data: any) => {
-        console.log('data is', data);
-        //this.successMessage = data.message;
-      });
+      .subscribe();
   }
 
   ngOnDestroy(): void {

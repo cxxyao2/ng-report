@@ -5,6 +5,7 @@ import { Customer } from 'src/app/models/customer';
 
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-pipeline-authorized',
@@ -36,11 +37,19 @@ export class PipelineAuthorizedComponent implements OnInit, OnDestroy {
       );
   }
 
-  trackPipelineId(index: number, customer: any) {
+  trackPipelineId(index: number, customer: any): string {
     return customer._id;
   }
 
-  frozeCustomer(id = '') {
+  getImageSrc(customerId = ''): string {
+    const apiUrl =
+      environment.imageUrl + '/customers' + '/' + customerId + '.jpg';
+
+    // E.X.  https://xxx.xxx.xxx.xx:5000/custoemrs/addd1323.jpg,
+    return apiUrl;
+  }
+
+  frozeCustomer(id = ''): void {
     const idx = this.customers.findIndex((customer) => customer._id === id);
     if (idx >= 0) {
       this.customers.splice(idx, 1);

@@ -14,7 +14,7 @@ export class LogsService {
   configUrl = environment.apiUrl + '/logs';
 
   constructor(private http: HttpClient) {
-    this.getIPAddress();
+    // this.getIPAddress();
   }
 
   getLog(id: string): Observable<LogRecord> {

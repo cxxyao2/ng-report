@@ -93,16 +93,6 @@
   animation: slideright 2s ease-out;
 }
 
-.login-input {
-  margin: 1rem 0;
-  padding: 1.5rem;
-  border-radius: 2rem;
-  outline: none;
-  border: none;
-  box-shadow: 0 0 2rem rgba(0, 0, 255, 0.3);
-  width: 80%;
-}
-
 .login-btn {
   background-color: #00ff9b;
   padding: 1rem;
@@ -131,10 +121,21 @@
   width: 100%;
   text-align: center;
 }
+
+.login-input {
+  margin: 1rem 0;
+  padding: 1.5rem;
+  border-radius: 2rem;
+  outline: none;
+  border: none;
+  box-shadow: 0 0 2rem rgba(0, 0, 255, 0.3);
+  width: 100%;
+}
+
 .button-in-input {
   position: absolute;
   top: 20px;
-  right: 70px;
+  right: 20px;
   font-size: 30px;
   color: #0c1066;
 }
@@ -163,12 +164,5 @@
 @media screen and (max-width: 1279px) {
   .login-aside {
     display: none;
-  }
-}
-
-@media screen and (max-width: 599px) {
-  .button-in-input {
-    right: 30px;
-    top: 25px;
   }
 }

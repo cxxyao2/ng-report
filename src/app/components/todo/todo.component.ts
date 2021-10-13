@@ -84,7 +84,6 @@ export class TodoComponent implements OnInit, OnDestroy {
 
     getPosition(options)
       .then((position) => {
-        console.log(position);
         this.center = {
           lat: position.coords.latitude,
           lng: position.coords.longitude,
@@ -319,7 +318,7 @@ export class TodoComponent implements OnInit, OnDestroy {
   }
 
   click(event: google.maps.MapMouseEvent): void {
-    console.log('event', event);
+    // console.log('event', event);
   }
 
   addMarker(): void {

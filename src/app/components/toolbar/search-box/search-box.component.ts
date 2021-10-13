@@ -35,7 +35,7 @@ export class SearchBoxComponent implements OnInit, OnDestroy {
       .pipe(
         debounceTime(300),
         distinctUntilChanged(),
-        tap((data) => console.log(data)),
+
         map((searchTerm: string) => {
           this.service.setSearchTerms(searchTerm);
           // if productList component is not active, navigate to it
@@ -45,7 +45,7 @@ export class SearchBoxComponent implements OnInit, OnDestroy {
         }),
         takeUntil(this.destroy$)
       )
-      .subscribe(console.log);
+      .subscribe();
   }
 
   ngOnDestroy(): void {

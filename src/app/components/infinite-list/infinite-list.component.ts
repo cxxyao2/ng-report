@@ -70,11 +70,12 @@ export class InfiniteListComponent implements OnInit, AfterViewInit, OnDestroy {
         image: `https://source.unsplash.com/${images[randomPhotoId]}/50x50`,
       });
       this.loading = true;
-      timer(1000).pipe(takeUntil(this.destroy$)).subscribe(() => {
-        console.log('feach more...');
-        this.loading = false;
-        this.listItems = [...this.listItems, ...newItems];
-      });
+      timer(1000)
+        .pipe(takeUntil(this.destroy$))
+        .subscribe(() => {
+          this.loading = false;
+          this.listItems = [...this.listItems, ...newItems];
+        });
     }
   }
 

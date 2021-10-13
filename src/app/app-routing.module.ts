@@ -72,11 +72,23 @@ const routes: Routes = [
     component: SchedulerComponent,
     canActivate: [ManagerServiceGuard],
   }, // manager role
-  { path: 'monthly-analyze', component: ReportThisMonthComponent, canActivate: [ManagerServiceGuard] }, // manager role
-  { path: 'yearly-analyze', component: ReportThisYearComponent, canActivate: [ManagerServiceGuard] }, // manager role
+  {
+    path: 'monthly-analyze',
+    component: ReportThisMonthComponent,
+    canActivate: [ManagerServiceGuard],
+  }, // manager role
+  {
+    path: 'yearly-analyze',
+    component: ReportThisYearComponent,
+    canActivate: [ManagerServiceGuard],
+  }, // manager role
   { path: 'todo', component: TodoComponent }, // salesperson role
   { path: 'product-list', component: ProductListComponent }, // salesperson role
-  { path: 'pipeline', component: PipelinesComponent }, // manager, salesperson
+  {
+    path: 'pipeline',
+    component: PipelinesComponent,
+    canActivate: [AuthGuard],
+  }, // manager, salesperson
   { path: 'add-client', component: AddClientComponent }, // salesperson role
 
   {
@@ -87,13 +99,17 @@ const routes: Routes = [
     ],
   }, // salesperson role
 
-  { path: 'cart', component: CartComponent ,  canActivate: [AuthGuard],},
-  { path: 'cart/print/:orderHeaderId', component: PrintInvoiceComponent,  canActivate: [AuthGuard], },
-  { path: 'routine', component: RoutineComponent,  canActivate: [AuthGuard], },
+  { path: 'cart', component: CartComponent, canActivate: [AuthGuard] },
+  {
+    path: 'cart/print/:orderHeaderId',
+    component: PrintInvoiceComponent,
+    canActivate: [AuthGuard],
+  },
+  { path: 'routine', component: RoutineComponent, canActivate: [AuthGuard] },
   {
     path: 'email-to-us',
     component: EmailToUsComponent,
-      canActivate: [AuthGuard],
+    canActivate: [AuthGuard],
   },
   {
     path: 'find-store',

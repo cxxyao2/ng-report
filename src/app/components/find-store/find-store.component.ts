@@ -6,7 +6,6 @@ import { Observable, of } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import { Stream } from 'stream';
 
-
 export interface Store {
   name: string;
   ranking: number;
@@ -39,7 +38,7 @@ export class FindStoreComponent implements OnInit, AfterViewInit {
   };
   markers: Array<any> = [];
   infoContent = '';
-
+  errorMessage = '';
   constructor(private mapService: GoogleMapService) {}
 
   ngOnInit(): void {
@@ -50,7 +49,11 @@ export class FindStoreComponent implements OnInit, AfterViewInit {
     };
 
     if (!navigator.geolocation || !navigator.geolocation.getCurrentPosition) {
-      console.log('not support');
+      this.errorMessage =
+        'Geolocation is not supported.Please allow this app to access the location.';
+      setTimeout(() => {
+        this.errorMessage = '';
+      }, 2000);
     } else {
       this.getCurrentPosition()
         .then((data) => {
@@ -91,7 +94,7 @@ export class FindStoreComponent implements OnInit, AfterViewInit {
   }
 
   click(event: google.maps.MapMouseEvent): void {
-    console.log('event', event);
+    // console.log('event', event);
   }
 
   logCenter(): void {
@@ -100,15 +103,6 @@ export class FindStoreComponent implements OnInit, AfterViewInit {
       timeout: 5000,
       maximumAge: 60000,
     };
-
-    // if (!this.center) {
-    //   const xx = this.map.getCenter();
-    //   this.center = {
-    //     lat: xx.lat(),
-    //     lng: xx.lng(),
-    //   };
-    // }
-    // console.log(JSON.stringify(this.map.getCenter()));
   }
 
   addMarker(): void {

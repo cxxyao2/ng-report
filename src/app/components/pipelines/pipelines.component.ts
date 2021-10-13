@@ -11,6 +11,7 @@ import {
   takeUntil,
 } from 'rxjs/operators';
 import { Customer } from 'src/app/models/customer';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-pipelines',
@@ -55,8 +56,16 @@ export class PipelinesComponent implements OnInit, OnDestroy {
     this.showNotification$ = merge(show$, hide$);
   }
 
-  trackPipelineId(index: number, customer: any) {
+  trackPipelineId(index: number, customer: any): string {
     return customer._id;
+  }
+
+  getImageSrc(customerId=''): string {
+    const apiUrl =
+      environment.imageUrl + '/customers' + '/' + customerId + '.jpg';
+
+    // E.X.  https://xxx.xxx.xxx.xx:5000/custoemrs/addd1323.jpg,
+    return apiUrl;
   }
 
   refreshDate() {

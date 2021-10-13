@@ -1,7 +1,11 @@
+:host {
+  margin-right: 16px;
+}
+
 .search-box-wrapper {
   position: relative;
   width: 100%;
-  min-width: 150px;
+  min-width: 120px;
   height: 100%;
   margin: 0 16px;
   mat-icon {

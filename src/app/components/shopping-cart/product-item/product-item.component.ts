@@ -48,7 +48,7 @@ export class ProductItemComponent implements OnInit, OnDestroy {
     this.imgSrc = apiUrl + 'w_1080.jpg';
   }
 
-  handleAddToCart() {
+  addToCart() {
     if (!this.cartService.currentCustomer) {
       this.errorMessage =
         'Please select a customer before add products to cart.';
@@ -60,7 +60,7 @@ export class ProductItemComponent implements OnInit, OnDestroy {
     this.cartService.addProductToCart(this.productItem);
   }
 
-  handleAddToWishList() {
+  addToWishList() {
     if (!this.cartService.currentCustomer) {
       this.errorMessage =
         'Please select a customer before add products to cart.';
@@ -71,7 +71,7 @@ export class ProductItemComponent implements OnInit, OnDestroy {
     this.wishListService.addToWishList(this.productItem._id);
   }
 
-  handleRemoveFromWishList() {
+  removeFromWishList(): void {
     this.wishListService.removeFromWishList(this.productItem._id);
   }
 
@@ -89,7 +89,7 @@ export class ProductItemComponent implements OnInit, OnDestroy {
 
   generateProductPDF(): any {
     let imageData = null;
-    let endpoint = this.imgSrc.trim();
+    const endpoint = this.imgSrc.trim();
     let docDefinition: any;
     this.http
       .get(endpoint, { responseType: 'blob' })

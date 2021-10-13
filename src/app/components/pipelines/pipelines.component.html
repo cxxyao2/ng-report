@@ -3,7 +3,9 @@
 <mat-tab-group>
   <mat-tab>
     <ng-template mat-tab-label>
-      <mat-icon [class.tab-notification-icon]="showNotification$ | async" >notifications_active</mat-icon>
+      <mat-icon [class.tab-notification-icon]="showNotification$ | async"
+        >notifications_active</mat-icon
+      >
       Unauthorized
     </ng-template>
     <ng-template matTabContent>
@@ -28,7 +30,7 @@
               <mat-list-item>
                 <img
                   matListAvatar
-                  src="https://source.unsplash.com/random/100x100?car"
+                  [src]="getImageSrc(customer._id)"
                   alt="..."
                 />
                 <h3 matLine>{{ customer.name }}</h3>

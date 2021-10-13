@@ -41,9 +41,7 @@ export class LoginComponent implements OnInit, OnDestroy {
       .pipe(takeUntil(this.destroy$))
       .subscribe(
         (result) => {
-          const token = '';
           this.authService.currentUser = result.data;
-          console.log('TODO login', this.authService.currentUser);
           this.authService.loginWithJwt(result);
           const returnUrl = this.route.snapshot.queryParamMap.get('returnUrl');
           this.router.navigate([returnUrl || '/']);

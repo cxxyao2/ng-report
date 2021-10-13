@@ -7,8 +7,8 @@
         <mat-list-item>
           <img
             matListAvatar
-            src="https://source.unsplash.com/random/100x100?car"
-            alt="..."
+            [src]="getImageSrc(customer._id)"
+            alt="customer image"
           />
           <h3 matLine>{{ customer.name }}</h3>
           <p matLine>{{ customer.address }}</p>

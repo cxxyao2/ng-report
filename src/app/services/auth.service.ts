@@ -1,9 +1,5 @@
 import { Injectable } from '@angular/core';
-import {
-  HttpClient,
-  HttpErrorResponse,
-  HttpHeaders,
-} from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Observable, of, throwError } from 'rxjs';
 import { User } from '../models/user';
 import jwt_decode from 'jwt-decode';
@@ -98,16 +94,10 @@ export class AuthService {
   }
 
   loginWithJwt(jwt: string) {
-    // TODO  cookie能用后要去掉, 要用getToken()从cookie中获取
-    // jwt =
-    //   'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MTQ2YTQxM2Q1MjQxNDY1NWE2ZTkxN2QiLCJuYW1lIjoiSmFuZTQiLCJpc0FkbWluIjpmYWxzZSwiaXNNYW5hZ2VyIjpmYWxzZSwiaXNTYWxlc3BlcnNvbiI6dHJ1ZSwiaWF0IjoxNjMyMTY2MzQ1fQ.4OpEEkDhHt1gN3MZu00Ns2QSA4b_c-IBvphjxR5w5ZY';
-
-    localStorage.setItem(this.tokenKey, jwt);
     this.logsSrv.addLog('login');
   }
 
-
-  setCurrentUser() {
+  setCurrentUser(): void {
     const jwt = localStorage.getItem(this.tokenKey);
     if (jwt && jwt.length >= 1) {
       try {
@@ -119,10 +109,8 @@ export class AuthService {
   }
 
   logout(): void {
-    // TODO 需要清除cookie 和 localStorage
-    // this.cookieService.deleteAll('/');
-    //localStorage.removeItem(this.tokenKey);
     this.logsSrv.addLog('logout');
+    this.cookieService.delete(environment.cookieName);
     window.location.reload();
   }
 }

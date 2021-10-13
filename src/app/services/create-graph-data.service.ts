@@ -19,7 +19,6 @@ export class CreateGraphDataService {
     const resultSubject = new BehaviorSubject<number>(0);
     this.worker.onmessage = ({ data }) => {
       resultSubject.next(data);
-      // console.log(`calculate result is : ${data} `);
     };
     this.worker.postMessage(counter);
     return resultSubject;

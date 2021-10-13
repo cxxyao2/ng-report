@@ -21,6 +21,8 @@ export class AdminServiceGuard implements CanLoad, CanActivate {
   canLoad(route: Route, segments: UrlSegment[]): boolean {
     if (this.authService.currentUser?.isAdmin !== true) {
       window.alert('You are not authorized to visit this page');
+      // // Navigate to /home
+      this.router.navigate(['/home']);
       return false;
     }
     return true;
@@ -34,10 +36,8 @@ export class AdminServiceGuard implements CanLoad, CanActivate {
       return true;
     }
 
-    // // Navigate to /login?returnUrl=xxxxx
-    this.router.navigate(['/login'], {
-      queryParams: { returnUrl: state.url },
-    });
+    // // Navigate to /home
+    this.router.navigate(['/home']);
     return false;
   }
 }

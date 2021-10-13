@@ -59,12 +59,25 @@
     font-size: 14px;
   }
 }
+
+.signup-input {
+  margin: 1rem 0;
+  padding: 1rem;
+  border-radius: 2rem;
+  outline: none;
+  border: none;
+  box-shadow: 0 0 1rem rgba(0, 0, 255, 0.3);
+  width: 100%;
+}
+
 .button-in-input {
   position: absolute;
-  top: 20px;
-  right: 120px;
+  top: 0;
+  right: 10px;
+  height: 30px;
   font-size: 30px;
   color: #0c1066;
+  transform: translateY(15px);
 }
 
 .signup-aside {
@@ -75,7 +88,7 @@
   flex-flow: column;
   min-height: 100%;
   border-radius: 0 10px 10px 0;
-  background: url("https://source.unsplash.com/random/1200x900?mountain")
+  background: url("https://source.unsplash.com/random/1200x900?station")
     no-repeat center center;
   background-size: cover;
   position: relative;
@@ -111,16 +124,6 @@
   position: relative;
   z-index: 5;
   animation: slideright 1s ease-out;
-}
-
-.signup-input {
-  margin: 1rem 0;
-  padding: 1rem;
-  border-radius: 2rem;
-  outline: none;
-  border: none;
-  box-shadow: 0 0 1rem rgba(0, 0, 255, 0.3);
-  width: 80%;
 }
 
 .signup-btn {
@@ -174,11 +177,5 @@
 @media screen and (max-width: 1279px) {
   .signup-aside {
     display: none;
-  }
-}
-
-@media screen and (max-width: 599px) {
-  .button-in-input {
-    right: 50px;
   }
 }

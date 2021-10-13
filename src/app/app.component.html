@@ -57,14 +57,13 @@
 
       <a
         class="nav-link"
-        style="margin-left: 16px"
         routerLink="/home"
         *ngIf="(themeService.isHandset | async) === false"
         ><mat-icon>home</mat-icon>Home</a
       >
 
       <a
-        class="nav-link"
+        class="nav-link login"
         *ngIf="!this.authService.currentUser?.name"
         routerLink="/login"
       >

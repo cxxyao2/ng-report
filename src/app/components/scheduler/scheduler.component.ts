@@ -187,9 +187,7 @@ export class SchedulerComponent implements OnInit, OnDestroy, AfterViewInit {
         (data) => {
           data.forEach((record) => {
             let per = record.contactPeriod;
-            console.log('recod.contactPeriod', record.contactPeriod);
             let idx = -1;
-
             idx = this.dataSource.findIndex(
               (planItem) => planItem.contactPeriod === per
             );

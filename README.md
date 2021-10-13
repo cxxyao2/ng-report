@@ -6,8 +6,8 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 
 - secure google map key by HTTP referrer
 - prevent XSRF attack by cookie + token in http headers
-- register & login with recaptcha
-- deploy web worker for analyzing mass data and image. no block the main thread.
+- authentication : register & login + authorization
+- deploy web worker for analyzing mass data . No block the main thread.
 - modularity && reusability
   - reusable confirm dialog
   - reusable router/card animations
@@ -40,7 +40,8 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
   - ...
 - SSR: server-side rendering
 - Unified error and success message prompt
-- Prevent memeory leak: Unsubscribe in ngOnDestroy + TakeUntil + ng lint
+- Prevent memeory leak: Unsubscribe in ngOnDestroy + TakeUntil/Take
+- Coding check: ng lint
 
 ## back-end : mongodb mongoose express node.js
 

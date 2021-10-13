@@ -8,7 +8,16 @@ import { LogsService } from './logs.service';
 import { UserService } from './user.service';
 
 import { environment } from '../../environments/environment';
+import { ReturnWithDataAndMessage } from './cart.service';
 
+export interface RegisterResult {
+  data: User;
+  message: string;
+}
+
+export interface ReturnWithMessage {
+  message: string;
+}
 @Injectable({
   providedIn: 'root',
 })
@@ -24,9 +33,9 @@ export class AuthService {
     private userService: UserService
   ) {}
 
-  registerUser(user: User): Observable<any> {
+  registerUser(user: User): Observable<RegisterResult> {
     const url = this.configUrl + '/users';
-    return this.http.post(url, user);
+    return this.http.post<RegisterResult>(url, user);
   }
 
   findUserByEmail(email: string): Observable<User[]> {
@@ -34,9 +43,9 @@ export class AuthService {
     return this.http.get<User[]>(url);
   }
 
-  sendResetPasswordEmail(email: string) {
+  sendResetPasswordEmail(email: string): Observable<ReturnWithMessage> {
     const url = this.configUrl + '/auth/send-reset-email';
-    return this.http.post(url, { email: email });
+    return this.http.post<ReturnWithMessage>(url, { email });
   }
 
   sendPlaceOrderEmail(
@@ -61,18 +70,21 @@ export class AuthService {
     return this.http.post(url, { newPassword });
   }
 
-  updatePassword(password: string, newPassword: string) {
+  updatePassword(
+    password: string,
+    newPassword: string
+  ): Observable<ReturnWithMessage> {
     const url = this.configUrl + '/auth';
-    return this.http.put(url, { password, newPassword });
+    return this.http.put<ReturnWithMessage>(url, { password, newPassword });
   }
 
-  login(email: string, password: string): Observable<any> {
+  login(email: string, password: string): Observable<ReturnWithDataAndMessage> {
     const url = this.configUrl + '/auth';
 
     // TODO, 正式部署前放开
     // auth service 需要带withCredentials
     // 其他服务通过interceptor来携带了,待验证
-    return this.http.post(
+    return this.http.post<ReturnWithDataAndMessage>(
       url,
       {
         email,
@@ -93,7 +105,7 @@ export class AuthService {
     // 这些代码是废代码了 return localStorage.getItem(this.tokenKey) || '';
   }
 
-  loginWithJwt(jwt: string) {
+  loginWithJwt() {
     this.logsSrv.addLog('login');
   }
 

@@ -138,6 +138,7 @@
           <img class="front-shop" *ngIf="fileUrl" src="{{ fileUrl }}" />
         </div>
         <div>
+          <p *ngIf="file">File Size: {{ (file?file.size:0) | fileSize }}</p>
           <p>Go to a different step to see the error state</p>
           <button mat-button matStepperPrevious>Back</button>
           <button mat-button matStepperNext>Next</button>

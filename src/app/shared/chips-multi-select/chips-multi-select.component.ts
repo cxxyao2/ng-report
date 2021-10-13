@@ -81,7 +81,7 @@ export class ChipsMultiSelectComponent
         map((event) => event.source),
         takeUntil(this.destroy$)
       )
-      .subscribe((chip: any) => {
+      .subscribe((chip: MatChip) => {
         if (chip.selected) {
           this.value = [...this.value, chip.value];
         } else {

@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { retry } from 'rxjs/operators';
 import { environment } from '../../environments/environment';
-import { ContactRecord } from '../models/contact-record';
+import { ContactRecord, ContactRecordForUpdate } from '../models/contact-record';
 
 @Injectable({
   providedIn: 'root',
@@ -22,11 +22,11 @@ export class ContactRecordService {
     return this.http.get<ContactRecord[]>(url).pipe(retry(1));
   }
 
-  addContactPlan(addPart: any): Observable<ContactRecord> {
+  addContactRecord(addPart: ContactRecordForUpdate): Observable<ContactRecord> {
     return this.http.post<ContactRecord>(this.configUrl, addPart);
   }
 
-  deleteContactPlan(planId: string): Observable<ContactRecord> {
+  deleteContactRecord(planId: string): Observable<ContactRecord> {
     const url = `${this.configUrl}/${planId}`;
     return this.http.delete<ContactRecord>(url);
   }
@@ -44,9 +44,9 @@ export class ContactRecordService {
     return this.http.delete<ContactRecord[]>(deleteUrl);
   }
 
-  updateContactPlan(
+  updateContactRecord(
     planId: string,
-    updatePart: any
+    updatePart: ContactRecordForUpdate
   ): Observable<ContactRecord> {
     const url = `${this.configUrl}/${planId}`;
     return this.http.put<ContactRecord>(url, updatePart);

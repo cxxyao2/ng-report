@@ -1,6 +1,6 @@
 import { Component, OnDestroy } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
-import { AuthService } from 'src/app/services/auth.service';
+import { AuthService, ReturnWithMessage } from 'src/app/services/auth.service';
 import { Subject, timer } from 'rxjs';
 import { takeUntil, tap } from 'rxjs/operators';
 
@@ -30,7 +30,7 @@ export class ForgetPasswordComponent implements OnDestroy {
         .sendResetPasswordEmail(this.email.value)
         .pipe(takeUntil(this.destroy$))
         .subscribe(
-          (data: any) => {
+          (data: ReturnWithMessage) => {
             this.successMessage = data.message;
           },
           (err) => {

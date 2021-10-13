@@ -38,7 +38,7 @@ export class PipelineAllComponent implements OnInit {
       );
   }
 
-  trackPipelineId(index: number, customer: any) {
+  trackPipelineId(index: number, customer: Customer) {
     return customer._id;
   }
 

@@ -42,7 +42,7 @@ export class LoginComponent implements OnInit, OnDestroy {
       .subscribe(
         (result) => {
           this.authService.currentUser = result.data;
-          this.authService.loginWithJwt(result);
+          this.authService.loginWithJwt();
           const returnUrl = this.route.snapshot.queryParamMap.get('returnUrl');
           this.router.navigate([returnUrl || '/']);
         },

@@ -41,22 +41,22 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 export class SlideShowsComponent implements OnInit, OnDestroy {
   activeSlideIdx = 0;
   slides = [0, 1, 2];
-  slideId: any;
+  slideId?: number;
 
   constructor() {}
 
   ngOnInit(): void {
-    this.slideId = setInterval(() => {
+    this.slideId = window.setInterval(() => {
       this.plusSlides(1);
     }, 5000);
   }
 
   ngOnDestroy() {
-    clearInterval(this.slideId);
+    window.clearInterval(this.slideId);
   }
 
   changeSlideManually(incrementIdx: number) {
-    clearInterval(this.slideId);
+    window.clearInterval(this.slideId);
     this.plusSlides(incrementIdx);
   }
 
@@ -71,7 +71,7 @@ export class SlideShowsComponent implements OnInit, OnDestroy {
   }
 
   jumpToSlide(index: number): void {
-    clearInterval(this.slideId);
+    window.clearInterval(this.slideId);
     this.activeSlideIdx = index;
   }
 }

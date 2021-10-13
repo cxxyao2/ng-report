@@ -10,7 +10,9 @@ import {
   tap,
 } from 'rxjs/operators';
 import { environment } from '../../environments/environment';
-import { Customer } from '../models/customer';
+import { Customer, CustomerForUpdate } from '../models/customer';
+import { ReturnWithDataAndMessage } from './cart.service';
+import { ReturnWithMessage } from 'src/app/services/auth.service';
 
 const CACHE_SIZE = 1;
 const REFRESH_INTERVAL = 10000; // 10 seconds
@@ -25,17 +27,17 @@ export class CustomerService {
 
   constructor(private http: HttpClient) {}
 
-  getAllUnauthorizedCustomers() {
+  getAllUnauthorizedCustomers(): Observable<Customer[]> {
     const url = `${this.configUrl}?isAuthorized=false`;
     return this.http.get<Customer[]>(url);
   }
 
-  getAllAuthorizedCustomers() {
+  getAllAuthorizedCustomers(): Observable<Customer[]> {
     const url = `${this.configUrl}?isAuthorized=true`;
     return this.http.get<Customer[]>(url);
   }
 
-  get newCustomers() {
+  get newCustomers(): Observable<Customer[]> {
     if (!this.cacheCustomers$) {
       const timer$ = timer(0, REFRESH_INTERVAL);
       this.cacheCustomers$ = timer$.pipe(
@@ -46,7 +48,9 @@ export class CustomerService {
     return this.cacheCustomers$;
   }
 
-  private requestNewAndUnAuthorizedCustomers() {
+  private requestNewAndUnAuthorizedCustomers(): Observable<
+    never[] | Customer[]
+  > {
     const url =
       `${this.configUrl}?isAuthorized=false&createDate=` +
       this.createDate?.toUTCString();
@@ -64,13 +68,17 @@ export class CustomerService {
     return this.http.get<Customer>(url);
   }
 
-  updateCustomer(id: string, updatePart: any) {
+  updateCustomer(
+    id: string,
+    updatePart: CustomerForUpdate
+  ): Observable<ReturnWithDataAndMessage> {
     const url = `${this.configUrl}/${id}`;
-    return this.http.put(url, updatePart);
+    return this.http.put<ReturnWithDataAndMessage>(url, updatePart);
   }
-  deleteCustomer(id: string) {
+
+  deleteCustomer(id: string): Observable<ReturnWithMessage> {
     const url = `${this.configUrl}/${id}`;
-    return this.http.delete(url);
+    return this.http.delete<ReturnWithMessage>(url);
   }
 
   getCustomers(): Observable<Customer[]> {

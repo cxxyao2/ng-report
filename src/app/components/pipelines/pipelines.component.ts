@@ -40,7 +40,7 @@ export class PipelinesComponent implements OnInit, OnDestroy {
     merge(initialCustomers$, updatedUsers$)
       .pipe(takeUntil(this.destroy$))
       .subscribe(
-        (data: any) => {
+        (data: Customer[]) => {
           this.customers = data;
         },
         (err) => {
@@ -56,11 +56,11 @@ export class PipelinesComponent implements OnInit, OnDestroy {
     this.showNotification$ = merge(show$, hide$);
   }
 
-  trackPipelineId(index: number, customer: any): string {
-    return customer._id;
+  trackPipelineId(index: number, customer: Customer): string {
+    return customer._id || '';
   }
 
-  getImageSrc(customerId=''): string {
+  getImageSrc(customerId = ''): string {
     const apiUrl =
       environment.imageUrl + '/customers' + '/' + customerId + '.jpg';
 

@@ -13,8 +13,8 @@ import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 import { AuthService } from 'src/app/services/auth.service';
 
-
 import { convertDateToYYYYmmDD } from '../../utils/date-convert.util';
+import { MatSelectionListChange } from '@angular/material/list/selection-list';
 
 @Component({
   selector: 'app-contact-customer',
@@ -101,8 +101,8 @@ export class ContactCustomerComponent implements OnInit, OnDestroy {
     return 'Enter a valid notes';
   }
 
-  setSelectedRecord(event: any) {
-    this.selectedRecordId = event.options[0]._value;
+  setSelectedRecord(event: MatSelectionListChange) {
+    this.selectedRecordId = event.options[0].value;
     this.latitude = null;
     this.longitude = null;
     this.startTime = null;
@@ -184,7 +184,7 @@ export class ContactCustomerComponent implements OnInit, OnDestroy {
       notes,
     };
     this.contactSrv
-      .updateContactPlan(planId, updatePart)
+      .updateContactRecord(planId, updatePart)
       .pipe(takeUntil(this.destroy$))
       .subscribe(
         () => {
@@ -200,7 +200,7 @@ export class ContactCustomerComponent implements OnInit, OnDestroy {
           }
           this.resetForm();
         },
-        (err) => {
+        (err: any) => {
           this.errorMessage = err;
           setTimeout(() => {
             this.errorMessage = '';

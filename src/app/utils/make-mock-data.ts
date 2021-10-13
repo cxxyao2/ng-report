@@ -35,6 +35,7 @@ const Customers: string[] = [
   'Amelia Academy',
 ];
 import { Observable, of, BehaviorSubject } from 'rxjs';
+import { ChartData } from '../models/chart-data';
 
 /** Builds and returns a new User. */
 function createNewOrder(id: number): MockOrder {
@@ -66,7 +67,7 @@ export function createYearlyMockData(counter = 10000) {
   );
 
   // create product sales data array :  [{name:string, value:number}]
-  const productSalesArray: Array<any> = [];
+  const productSalesArray: Array<ChartData> = [];
   Products.forEach((product) => {
     const filterResult = orders.filter(
       (order) => order.productName === product

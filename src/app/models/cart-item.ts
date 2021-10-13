@@ -10,5 +10,5 @@ export interface CartItem {
   customerName?: string;
   salespersonId?: string;
   salespersonName?: string;
-  _id: string;
+  _id?: string;
 }

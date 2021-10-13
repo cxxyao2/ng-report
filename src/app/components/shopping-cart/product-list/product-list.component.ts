@@ -40,7 +40,7 @@ export class ProductListComponent implements OnInit, OnDestroy {
     // this.productList = this.productService.getProducts();
     this.sub = this.searchSrv.searchTermObs
       .pipe(
-        switchMap((term: any) => {
+        switchMap((term: string | null) => {
           return this.productService.getProducts(term);
         }),
         takeUntil(this.destroy$)

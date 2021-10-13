@@ -71,7 +71,7 @@ export class AddProductComponent implements AfterViewInit, OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.service
-      .getProducts()
+      .getProducts('')
       .pipe(takeUntil(this.destroy$))
       .subscribe(
         (data) => {
@@ -240,8 +240,8 @@ export class AddProductComponent implements AfterViewInit, OnInit, OnDestroy {
     this.dataSource.setData(filteredArray);
   }
 
-  trackProduct(index: number, product: any): void {
-    return product._id;
+  trackProduct(index: number, product: Product): string {
+    return product._id || '';
   }
 
   /** Builds and returns a new Product. */

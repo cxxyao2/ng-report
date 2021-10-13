@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { MatSidenav } from '@angular/material/sidenav';
 import { Event, NavigationEnd, Router } from '@angular/router';
 import { BehaviorSubject } from 'rxjs';
 import { first } from 'rxjs/operators';
@@ -7,7 +8,7 @@ import { first } from 'rxjs/operators';
   providedIn: 'root',
 })
 export class NavService {
-  public appDrawer: any;
+  public appDrawer!: MatSidenav;
   public currentUrl = new BehaviorSubject<string | null>(null);
 
   constructor(private router: Router) {

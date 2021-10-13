@@ -37,8 +37,8 @@ export class PipelineAuthorizedComponent implements OnInit, OnDestroy {
       );
   }
 
-  trackPipelineId(index: number, customer: any): string {
-    return customer._id;
+  trackPipelineId(index: number, customer: Customer): string {
+    return customer._id || '';
   }
 
   getImageSrc(customerId = ''): string {

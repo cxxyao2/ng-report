@@ -11,7 +11,12 @@ import { AuthService } from './auth.service';
 import { constants } from 'src/app/config/constants';
 import { concatMap, switchMap, catchError } from 'rxjs/operators';
 import { convertDateToYYYYmmDD } from '../utils/date-convert.util';
+import { OrderHeader } from '../models/order-header';
 
+export interface ReturnWithDataAndMessage {
+  data: any;
+  message: string;
+}
 @Injectable({
   providedIn: 'root',
 })
@@ -43,16 +48,16 @@ export class CartService {
     return this.http.get<CartItem[]>(getUrl);
   }
 
-  removeProductFromCart(id: string): Observable<any> {
+  removeProductFromCart(id: string = ''): Observable<ReturnWithDataAndMessage> {
     const idx = this.items.findIndex((item) => item._id === id);
     if (idx >= 0) {
       this.items.splice(idx, 1);
     }
     const deleteUrl = this.configUrl + '?id=' + id;
-    return this.http.delete(deleteUrl);
+    return this.http.delete<ReturnWithDataAndMessage>(deleteUrl);
   }
 
-  clearCart(): Observable<any> {
+  clearCart(): Observable<ReturnWithDataAndMessage> {
     const customerId = this.currentCustomer?._id;
     const createUserId = this.authSrv.currentUser?._id;
     const deleteUrl =
@@ -61,7 +66,7 @@ export class CartService {
       customerId +
       '&createUser=' +
       createUserId;
-    return this.http.delete(deleteUrl);
+    return this.http.delete<ReturnWithDataAndMessage>(deleteUrl);
   }
 
   addProductToCart(product: Product): void {
@@ -73,7 +78,7 @@ export class CartService {
       const putUrl = this.configUrl + '/' + cartItem._id;
       this.http.put(putUrl, { quantity: cartItem.quantity }).subscribe();
     } else {
-      const newItem = {
+      const newItem: CartItem = {
         selected: true,
         productId: product._id,
         productName: product.name,
@@ -93,20 +98,23 @@ export class CartService {
     }
   }
 
-  updateProductQtyInCart(_id: string, quantity: number): Observable<any> {
+  updateProductQtyInCart(
+    _id = '',
+    quantity: number
+  ): Observable<ReturnWithDataAndMessage | never[]> {
     // 1, update local array
     // 2, update remote database
     const cartItem = this.items.find((item) => item._id === _id);
     if (cartItem) {
       cartItem.quantity = quantity;
       const putUrl = this.configUrl + '/' + _id;
-      return this.http.put(putUrl, { quantity });
+      return this.http.put<ReturnWithDataAndMessage>(putUrl, { quantity });
     } else {
       return of([]);
     }
   }
 
-  toggleProductSelected(_id: string, selected: boolean): Observable<any> {
+  toggleProductSelected(_id: string = '', selected: boolean): Observable<any> {
     const idx = this.items.findIndex((item) => item._id === _id);
 
     if (idx >= 0) {

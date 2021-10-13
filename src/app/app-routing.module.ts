@@ -20,7 +20,7 @@ import { AddProductComponent } from './components/add-product/add-product.compon
 import { LoginComponent } from './components/login/login.component';
 import { SignUpComponent } from './components/sign-up/sign-up.component';
 import { PipelinesComponent } from './components/pipelines/pipelines.component';
-import { AuthGuard } from './shared/auth.guard';
+import { AuthGuard } from './services/auth.guard';
 import { ForgetPasswordComponent } from './components/forget-password/forget-password.component';
 import { ResetPasswordComponent } from './components/reset-password/reset-password.component';
 import { ChangePasswordComponent } from './components/change-password/change-password.component';

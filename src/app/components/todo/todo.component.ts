@@ -152,10 +152,10 @@ export class TodoComponent implements OnInit, OnDestroy {
       );
   }
 
-  resetTodoAndDone(todoDataSource: any[]): void {
+  resetTodoAndDone(todoDataSource: ContactPlan[] | ContactRecord[]): void {
     this.todo = [];
     this.done = [];
-    todoDataSource.forEach((plan: any) => {
+    todoDataSource.forEach((plan: ContactPlan | ContactRecord) => {
       this.todo.push(plan.customerName);
     });
     this.customerArray.forEach((customer) => {
@@ -198,7 +198,7 @@ export class TodoComponent implements OnInit, OnDestroy {
           );
           const periodString = this.getStringFromPosition(i);
           i += 1;
-          return this.recordSrv.addContactPlan({
+          return this.recordSrv.addContactRecord({
             customerId: this.customerArray[idx]._id,
             contactDate: dateString,
             contactPeriod: periodString,

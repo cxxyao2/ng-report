@@ -7,7 +7,6 @@ import { HttpClient } from '@angular/common/http';
 
 import { ThemeService } from 'src/app/services/theme.service';
 import { CustomerService } from 'src/app/services/customer.service';
-import { STEPPER_GLOBAL_OPTIONS } from '@angular/cdk/stepper';
 
 import { environment } from 'src/environments/environment';
 
@@ -30,7 +29,7 @@ export class AddClientComponent implements OnInit, OnDestroy {
   requiredFileType = 'image/*';
   bufferValue = 100;
 
-  fileUrl?: any;
+  fileUrl: string | ArrayBuffer | null | undefined = null;
   errorMessage: string | null = null;
   successMessage: string | null = null;
   creditLevels = [
@@ -90,8 +89,11 @@ export class AddClientComponent implements OnInit, OnDestroy {
     );
   }
 
-  onFileSelected(event: any): void {
-    const chooseFile = event.target.files[0];
+  onFileSelected(event: Event): void {
+    const target = event.target as HTMLInputElement;
+    const files = target.files as FileList;
+    const chooseFile = files[0];
+    // const chooseFile = event.target?.files[0];
     this.file = null;
     if (chooseFile) {
       const initFileName = chooseFile?.name;

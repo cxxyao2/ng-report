@@ -19,6 +19,7 @@ import { NavService } from './services/nav.service';
 import { NavItem } from './models/nav-item';
 import { LoadingService } from './services/loading.service';
 import { RouterOutlet } from '@angular/router';
+import { MatSidenav } from '@angular/material/sidenav';
 
 @Component({
   selector: 'app-root',
@@ -26,7 +27,7 @@ import { RouterOutlet } from '@angular/router';
   styleUrls: ['./app.component.scss'],
 })
 export class AppComponent implements AfterViewInit, OnDestroy {
-  @ViewChild('drawer') appDrawer!: ElementRef;
+  @ViewChild('drawer') appDrawer!: MatSidenav;
   @ViewChild('spin') spin?: ElementRef;
   destroy$: Subject<void> = new Subject<void>();
   title = 'ng-center';

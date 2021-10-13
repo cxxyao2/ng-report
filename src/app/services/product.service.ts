@@ -14,7 +14,7 @@ export class ProductService {
 
   constructor(private http: HttpClient) {}
 
-  getProducts(productName = ''): Observable<Product[]> {
+  getProducts(productName: string | null | undefined): Observable<Product[]> {
     const requestUrl = `${this.configUrl}?productName=${productName}`;
     return this.http.get<Product[]>(requestUrl).pipe(retry(1));
   }

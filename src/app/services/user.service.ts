@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 import { retry } from 'rxjs/operators';
 
 import { environment } from '../../environments/environment';
-import { User } from '../models/user';
+import { User, UserForUpdate } from '../models/user';
 
 @Injectable({
   providedIn: 'root',
@@ -23,7 +23,7 @@ export class UserService {
     return this.http.get<User[]>(this.configUrl).pipe(retry(1));
   }
 
-  updateUser(userId?: string, updatePart?: any): Observable<User> {
+  updateUser(userId?: string, updatePart?: UserForUpdate): Observable<User> {
     const url = `${this.configUrl}/${userId}`;
     return this.http.put<User>(url, updatePart);
   }

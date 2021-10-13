@@ -2,7 +2,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { AuthService } from 'src/app/services/auth.service';
-import { uniquePasswordValidator } from 'src/app/shared/unique-password.directive';
+import { uniquePasswordValidator } from 'src/app/services/unique-password.directive';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 

@@ -30,6 +30,7 @@ import {
   ConfirmDialogData,
   DialogService,
 } from 'src/app/services/dialog.service';
+import { LogFilter } from 'src/app/models/log-filter';
 /**
  * Log Management: Remove Data
  * Sort, filter, Paginator
@@ -55,7 +56,7 @@ export class LoglistComponent implements OnInit, OnDestroy {
   ];
   dataSource = new MatTableDataSource<LogRecord>();
 
-  dialogFilterData: any;
+  dialogFilterData: LogFilter | null |undefined;
   range = new FormGroup({
     start: new FormControl(),
     end: new FormControl(),
@@ -112,7 +113,7 @@ export class LoglistComponent implements OnInit, OnDestroy {
       )
       .pipe(takeUntil(this.destroy$))
       .subscribe(
-        (data: any) => {
+        (data: LogRecord[]) => {
           this.dialogFilterData = null;
           this.data = data;
           this.dataSource.data = this.data;

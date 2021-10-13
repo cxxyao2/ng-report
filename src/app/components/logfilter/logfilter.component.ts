@@ -12,6 +12,7 @@ import { map, startWith, takeUntil } from 'rxjs/operators';
 
 import { UserService } from 'src/app/services/user.service';
 import { User } from 'src/app/models/user';
+import { LogFilter } from '../../models/log-filter';
 
 @Component({
   selector: 'app-logfilter',
@@ -33,7 +34,7 @@ export class LogfilterComponent implements OnInit, AfterViewInit, OnDestroy {
   constructor(
     private service: UserService,
     public dialogRef: MatDialogRef<LogfilterComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: any
+    @Inject(MAT_DIALOG_DATA) public data: LogFilter
   ) {
     this.myForm = new FormGroup({
       name: this.nameControl,

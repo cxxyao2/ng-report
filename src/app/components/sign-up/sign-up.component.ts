@@ -4,8 +4,8 @@ import { Router } from '@angular/router';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
-import { UniqueUserValidator } from 'src/app/shared/unique-user.directive';
-import { uniquePasswordValidator } from 'src/app/shared/unique-password.directive';
+import { UniqueUserValidator } from 'src/app/services/unique-user.directive';
+import { uniquePasswordValidator } from 'src/app/services/unique-password.directive';
 import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
@@ -130,7 +130,7 @@ export class SignUpComponent implements OnInit, OnDestroy {
       .subscribe(
         (data) => {
           this.authService.currentUser = { ...data.data };
-          this.authService.loginWithJwt('TODO');
+          this.authService.loginWithJwt();
           this.router.navigate(['/']);
         },
         (err) => {

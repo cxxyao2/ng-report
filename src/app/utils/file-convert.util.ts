@@ -31,10 +31,10 @@ export function base64ToBlob(urlData: any, type: any) {
 
 export function saveBlobtoLocalFile(
   blobData: any,
-  localFileName: any,
+  localFileName: string,
   fileType = 'jpeg'
 ) {
-  let file = new File([blobData], 'foo.txt', {
+  const file = new File([blobData], 'foo.txt', {
     type: fileType,
   });
 
@@ -53,7 +53,7 @@ export function saveBlobtoLocalFile(
 export function makeCSV(contents: any) {
   let csv = '';
   contents.forEach((value: any) => {
-    value.forEach((item:any, i:any) => {
+    value.forEach((item: any, i: any) => {
       let innerValue = item === null ? '' : '' + item;
       let result = innerValue.replace(/"/g, '""');
       // " , \n  That anyone of the 3 signs appears means the end of one line

@@ -2,8 +2,8 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 
-import { uniquePasswordValidator } from 'src/app/shared/unique-password.directive';
-import { AuthService } from 'src/app/services/auth.service';
+import { uniquePasswordValidator } from 'src/app/services/unique-password.directive';
+import { AuthService, ReturnWithMessage } from 'src/app/services/auth.service';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
@@ -96,7 +96,7 @@ export class ChangePasswordComponent implements OnInit, OnDestroy {
       .updatePassword(this.oldPassword?.value, this.password?.value)
       .pipe(takeUntil(this.destroy$))
       .subscribe(
-        (data: any) => {
+        (data: ReturnWithMessage) => {
           this.successMessage = data.message;
         },
         (err) => {

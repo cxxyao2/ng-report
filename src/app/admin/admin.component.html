@@ -97,15 +97,15 @@
           </mat-card-title>
         </mat-card-header>
         <mat-card-content class="dashboard-card-content">
-          <div class="pipeline-item">
+          <div class="card-item" *delayRendering="1000">
             <div>Visited Customer:</div>
-            <div class="important-data">120</div>
+            <div class="important-data" >120</div>
           </div>
-          <div class="pipeline-item">
+          <div class="card-item" *delayRendering="2000">
             <div>Digged out New Customer:</div>
             <div class="important-data">111</div>
           </div>
-          <div class="pipeline-item">
+          <div class="card-item" *delayRendering="3000">
             <div>Travelled Distance:</div>
             <div class="important-data">12,000 km</div>
           </div>
@@ -121,17 +121,17 @@
           </mat-card-title>
         </mat-card-header>
         <mat-card-content class="dashboard-card-content">
-          <div class="pipeline-item">
+          <div class="card-item">
             <div>Sep 1, 2021 11:11</div>
-            <div style="font-weight: bold">111.111.111.111</div>
+            <div class="important-data">111.111.111.111</div>
           </div>
-          <div class="pipeline-item">
+          <div class="card-item">
             <div>Sep 1, 2021 11:11</div>
-            <div style="font-weight: bold">111.111.111.111</div>
+            <div class="important-data">111.111.111.111</div>
           </div>
-          <div class="pipeline-item">
+          <div class="card-item">
             <div>Sep 1, 2021 11:11</div>
-            <div style="font-weight: bold">111.111.111.111</div>
+            <div class="important-data">111.111.111.111</div>
           </div>
         </mat-card-content>
       </mat-card>
@@ -145,19 +145,19 @@
           </mat-card-title>
         </mat-card-header>
         <mat-card-content class="dashboard-card-content">
-          <div class="pipeline-item">
+          <div class="card-item">
             <div>Place Orders:</div>
             <div class="important-data">120</div>
           </div>
-          <div class="pipeline-item">
+          <div class="card-item">
             <div>Total Amount($k):</div>
             <div class="important-data">1,200</div>
           </div>
-          <div class="pipeline-item">
+          <div class="card-item">
             <div>Net Profits($1k):</div>
             <div class="important-data">100</div>
           </div>
-          <div class="pipeline-item">
+          <div class="card-item">
             <div>Receivable($1k):</div>
             <div class="important-data">2</div>
           </div>

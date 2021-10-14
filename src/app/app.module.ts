@@ -147,8 +147,8 @@ import { FileSizePipe } from './services/file-size.pipe';
     GoogleMapsModule,
     HttpClientModule,
     HttpClientXsrfModule.withOptions({
-      cookieName: 'XSRF-TOKEN',
-      headerName: 'X-XSRF-TOKEN',
+      cookieName: 'xsrf-token',
+      headerName: 'x-xsrf-token',
     }),
     MaterialModule,
     NgxEchartsModule.forRoot({

@@ -99,7 +99,7 @@ export class AuthService {
 
   getToken(): string {
     return this.cookieService.get(environment.cookieName) || '';
-    // 这些代码是废代码了 return localStorage.getItem(this.tokenKey) || '';
+    //  return localStorage.getItem(this.tokenKey) || '';
   }
 
   loginWithJwt() {
@@ -107,7 +107,7 @@ export class AuthService {
   }
 
   setCurrentUser(): void {
-    const jwt = localStorage.getItem(this.tokenKey);
+    const jwt = this.getToken();
     if (jwt && jwt.length >= 1) {
       try {
         this.currentUser = jwt_decode(jwt);

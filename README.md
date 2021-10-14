@@ -21,7 +21,7 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 - reusable animations
 - dynamic views by content projection
 - multiple level menus
-- DI( Dependency Injection): Services have different visible(usable) levels, e.g. app, component, component view etc.
+- DI( Dependency Injection): different Service scope, e.g. app, component, component view etc.
 - fxLayout, responsive images, responsive layout
 - Material Design
   - table:row/expanded row/array-based datasource/observable datasource/infinite scroll table... )
@@ -80,6 +80,8 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 - Error popup window
 
 ## Test list
+
+> npm i jasmine-marbles
 
 - Template-driven forms
 - Reactive forms

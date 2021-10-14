@@ -15,7 +15,7 @@ fdescribe('CustomerService CRUD', () => {
   let service: CustomerService;
   let http: HttpClient;
   let httpTestingController: HttpTestingController;
-  const configUrl = '/api/customers';
+  const configUrl = 'http://localhost:5000/api/customers';
   const customer: Customer = {
     name: 'customer1',
     email: 'customer1@gmail.com',

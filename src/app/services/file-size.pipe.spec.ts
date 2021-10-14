@@ -1,8 +1,9 @@
 import { FileSizePipe } from './file-size.pipe';
 
 describe('FileSizePipe', () => {
-  it('create an instance', () => {
-    const pipe = new FileSizePipe();
-    expect(pipe).toBeTruthy();
+  const pipe = new FileSizePipe();
+
+  it('transforms "1024*1024" to 1', () => {
+    expect(pipe.transform(1024 * 1024)).toBe('1.00MB');
   });
 });

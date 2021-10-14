@@ -1,29 +1,57 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
-
+import { Observable, of, timer, throwError } from 'rxjs';
+import {
+  map,
+  share,
+  switchMap,
+  shareReplay,
+  catchError,
+  tap,
+} from 'rxjs/operators';
 import { environment } from '../../environments/environment';
 import { Customer, CustomerForUpdate } from '../models/customer';
 import { ReturnWithDataAndMessage } from './cart.service';
 import { ReturnWithMessage } from 'src/app/services/auth.service';
 
-@Injectable({
-  providedIn: 'root',
-})
-export class CustomerService {
+
+
+@Injectable()
+export class CustomerAuthorizeService {
   configUrl = environment.apiUrl + '/customers';
   createDate: Date | null = null;
 
   constructor(private http: HttpClient) {}
 
-  getCustomer(id: string): Observable<Customer> {
-    const url = `${this.configUrl}/${id}`;
-    return this.http.get<Customer>(url);
+  getAllUnauthorizedCustomers(): Observable<Customer[]> {
+    const url = `${this.configUrl}?isAuthorized=false`;
+    return this.http.get<Customer[]>(url);
   }
 
   getAllAuthorizedCustomers(): Observable<Customer[]> {
     const url = `${this.configUrl}?isAuthorized=true`;
     return this.http.get<Customer[]>(url);
+  }
+
+
+ requestNewAndUnAuthorizedCustomers(): Observable<
+    never[] | Customer[]
+  > {
+    const url =
+      `${this.configUrl}?isAuthorized=false&createDate=` +
+      this.createDate?.toUTCString();
+    return this.http.get<Customer[]>(url).pipe(
+      map((response) => response),
+      catchError((error) => {
+        throwError(error);
+        return of([]);
+      })
+    );
+  }
+
+  getCustomer(id: string): Observable<Customer> {
+    const url = `${this.configUrl}/${id}`;
+    return this.http.get<Customer>(url);
   }
 
   updateCustomer(

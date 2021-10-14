@@ -37,7 +37,10 @@ export class AdminServiceGuard implements CanLoad, CanActivate {
     }
 
     // // Navigate to /home
-    this.router.navigate(['/home']);
+    window.alert('You are not authorized to visit this page');
+    this.router.navigate(['/login'], {
+      queryParams: { returnUrl: state.url },
+    });
     return false;
   }
 }

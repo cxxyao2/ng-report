@@ -1,7 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { CustomerService } from 'src/app/services/customer.service';
+import { CustomerAuthorizeService } from 'src/app/services/customer-authorize.service';
 
-import { merge, Observable, of, Subject } from 'rxjs';
+import { merge, Observable, of, Subject, timer } from 'rxjs';
 import {
   mapTo,
   mergeMap,
@@ -9,14 +9,20 @@ import {
   switchMap,
   tap,
   takeUntil,
+  shareReplay,
+  takeLast,
 } from 'rxjs/operators';
 import { Customer } from 'src/app/models/customer';
 import { environment } from 'src/environments/environment';
+
+const CACHE_SIZE = 1;
+const REFRESH_INTERVAL = 10000; // 10 seconds
 
 @Component({
   selector: 'app-pipelines',
   templateUrl: './pipelines.component.html',
   styleUrls: ['./pipelines.component.scss'],
+  providers: [CustomerAuthorizeService],
 })
 export class PipelinesComponent implements OnInit, OnDestroy {
   destroy$: Subject<void> = new Subject<void>();
@@ -25,8 +31,9 @@ export class PipelinesComponent implements OnInit, OnDestroy {
   updateClick$ = new Subject<void>();
   showNotification$?: Observable<boolean>;
   errorMessage: string | null = null;
+  cacheCustomers$?: Observable<Customer[]>;
 
-  constructor(private customerSrv: CustomerService) {}
+  constructor(private customerSrv: CustomerAuthorizeService) {}
 
   ngOnInit(): void {
     this.customerSrv.createDate = new Date();
@@ -35,7 +42,8 @@ export class PipelinesComponent implements OnInit, OnDestroy {
       mergeMap(() => this.getCustomerOnce()),
       tap(() => {
         this.customerSrv.createDate = new Date();
-      })
+      }),
+      takeUntil(this.destroy$)
     );
     merge(initialCustomers$, updatedUsers$)
       .pipe(takeUntil(this.destroy$))
@@ -51,9 +59,12 @@ export class PipelinesComponent implements OnInit, OnDestroy {
         }
       );
 
-    const show$ = this.getNew();
-    const hide$ = this.updateClick$.pipe(mapTo(false));
-    this.showNotification$ = merge(show$, hide$);
+    const show$ = this.getNew().pipe(takeUntil(this.destroy$));
+    const hide$ = this.updateClick$.pipe(
+      mapTo(false),
+      takeUntil(this.destroy$)
+    );
+    this.showNotification$ = merge(show$, hide$).pipe(takeUntil(this.destroy$));
   }
 
   trackPipelineId(index: number, customer: Customer): string {
@@ -71,19 +82,36 @@ export class PipelinesComponent implements OnInit, OnDestroy {
   refreshDate() {
     this.updateClick$.next();
   }
+
   getCustomerOnce() {
-    return this.customerSrv.getAllUnauthorizedCustomers();
+    return this.customerSrv
+      .getAllUnauthorizedCustomers()
+      .pipe(takeUntil(this.destroy$));
   }
+
   getNew() {
-    return this.customerSrv.newCustomers.pipe(
+    return this.newCustomers.pipe(
       skip(1),
       switchMap((data) => {
         if (data.length > 0) {
           return of(true);
         }
         return of(false);
-      })
+      }),
+      takeUntil(this.destroy$)
     );
+  }
+
+  get newCustomers(): Observable<Customer[]> {
+    if (!this.cacheCustomers$) {
+      const timer$ = timer(0, REFRESH_INTERVAL).pipe(takeUntil(this.destroy$));
+      this.cacheCustomers$ = timer$.pipe(
+        switchMap(() => this.customerSrv.requestNewAndUnAuthorizedCustomers()),
+        shareReplay(CACHE_SIZE),
+        takeUntil(this.destroy$)
+      );
+    }
+    return this.cacheCustomers$;
   }
 
   authorizeCustomer(id = '') {

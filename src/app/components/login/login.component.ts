@@ -17,7 +17,7 @@ import { Subject } from 'rxjs';
 export class LoginComponent implements OnInit, OnDestroy {
   destroy$: Subject<void> = new Subject<void>();
   unamePattern = '^[a-z0-9_-]{8,15}$';
-  pwdPattern = '^(?=.*d)(?=.*[a-z])(?=.*[A-Z])(?!.*s).{6,12}$';
+  pwdPattern = '^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?!.*\s).{6,12}$';
   mobnumPattern = '^((\\+91-?)|0)?[0-9]{10}$';
 
   errorMessage = '';

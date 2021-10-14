@@ -13,10 +13,8 @@ import { concatMap, switchMap, catchError } from 'rxjs/operators';
 import { convertDateToYYYYmmDD } from '../utils/date-convert.util';
 import { OrderHeader } from '../models/order-header';
 
-export interface ReturnWithDataAndMessage {
-  data: any;
-  message: string;
-}
+import { ReturnWithDataAndMessage } from '../models/return-values';
+
 @Injectable({
   providedIn: 'root',
 })

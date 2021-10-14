@@ -11,10 +11,10 @@ import {
 } from 'rxjs/operators';
 import { environment } from '../../environments/environment';
 import { Customer, CustomerForUpdate } from '../models/customer';
-import { ReturnWithDataAndMessage } from './cart.service';
-import { ReturnWithMessage } from 'src/app/services/auth.service';
-
-
+import {
+  ReturnWithDataAndMessage,
+  ReturnWithMessage,
+} from '../models/return-values';
 
 @Injectable()
 export class CustomerAuthorizeService {
@@ -33,10 +33,7 @@ export class CustomerAuthorizeService {
     return this.http.get<Customer[]>(url);
   }
 
-
- requestNewAndUnAuthorizedCustomers(): Observable<
-    never[] | Customer[]
-  > {
+  requestNewAndUnAuthorizedCustomers(): Observable<never[] | Customer[]> {
     const url =
       `${this.configUrl}?isAuthorized=false&createDate=` +
       this.createDate?.toUTCString();

@@ -3,9 +3,12 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 
 import { uniquePasswordValidator } from 'src/app/services/unique-password.directive';
-import { AuthService, ReturnWithMessage } from 'src/app/services/auth.service';
+import { AuthService } from 'src/app/services/auth.service';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
+
+import { ReturnWithMessage } from '../../models/return-values';
+
 
 @Component({
   selector: 'app-change-password',

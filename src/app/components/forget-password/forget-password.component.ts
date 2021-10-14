@@ -1,8 +1,9 @@
 import { Component, OnDestroy } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
-import { AuthService, ReturnWithMessage } from 'src/app/services/auth.service';
+import { AuthService } from 'src/app/services/auth.service';
 import { Subject, timer } from 'rxjs';
 import { takeUntil, tap } from 'rxjs/operators';
+import { ReturnWithMessage } from 'src/app/models/return-values';
 
 @Component({
   selector: 'app-forget-password',

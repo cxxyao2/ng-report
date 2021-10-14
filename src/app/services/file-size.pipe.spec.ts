@@ -1,5 +1,8 @@
 import { FileSizePipe } from './file-size.pipe';
 
+/**
+ * Pipe Test
+ */
 fdescribe('FileSizePipe', () => {
   const pipe = new FileSizePipe(); // This pipe is pure. No need for BeforeEach
 

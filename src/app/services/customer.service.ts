@@ -4,15 +4,16 @@ import { Observable } from 'rxjs';
 
 import { environment } from '../../environments/environment';
 import { Customer, CustomerForUpdate } from '../models/customer';
-import { ReturnWithDataAndMessage } from './cart.service';
-import { ReturnWithMessage } from 'src/app/services/auth.service';
+import {
+  ReturnWithDataAndMessage,
+  ReturnWithMessage,
+} from '../models/return-values';
 
 @Injectable({
   providedIn: 'root',
 })
 export class CustomerService {
   configUrl = environment.apiUrl + '/customers';
-  createDate: Date | null = null;
 
   constructor(private http: HttpClient) {}
 

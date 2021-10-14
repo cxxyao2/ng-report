@@ -8,16 +8,16 @@ import { LogsService } from './logs.service';
 import { UserService } from './user.service';
 
 import { environment } from '../../environments/environment';
-import { ReturnWithDataAndMessage } from './cart.service';
+import {
+  ReturnWithDataAndMessage,
+  ReturnWithMessage,
+} from '../models/return-values';
 
 export interface RegisterResult {
   data: User;
   message: string;
 }
 
-export interface ReturnWithMessage {
-  message: string;
-}
 @Injectable({
   providedIn: 'root',
 })
@@ -81,9 +81,6 @@ export class AuthService {
   login(email: string, password: string): Observable<ReturnWithDataAndMessage> {
     const url = this.configUrl + '/auth';
 
-    // TODO, 正式部署前放开
-    // auth service 需要带withCredentials
-    // 其他服务通过interceptor来携带了,待验证
     return this.http.post<ReturnWithDataAndMessage>(
       url,
       {

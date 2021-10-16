@@ -80,6 +80,8 @@ import { AnimateCardComponent } from './shared/animations/animate-card/animate-c
 import { AnimateCardListComponent } from './shared/animations/animate-card-list/animate-card-list.component';
 import { SlideShowsComponent } from './components/slide-shows/slide-shows.component';
 import { FileSizePipe } from './services/file-size.pipe';
+import { ChangeColorComponent } from './components/change-color/change-color.component';
+import { UniquePassComponent } from './components/unique-pass/unique-pass.component';
 
 @NgModule({
   declarations: [
@@ -136,6 +138,8 @@ import { FileSizePipe } from './services/file-size.pipe';
     AnimateCardListComponent,
     SlideShowsComponent,
     FileSizePipe,
+    ChangeColorComponent,
+    UniquePassComponent
   ],
   imports: [
     BrowserModule,

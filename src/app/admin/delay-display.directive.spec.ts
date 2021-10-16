@@ -9,6 +9,9 @@ import {
 } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 
+/**
+ * Test an async directive with setTimeout
+ */
 @Component({
   template: `
     <div>

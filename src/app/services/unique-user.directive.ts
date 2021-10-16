@@ -13,9 +13,7 @@ import { AuthService } from '../services/auth.service';
 export class UniqueUserValidator implements AsyncValidator {
   constructor(private userService: AuthService) {}
 
-  validate(
-    ctrl: AbstractControl
-  ): Promise<ValidationErrors | null> | Observable<ValidationErrors | null> {
+  validate(ctrl: AbstractControl): Observable<ValidationErrors | null> {
     return this.userService.findUserByEmail(ctrl.value).pipe(
       map((users) => {
         return users.length >= 1 ? { userExists: true } : null;
@@ -35,9 +33,9 @@ export class UniqueUserValidator implements AsyncValidator {
     },
   ],
 })
-export class UniqueUserDirective {
+export class UniqueUserDirective implements AsyncValidator {
   constructor(private validator: UniqueUserValidator) {}
-  Validate(control: AbstractControl) {
-    this.validator.validate(control);
+  validate(control: AbstractControl): Observable<ValidationErrors | null> {
+    return this.validator.validate(control);
   }
 }

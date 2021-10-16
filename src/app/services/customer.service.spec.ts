@@ -15,6 +15,7 @@ fdescribe('CustomerService CRUD', () => {
   let service: CustomerService;
   let http: HttpClient;
   let httpTestingController: HttpTestingController;
+  // configUrl should be same as setting in environment.ts
   const configUrl = 'http://localhost:5000/api/customers';
   const customer: Customer = {
     name: 'customer1',

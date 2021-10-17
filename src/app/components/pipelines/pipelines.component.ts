@@ -58,12 +58,11 @@ export class PipelinesComponent implements OnInit, OnDestroy {
         }
       );
 
-    const show$ = this.getNew().pipe(takeUntil(this.destroy$));
+    const show$ = this.getNew();
     const hide$ = this.updateClick$.pipe(
-      mapTo(false),
-      takeUntil(this.destroy$)
+      mapTo(false)
     );
-    this.showNotification$ = merge(show$, hide$).pipe(takeUntil(this.destroy$));
+    this.showNotification$ = merge(show$, hide$);
   }
 
   trackPipelineId(index: number, customer: Customer): string {
@@ -84,8 +83,7 @@ export class PipelinesComponent implements OnInit, OnDestroy {
 
   getCustomerOnce() {
     return this.customerSrv
-      .getAllUnauthorizedCustomers()
-      .pipe(takeUntil(this.destroy$));
+      .getAllUnauthorizedCustomers();
   }
 
   getNew() {

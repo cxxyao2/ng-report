@@ -5,7 +5,6 @@ import { User } from '../models/user';
 import jwt_decode from 'jwt-decode';
 import { CookieService } from 'ngx-cookie-service';
 import { LogsService } from './logs.service';
-import { UserService } from './user.service';
 
 import { environment } from '../../environments/environment';
 import {
@@ -29,8 +28,7 @@ export class AuthService {
   constructor(
     private http: HttpClient,
     private cookieService: CookieService,
-    private logsSrv: LogsService,
-    private userService: UserService
+    private logsSrv: LogsService
   ) {}
 
   registerUser(user: User): Observable<RegisterResult> {

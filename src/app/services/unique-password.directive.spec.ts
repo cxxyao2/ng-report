@@ -5,8 +5,6 @@ import {
 import { FormControl, FormGroup, NgForm } from '@angular/forms';
 import {
   Component,
-  Input,
-  ViewChild,
   EventEmitter,
   Output,
   OnInit,
@@ -15,7 +13,7 @@ import {
 } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import {
-  async,
+  waitForAsync,
   ComponentFixture,
   fakeAsync,
   flush,
@@ -128,7 +126,7 @@ fdescribe('UniquePasswordDirective', () => {
     expect(repeatPasswordEl.value).toEqual('');
   });
 
-  it('should emit a value on change', (done) => {
+  it('should emit a value on change', (done: DoneFn) => {
     const value = 'Pretty';
     const changeEvent = new Event('change');
     component.model.newPassword = value;
@@ -146,17 +144,20 @@ fdescribe('UniquePasswordDirective', () => {
     passwordInput.dispatchEvent(changeEvent);
   });
 
-  it('should show error when password is not equal to repeatPassword', async(() => {
-    component.model = {
-      newPassword: 'aaa',
-      newRepeatPassword: 'bbb',
-    };
-    fixture.detectChanges();
+  it(
+    'should show error when password is not equal to repeatPassword',
+    waitForAsync(() => {
+      component.model = {
+        newPassword: 'aaa',
+        newRepeatPassword: 'bbb',
+      };
+      fixture.detectChanges();
 
-    fixture.whenStable().then(() => {
-      expect(form.hasError('identifyPassword')).toBe(true);
-    });
-  }));
+      fixture.whenStable().then(() => {
+        expect(form.hasError('identifyPassword')).toBe(true);
+      });
+    })
+  );
 
   it('should have one attribute directive uniquePassword', () => {
     expect(des.length).toBe(1);

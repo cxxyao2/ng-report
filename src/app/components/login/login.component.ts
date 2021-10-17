@@ -17,7 +17,7 @@ import { Subject } from 'rxjs';
 export class LoginComponent implements OnInit, OnDestroy {
   destroy$: Subject<void> = new Subject<void>();
   unamePattern = '^[a-z0-9_-]{8,15}$';
-  pwdPattern = '^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?!.*\s).{6,12}$';
+  pwdPattern = '^(?=.*d)(?=.*[a-z])(?=.*[A-Z])(?!.*s).{6,12}$';
   mobnumPattern = '^((\\+91-?)|0)?[0-9]{10}$';
 
   errorMessage = '';
@@ -25,9 +25,7 @@ export class LoginComponent implements OnInit, OnDestroy {
   constructor(
     public authService: AuthService,
     private router: Router,
-    private route: ActivatedRoute,
-    private cartService: CartService,
-    private customerService: CustomerService
+    private route: ActivatedRoute
   ) {}
 
   ngOnInit() {}
@@ -53,8 +51,6 @@ export class LoginComponent implements OnInit, OnDestroy {
           }, 3000);
         }
       );
-
-    // form.resetForm();
   }
 
   ngOnDestroy(): void {

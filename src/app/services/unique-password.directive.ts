@@ -11,7 +11,7 @@ import {
 
 /** Password should be equal to repeat-password */
 export const uniquePasswordValidator: ValidatorFn = (
-  control: AbstractControl
+control: AbstractControl
 ): ValidationErrors | null => {
   const password = control.get('password');
   const repeatPassword = control.get('repeatPassword');

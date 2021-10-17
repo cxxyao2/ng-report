@@ -13,11 +13,11 @@
           <input
             type="text"
             autofocus
+            id="fullName"
+            name="fullName"
             placeholder="Enter your name"
             formControlName="fullName"
             class="signup-input"
-            maxlength="100"
-            required
           />
         </div>
         <div
@@ -29,12 +29,11 @@
         <div class="form-input-wrapper">
           <input
             type="email"
+            id="email"
+            name="email"
             placeholder="pat@example.com"
             formControlName="email"
             class="signup-input"
-            minlength="6"
-            maxlength="100"
-            required
           />
         </div>
         <div
@@ -45,16 +44,18 @@
         </div>
         <div class="form-input-wrapper">
           <input
+            id="password"
+            name="password"
             [type]="hide ? 'password' : 'text'"
             placeholder="Password"
             formControlName="password"
             class="signup-input"
-            minlength="6"
-            required
           />
           <button
             mat-icon-button
             matSuffix
+             name="togglePassword"
+
             class="button-in-input"
             (click)="hide = !hide"
             [attr.aria-label]="'Hide password'"
@@ -72,6 +73,8 @@
         <div class="form-input-wrapper">
           <input
             [type]="hideRepeat ? 'password' : 'text'"
+            id="repeatPassword"
+            name="repeatPassword"
             placeholder="Repeat your password"
             formControlName="repeatPassword"
             class="signup-input"
@@ -81,6 +84,7 @@
           <button
             mat-icon-button
             matSuffix
+            name="toggleRepeatPassword"
             class="button-in-input"
             (click)="hideRepeat = !hideRepeat"
             [attr.aria-label]="'Hide repeatPassword'"

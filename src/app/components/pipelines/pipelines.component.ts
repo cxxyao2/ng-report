@@ -10,7 +10,6 @@ import {
   tap,
   takeUntil,
   shareReplay,
-  takeLast,
 } from 'rxjs/operators';
 import { Customer } from 'src/app/models/customer';
 import { environment } from 'src/environments/environment';

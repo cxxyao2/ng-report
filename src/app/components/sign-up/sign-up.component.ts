@@ -30,7 +30,11 @@ export class SignUpComponent implements OnInit, OnDestroy {
     this.myForm = new FormGroup(
       {
         fullName: new FormControl('', {
-          validators: [Validators.required, Validators.minLength(5)],
+          validators: [
+            Validators.required,
+            Validators.minLength(5),
+            Validators.maxLength(100),
+          ],
 
           updateOn: 'blur',
         }),
@@ -84,7 +88,7 @@ export class SignUpComponent implements OnInit, OnDestroy {
       return 'Email is required';
     }
 
-    // TODO
+
     if (this.email?.errors?.userExists) {
       return 'Email Exists';
     }

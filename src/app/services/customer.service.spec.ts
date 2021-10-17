@@ -7,16 +7,17 @@ import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 
 import { CustomerService } from './customer.service';
 import { Customer, CustomerForUpdate } from '../models/customer';
+import { environment } from 'src/environments/environment';
 
 /**
  * CRUD SERVICE TEST
  */
-fdescribe('CustomerService CRUD', () => {
+describe('CustomerService CRUD', () => {
   let service: CustomerService;
   let http: HttpClient;
   let httpTestingController: HttpTestingController;
   // configUrl should be same as setting in environment.ts
-  const configUrl = 'http://localhost:5000/api/customers';
+  const configUrl = environment.apiUrl + '/customers';
   const customer: Customer = {
     name: 'customer1',
     email: 'customer1@gmail.com',

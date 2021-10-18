@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
-import * as pdfMake from 'pdfmake/build/pdfMake';
-import * as pdfFonts from 'pdfmake/build/vfs_fonts';
+// tslint:disable-next-line: import-spacing
+import  * as pdfMake from 'pdfmake/build/pdfMake';
+// tslint:disable-next-line: import-spacing
+import  * as pdfFonts from 'pdfmake/build/vfs_fonts';
 
 (pdfMake as any).vfs = pdfFonts.pdfMake.vfs;
 

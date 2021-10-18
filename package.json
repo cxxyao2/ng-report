@@ -40,8 +40,8 @@
     "pdfmake": "^0.2.2",
     "rxjs": "~6.6.0",
     "tslib": "^2.0.0",
-    "zone.js": "~0.11.4",
-    "typescript": "~4.3.5"
+    "typescript": "~4.3.5",
+    "zone.js": "~0.11.4"
   },
   "devDependencies": {
     "codelyzer": "^6.0.0",

@@ -24,17 +24,6 @@
         <mat-icon *ngIf="!isDark">dark_mode</mat-icon>
         <mat-icon *ngIf="isDark">light_mode</mat-icon>
       </button>
-      <button
-        mat-button
-        [title]="getLanguageLabel()"
-        [attr.aria-label]="getLanguageLabel()"
-        (click)="toggleLanguage()"
-      >
-        <span class="link-item">
-          <a *ngIf="currentLanguage === 'Français'" href="/en/">English</a>
-          <a *ngIf="currentLanguage === 'English'" href="/fr/">Français</a>
-        </span>
-      </button>
     </mat-toolbar-row>
 
     <mat-toolbar-row class="fix-toolbar">
@@ -82,15 +71,6 @@
         ></a
       >
       <mat-menu #profileMenu="matMenu" yPosition="below">
-        <ng-container *ngIf="(themeService.isHandset | async) === true">
-          <a mat-menu-item *ngIf="currentLanguage === 'Français'" href="/en/"
-            >English</a
-          >
-          <a mat-menu-item *ngIf="currentLanguage === 'English'" href="/fr/"
-            >Français</a
-          >
-        </ng-container>
-
         <button mat-menu-item (click)="this.authService.logout()">
           Logout
         </button>

@@ -21,9 +21,27 @@
   }
 }
 
-.is-handset .toolbar {
-  position: fixed;
-  height: 56px;
+.is-handset {
+  .account-icon,
+  .home-icon {
+    display: none;
+  }
+  .toolbar {
+    position: fixed;
+    height: 56px;
+    .nav-link {
+      margin: 2px 0px;
+      border-radius: 2px;
+      &:hover,
+      &:active {
+        border: 1px solid white;
+        opacity: 0.8;
+      }
+      mat-icon {
+        margin-right: 2px;
+      }
+    }
+  }
 }
 
 .pliable-toolbar {

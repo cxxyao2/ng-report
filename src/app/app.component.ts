@@ -41,6 +41,7 @@ export class AppComponent implements AfterViewInit, OnDestroy {
     { code: 'fr', label: 'Français' },
   ];
 
+  commonItems: NavItem[] = [{ label: 'Home', icon: 'home', route: 'home' }];
   adminItems: NavItem[] = [
     { label: 'Products', icon: 'addchart', route: 'add-product' },
     { label: 'Authorization', icon: 'vpn_key', route: 'authorize' },

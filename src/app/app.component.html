@@ -27,15 +27,15 @@
     </mat-toolbar-row>
 
     <mat-toolbar-row class="fix-toolbar">
-      <button
-        type="button"
+      <span
+        class="nav-link"
         aria-label="Toggle sidenav"
         mat-icon-button
         (click)="drawer.toggle()"
         *ngIf="themeService.isHandset | async"
       >
         <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
-      </button>
+    </span>
 
       <h1
         *ngIf="(themeService.isHandset | async) === false"
@@ -48,11 +48,8 @@
 
       <app-search-box></app-search-box>
 
-      <a
-        class="nav-link"
-        routerLink="/home"
-        *ngIf="(themeService.isHandset | async) === false"
-        ><mat-icon>home</mat-icon>Home</a
+      <a class="nav-link home-icon" routerLink="/home"
+        ><mat-icon>home</mat-icon> Home</a
       >
 
       <a
@@ -65,7 +62,7 @@
       <a class="nav-link" *ngIf="this.authService.currentUser?.name">
         <span
           ><button mat-button [matMenuTriggerFor]="profileMenu">
-            <mat-icon>account_circle</mat-icon>
+            <mat-icon class="account-icon">account_circle</mat-icon>
             {{ this.authService.currentUser?.name }}
           </button></span
         ></a
@@ -109,6 +106,14 @@
       [attr.role]="(themeService.isHandset | async) ? 'dialog' : 'navigation'"
     >
       <mat-nav-list>
+        <ng-container *ngIf="themeService.isHandset | async">
+          <app-menu-list-item
+            *ngFor="let item of commonItems"
+            [item]="item"
+          ></app-menu-list-item>
+          <mat-divider></mat-divider>
+        </ng-container>
+
         <h3 mat-subheader>Administrator</h3>
         <app-menu-list-item
           *ngFor="let item of adminItems"

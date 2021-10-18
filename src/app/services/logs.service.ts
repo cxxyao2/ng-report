@@ -14,7 +14,7 @@ export class LogsService {
   configUrl = environment.apiUrl + '/logs';
 
   constructor(private http: HttpClient) {
-    // this.getIPAddress();
+   //  this.getIPAddress();
   }
 
   getLog(id: string): Observable<LogRecord> {
@@ -50,16 +50,15 @@ export class LogsService {
   }
 
   addLog(content: string): void {
-    this.http
-      .post(this.configUrl, {
-        content,
-      })
-      .subscribe();
+    this.http.post(this.configUrl, {  content }).subscribe();
   }
 
   getIPAddress(): void {
-    this.http.get('http://api.ipify.org/?format=json').subscribe((res: any) => {
-      this.ipAddress = res.ip;
-    });
+    // CORS policy does not allow the operation
+    this.http
+      .get('https://api.ipify.org/?format=json')
+      .subscribe((res: any) => {
+        this.ipAddress = res.ip;
+      });
   }
 }

@@ -32,11 +32,8 @@ import { UserResolver } from './services/user.resolver';
 import { AddRoleToUserComponent } from './components/add-role-to-user/add-role-to-user.component';
 import { AdminServiceGuard } from './services/admin-service.guard';
 import { ManagerServiceGuard } from './services/manager-service.guard';
-import { ChangeColorComponent } from './components/change-color/change-color.component';
-import { UniquePassComponent } from './components/unique-pass/unique-pass.component';
 
 const routes: Routes = [
-  { path: 'color', component: UniquePassComponent },
   { path: 'login', component: LoginComponent },
   { path: 'signup', component: SignUpComponent },
   { path: 'forget-password', component: ForgetPasswordComponent },
@@ -46,7 +43,6 @@ const routes: Routes = [
     component: ChangePasswordComponent,
     canActivate: [AuthGuard],
   },
-
   { path: 'home', component: HomeComponent }, // public no-login
   {
     path: 'add-product',

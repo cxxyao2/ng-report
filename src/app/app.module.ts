@@ -6,6 +6,7 @@ import { CookieService } from 'ngx-cookie-service';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { GoogleMapsModule } from '@angular/google-maps';
+import { EnvServiceProvider } from './env.service.provider';
 
 import {
   HttpClientModule,
@@ -139,7 +140,7 @@ import { UniquePassComponent } from './components/unique-pass/unique-pass.compon
     SlideShowsComponent,
     FileSizePipe,
     ChangeColorComponent,
-    UniquePassComponent
+    UniquePassComponent,
   ],
   imports: [
     BrowserModule,
@@ -166,7 +167,7 @@ import { UniquePassComponent } from './components/unique-pass/unique-pass.compon
     MatButtonModule,
     LayoutModule,
   ],
-  providers: [CookieService, httpInterceptorProviders],
+  providers: [CookieService, EnvServiceProvider, httpInterceptorProviders],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

@@ -30,12 +30,10 @@
         [attr.aria-label]="getLanguageLabel()"
         (click)="toggleLanguage()"
       >
-        <a *ngIf="currentLanguage === 'french'" class="nav-bar-item" href="/en/"
-          >English</a
-        >
-        <a *ngIf="currentLanguage === 'english'" class="nav-link" href="/fr/"
-          >Français</a
-        >
+        <span class="link-item">
+          <a *ngIf="currentLanguage === 'Français'" href="/en/">English</a>
+          <a *ngIf="currentLanguage === 'English'" href="/fr/">Français</a>
+        </span>
       </button>
     </mat-toolbar-row>
 
@@ -50,7 +48,13 @@
         <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
       </button>
 
-      <h1 class="app-name" routerLink="/home">Center</h1>
+      <h1
+        *ngIf="(themeService.isHandset | async) === false"
+        class="app-name"
+        routerLink="/home"
+      >
+        Center
+      </h1>
       <span class="spacer"></span>
 
       <app-search-box></app-search-box>
@@ -78,12 +82,22 @@
         ></a
       >
       <mat-menu #profileMenu="matMenu" yPosition="below">
+        <ng-container *ngIf="(themeService.isHandset | async) === true">
+          <a mat-menu-item *ngIf="currentLanguage === 'Français'" href="/en/"
+            >English</a
+          >
+          <a mat-menu-item *ngIf="currentLanguage === 'English'" href="/fr/"
+            >Français</a
+          >
+        </ng-container>
+
         <button mat-menu-item (click)="this.authService.logout()">
           Logout
         </button>
         <button mat-menu-item routerLink="/change-password">
           Change Password
         </button>
+
         <button mat-menu-item routerLink="/dashboard">Dashboard</button>
       </mat-menu>
 

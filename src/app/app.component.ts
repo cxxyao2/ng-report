@@ -32,8 +32,14 @@ export class AppComponent implements AfterViewInit, OnDestroy {
   destroy$: Subject<void> = new Subject<void>();
   title = 'ng-center';
   isDark = false;
-  currentLanguage = 'english';
+  currentLanguage = 'English';
+  siteLocale = 'en';
   cookieValue = '';
+
+  languageList = [
+    { code: 'en', label: 'English' },
+    { code: 'fr', label: 'Français' },
+  ];
 
   adminItems: NavItem[] = [
     { label: 'Products', icon: 'addchart', route: 'add-product' },
@@ -93,6 +99,10 @@ export class AppComponent implements AfterViewInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
+    this.siteLocale = window.location.pathname.split('/')[1];
+    this.currentLanguage =
+      this.languageList.find((lang) => lang.code === this.siteLocale)?.label ||
+      'English';
     this.breakpointObserver
       .observe(['(max-width: 800px)'])
       .pipe(

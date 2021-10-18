@@ -9,7 +9,6 @@ import * as pdfFonts from 'pdfmake/build/vfs_fonts';
 })
 export class PdfMakeService {
   generatePDF(docDefinition: any, action: string = 'open'): void {
-    // TODO 替换成真实的数据
     // docDefinition = {
     //   header: 'C#Corner PDF Header',
     //   content:

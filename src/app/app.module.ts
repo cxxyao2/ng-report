@@ -8,12 +8,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { GoogleMapsModule } from '@angular/google-maps';
 import { EnvServiceProvider } from './env.service.provider';
 
-import {
-  HttpClientModule,
-  HttpClientJsonpModule,
-  HTTP_INTERCEPTORS,
-  HttpClientXsrfModule,
-} from '@angular/common/http';
+import { HttpClientModule } from '@angular/common/http';
 import { NgxEchartsModule } from 'ngx-echarts';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -33,13 +28,11 @@ import { FindStoreComponent } from './components/find-store/find-store.component
 import { GameCardComponent } from './shared/animations/game-card/game-card.component';
 import { LoglistComponent } from './components/loglist/loglist.component';
 import { LogfilterComponent } from './components/logfilter/logfilter.component';
-import { NetworkInterceptor } from './interceptors/network.interceptor';
 import { MenuListItemComponent } from './components/toolbar/menu-list-item/menu-list-item.component';
 import { PrintInvoiceComponent } from './components/shopping-cart/print-invoice/print-invoice.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { ProductItemComponent } from './components/./shopping-cart/product-item/product-item.component';
 import { ProductListComponent } from './components/./shopping-cart/product-list/product-list.component';
-import { RoutineComponent } from './components/routine/routine.component';
 import { SearchBoxComponent } from './components/toolbar/search-box/search-box.component';
 import { ScrollToTopComponent } from './components/scroll-to-top/scroll-to-top.component';
 import { WishListComponent } from './components/shopping-cart/wish-list/wish-list.component';
@@ -119,7 +112,6 @@ import { UniquePassComponent } from './components/unique-pass/unique-pass.compon
     PrintInvoiceComponent,
     ProductListComponent,
     PipelinesComponent,
-    RoutineComponent,
     ResetPasswordComponent,
     ReportThisMonthComponent,
     ReportThisYearComponent,
@@ -151,10 +143,7 @@ import { UniquePassComponent } from './components/unique-pass/unique-pass.compon
     ReactiveFormsModule,
     GoogleMapsModule,
     HttpClientModule,
-    HttpClientXsrfModule.withOptions({
-      cookieName: 'xsrf-token',
-      headerName: 'x-xsrf-token',
-    }),
+
     MaterialModule,
     NgxEchartsModule.forRoot({
       echarts: () => import('echarts'),

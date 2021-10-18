@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Observable, of, throwError } from 'rxjs';
 import { User } from '../models/user';
 import jwt_decode from 'jwt-decode';
@@ -11,6 +11,7 @@ import {
   ReturnWithDataAndMessage,
   ReturnWithMessage,
 } from '../models/return-values';
+import { map, tap } from 'rxjs/operators';
 
 export interface RegisterResult {
   data: User;
@@ -63,9 +64,12 @@ export class AuthService {
     });
   }
 
-  resetPassword(newPassword: string, token: string) {
+  resetPassword(
+    newPassword: string,
+    token: string
+  ): Observable<ReturnWithMessage> {
     const url = this.configUrl + '/auth/reset-password?token=' + token;
-    return this.http.post(url, { newPassword });
+    return this.http.post<ReturnWithMessage>(url, { newPassword });
   }
 
   updatePassword(
@@ -79,20 +83,24 @@ export class AuthService {
   login(email: string, password: string): Observable<ReturnWithDataAndMessage> {
     const url = this.configUrl + '/auth';
 
-    return this.http.post<ReturnWithDataAndMessage>(
-      url,
-      {
-        email,
-        password,
-      },
-      {
-        withCredentials: true,
-      }
-    );
-    // return this.http.post(url, {
-    //   email,
-    //   password,
-    // });
+    return this.http
+      .post<ReturnWithDataAndMessage>(
+        url,
+        {
+          email,
+          password,
+        },
+        {
+          withCredentials: true,
+        }
+      )
+      .pipe(
+        tap((res) => {
+          if (res.token) {
+            this.cookieService.set(environment.cookieName, res.token);
+          }
+        })
+      );
   }
 
   getToken(): string {

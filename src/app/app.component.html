@@ -35,7 +35,7 @@
         *ngIf="themeService.isHandset | async"
       >
         <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
-    </span>
+      </span>
 
       <h1
         *ngIf="(themeService.isHandset | async) === false"
@@ -131,6 +131,16 @@
           *ngFor="let item of salespersonItems"
           [item]="item"
         ></app-menu-list-item>
+
+        <ng-container *ngIf="themeService.isHandset | async">
+          <mat-divider></mat-divider>
+          <h3 mat-subheader>Other Information</h3>
+          <app-menu-list-item
+            *ngFor="let item of referItems"
+            [item]="item"
+          ></app-menu-list-item>
+          <mat-divider></mat-divider>
+        </ng-container>
       </mat-nav-list>
     </mat-sidenav>
     <mat-sidenav-content>

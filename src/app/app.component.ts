@@ -86,6 +86,18 @@ export class AppComponent implements AfterViewInit, OnDestroy {
     },
   ];
 
+  referItems: NavItem[] = [
+    {
+      label: 'Find A Store',
+      icon: 'storefront',
+      route: 'find-store',
+    },
+    { label: 'Contact US', icon: 'email', route: 'email-to-us' },
+
+    { label: 'Infinite List', icon: 'toc', route: 'infinite-list' },
+    { label: 'Flip Card', icon: 'gamepad', route: 'game-card' },
+  ];
+
   loading$ = this.loader.laoding$;
 
   constructor(

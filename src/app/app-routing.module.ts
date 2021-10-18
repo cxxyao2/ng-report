@@ -11,10 +11,8 @@ import { PrintInvoiceComponent } from './components/shopping-cart/print-invoice/
 import { LoglistComponent } from './components/loglist/loglist.component';
 import { InfiniteListComponent } from './components/infinite-list/infinite-list.component';
 import { AddClientComponent } from './components/add-client/add-client.component';
-import { RoutineComponent } from './components/routine/routine.component';
 import { FindStoreComponent } from './components/find-store/find-store.component';
 import { EmailToUsComponent } from './components/email-to-us/email-to-us.component';
-import { TechnicalSupportComponent } from './components/technical-support/technical-support.component';
 import { SchedulerComponent } from './components/scheduler/scheduler.component';
 import { AddProductComponent } from './components/add-product/add-product.component';
 import { LoginComponent } from './components/login/login.component';
@@ -81,20 +79,36 @@ const routes: Routes = [
     component: ReportThisYearComponent,
     canActivate: [ManagerServiceGuard],
   }, // manager role
-  { path: 'todo', component: TodoComponent }, // salesperson role
-  { path: 'product-list', component: ProductListComponent }, // salesperson role
+  { path: 'todo', component: TodoComponent, canActivate: [AuthGuard] }, // salesperson role
+  {
+    path: 'product-list',
+    component: ProductListComponent,
+    canActivate: [AuthGuard],
+  }, // salesperson role
   {
     path: 'pipeline',
     component: PipelinesComponent,
     canActivate: [AuthGuard],
   }, // manager, salesperson
-  { path: 'add-client', component: AddClientComponent }, // salesperson role
+  {
+    path: 'add-client',
+    component: AddClientComponent,
+    canActivate: [AuthGuard],
+  }, // salesperson role
 
   {
     path: 'personal',
     children: [
-      { path: 'contact-customer', component: ContactCustomerComponent },
-      { path: 'order-review', component: OrderQueryComponent },
+      {
+        path: 'contact-customer',
+        component: ContactCustomerComponent,
+        canActivate: [AuthGuard],
+      },
+      {
+        path: 'order-review',
+        component: OrderQueryComponent,
+        canActivate: [AuthGuard],
+      },
     ],
   }, // salesperson role
 
@@ -104,7 +118,6 @@ const routes: Routes = [
     component: PrintInvoiceComponent,
     canActivate: [AuthGuard],
   },
-  { path: 'routine', component: RoutineComponent, canActivate: [AuthGuard] },
   {
     path: 'email-to-us',
     component: EmailToUsComponent,
@@ -115,7 +128,12 @@ const routes: Routes = [
     component: FindStoreComponent,
     canActivate: [AuthGuard],
   },
-  { path: 'game-card', component: GameCardComponent }, // technique features
+  { path: 'game-card', component: GameCardComponent, canActivate: [AuthGuard] }, // technique features
+  {
+    path: 'infinite-list',
+    component: InfiniteListComponent,
+    canActivate: [AuthGuard],
+  },
   { path: '', redirectTo: '/home', pathMatch: 'full' },
   { path: '**', component: PageNotFoundComponent },
 ];

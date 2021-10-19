@@ -37,7 +37,6 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
   - multi-slot content projection
   - drag && drop
   - ...
-- SSR: server-side rendering
 - Unified error and success message prompt
 - Prevent memeory leak: Unsubscribe in ngOnDestroy + TakeUntil/Take
 - Coding check: ng lint

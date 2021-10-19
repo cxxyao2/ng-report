@@ -6,7 +6,7 @@
   padding: 20px 20px 0px 20px;
   color: #000000;
   font-weight: bold;
-  width: 80%;
+  width: 70%;
   button + button {
     margin-left: 8px;
   }
@@ -14,4 +14,10 @@
 
 .input-area-full-width {
   width: 100%;
+}
+
+@media screen and (max-width: 800px) {
+  .container {
+    width: 90%;
+  }
 }

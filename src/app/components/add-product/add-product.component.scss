@@ -16,17 +16,32 @@ table {
   flex: 1 0 auto;
 }
 
+.actions-wrapper {
+  display: inline-flex;
+  justify-content: center;
+  gap: 1px;
+  .action {
+    transition: all 0.3s;
+  }
+  .action:hover {
+    box-shadow: -1px 1px 2px 2px gray;
+  }
+  .action + .action {
+    margin-left: 4px;
+  }
+}
+
 /* Expanded Row Setting */
 tr.example-detail-row {
   height: 0;
 }
 
 tr.example-element-row:not(.example-expanded-row):hover {
-  background: whitesmoke;
+  opacity: 0.5;
 }
 
 tr.example-element-row:not(.example-expanded-row):active {
-  background: #efefef;
+  opacity: 0.8;
 }
 
 .example-element-row td {
@@ -40,7 +55,7 @@ tr.example-element-row:not(.example-expanded-row):active {
 
 .example-element-diagram {
   width: 100px;
-  height: 100px;
+  min-width:50px;
   object-fit: cover;
   overflow: hidden;
   border: 1px solid lightgray;

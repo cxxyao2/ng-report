@@ -17,7 +17,7 @@ import {
 } from '@angular/material/dialog';
 import { AddProductDetailsComponent } from 'src/app/components/add-product-details/add-product-details.component';
 import { ProductService } from 'src/app/services/product.service';
-import { first, switchMap, takeUntil } from 'rxjs/operators';
+import { first, switchMap, takeUntil, tap } from 'rxjs/operators';
 import {
   animate,
   state,
@@ -26,6 +26,7 @@ import {
   trigger,
 } from '@angular/animations';
 import { environment } from 'src/environments/environment';
+import { DialogService } from 'src/app/services/dialog.service';
 
 /** Constants used to fill up our data base. */
 const FRUITS: string[] = [
@@ -67,10 +68,14 @@ export class AddProductComponent implements AfterViewInit, OnInit, OnDestroy {
   rowCount = 0;
   expandedElement: Product | null = null; // show collapsed image and descriptions
 
-  constructor(public dialog: MatDialog, private service: ProductService) {}
+  constructor(
+    public dialog: MatDialog,
+    private productService: ProductService,
+    private dialogService: DialogService
+  ) {}
 
   ngOnInit(): void {
-    this.service
+    this.productService
       .getProducts('')
       .pipe(takeUntil(this.destroy$))
       .subscribe(
@@ -115,7 +120,7 @@ export class AddProductComponent implements AfterViewInit, OnInit, OnDestroy {
       .pipe(
         switchMap((result) => {
           if (result && 'price' in result) {
-            return this.service.addProduct(result);
+            return this.productService.addProduct(result);
           } else {
             return of(null);
           }
@@ -153,7 +158,7 @@ export class AddProductComponent implements AfterViewInit, OnInit, OnDestroy {
   }
 
   editProduct(product: Product): void {
-    let dialogData: ProductDialogData = {
+    const dialogData: ProductDialogData = {
       isAdd: false,
       product: product,
     };
@@ -169,7 +174,7 @@ export class AddProductComponent implements AfterViewInit, OnInit, OnDestroy {
       .pipe(
         switchMap((result) => {
           if (result && 'price' in result) {
-            return this.service.updateProduct(result);
+            return this.productService.updateProduct(result);
           } else {
             return of(null);
           }
@@ -192,15 +197,43 @@ export class AddProductComponent implements AfterViewInit, OnInit, OnDestroy {
   }
 
   deleteProduct(product: Product): void {
-    const idx = this.dataToDisplay.findIndex(
-      (record) => record._id === product._id
-    );
-
-    this.service
-      .deleteProduct(product)
-      .pipe(takeUntil(this.destroy$))
+    this.dialogService
+      .confirmDialog({
+        title: 'Product Management',
+        message: 'Are you sure you to delete this product?',
+        confirmText: 'Yes',
+        cancelText: 'No',
+      })
+      .pipe(
+        switchMap((confirm) => {
+          if (confirm) {
+            return this.productService.deleteProduct(product);
+          } else {
+            return of(null);
+          }
+        }),
+        takeUntil(this.destroy$)
+      )
       .subscribe(
-        () => {},
+        (data) => {
+          if (!data) {
+            return;
+          }
+          const idx = this.dataToDisplay.findIndex(
+            (record) => record._id === product._id
+          );
+
+          if (idx >= 0) {
+            this.dataToDisplay.splice(idx, 1);
+            if (
+              this.dataToDisplay !== undefined &&
+              this.dataToDisplay !== null
+            ) {
+              this.rowCount = this.dataToDisplay.length;
+            }
+            this.dataSource.setData(this.dataToDisplay);
+          }
+        },
         (err) => {
           this.errorMessage = err;
           setTimeout(() => {
@@ -208,13 +241,6 @@ export class AddProductComponent implements AfterViewInit, OnInit, OnDestroy {
           }, 3000);
         }
       );
-    if (idx >= 0) {
-      this.dataToDisplay.splice(idx, 1);
-      if (this.dataToDisplay !== undefined && this.dataToDisplay !== null) {
-        this.rowCount = this.dataToDisplay.length;
-      }
-      this.dataSource.setData(this.dataToDisplay);
-    }
   }
 
   ngAfterViewInit() {}

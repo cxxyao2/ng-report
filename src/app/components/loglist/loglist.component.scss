@@ -34,3 +34,9 @@ table {
 .button-ml {
   margin-left: 8px;
 }
+
+@media screen and (max-width:800px){
+.button-ml {
+  margin-bottom: 8px;
+}
+}

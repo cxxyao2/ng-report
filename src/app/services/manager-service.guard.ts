@@ -23,7 +23,9 @@ export class ManagerServiceGuard implements CanActivate {
     }
 
     // Navigate to /home
-    window.alert('You are not authorized to visit this page');
+    window.alert(
+      'You are not authorized to visit this page..Please contact your supervisor.'
+    );
     this.router.navigate(['/home']);
     return false;
   }

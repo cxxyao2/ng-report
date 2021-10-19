@@ -15,7 +15,6 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 - interceptors
 - guards, resolves,pipes,directives,validators
 - light/dark themes
-- i18n
 - download file formats: CSV and PDF
 - forget password/reset password emails, order notification email
 - reusable animations

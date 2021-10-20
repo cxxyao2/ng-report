@@ -1,7 +1,7 @@
 export const environment = {
   production: false,
-  apiUrl: ' https://backend-cxx.herokuapp.com/api',
-  imageUrl: 'https://backend-cxx.herokuapp.com/',
+  apiUrl: ' http://localhost:5000/api',
+  imageUrl: 'http://localhost:5000',
   mapKey: 'w',
   weatherUrl: 'https://weather.',
   cookieName: 'xsrf-token',

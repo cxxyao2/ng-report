@@ -32,8 +32,8 @@ export class SignUpComponent implements OnInit, OnDestroy {
         fullName: new FormControl('', {
           validators: [
             Validators.required,
-            Validators.minLength(5),
-            Validators.maxLength(100),
+            Validators.minLength(3),
+            Validators.maxLength(10),
           ],
 
           updateOn: 'blur',
@@ -80,6 +80,9 @@ export class SignUpComponent implements OnInit, OnDestroy {
     if (this.fullName?.errors?.minlength) {
       return 'Too short: ' + JSON.stringify(this.fullName?.errors?.minlength);
     }
+    if (this.fullName?.errors?.maxlength) {
+      return 'Too long: ' + JSON.stringify(this.fullName?.errors?.maxlength);
+    }
     return 'Name is invalid';
   }
 
@@ -87,7 +90,6 @@ export class SignUpComponent implements OnInit, OnDestroy {
     if (this.email?.errors?.required) {
       return 'Email is required';
     }
-
 
     if (this.email?.errors?.userExists) {
       return 'Email Exists';
@@ -105,6 +107,9 @@ export class SignUpComponent implements OnInit, OnDestroy {
 
     if (this.password?.errors?.pattern) {
       return 'Password is invalid';
+    }
+    if (this.password?.errors?.minlength) {
+      return 'Too short: ' + JSON.stringify(this.password?.errors?.minlength);
     }
     return 'Password is invalid';
   }

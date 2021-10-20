@@ -51,14 +51,16 @@ export class PipelineAuthorizedComponent implements OnInit, OnDestroy {
 
   frozeCustomer(id = ''): void {
     const idx = this.customers.findIndex((customer) => customer._id === id);
-    if (idx >= 0) {
-      this.customers.splice(idx, 1);
-    }
+
     this.customerSrv
       .updateCustomer(id, { isAuthorized: false })
       .pipe(takeUntil(this.destroy$))
       .subscribe(
-        (data) => {},
+        (data) => {
+           if (idx >= 0) {
+             this.customers.splice(idx, 1);
+           }
+        },
         (err) => {
           this.errorMessage = err;
           setTimeout(() => {

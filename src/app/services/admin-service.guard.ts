@@ -20,7 +20,9 @@ export class AdminServiceGuard implements CanLoad, CanActivate {
 
   canLoad(route: Route, segments: UrlSegment[]): boolean {
     if (this.authService.currentUser?.isAdmin !== true) {
-      window.alert('You are not authorized to visit this page.Please contact your supervisor.');
+      window.alert(
+        'You are not authorized to visit this page.Please contact your supervisor.'
+      );
       // // Navigate to /home
       this.router.navigate(['/home']);
       return false;
@@ -39,9 +41,10 @@ export class AdminServiceGuard implements CanLoad, CanActivate {
     window.alert(
       'You are not authorized to visit this page..Please contact your supervisor.'
     );
-    this.router.navigate(['/login'], {
-      queryParams: { returnUrl: state.url },
-    });
+    this.router.navigate(['/home']);
+    // this.router.navigate(['/login'], {
+    //   queryParams: { returnUrl: state.url },
+    // });
     return false;
   }
 }

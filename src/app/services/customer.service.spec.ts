@@ -93,7 +93,7 @@ describe('CustomerService CRUD', () => {
     expect(req.request.body).toEqual(customer);
   });
 
-  it('can test for 404 4rror', () => {
+  it('can test for 404 error', () => {
     const emsg = 'deliberate 404 error';
 
     http.get('/data').subscribe(

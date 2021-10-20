@@ -75,7 +75,7 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 - Mobile Friendly and full responsive
 - Back to top button
 - Spinner during http actions
-- Error popup window
+- Toast message
 
 ## Test list
 

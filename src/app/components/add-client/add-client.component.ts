@@ -1,5 +1,12 @@
-import { Component, OnInit, ViewChild, OnDestroy } from '@angular/core';
-import { FormBuilder, Validators, FormGroup } from '@angular/forms';
+import {
+  Component,
+  OnInit,
+  ViewChild,
+  OnDestroy,
+  ViewChildren,
+  QueryList,
+} from '@angular/core';
+import { FormBuilder, Validators, FormGroup, NgForm } from '@angular/forms';
 import { MatStepper, StepperOrientation } from '@angular/material/stepper';
 import { Observable, of, Subject } from 'rxjs';
 import { map, switchMap, takeUntil } from 'rxjs/operators';
@@ -18,6 +25,7 @@ import { environment } from 'src/environments/environment';
 })
 export class AddClientComponent implements OnInit, OnDestroy {
   @ViewChild('stepper') stepper!: MatStepper;
+  @ViewChildren('form1,form2,form3,form4') formList!: QueryList<NgForm>;
   destroy$: Subject<void> = new Subject<void>();
 
   isLinear = false;
@@ -211,6 +219,13 @@ export class AddClientComponent implements OnInit, OnDestroy {
 
   allDataClear() {
     this.stepper.reset();
+    this.firstFormGroup.reset();
+    this.secondFormGroup.reset();
+    this.thirdFormGroup.reset();
+    this.fourthFormGroup.reset();
+    this.formList.forEach((form) => {
+      form.resetForm();
+    });
     this.file = null;
     this.fileUrl = null;
   }

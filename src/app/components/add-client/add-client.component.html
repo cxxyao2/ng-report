@@ -6,7 +6,7 @@
     [orientation]="(stepperOrientation | async) || 'vertical'"
   >
     <mat-step [stepControl]="firstFormGroup" errorMessage="Name is required.">
-      <form [formGroup]="firstFormGroup">
+      <form [formGroup]="firstFormGroup" #form1="ngForm">
         <ng-template matStepLabel>Fill out your name</ng-template>
         <div>
           <mat-form-field appearance="fill">
@@ -47,7 +47,7 @@
       [stepControl]="secondFormGroup"
       errorMessage="Address is required."
     >
-      <form [formGroup]="secondFormGroup">
+      <form [formGroup]="secondFormGroup" #form2="ngForm">
         <ng-template matStepLabel>Fill out your address</ng-template>
         <mat-form-field appearance="fill">
           <mat-label>Address</mat-label>
@@ -87,7 +87,7 @@
       [stepControl]="thirdFormGroup"
       errorMessage="Telephone number is required."
     >
-      <form [formGroup]="thirdFormGroup">
+      <form [formGroup]="thirdFormGroup" #form3="ngForm">
         <ng-template matStepLabel>Fill out telephone number</ng-template>
         <mat-form-field appearance="fill">
           <mat-label>Telelphone number</mat-label>
@@ -111,7 +111,7 @@
       </form>
     </mat-step>
     <mat-step [stepControl]="fourthFormGroup" errorMessage="Image is required.">
-      <form [formGroup]="fourthFormGroup">
+      <form [formGroup]="fourthFormGroup" #form4="ngForm">
         <ng-template matStepLabel>Select a front shop image</ng-template>
         <input
           type="file"

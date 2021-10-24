@@ -45,7 +45,7 @@ describe('CustomerService CRUD', () => {
     expect(service).toBeTruthy();
   });
 
-  it('should return an customer', () => {
+  it('should return a customer', () => {
     let result!: Customer;
     const url = configUrl + '/' + customer._id;
     service.getCustomer(customer._id || '').subscribe((t: Customer) => {

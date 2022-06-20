@@ -51,7 +51,7 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 - pdfmake
   (These package names are self-explanatory. No extra explanation.)
 
-## Main Functions
+## Main Modules
 
 - Master Data Maintenance
 

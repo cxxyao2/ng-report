@@ -8,7 +8,6 @@ import { SearchProductService } from 'src/app/services/search-product.service';
 import { CartService } from 'src/app/services/cart.service';
 import { Customer } from 'src/app/models/customer';
 import { CustomerService } from '../../../services/customer.service';
-import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-product-list',

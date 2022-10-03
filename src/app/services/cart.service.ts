@@ -140,7 +140,7 @@ export class CartService {
     const taxTVQ = subTotal * constants.tvq;
     const total = subTotal + taxTPS + taxTVQ;
 
-    const selectedItems = this.items.filter((item) => item.selected === true);
+    const selectedItems = this.items.filter((item) => item.selected);
 
     // 1,add an order header
     return this.http

@@ -18,8 +18,8 @@ import { environment } from 'src/environments/environment';
 export class ProductListComponent implements OnInit, OnDestroy {
   destroy$: Subject<void> = new Subject<void>();
 
-  categories: string[] = ['Gasoline', 'Diesel', 'Lubricant'];
-  chipsControl = new FormControl(['Gasoline']);
+  categories: string[] = ['gas', 'diesel', 'lubricant'];
+  chipsControl = new FormControl(['gas']);
 
   productList: Product[] = [];
   filteredProductList: Product[] = [];

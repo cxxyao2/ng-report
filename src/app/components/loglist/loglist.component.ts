@@ -56,7 +56,7 @@ export class LoglistComponent implements OnInit, OnDestroy {
   ];
   dataSource = new MatTableDataSource<LogRecord>();
 
-  dialogFilterData: LogFilter | null |undefined;
+  dialogFilterData: LogFilter | null | undefined;
   range = new FormGroup({
     start: new FormControl(),
     end: new FormControl(),

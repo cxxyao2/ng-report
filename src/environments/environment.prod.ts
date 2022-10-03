@@ -1,9 +1,9 @@
 export const environment = {
   production: true,
-  apiUrl: ' https://backend-cxx.herokuapp.com/api',
-  imageUrl: 'https://backend-cxx.herokuapp.com',
+  apiUrl: ' https://bakend-jennifer.herokuapp.com/api',
+  imageUrl: 'https://bakend-jennifer.herokuapp.com',
   mapKey: 'w',
   weatherUrl: 'https://weather.',
-  cookieName: 'xsrf-token',
-  tokenHeaderName: 'x-xsrf-token',
+  cookieName: 'my-xsrf-token',
+  tokenHeaderName: 'my-x-xsrf-token',
 };

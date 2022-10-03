@@ -76,6 +76,7 @@ import { SlideShowsComponent } from './components/slide-shows/slide-shows.compon
 import { FileSizePipe } from './services/file-size.pipe';
 import { ChangeColorComponent } from './components/change-color/change-color.component';
 import { UniquePassComponent } from './components/unique-pass/unique-pass.component';
+import { FormSelectComponent } from './form-select/form-select.component';
 
 @NgModule({
   declarations: [
@@ -133,6 +134,7 @@ import { UniquePassComponent } from './components/unique-pass/unique-pass.compon
     FileSizePipe,
     ChangeColorComponent,
     UniquePassComponent,
+    FormSelectComponent,
   ],
   imports: [
     BrowserModule,

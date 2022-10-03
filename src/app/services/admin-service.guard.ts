@@ -39,7 +39,7 @@ export class AdminServiceGuard implements CanLoad, CanActivate {
     }
 
     window.alert(
-      'You are not authorized to visit this page..Please contact your supervisor.'
+      'You are not authorized to visit this page.Please contact your supervisor.'
     );
     this.router.navigate(['/home']);
     // this.router.navigate(['/login'], {

@@ -50,6 +50,7 @@ export class InfiniteListComponent implements OnInit, AfterViewInit, OnDestroy {
         });
       });
   }
+  
   fetchMore(): void {
     const images = [
       'IuLgi9PWETU',

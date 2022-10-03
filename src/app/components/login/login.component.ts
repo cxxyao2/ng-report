@@ -45,6 +45,7 @@ export class LoginComponent implements OnInit, OnDestroy {
           this.router.navigate([returnUrl || '/']);
         },
         (err) => {
+          console.log('err', err.messages);
           this.errorMessage = err;
           setTimeout(() => {
             this.errorMessage = '';

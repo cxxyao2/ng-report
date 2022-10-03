@@ -20,11 +20,16 @@ export class XsrftokenInterceptor implements HttpInterceptor {
     let token;
     let reqClone;
     token = this.cookieService.get(environment.cookieName);
-  
+
     if (token !== null && !request.headers.has(environment.tokenHeaderName)) {
+      // reqClone = request.clone({
+      //   headers: request.headers.set(environment.tokenHeaderName, token),
+      //   withCredentials: true,
+      //   body: request.body,
+      // });
+
       reqClone = request.clone({
         headers: request.headers.set(environment.tokenHeaderName, token),
-        withCredentials: true,
         body: request.body,
       });
 

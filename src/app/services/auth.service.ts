@@ -84,16 +84,10 @@ export class AuthService {
     const url = this.configUrl + '/auth';
 
     return this.http
-      .post<ReturnWithDataAndMessage>(
-        url,
-        {
-          email,
-          password,
-        },
-        {
-          withCredentials: true,
-        }
-      )
+      .post<ReturnWithDataAndMessage>(url, {
+        email,
+        password,
+      })
       .pipe(
         tap((res) => {
           if (res.token) {
@@ -128,4 +122,28 @@ export class AuthService {
     this.cookieService.delete(environment.cookieName);
     window.location.reload();
   }
+
+  // with credential case
+  // login(email: string, password: string): Observable<ReturnWithDataAndMessage> {
+  //   const url = this.configUrl + '/auth';
+
+  //   return this.http
+  //     .post<ReturnWithDataAndMessage>(
+  //       url,
+  //       {
+  //         email,
+  //         password,
+  //       },
+  //       {
+  //         withCredentials: true,
+  //       }
+  //     )
+  //     .pipe(
+  //       tap((res) => {
+  //         if (res.token) {
+  //           this.cookieService.set(environment.cookieName, res.token);
+  //         }
+  //       })
+  //     );
+  // }
 }

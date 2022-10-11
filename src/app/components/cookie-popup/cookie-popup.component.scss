@@ -1,7 +1,11 @@
 .main {
-  width: 100%;
+  min-width: 100vw;
   margin: 16px 0 0 0;
-  padding: 0;
+  padding: 2px;
+}
+.content {
+  white-space: normal;
+  padding: 2px 4px;
 }
 .actions {
   margin: 2rem auto;

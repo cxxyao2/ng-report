@@ -117,6 +117,14 @@ input[type="search"]::-webkit-search-results-decoration {
   @include home-color($dark-theme, rgba(255, 255, 255, 0.1));
 }
 
+.my-bottom-sheet {
+  min-width: calc(100vw - 20px) !important;
+}
+
+.mat-bottom-sheet-container {
+  padding: 2px 2px !important;
+}
+
 @keyframes fadein {
   from {
     opacity: 0;

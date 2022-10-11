@@ -152,7 +152,9 @@ export class AppComponent implements AfterViewInit, OnDestroy {
     this.cookieValue = this.cookieService.get('acceptCookie');
     if (this.cookieValue.trim() !== 'yes') {
       setTimeout(() => {
-        this._bottomSheet.open(CookiePopupComponent);
+        this._bottomSheet.open(CookiePopupComponent, {
+          panelClass: 'my-bottom-sheet',
+        });
       }, 1000);
     }
   }

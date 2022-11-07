@@ -1,5 +1,5 @@
 export const environment = {
-  production: true,
+  production: false,
   apiUrl: ' https://bakend-jennifer.herokuapp.com/api',
   imageUrl: 'https://bakend-jennifer.herokuapp.com',
   mapKey: 'w',
